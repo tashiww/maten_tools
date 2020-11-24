@@ -86,6 +86,38 @@ ja_tbl = build_tbl(ja_tbl_path)
 en_tbl = build_tbl(en_tbl_path, True)
 
 
+def target_dump(rom, tbl):
+	rom = rom_path.open("rb")
+	i = 0
+	start = 0x21000
+	stop = 0x21660
+	rom.seek(start, 0)
+	while rom.tell() < stop:
+
+		ptr_loc = rom.tell()
+		ptr = struct.unpack(">I", rom.read(4))[0]
+
+		# print(f'{rom.tell():0x}')
+
+		text, missing = tbl_read(ja_tbl, rom, ptr)
+
+		# if len(text) > 0 and not missing:
+		if len(text) > 0:
+			fprint(f"{{'String': {i}, " +
+										f"'ptr_pos': 0x{ptr_loc:00x}, " +
+										f"'str_pos': 0x{ptr:00x}}}")
+			if missing:
+				fprint(f"# WARNING: {missing} failed lookup bytes")
+			fprint("#" + text)
+			# tags = re.findall(r'<[^sb>]+>', text)
+			# fprint(f'test string #{i}' + ''.join(tags))
+			fprint('\n')
+			i += 1
+
+		# get back in position to read next ptr
+		rom.seek(ptr_loc+4)
+
+
 def raw_dump(rom, tbl):
 	rom_size = rom_path.stat().st_size
 	rom = rom_path.open("rb")
@@ -93,8 +125,9 @@ def raw_dump(rom, tbl):
 	while rom.tell() < rom_size:
 		prefix = struct.unpack(">H", rom.read(2))[0]
 
-		# text pointers are prefixed with $0007
-		if prefix == 7:
+		# text pointers are prefixed with certain bytes
+		valid_prefix = [0x07, 0x27, 0x41f9]
+		if prefix in valid_prefix:
 			ptr_loc = rom.tell()
 			ptr = struct.unpack(">I", rom.read(4))[0]
 
@@ -107,23 +140,22 @@ def raw_dump(rom, tbl):
 						and ptr < 0x0045000:
 				text, missing = tbl_read(ja_tbl, rom, ptr)
 
-				if len(text) > 0 and not missing:
+				# if len(text) > 0 and not missing:
+				if len(text) > 0:
 					fprint(f"{{'String': {i}, " +
+												f"'prefix': 0x{prefix:00x}, " +
 												f"'ptr_pos': 0x{ptr_loc:00x}, " +
 												f"'str_pos': 0x{ptr:00x}}}")
 					if missing:
 						fprint(f"# WARNING: {missing} failed lookup bytes")
 					fprint("#" + text)
 					tags = re.findall(r'<[^sb>]+>', text)
-					fprint(''.join(tags))
+					fprint(f'test string #{i}' + ''.join(tags))
 					fprint('\n')
 					i += 1
+				# this should seek after the prev ptr for small optimization
 				rom.seek(ptr_loc, 0)
 
-
-# rom storage:
-# 	0x41a40 	32KB?
-# 	0xEF310 	32KB?
 
 def text_to_bin(tbl, string):
 	ret_str = ''
@@ -139,36 +171,58 @@ def text_to_bin(tbl, string):
 	return ret_str
 
 
-with open(script_path, "r") as script:
-	script_cursor = 0x41a40
-	for line in [li[:-1] for li in script.readlines()[5075:5109]
-									if not li.startswith('#') and len(li) > 1]:
-		if line.startswith("{"):
-			str_info = json.loads(line)
-			# print(str_info)
-		else:
-			hex_line = text_to_bin(en_tbl, line)
-			bin_line = bytes.fromhex(hex_line)
-			with open(tling_rom_path, "rb+") as tl_rom:
+# a dict of ROM offsets and available space at each one
+def script_insert():
+	spaces = [
+			(0x41a40, 34208),
+			(0xef310, 27872),
+			(0x20300, 3200),
+			(0x5f780, 2000),
+			(0xdeee0, 4000),
+			(0xfefe0, 4000),
+			(0x662a0, 11000)
+			]
 
-				ptr_pos = int(str_info['ptr_pos'], 16)
-				tl_rom.seek(ptr_pos, 0)
-				print(f'ptr_pos 0x{ptr_pos:0x}')
-				print(f'new ptr 0x{script_cursor:0x}')
-				print(line)
-				print(f'{len(line)=}')
-				print(f'{len(hex_line)=}')
-				print(f'{len(bin_line)=}')
-				print(hex_line)
-				ptr_bytes = struct.pack(">I", ptr_pos)
-				script_bytes = struct.pack(">I", script_cursor)
+	with open(script_path, "r") as script:
+		script_idx = 0
+		script_cursor, size = spaces[script_idx]
 
-				tl_rom.seek(ptr_pos, 0)
-				tl_rom.write(script_bytes)
+		for line in [
+						li[:-1] for li in script.readlines()
+						if not li.startswith('#') and len(li) > 1]:
+			if line.startswith("{"):
+				str_info = json.loads(line)
+				# print(str_info)
+			else:
+				hex_line = text_to_bin(en_tbl, line)
+				bin_line = bytes.fromhex(hex_line)
+				if len(bin_line) + script_cursor > sum(spaces[script_idx]):
+					script_idx += 1
+					try:
+						script_cursor, size = spaces[script_idx]
+					except IndexError:
+						print("no more space")
+						break
 
-				tl_rom.seek(script_cursor, 0)
-				tl_rom.write(bin_line)
-				script_cursor = tl_rom.tell()
+				with open(tling_rom_path, "rb+") as tl_rom:
+
+					ptr_pos = int(str_info['ptr_pos'], 16)
+					tl_rom.seek(ptr_pos, 0)
+					print(
+							f"str {str_info['String']} " +
+							f"- ptr_pos 0x{ptr_pos:0x} - " +
+							f"new ptr 0x{script_cursor:0x}")
+					print(line)
+					print(hex_line)
+					# ptr_bytes = struct.pack(">I", ptr_pos)
+					script_ptr = struct.pack(">I", script_cursor)
+
+					tl_rom.seek(ptr_pos, 0)
+					tl_rom.write(script_ptr)
+
+					tl_rom.seek(script_cursor, 0)
+					tl_rom.write(bin_line)
+					script_cursor = tl_rom.tell()
 
 
-# raw_dump(rom_path, ja_tbl)
+target_dump(rom_path, ja_tbl)
