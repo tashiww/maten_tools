@@ -8,7 +8,7 @@ rom_filename = "Maten no Soumetsu (Japan).md"
 ja_tbl_fn = "ja_tbl.tbl"
 en_tbl_fn = "en_tbl.tbl"
 script = "tling.txt"
-tling_rom = "tling.md"
+tling_rom = "hax.md"
 
 # place output file in current script directory
 cwd = Path(__file__).resolve().parent
@@ -166,6 +166,16 @@ def text_to_bin(tbl, string):
 			nibble = string[0:x]
 			if nibble in tbl.keys():
 				ret_str += tbl[nibble]
+				if len(ret_str) % 60 == 0:
+					last_space = ret_str.rfind('10')
+					"""
+					print(f'{string=}')
+					print(f'{last_space=}')
+					print(f'{ret_str=}')
+					"""
+					ret_str = ret_str[0:last_space] + '0d' + ret_str[last_space+2:]
+					# <br> is 0x0d
+					# <scroll> is 0x0c
 				string = string[x:]
 
 	return ret_str
@@ -180,7 +190,7 @@ def script_insert():
 			(0x5f780, 2000),
 			(0xdeee0, 4000),
 			(0xfefe0, 4000),
-			(0x662a0, 11000)
+			(0x65500, 0x3b90)
 			]
 
 	with open(script_path, "r") as script:
@@ -212,8 +222,8 @@ def script_insert():
 							f"str {str_info['String']} " +
 							f"- ptr_pos 0x{ptr_pos:0x} - " +
 							f"new ptr 0x{script_cursor:0x}")
-					print(line)
-					print(hex_line)
+					fprint(line)
+					fprint(hex_line)
 					# ptr_bytes = struct.pack(">I", ptr_pos)
 					script_ptr = struct.pack(">I", script_cursor)
 
@@ -225,4 +235,7 @@ def script_insert():
 					script_cursor = tl_rom.tell()
 
 
-target_dump(rom_path, ja_tbl)
+# raw_dump(rom_path, ja_tbl)
+# target_dump(rom_path, ja_tbl)
+
+script_insert()
