@@ -94,6 +94,7 @@ def build_tbl(tbl_path, invert=False):
 ja_tbl = build_tbl(ja_tbl_path)
 
 en_tbl = build_tbl(en_tbl_path, True)
+menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'), invert=True)
 
 
 def target_dump(rom, tbl):
@@ -169,7 +170,7 @@ def raw_dump(rom, tbl):
 				rom.seek(ptr_loc, 0)
 
 
-def text_to_bin(tbl, string):
+def text_to_hex(tbl, string):
 	ret_str = ''
 	longest_lookup = len(max(tbl.keys(), key=len))
 	cur_len = 0
@@ -179,10 +180,11 @@ def text_to_bin(tbl, string):
 
 	# TODO: make the length check add by each character, reset at 0D
 
-	while len(string) > 1:
+	while len(string) >= 1:
 		for x in range(longest_lookup, 0, -1):
 			nibble = string[0:x]
 			if nibble in tbl.keys():
+				# print(f'{nibble=}')
 				ret_str += tbl[nibble]
 				string = string[x:]
 				break
@@ -206,8 +208,8 @@ def text_to_bin(tbl, string):
 	return ret_str
 
 
-# a dict of ROM offsets and available space at each one
 def script_insert(script_path, table, rom):
+	# a list of ROM offsets and available space at each one
 	spaces = [
 			(0x41a40, 34208),
 			(0xef310, 27872),
@@ -229,7 +231,7 @@ def script_insert(script_path, table, rom):
 				str_info = json.loads(line)
 				# print(str_info)
 			else:
-				hex_line = text_to_bin(table, line)
+				hex_line = text_to_hex(table, line)
 				bin_line = bytes.fromhex(hex_line)
 				if len(bin_line) + script_cursor > sum(spaces[script_idx]):
 					script_idx += 1
@@ -265,8 +267,54 @@ def script_insert(script_path, table, rom):
 					fprint(hex_line)
 
 
+class StringBlock:
+	""" Basic data for script blocks: description of string block,
+		start offset in ROM, end offset,
+		step value to reach next string, max_len of string """
+
+	def __init__(self, desc, start, end, step, max_len):
+		self.desc = desc
+		self.start = start
+		self.end = end
+		self.step = step
+		self.max_len = max_len
+
+
+def fixed_str_parse(tling_rom, tbl, StringBlock):
+	rom = tling_rom.open("rb+")
+	start_offset = StringBlock.start
+	end_offset = StringBlock.end
+
+	i = 0
+	current_string_offset = start_offset + (i * StringBlock.step)
+	while current_string_offset < end_offset:
+		rom.seek(current_string_offset, 0)
+		# name = rom.read(11)
+		debug_str = StringBlock.desc.upper() + str(i)
+		debug_hex = text_to_hex(tbl, debug_str)
+		debug_bin = bytes.fromhex(debug_hex)
+
+		# print(f'{debug_str=}')
+		# print(f'{debug_hex=}')
+		debug_bin += b'\0' * (StringBlock.max_len-len(debug_bin))
+
+		# print(debug_bin)
+		rom.write(debug_bin)
+		print(f"wrote {debug_str} to {current_string_offset:00x}")
+		i += 1
+		current_string_offset = start_offset + (i * StringBlock.step)
+
+
 # raw_dump(rom_path, ja_tbl)
 # target_dump(rom_path, ja_tbl)
 
 # hc_strings = cwd_path('hard_coded_strings.txt')
-script_insert(script_path, en_tbl, tling_rom_path)
+# script_insert(script_path, en_tbl, tling_rom_path)
+
+item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
+monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
+npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
+
+# fixed_str_parse(tling_rom_path, menu_tbl, item_block)
+# fixed_str_parse(tling_rom_path, menu_tbl, monster_block)
+# fixed_str_parse(tling_rom_path, menu_tbl, npc_block)
