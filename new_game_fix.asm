@@ -5,13 +5,15 @@
 ; # Analysis Region: 0x00003726 - 0x0000372C
 ; ########################################################################################
 
-;	org $3726
+;	vram fix and new offset for "Choose a name" string
+
+	org $3726
 ;;	ADDQ.w	#2, D6
-;	NOP
-;	ADDA.w	#$0040, A1
+	NOP
+	ADDA.w	#$0040, A1
 
 
-	org	$492
+;	org	$492
 
 ;	LEA *+$6E6, A0
-	dc.l $41fa0257
+;	dc.l $41fa0258
