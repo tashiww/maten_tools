@@ -22,6 +22,10 @@ script_path = Path(str(cwd) + "/" + script)
 tling_rom_path = Path(str(cwd) + "/" + tling_rom)
 
 
+def cwd_path(name):
+	return Path(str(cwd) + "/" + str(name))
+
+
 # empty the file before we start writing to it
 out.open("w").close()
 out = out.open("a")
@@ -41,8 +45,12 @@ def tbl_read(tbl, rom, offset):
 	parsed = ''
 	rom.seek(offset, 0)
 	missing = 0
+	bin_len = 0
 	while True:
+		# TODO: this should scan in the max length control code bytes, not 1
+		# TODO: bin len is wrong sometimes.
 		byte = rom.read(1).hex()
+		bin_len += 1
 		if byte == '00':
 			if len(parsed) > 0:
 				if rom.read(1).hex() == '00':
@@ -56,13 +64,14 @@ def tbl_read(tbl, rom, offset):
 				parsed += tbl.get(byte)
 			else:
 				byte += rom.read(1).hex()
+				bin_len += 1
 				# print(f'2{byte=}')
 				try:
 					parsed += tbl[byte]
 				except KeyError:
 					missing += 1
 					parsed += byte
-	return parsed, missing
+	return parsed, missing, bin_len
 
 
 def build_tbl(tbl_path, invert=False):
@@ -73,8 +82,9 @@ def build_tbl(tbl_path, invert=False):
 	with open(tbl_path, "r") as tbl_file:
 		raw_tbl = tbl_file.read().splitlines()
 		for line in raw_tbl:
-			split = line.split("=")
-			tbl[split[0].lower()] = split[1]
+			split = line.split("=", 1)
+			if split[1]:
+				tbl[split[0].lower()] = split[1]
 	if invert:
 		return {v: k for k, v in tbl.items()}
 	else:
@@ -138,16 +148,18 @@ def raw_dump(rom, tbl):
 						and ptr_loc < 0x0045000 \
 						and ptr > 0x00023000 \
 						and ptr < 0x0045000:
-				text, missing = tbl_read(ja_tbl, rom, ptr)
+				text, missing, bin_len = tbl_read(ja_tbl, rom, ptr)
 
 				# if len(text) > 0 and not missing:
-				if len(text) > 0:
-					fprint(f"{{'String': {i}, " +
-												f"'prefix': 0x{prefix:00x}, " +
-												f"'ptr_pos': 0x{ptr_loc:00x}, " +
-												f"'str_pos': 0x{ptr:00x}}}")
+				if len(text) > 0 and not missing:
+					# fprint(f"{ptr}\t{bin_len}\t'{ptr:00x}\t'{bin_len:00x}")
+					fprint(f'{{"String": {i}, ' +
+												f'"prefix": 0x{prefix:00x}, ' +
+												f'"ptr_pos": 0x{ptr_loc:00x}, ' +
+												f'"str_pos": 0x{ptr:00x}}}')
 					if missing:
 						fprint(f"# WARNING: {missing} failed lookup bytes")
+
 					fprint("#" + text)
 					tags = re.findall(r'<[^sb>]+>', text)
 					fprint(f'test string #{i}' + ''.join(tags))
@@ -160,29 +172,42 @@ def raw_dump(rom, tbl):
 def text_to_bin(tbl, string):
 	ret_str = ''
 	longest_lookup = len(max(tbl.keys(), key=len))
+	cur_len = 0
+	br = '0d'
+	# <scroll> is 0x0c
+	space = '60'
+
+	# TODO: make the length check add by each character, reset at 0D
 
 	while len(string) > 1:
 		for x in range(longest_lookup, 0, -1):
 			nibble = string[0:x]
 			if nibble in tbl.keys():
 				ret_str += tbl[nibble]
-				if len(ret_str) % 60 == 0:
-					last_space = ret_str.rfind('10')
-					"""
-					print(f'{string=}')
-					print(f'{last_space=}')
-					print(f'{ret_str=}')
-					"""
-					ret_str = ret_str[0:last_space] + '0d' + ret_str[last_space+2:]
-					# <br> is 0x0d
-					# <scroll> is 0x0c
 				string = string[x:]
+				break
+
+		# TODO: make an actual table of lengths instead of assuming 1
+		cur_len += len(nibble)
+
+		if tbl[nibble] == '0d':
+			cur_len = 0
+
+		if cur_len > 30:
+			last_space = ret_str.rfind(space)
+			"""
+			print(f'{string=}')
+			print(f'{last_space=}')
+			print(f'{ret_str=}')
+			"""
+			ret_str = ret_str[0:last_space] + br + ret_str[last_space+2:]
+			cur_len = 0
 
 	return ret_str
 
 
 # a dict of ROM offsets and available space at each one
-def script_insert():
+def script_insert(script_path, table, rom):
 	spaces = [
 			(0x41a40, 34208),
 			(0xef310, 27872),
@@ -204,7 +229,7 @@ def script_insert():
 				str_info = json.loads(line)
 				# print(str_info)
 			else:
-				hex_line = text_to_bin(en_tbl, line)
+				hex_line = text_to_bin(table, line)
 				bin_line = bytes.fromhex(hex_line)
 				if len(bin_line) + script_cursor > sum(spaces[script_idx]):
 					script_idx += 1
@@ -214,28 +239,34 @@ def script_insert():
 						print("no more space")
 						break
 
-				with open(tling_rom_path, "rb+") as tl_rom:
+				with open(rom, "rb+") as tl_rom:
 
 					ptr_pos = int(str_info['ptr_pos'], 16)
-					tl_rom.seek(ptr_pos, 0)
+
+					if ptr_pos > 0:
+						tl_rom.seek(ptr_pos, 0)
+						script_ptr = struct.pack(">I", script_cursor)
+						tl_rom.seek(ptr_pos, 0)
+						tl_rom.write(script_ptr)
+						tl_rom.seek(script_cursor, 0)
+						tl_rom.write(bin_line)
+						# script_cursor += len(bin_line)
+						script_cursor = tl_rom.tell()
+
+					else:
+						tl_rom.seek(int(str_info['str_pos'], 16))
+						tl_rom.write(bin_line)
+
 					print(
 							f"str {str_info['String']} " +
 							f"- ptr_pos 0x{ptr_pos:0x} - " +
 							f"new ptr 0x{script_cursor:0x}")
 					fprint(line)
 					fprint(hex_line)
-					# ptr_bytes = struct.pack(">I", ptr_pos)
-					script_ptr = struct.pack(">I", script_cursor)
-
-					tl_rom.seek(ptr_pos, 0)
-					tl_rom.write(script_ptr)
-
-					tl_rom.seek(script_cursor, 0)
-					tl_rom.write(bin_line)
-					script_cursor = tl_rom.tell()
 
 
 # raw_dump(rom_path, ja_tbl)
 # target_dump(rom_path, ja_tbl)
 
-script_insert()
+# hc_strings = cwd_path('hard_coded_strings.txt')
+script_insert(script_path, en_tbl, tling_rom_path)
