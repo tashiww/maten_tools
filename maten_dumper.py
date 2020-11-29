@@ -22,6 +22,19 @@ script_path = Path(str(cwd) + "/" + script)
 tling_rom_path = Path(str(cwd) + "/" + tling_rom)
 
 
+class StringBlock:
+	""" Basic data for script blocks: description of string block,
+		start offset in ROM, end offset,
+		step value to reach next string, max_len of string """
+
+	def __init__(self, desc=None, start=None, end=None, step=None, max_len=None):
+		self.desc = desc
+		self.start = start
+		self.end = end
+		self.step = step
+		self.max_len = max_len
+
+
 def cwd_path(name):
 	return Path(str(cwd) + "/" + str(name))
 
@@ -40,10 +53,12 @@ def fprint(text, mode="both", fout=out):
 		out.write(str(text) + '\n')
 
 
-def tbl_read(tbl, rom, offset):
-	""" takes a dict as lookup table and bytearray as string """
+def tbl_read(tbl, rom, start_offset, end_offset=None):
+	""" takes a dict as lookup table, rom from which to extract,
+		offset to start parsing, optionally an end offset. If there is
+		no end_offset, read until first string terminator (null)"""
 	parsed = ''
-	rom.seek(offset, 0)
+	rom.seek(start_offset, 0)
 	missing = 0
 	bin_len = 0
 	while True:
@@ -53,11 +68,15 @@ def tbl_read(tbl, rom, offset):
 		bin_len += 1
 		if byte == '00':
 			if len(parsed) > 0:
+				""" original game aligns on even bytes but i don't think it matters
 				if rom.read(1).hex() == '00':
 					parsed += '<hend>'
 				else:
 					parsed += '<end>'
-			break
+				"""
+				parsed += '<end>'
+			if not end_offset:
+				break
 		else:
 			# print(f'1{byte=}')
 			if byte in tbl.keys():
@@ -71,6 +90,8 @@ def tbl_read(tbl, rom, offset):
 				except KeyError:
 					missing += 1
 					parsed += byte
+		if end_offset and rom.tell() >= end_offset:
+			break
 	return parsed, missing, bin_len
 
 
@@ -97,20 +118,22 @@ en_tbl = build_tbl(en_tbl_path, True)
 menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'), invert=True)
 
 
-def target_dump(rom, tbl):
+def target_dump(rom, tbl, StringBlock):
 	rom = rom_path.open("rb")
 	i = 0
-	start = 0x21000
-	stop = 0x21660
-	rom.seek(start, 0)
-	while rom.tell() < stop:
+	start_offset = StringBlock.start
+	stop_offset = StringBlock.stop
+	rom.seek(start_offset, 0)
+	while rom.tell() < stop_offset:
+		ptr = None
 
-		ptr_loc = rom.tell()
-		ptr = struct.unpack(">I", rom.read(4))[0]
+		if ptr:
+			ptr_loc = rom.tell()
+			ptr = struct.unpack(">I", rom.read(4))[0]
 
 		# print(f'{rom.tell():0x}')
 
-		text, missing = tbl_read(ja_tbl, rom, ptr)
+		text, missing = tbl_read(tbl, rom, rom.tell())
 
 		# if len(text) > 0 and not missing:
 		if len(text) > 0:
@@ -170,6 +193,54 @@ def raw_dump(rom, tbl):
 				rom.seek(ptr_loc, 0)
 
 
+def direct_dump(rom_path, tbl, start_offset, stop_offset):
+	rom = rom_path.open("rb")
+	rom.seek(start_offset)
+	bin_string = rom.read(stop_offset - start_offset)
+	text = bin_to_text(bin_string, tbl, rom_path.name, True)
+	return text
+
+
+def bin_to_text(bin_string, tbl, name, ignore_terminators=False):
+	""" Parses binary string according to tbl """
+	missing = 0
+	offset = 0x8a14
+	ret_list = []
+
+	i = 0
+	ret_str = f'{offset=:0x}\n'
+	bin_string = [x[0].hex() for x in struct.iter_unpack("1s", bin_string)]
+
+	ret_dict = {}
+	ret_dict[name] = f'{offset:0x}'
+	while len(bin_string) > 0:
+		# multibyte control codes max length is 2
+		nibble = ''.join(bin_string[0:2])
+		if nibble in tbl.keys():
+			ret_str += tbl[nibble]
+			bin_string = bin_string[2:]
+			offset += 2
+		else:
+			nibble = bin_string.pop(0)
+			try:
+				ret_str += tbl[nibble]
+			except KeyError:
+				missing += 1
+				ret_str += nibble
+			offset += 1
+		if nibble[-2:] == '00':
+			ret_dict['str_id'] = i
+			# ret_dict['ja_str'] = ret_str
+			# ret_list.append(json.dumps(ret_dict))
+			ret_list.append(ret_dict)
+			ret_dict = {}
+			ret_dict[name] = f'{offset:0x}'
+			ret_str = ''
+			i += 1
+
+	return ret_list
+
+
 def text_to_hex(tbl, string):
 	ret_str = ''
 	longest_lookup = len(max(tbl.keys(), key=len))
@@ -192,7 +263,7 @@ def text_to_hex(tbl, string):
 		# TODO: make an actual table of lengths instead of assuming 1
 		cur_len += len(nibble)
 
-		if tbl[nibble] == '0d':
+		if tbl[nibble] in ['00', '0000', '0d']:
 			cur_len = 0
 
 		if cur_len > 30:
@@ -267,21 +338,8 @@ def script_insert(script_path, table, rom):
 					fprint(hex_line)
 
 
-class StringBlock:
-	""" Basic data for script blocks: description of string block,
-		start offset in ROM, end offset,
-		step value to reach next string, max_len of string """
-
-	def __init__(self, desc, start, end, step, max_len):
-		self.desc = desc
-		self.start = start
-		self.end = end
-		self.step = step
-		self.max_len = max_len
-
-
-def fixed_str_parse(tling_rom, tbl, StringBlock):
-	rom = tling_rom.open("rb+")
+def fixed_str_parse(rom_path, tbl, StringBlock):
+	rom = rom_path.open("rb+")
 	start_offset = StringBlock.start
 	end_offset = StringBlock.end
 
@@ -314,7 +372,81 @@ def fixed_str_parse(tling_rom, tbl, StringBlock):
 item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
 monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
 npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
+# shop strings start = 0x21000
+# shop strings stop = 0x21660
 
+# these lines fill fixed length text blocks with debug strings
 # fixed_str_parse(tling_rom_path, menu_tbl, item_block)
 # fixed_str_parse(tling_rom_path, menu_tbl, monster_block)
 # fixed_str_parse(tling_rom_path, menu_tbl, npc_block)
+
+
+def direct_insert(rom_path, bin_string, start):
+	rom = open(rom_path, "rb+")
+	rom.seek(start, 0)
+	rom.write(bin_string)
+	return f'inserted {len(bin_string):0x} bytes at {start}'
+
+
+"""
+for x in menu_msg_asm_offsets:
+	rom = open(tling_rom_path, "rb+")
+	rom.seek(x+2, 0)
+	lea_offset = struct.unpack(">h", rom.read(2))[0]
+	# lea_offset += 2
+	lea_offset = struct.pack(">h", lea_offset)
+	rom.seek(-2, 1)
+	rom.write(lea_offset)
+"""
+
+
+# fprint(json.dumps(menu_msgs.__dict__))
+
+menu_msgs = StringBlock('menumsg', 0x8a14, 0x8a9a)
+
+
+def update_menu_msgs():
+	menu_msg_asm_offsets = [
+						0x855c,  # $8a14
+						0x856a,  # $8a20
+						0x8678,  # $8a32
+						0x86a4,  # $8a3e
+						0x8774,  # $8a4a
+						0x877e,  # $8a58
+						0x87b2,  # $8a66
+						0x89e0,  # $8a76
+						0x876e,  # $8a82
+						0x8a02,  # $8a90
+						]
+	insert_path = cwd_path('menu_msgs.txt')
+	insert_fh = open(insert_path, "r")
+	insert_lines = insert_fh.readlines()
+	insert_bin = insert_lines[1]
+	menu_msg_start = json.loads(insert_lines[0])['start']
+	en_txt = bytes.fromhex((text_to_hex(en_tbl, insert_bin)))
+	direct_insert(tling_rom_path, en_txt, menu_msg_start)
+	en_bin = bin_to_text(en_txt, en_tbl, 'en')
+
+	ja_bin = direct_dump(rom_path, ja_tbl, menu_msgs.start, menu_msgs.end)
+
+	combined_list = []
+	for i in range(len(en_bin)):
+		combo = {}
+		combo['str_id'] = en_bin[i]['str_id']
+		combo['en'] = en_bin[i]['en']
+		combo['ja'] = ja_bin[i]['Maten no Soumetsu (Japan).md']
+		combo['diff'] = int(combo['en'], 16) - int(combo['ja'], 16)
+		print(combo)
+		combined_list.append(combo)
+
+		orig_rom = open(rom_path, "rb")
+		rom = open(tling_rom_path, "rb+")
+		orig_rom.seek(menu_msg_asm_offsets[i]+2, 0)
+		lea_offset = struct.unpack(">h", orig_rom.read(2))[0]
+		lea_offset += combo['diff']
+		lea_offset = struct.pack(">h", lea_offset)
+		rom.seek(menu_msg_asm_offsets[i]+2, 0)
+		rom.write(lea_offset)
+
+
+update_menu_msgs()

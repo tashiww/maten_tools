@@ -7,15 +7,6 @@
 
  org $00008000
 
-	dc.b	$00, $10, $67, $24, $0C, $42, $00, $08, $67, $16, $0C, $42, $00, $04, $67, $08, $E7, $4E, $E7, $4F, $74, $01, $60, $12, $E5, $4E, $E5, $4F, $74, $03, $60, $0A ;0x0 (0x00008000-0x00008118, Entry count: 0x118) [Unknown data]
-	dc.b	$E3, $4E, $E3, $4F, $74, $07, $60, $02, $74, $0F, $33, $C6, $00, $FF, $53, $A2, $33, $C7, $00, $FF, $53, $A4, $36, $39, $00, $FF, $27, $DA, $86, $79, $00, $FF ;0x20
-	dc.b	$CA, $AC, $33, $C3, $00, $FF, $CA, $AC, $4E, $45, $00, $01, $61, $00, $00, $64, $51, $CA, $FF, $E4, $42, $79, $00, $FF, $53, $A2, $42, $79, $00, $FF, $53, $A4 ;0x40
-	dc.b	$4E, $75, $30, $06, $E9, $48, $D0, $79, $00, $FF, $CA, $A6, $33, $C0, $00, $FF, $CA, $A6, $32, $07, $E9, $49, $D2, $79, $00, $FF, $CA, $A8, $33, $C1, $00, $FF ;0x60
-	dc.b	$CA, $A8, $34, $39, $00, $FF, $CA, $AA, $30, $79, $00, $FF, $CA, $A4, $61, $00, $A9, $8C, $36, $39, $00, $FF, $27, $DA, $86, $79, $00, $FF, $CA, $AC, $33, $C3 ;0x80
-	dc.b	$00, $FF, $CA, $AC, $4E, $45, $00, $01, $61, $00, $00, $08, $4A, $42, $66, $DE, $4E, $75, $4A, $39, $00, $FF, $CA, $B9, $67, $22, $48, $E7, $C0, $80, $30, $39 ;0xA0
-	dc.b	$00, $FF, $CA, $B2, $32, $39, $00, $FF, $CA, $B4, $61, $00, $CD, $98, $30, $79, $00, $FF, $CA, $BA, $61, $00, $A7, $22, $4C, $DF, $01, $03, $4E, $75, $48, $E7 ;0xC0
-	dc.b	$60, $80, $41, $F9, $00, $FF, $CE, $D6, $42, $41, $74, $05, $B0, $30, $10, $00, $67, $08, $52, $41, $51, $CA, $FF, $F6, $60, $18, $4A, $41, $67, $14, $11, $B0 ;0xE0
-	dc.b	$10, $FF, $10, $00, $53, $41, $66, $F6, $10, $80, $61, $00, $00, $0C, $61, $00, $FA, $7A, $4C, $DF, $01, $06, $4E, $75 ;0x100
 loc_00008118:
 	MOVEM.l	A0/D0, -(A7)	;Predicted (Code-scan)
 	CLR.w	D0	;Predicted (Code-scan)
@@ -116,6 +107,7 @@ loc_0000836A:
 	MOVEA.w	#$9000, A1
 	MOVEQ	#3, D0
 	MOVEQ	#3, D1
+; main menu strings
 	LEA	loc_000083E6(PC), A0
 	BSR.w	*+$B362
 	MOVEQ	#3, D0
@@ -272,12 +264,16 @@ loc_00008508:
 	BEQ.b	loc_0000855C
 	BSR.w	*+$2BAC	;Predicted (Code-scan)
 loc_0000855C:
+
+; item throw away string
 	LEA	loc_00008A14(PC), A0
 	BRA.b	loc_0000856E
 loc_00008562:
 	MOVE.w	D0, D2	;Predicted (Code-scan)
 	BSR.w	*+$1EF2	;Predicted (Code-scan)
 	MOVE.l	A0, (A4)	;Predicted (Code-scan)
+	
+; can't throw away borrowed item string
 	LEA	loc_00008A20(PC), A0	;Predicted (Code-scan)
 loc_0000856E:
 	BSR.w	*+$B290
@@ -361,6 +357,8 @@ loc_00008640:
 	BSR.w	*+$1F56	;Predicted (Code-scan)
 loc_00008674:
 	BSR.w	*+$B18A
+	
+; use item string
 	LEA	loc_00008A32(PC), A0
 	CLR.w	D0
 	BSR.w	*+$B1D0
@@ -376,6 +374,8 @@ loc_00008674:
 	MOVEM.l	(A7)+, A5/A6	;Predicted (Code-scan)
 	BRA.b	loc_000086B2	;Predicted (Code-scan)
 loc_000086A4:
+
+; nothing happened string
 	LEA	loc_00008A3E(PC), A0
 	CLR.w	D0
 	BSR.w	*+$B1A4
@@ -438,13 +438,18 @@ loc_000086F6:
 	MOVEA.l	(A4), A0	;Predicted (Code-scan)
 	MOVE.l	$4(A4), (A4)	;Predicted (Code-scan)
 	MOVE.l	A0, $4(A4)	;Predicted (Code-scan)
+	
+; took item string
 	LEA	loc_00008A82(PC), A0	;Predicted (Code-scan)
 	BRA.b	loc_000087B6	;Predicted (Code-scan)
 loc_00008774:
+
+; handed itm to X string
 	LEA	loc_00008A4A(PC), A0	;Predicted (Code-scan)
 	BRA.b	loc_000087B6	;Predicted (Code-scan)
 loc_0000877A:
 	MOVE.l	$4(A4), (A4)	;Predicted (Code-scan)
+; can't carry anymore string
 	LEA	loc_00008A58(PC), A0	;Predicted (Code-scan)
 	BRA.b	loc_000087B6	;Predicted (Code-scan)
 loc_00008784:
@@ -462,6 +467,7 @@ loc_00008784:
 	MOVE.w	D3, D2	;Predicted (Code-scan)
 	BSR.w	*+$1CAA	;Predicted (Code-scan)
 	MOVE.l	A0, (A4)	;Predicted (Code-scan)
+; tried to take out X string
 	LEA	loc_00008A66(PC), A0	;Predicted (Code-scan)
 loc_000087B6:
 	BSR.w	*+$B048	;Predicted (Code-scan)
@@ -478,6 +484,7 @@ loc_000087E4:
 loc_000087EC:
 	dc.b	$3F, $3F, $3F, $3F, $3F, $3F, $3F, $3F, $00, $00 ;0x0 (0x000087EC-0x000087F6, Entry count: 0xA) [Unknown data]
 loc_000087F6:
+; not sure, blanks in menu_tbl, dadada in japanese table lol
 	LEA	loc_000087EC(PC), A0	;Predicted (Code-scan)
 	BSR.w	*+$AE2C	;Predicted (Code-scan)
 	TST.b	D2	;Predicted (Code-scan)
@@ -537,14 +544,17 @@ loc_00008894:
 	MOVEA.w	$4(A5), A1	;Predicted (Code-scan)
 	MOVEQ	#$0000000B, D0	;Predicted (Code-scan)
 	MOVEQ	#4, D1	;Predicted (Code-scan)
+; weapon, armor, helmet, shield (one string with <brs> in equip menu string
 	LEA	loc_000087C8(PC), A0	;Predicted (Code-scan)
 	BSR.w	*+$AD86	;Predicted (Code-scan)
 	MOVEQ	#$00000018, D0	;Predicted (Code-scan)
 	MOVEQ	#4, D1	;Predicted (Code-scan)
+; "item" in equip menu string
 	LEA	loc_000087DE(PC), A0	;Predicted (Code-scan)
 	BSR.w	*+$AD7A	;Predicted (Code-scan)
 	MOVEQ	#$00000018, D0	;Predicted (Code-scan)
 	MOVEQ	#7, D1	;Predicted (Code-scan)
+; ATK / DEF in equip menu string
 	LEA	loc_000087E4(PC), A0	;Predicted (Code-scan)
 	BSR.w	*+$AE38	;Predicted (Code-scan)
 	MOVE.w	$2(A5), D2	;Predicted (Code-scan)
@@ -642,6 +652,8 @@ loc_000089D0:
 	MOVE.l	A0, $00FF3098	;Predicted (Code-scan)
 	BSR.b	loc_000089B2	;Predicted (Code-scan)
 	BSR.w	*+$AE22	;Predicted (Code-scan)
+	
+; X is dead string (lol)
 	LEA	loc_00008A76(PC), A0	;Predicted (Code-scan)
 	CLR.w	D0	;Predicted (Code-scan)
 	BSR.w	*+$AE68	;Predicted (Code-scan)
@@ -652,6 +664,8 @@ loc_000089F2:
 	MOVE.l	A0, $00FF3098	;Predicted (Code-scan)
 	BSR.b	loc_000089B2	;Predicted (Code-scan)
 	BSR.w	*+$AE00	;Predicted (Code-scan)
+	
+; X can't move string
 	LEA	loc_00008A90(PC), A0	;Predicted (Code-scan)
 	CLR.w	D0	;Predicted (Code-scan)
 	BSR.w	*+$AE46	;Predicted (Code-scan)
@@ -690,6 +704,8 @@ loc_00008AA2:
 	MOVE.w	A1, $2(A5)	;Predicted (Code-scan)
 	MOVEQ	#4, D0	;Predicted (Code-scan)
 	MOVEQ	#5, D1	;Predicted (Code-scan)
+	
+; stats / order string, with <br>, from a menu
 	LEA	loc_00008A9A(PC), A0	;Predicted (Code-scan)
 	BSR.w	*+$AC2E	;Predicted (Code-scan)
 	CLR.w	$4(A5)	;Predicted (Code-scan)
@@ -1133,6 +1149,7 @@ loc_00008F5A:
 	SUBQ.b	#1, D2	;Predicted (Code-scan)
 	EXT.w	D2	;Predicted (Code-scan)
 	MULU.w	#$000C, D2	;Predicted (Code-scan)
+; end of stats effect page strings ?
 	LEA	*+$92A8, A3	;Predicted (Code-scan)
 	ADDA.l	D2, A3	;Predicted (Code-scan)
 	MOVEM.l	A6/A5, -(A7)	;Predicted (Code-scan)
