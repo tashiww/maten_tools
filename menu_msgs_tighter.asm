@@ -403,41 +403,6 @@ loc_000086B6:
 	MOVE.w	#$FFFF, $8(A6)	;Predicted (Code-scan)
 	TRAP	#5	;Predicted (Code-scan)
 	ORI.b	#0, D1	;Predicted (Code-scan)
-	dc.b	$FD, $D2 ;0x0 (0x000086F4-0x000086F6, Entry count: 0x2) [Unknown data]
-loc_000086F6:
-	BSR.w	loc_000089B2	;Predicted (Code-scan)
-	LEA	$00FF3098, A4	;Predicted (Code-scan)
-	MOVE.w	$6(A5), D2	;Predicted (Code-scan)
-	CMP.w	$A(A5), D2	;Predicted (Code-scan)
-	BEQ.w	loc_00008784	;Predicted (Code-scan)
-	BSR.w	*+$1C42	;Predicted (Code-scan)
-	MOVE.w	D2, D3	;Predicted (Code-scan)
-	BSR.w	*+$1AC8	;Predicted (Code-scan)
-	MOVE.l	A0, (A4)	;Predicted (Code-scan)
-	MOVE.w	$8(A5), D0	;Predicted (Code-scan)
-	BSR.w	*+$1DFC	;Predicted (Code-scan)
-	MOVE.w	D0, D2	;Predicted (Code-scan)
-	BSR.w	*+$1D34	;Predicted (Code-scan)
-	MOVE.l	A0, $8(A4)	;Predicted (Code-scan)
-	MOVE.w	$A(A5), D2	;Predicted (Code-scan)
-	BSR.w	*+$1C20	;Predicted (Code-scan)
-	BSR.w	*+$1AA8	;Predicted (Code-scan)
-	MOVE.l	A0, $4(A4)	;Predicted (Code-scan)
-	BCLR.l	#$0F, D0	;Predicted (Code-scan)
-	BSR.w	*+$1DEC	;Predicted (Code-scan)
-	TST.w	D0	;Predicted (Code-scan)
-	BEQ.w	loc_0000877A	;Predicted (Code-scan)
-	MOVE.w	$8(A5), D0	;Predicted (Code-scan)
-	MOVE.w	D3, D2	;Predicted (Code-scan)
-	BSR.w	*+$1E78	;Predicted (Code-scan)
-	MOVE.w	$6(A5), D2	;Predicted (Code-scan)
-	BSR.w	*+$1BF8	;Predicted (Code-scan)
-	BSR.w	*+$1A96	;Predicted (Code-scan)
-	TST.w	$2(A0)	;Predicted (Code-scan)
-	BNE.b	loc_00008774	;Predicted (Code-scan)
-	MOVEA.l	(A4), A0	;Predicted (Code-scan)
-	MOVE.l	$4(A4), (A4)	;Predicted (Code-scan)
-	MOVE.l	A0, $4(A4)	;Predicted (Code-scan)
 	
 ; took item string
 	LEA	loc_00008A82(PC), A0	;Predicted (Code-scan)
@@ -544,16 +509,19 @@ loc_00008894:
 	MOVEA.w	$4(A5), A1	;Predicted (Code-scan)
 	MOVEQ	#$0000000B, D0	;Predicted (Code-scan)
 	MOVEQ	#4, D1	;Predicted (Code-scan)
+	
 ; weapon, armor, helmet, shield (one string with <brs> in equip menu string
 	LEA	loc_000087C8(PC), A0	;Predicted (Code-scan)
 	BSR.w	*+$AD86	;Predicted (Code-scan)
 	MOVEQ	#$00000018, D0	;Predicted (Code-scan)
 	MOVEQ	#4, D1	;Predicted (Code-scan)
+	
 ; "item" in equip menu string
 	LEA	loc_000087DE(PC), A0	;Predicted (Code-scan)
 	BSR.w	*+$AD7A	;Predicted (Code-scan)
 	MOVEQ	#$00000018, D0	;Predicted (Code-scan)
 	MOVEQ	#7, D1	;Predicted (Code-scan)
+	
 ; ATK / DEF in equip menu string
 	LEA	loc_000087E4(PC), A0	;Predicted (Code-scan)
 	BSR.w	*+$AE38	;Predicted (Code-scan)
@@ -671,39 +639,6 @@ loc_000089F2:
 	BSR.w	*+$AE46	;Predicted (Code-scan)
 	BSR.w	*+$AE20	;Predicted (Code-scan)
 	BRA.w	loc_000083CA-2	;Predicted (Code-scan)
-loc_00008A14:
-	dc.b	$06, $4E, $1A, $06, $6E, $0D, $CA, $45, $3E, $1B, $00, $00 ;0x0 (0x00008A14-0x00008A20, Entry count: 0xC) [Unknown data]
-loc_00008A20:
-	dc.b	$06, $4E, $1A, $2A, $69, $C1, $49, $4D, $46, $0D, $CA, $45, $68, $6B, $49, $23, $1B, $00 ;0x0 (0x00008A20-0x00008A32, Entry count: 0x12) [Unknown data]
-loc_00008A32:
-	dc.b	$06, $4E, $1A, $06, $6E, $0D, $C8, $42, $3E, $1B, $00, $00 ;0x0 (0x00008A32-0x00008A3E, Entry count: 0xC) [Unknown data]
-loc_00008A3E:
-	dc.b	$C7, $61, $29, $32, $68, $49, $2A, $42, $3E, $1B, $00, $00 ;0x0 (0x00008A3E-0x00008A4A, Entry count: 0xC) [Unknown data]
-loc_00008A4A:
-	dc.b	$06, $4E, $1A, $06, $4A, $0D, $06, $6E, $C9, $36, $3E, $1B, $00, $00 ;0x0 (0x00008A4A-0x00008A58, Entry count: 0xE) [Unknown data]
-loc_00008A58:
-	dc.b	$06, $4E, $1A, $0D, $32, $6B, $CB, $CC, $C0, $45, $49, $23, $1B, $00 ;0x0 (0x00008A58-0x00008A66, Entry count: 0xE) [Unknown data]
-loc_00008A66:
-	dc.b	$06, $4E, $1A, $06, $6E, $0D, $CD, $69, $CE, $36, $45, $5E, $3E, $1B, $00, $00 ;0x0 (0x00008A66-0x00008A76, Entry count: 0x10) [Unknown data]
-loc_00008A76:
-	dc.b	$06, $4E, $1A, $01, $08, $6F, $46, $23, $6A, $1B, $00, $00 ;0x0 (0x00008A76-0x00008A82, Entry count: 0xC) [Unknown data]
-loc_00008A82:
-	dc.b	$06, $4E, $1A, $06, $4D, $0D, $06, $6E, $CD, $42, $3E, $1B, $00, $00 ;0x0 (0x00008A82-0x00008A90, Entry count: 0xE) [Unknown data]
-loc_00008A90:
-	dc.b	$06, $4E, $1A, $25, $33, $30, $49, $23, $1B, $00 ;0x0 (0x00008A90-0x00008A9A, Entry count: 0xA) [Unknown data]
-loc_00008A9A:
-	dc.b	$43, $67, $34, $0D, $49, $68, $52, $00 ;0x0 (0x00008A9A-0x00008AA2, Entry count: 0x8) [Unknown data]
-loc_00008AA2:
-	MOVEQ	#3, D0	;Predicted (Code-scan)
-	MOVEQ	#4, D1	;Predicted (Code-scan)
-	MOVEQ	#8, D2	;Predicted (Code-scan)
-	MOVEQ	#6, D3	;Predicted (Code-scan)
-	MOVE.w	#$0083, D4	;Predicted (Code-scan)
-	BSR.w	*+$A826	;Predicted (Code-scan)
-	MOVE.w	D0, $2(A6)	;Predicted (Code-scan)
-	MOVE.w	A1, $2(A5)	;Predicted (Code-scan)
-	MOVEQ	#4, D0	;Predicted (Code-scan)
-	MOVEQ	#5, D1	;Predicted (Code-scan)
 	
 ; stats / order string, with <br>, from a menu
 	LEA	loc_00008A9A(PC), A0	;Predicted (Code-scan)

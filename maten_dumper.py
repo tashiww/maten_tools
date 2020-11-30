@@ -8,7 +8,7 @@ rom_filename = "Maten no Soumetsu (Japan).md"
 ja_tbl_fn = "ja_tbl.tbl"
 en_tbl_fn = "en_tbl.tbl"
 script = "tling.txt"
-tling_rom = "hax.md"
+tling_rom = "foobar.bin"
 
 # place output file in current script directory
 cwd = Path(__file__).resolve().parent
@@ -26,13 +26,26 @@ class StringBlock:
 	""" Basic data for script blocks: description of string block,
 		start offset in ROM, end offset,
 		step value to reach next string, max_len of string """
-
 	def __init__(self, desc=None, start=None, end=None, step=None, max_len=None):
 		self.desc = desc
 		self.start = start
 		self.end = end
 		self.step = step
 		self.max_len = max_len
+
+
+class LEA:
+	""" Basic data for LEA ops which load relative pointers:
+		pc: pc offset of LEA op
+		abs_offset: absolute offset loaded by the LEA
+		table: type of table to parse text at the offset location """
+
+	def __init__(self, pc=None, abs_offset=None, table=None):
+		self.pc = pc
+		self.pc_hex = f'0x{pc:00x}'
+		self.abs_offset = abs_offset
+		self.abs_offset_hex = f'0x{abs_offset:00x}'
+		self.table = table
 
 
 def cwd_path(name):
@@ -100,7 +113,7 @@ def build_tbl(tbl_path, invert=False):
 	code=char
 	"""
 	tbl = {}
-	with open(tbl_path, "r") as tbl_file:
+	with open(tbl_path, "r", encoding="utf-8") as tbl_file:
 		raw_tbl = tbl_file.read().splitlines()
 		for line in raw_tbl:
 			split = line.split("=", 1)
@@ -116,6 +129,7 @@ ja_tbl = build_tbl(ja_tbl_path)
 
 en_tbl = build_tbl(en_tbl_path, True)
 menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'), invert=True)
+raw_menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'))
 
 
 def target_dump(rom, tbl, StringBlock):
@@ -177,10 +191,21 @@ def raw_dump(rom, tbl):
 				# if len(text) > 0 and not missing:
 				if len(text) > 0 and not missing:
 					# fprint(f"{ptr}\t{bin_len}\t'{ptr:00x}\t'{bin_len:00x}")
+					str_info = {
+							'str_num': i,
+							'prefix': f'0x{prefix:00x}',
+							'ptr_pos': ptr_loc,
+							'str_pos': ptr,
+							'ptr_pos_hex': f'0x{ptr_loc:0000x}',
+							'str_pos_hex': f'0x{ptr:0000x}'
+							}
+					"""
 					fprint(f'{{"String": {i}, ' +
 												f'"prefix": 0x{prefix:00x}, ' +
 												f'"ptr_pos": 0x{ptr_loc:00x}, ' +
 												f'"str_pos": 0x{ptr:00x}}}')
+					"""
+					fprint(json.dumps(str_info))
 					if missing:
 						fprint(f"# WARNING: {missing} failed lookup bytes")
 
@@ -193,15 +218,50 @@ def raw_dump(rom, tbl):
 				rom.seek(ptr_loc, 0)
 
 
-def direct_dump(rom_path, tbl, start_offset, stop_offset):
+def direct_dump(rom_path, start_offset, stop_offset=None):
+	""" Dump bytes from rom_path from start_offset until
+		stop_offset or first NULL """
 	rom = rom_path.open("rb")
 	rom.seek(start_offset)
-	bin_string = rom.read(stop_offset - start_offset)
-	text = bin_to_text(bin_string, tbl, rom_path.name, True)
-	return text
+	if stop_offset:
+		bin_string = rom.read(stop_offset - start_offset)
+	else:
+		bin_string = bytes()
+		while char := rom.read(1):
+			if char == b'\x00':
+				break
+			bin_string += char
+
+	# put this somewhere else?
+	# text = bin_to_text(bin_string, tbl, rom_path.name, True)
+	return bin_string
 
 
-def bin_to_text(bin_string, tbl, name, ignore_terminators=False):
+def bin_to_text(bin_string, tbl):
+	""" Parses bin_string through tbl, returning tuple
+		of the string and count of failed lookups """
+	missing = 0
+	ret_str = ''
+	bin_string = [x[0].hex() for x in struct.iter_unpack("1s", bin_string)]
+
+	while len(bin_string) > 0:
+		# multibyte control codes max length is 2
+		nibble = ''.join(bin_string[0:2])
+		if nibble in tbl.keys():
+			ret_str += tbl[nibble]
+			bin_string = bin_string[2:]
+		else:
+			nibble = bin_string.pop(0)
+			try:
+				ret_str += tbl[nibble]
+			except KeyError:
+				missing += 1
+				ret_str += nibble
+
+	return ret_str, missing
+
+
+def bin_to_text_list(bin_string, tbl, name, ignore_terminators=False):
 	""" Parses binary string according to tbl """
 	missing = 0
 	offset = 0x8a14
@@ -284,17 +344,19 @@ def script_insert(script_path, table, rom):
 	spaces = [
 			(0x41a40, 34208),
 			(0xef310, 27872),
-			(0x20300, 3200),
+			(0x20300, 3000),
 			(0x5f780, 2000),
 			(0xdeee0, 4000),
 			(0xfefe0, 4000),
 			(0x65500, 0x3b90)
 			]
 
-	with open(script_path, "r") as script:
+	size = 0
+	freespace = sum([b[1] for b in spaces])
+	with open(script_path, "r", encoding='utf-8') as script:
 		script_idx = 0
+		i = 0
 		script_cursor, size = spaces[script_idx]
-
 		for line in [
 						li[:-1] for li in script.readlines()
 						if not li.startswith('#') and len(li) > 1]:
@@ -306,6 +368,7 @@ def script_insert(script_path, table, rom):
 				bin_line = bytes.fromhex(hex_line)
 				if len(bin_line) + script_cursor > sum(spaces[script_idx]):
 					script_idx += 1
+					size += len(bin_line)
 					try:
 						script_cursor, size = spaces[script_idx]
 					except IndexError:
@@ -314,7 +377,9 @@ def script_insert(script_path, table, rom):
 
 				with open(rom, "rb+") as tl_rom:
 
-					ptr_pos = int(str_info['ptr_pos'], 16)
+					ptr_pos = str_info['ptr_pos']
+					# ptr_pos = int(str_info['ptr_pos'], 16)
+					i += 1
 
 					if ptr_pos > 0:
 						tl_rom.seek(ptr_pos, 0)
@@ -327,15 +392,19 @@ def script_insert(script_path, table, rom):
 						script_cursor = tl_rom.tell()
 
 					else:
-						tl_rom.seek(int(str_info['str_pos'], 16))
+						tl_rom.seek(str_info['str_pos'])
+						# tl_rom.seek(int(str_info['str_pos'], 16))
 						tl_rom.write(bin_line)
 
+					"""
 					print(
-							f"str {str_info['String']} " +
+							f"str {str_info['str_num']} " +
 							f"- ptr_pos 0x{ptr_pos:0x} - " +
 							f"new ptr 0x{script_cursor:0x}")
 					fprint(line)
-					fprint(hex_line)
+					"""
+					# fprint(hex_line)
+	print(f'inserted {i} script strings in {size} bytes, {freespace-size} remaining')
 
 
 def fixed_str_parse(rom_path, tbl, StringBlock):
@@ -358,9 +427,10 @@ def fixed_str_parse(rom_path, tbl, StringBlock):
 
 		# print(debug_bin)
 		rom.write(debug_bin)
-		print(f"wrote {debug_str} to {current_string_offset:00x}")
+		# print(f"wrote {debug_str} to {current_string_offset:00x}")
 		i += 1
 		current_string_offset = start_offset + (i * StringBlock.step)
+	print(f"inserted {StringBlock.desc}")
 
 
 # raw_dump(rom_path, ja_tbl)
@@ -368,6 +438,7 @@ def fixed_str_parse(rom_path, tbl, StringBlock):
 
 # hc_strings = cwd_path('hard_coded_strings.txt')
 # script_insert(script_path, en_tbl, tling_rom_path)
+script_insert(cwd_path('debug_script.txt'), en_tbl, tling_rom_path)
 
 item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
 monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
@@ -376,9 +447,9 @@ npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
 # shop strings stop = 0x21660
 
 # these lines fill fixed length text blocks with debug strings
-# fixed_str_parse(tling_rom_path, menu_tbl, item_block)
-# fixed_str_parse(tling_rom_path, menu_tbl, monster_block)
-# fixed_str_parse(tling_rom_path, menu_tbl, npc_block)
+fixed_str_parse(tling_rom_path, menu_tbl, item_block)
+fixed_str_parse(tling_rom_path, menu_tbl, monster_block)
+fixed_str_parse(tling_rom_path, menu_tbl, npc_block)
 
 
 def direct_insert(rom_path, bin_string, start):
@@ -427,7 +498,7 @@ def update_menu_msgs():
 	direct_insert(tling_rom_path, en_txt, menu_msg_start)
 	en_bin = bin_to_text(en_txt, en_tbl, 'en')
 
-	ja_bin = direct_dump(rom_path, ja_tbl, menu_msgs.start, menu_msgs.end)
+	ja_bin = direct_dump(rom_path, menu_msgs.start, menu_msgs.end)
 
 	combined_list = []
 	for i in range(len(en_bin)):
@@ -449,4 +520,49 @@ def update_menu_msgs():
 		rom.write(lea_offset)
 
 
-update_menu_msgs()
+# update_menu_msgs()
+
+
+def find_leas(rom_path: Path) -> list:
+	""" Searches rom_path for any relative word-length LEAs
+		and returns a list of LEA objects containing their
+		offsets and PC addresses """
+	lea_list = []
+	pc = 0
+	with rom_path.open("rb") as rom:
+		for nibble in struct.iter_unpack(">H", rom.read()):
+			pc += 2
+			nibble = nibble[0]
+			if nibble == 0x41fa:
+				rom.seek(pc)
+				rel_offset = struct.unpack(">H", rom.read(2))[0]
+				abs_offset = pc + rel_offset
+
+				lea_info = LEA(
+						pc-2,
+						abs_offset
+						)
+				lea_list.append(lea_info)
+	return lea_list
+
+
+def dump_leas(leas, normal_table, menu_table):
+	""" Takes a list of LEA objects and tries to parse
+		the data at each LEA offset with the given tables
+		outputting successful parses
+		~30% of the strings are garbage and must be
+		removed manually """
+
+	tables = {'normal': normal_table, 'menu': menu_table}
+	for tbl_name, tbl in tables.items():
+		for lea in leas:
+			lea.table = tbl_name
+			text, missing = bin_to_text(
+									direct_dump(rom_path, lea.abs_offset),
+									tbl)
+			if len(text) > 2 and len(text) < 130 and missing == 0:
+				fprint(json.dumps(lea.__dict__))
+				fprint("# " + text + "\n")
+
+
+# dump_leas(find_leas(rom_path), ja_tbl, raw_menu_tbl)
