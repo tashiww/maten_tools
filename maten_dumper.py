@@ -108,7 +108,7 @@ def tbl_read(tbl, rom, start_offset, end_offset=None):
 	return parsed, missing, bin_len
 
 
-def build_tbl(tbl_path, invert=False):
+def build_tbl(tbl_path: Path, reverse: bool = False) -> dict:
 	"""build lookup dictionary from thingy table
 	code=char
 	"""
@@ -119,17 +119,17 @@ def build_tbl(tbl_path, invert=False):
 			split = line.split("=", 1)
 			if split[1]:
 				tbl[split[0].lower()] = split[1]
-	if invert:
+	if reverse:
 		return {v: k for k, v in tbl.items()}
 	else:
 		return tbl
 
 
 ja_tbl = build_tbl(ja_tbl_path)
-
 en_tbl = build_tbl(en_tbl_path, True)
-menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'), invert=True)
+menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'), reverse=True)
 raw_menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'))
+en_menu_tbl = build_tbl(cwd_path('en_menu_font.tbl'), reverse=True)
 
 
 def target_dump(rom, tbl, StringBlock):
@@ -238,12 +238,16 @@ def direct_dump(rom_path, start_offset, stop_offset=None):
 
 
 def bin_to_text(bin_string, tbl):
+	print(type(bin_string))
 	""" Parses bin_string through tbl, returning tuple
 		of the string and count of failed lookups """
 	missing = 0
 	ret_str = ''
+
+	# read all bytes into list
 	bin_string = [x[0].hex() for x in struct.iter_unpack("1s", bin_string)]
 
+	# loop until list is empty by parsing and removing bytes
 	while len(bin_string) > 0:
 		# multibyte control codes max length is 2
 		nibble = ''.join(bin_string[0:2])
@@ -262,7 +266,8 @@ def bin_to_text(bin_string, tbl):
 
 
 def bin_to_text_list(bin_string, tbl, name, ignore_terminators=False):
-	""" Parses binary string according to tbl """
+	""" Parses binary string according to tbl, splitting lines
+		by \x00s """
 	missing = 0
 	offset = 0x8a14
 	ret_list = []
@@ -340,6 +345,9 @@ def text_to_hex(tbl, string):
 
 
 def script_insert(script_path, table, rom):
+	""" inserts script badly and should be replaced """
+
+	""" obsoleted by find_freespace function
 	# a list of ROM offsets and available space at each one
 	spaces = [
 			(0x41a40, 34208),
@@ -350,7 +358,9 @@ def script_insert(script_path, table, rom):
 			(0xfefe0, 4000),
 			(0x65500, 0x3b90)
 			]
+	"""
 
+	spaces = find_freespace(rom)[0:7]
 	size = 0
 	freespace = sum([b[1] for b in spaces])
 	with open(script_path, "r", encoding='utf-8') as script:
@@ -404,7 +414,8 @@ def script_insert(script_path, table, rom):
 					fprint(line)
 					"""
 					# fprint(hex_line)
-	print(f'inserted {i} script strings in {size} bytes, {freespace-size} remaining')
+	print(f'inserted {i} script strings in {size} bytes, ' +
+							f'{freespace-size} remaining')
 
 
 def fixed_str_parse(rom_path, tbl, StringBlock):
@@ -438,18 +449,6 @@ def fixed_str_parse(rom_path, tbl, StringBlock):
 
 # hc_strings = cwd_path('hard_coded_strings.txt')
 # script_insert(script_path, en_tbl, tling_rom_path)
-script_insert(cwd_path('debug_script.txt'), en_tbl, tling_rom_path)
-
-item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
-monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
-npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
-# shop strings start = 0x21000
-# shop strings stop = 0x21660
-
-# these lines fill fixed length text blocks with debug strings
-fixed_str_parse(tling_rom_path, menu_tbl, item_block)
-fixed_str_parse(tling_rom_path, menu_tbl, monster_block)
-fixed_str_parse(tling_rom_path, menu_tbl, npc_block)
 
 
 def direct_insert(rom_path, bin_string, start):
@@ -496,14 +495,14 @@ def update_menu_msgs():
 	menu_msg_start = json.loads(insert_lines[0])['start']
 	en_txt = bytes.fromhex((text_to_hex(en_tbl, insert_bin)))
 	direct_insert(tling_rom_path, en_txt, menu_msg_start)
-	en_bin = bin_to_text(en_txt, en_tbl, 'en')
+	en_bin = bin_to_text(en_txt, en_tbl)[0].split('00')
+	print(en_bin)
 
 	ja_bin = direct_dump(rom_path, menu_msgs.start, menu_msgs.end)
 
 	combined_list = []
 	for i in range(len(en_bin)):
 		combo = {}
-		combo['str_id'] = en_bin[i]['str_id']
 		combo['en'] = en_bin[i]['en']
 		combo['ja'] = ja_bin[i]['Maten no Soumetsu (Japan).md']
 		combo['diff'] = int(combo['en'], 16) - int(combo['ja'], 16)
@@ -518,8 +517,7 @@ def update_menu_msgs():
 		lea_offset = struct.pack(">h", lea_offset)
 		rom.seek(menu_msg_asm_offsets[i]+2, 0)
 		rom.write(lea_offset)
-
-
+# i broke this :/
 # update_menu_msgs()
 
 
@@ -565,4 +563,142 @@ def dump_leas(leas, normal_table, menu_table):
 				fprint("# " + text + "\n")
 
 
+def find_freespace(
+		rom_path: Path,
+		start: int = 0,
+		stop: int = None,
+		sortby: str = 'size',
+		exclusions: list = None) -> list:
+	""" Searches rom for continguous segments of FFs or 00s
+		returning a list of offset and size tuples,
+		sortby 'size' descending or address ascending,
+		with optional exclusion zones given as a list of
+		(lower, upper) tuples """
+
+	exclusions = [] if not exclusions else exclusions
+	freelist = []
+	size = 0
+	offset = 0
+	with open(rom_path, "rb") as rom:
+		rom.seek(start)
+		while nibble := rom.read(1):
+			if nibble in [b'\x00', b'\xff']:
+				# offset is after first match in case it was a string terminator
+				offset = rom.tell()
+
+				# leave a buffer at end of freespace
+				size = -1
+
+				# search for contiguous bytes of same value
+				while rom.read(1) == nibble:
+					size += 1
+
+			if size > 16 and \
+				not any(lower <= offset <= upper for
+												(lower, upper) in exclusions):
+				freelist.append((offset, size))
+				size = -1
+			if stop and rom.tell() > stop:
+				break
+
+	if sortby == 'size':
+		return sorted(freelist, key=lambda x: x[1], reverse=True)
+	else:
+		return freelist
+
+
+def parse_leas(script_path: Path, tbls: dict) -> list:
+	""" Parses a script file that has LEA addresses specified,
+		and moves them to other free spaces and repoints them
+	"""
+	lea_lines = []
+	with open(script_path, "r", encoding="utf-8") as script:
+		for line in [
+					li.strip() for li in script.readlines()
+					if not li.startswith('#') and len(li) > 1]:
+			if line.startswith("{"):
+				str_info = json.loads(line)
+			else:
+				hex_line = text_to_hex(tbls[str_info['table']], line) + '00'
+				bin_line = bytes.fromhex(hex_line)
+				str_info['bin_line'] = bin_line
+				lea_lines.append(str_info)
+	return lea_lines
+
+
+def move_leas(rom_path: Path, lea_list: list):
+
+	# binary representations of opcodes
+	bsr = b'\x61\x00'
+	lea = b'\x41\xf9'
+	rts = b'\x4e\x75'
+	with open(rom_path, "rb+") as rom:
+		for line in lea_list:
+			bin_line = line.get('bin_line')
+			if bin_line:
+				pc = line.get('pc')
+				print(f'0x{pc=:0x}')
+				start = pc - 0x7fff if pc > 0x7fff else 0
+				stop = pc + 0x7fff
+				print(bin_line)
+				try:
+					lea_space = find_freespace(rom_path, start, stop, 'ascending')[0]
+					string_space = find_freespace(rom_path)[0]
+					if string_space[1] > len(bin_line):
+					rom.seek(pc)
+					rom.write(bsr)
+					rom.write(bytes(lea_space[0]))
+					print(f'wrote 0x{lea_space[0]:0x} to 0x{pc+2:0x}')
+
+					rom.seek(lea_space[0])
+					rom.write(lea)
+					# this should be its own function :/
+					rom.write(bytes(string_space[0]))
+					rom.write(rts)
+					print(f'wrote 0x{string_space:0x} to 0x{lea_space[0]+2:0x}')
+					rom.seek(string_space)
+					rom.write(bin_line)
+					print(f'wrote 0x{bin_line.hex()} to 0x{string_space:0x}')
+
+				except IndexError:
+					print("No nearby free space found :(")
+					break
+				#	print(f'{space[0]:0x}')
+
+
+tables = {'normal': en_tbl, 'menu': en_menu_tbl}
+lea_lines = parse_leas(cwd_path("lea_strings.txt"), tables)
+
+move_leas(tling_rom_path, lea_lines)
+
+# print(lea_lines)
+
+item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
+monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
+npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
+# shop strings start = 0x21000
+# shop strings stop = 0x21660
+
+fixed_len_blocks = [item_block, monster_block, npc_block]
+
+exclusions = [(s.start, s.end) for s in fixed_len_blocks]
+"""
+total_space = sum(
+		[x[1] for x in
+			find_freespace(tling_rom_path, exclusions=exclusions)])
+print(f'total space: {total_space/1024:.2f}KB')
+"""
+
+
+# these lines fill fixed length text blocks with debug strings
+for block in fixed_len_blocks:
+	fixed_str_parse(tling_rom_path, menu_tbl, block)
+
+script_insert(cwd_path('debug_script.txt'), en_tbl, tling_rom_path)
+
+"""
+foo = find_freespace(tling_rom_path, 'x', exclusions)
+for f in foo:
+	print(f'0x{f[0]:0x}: {f[1]} bytes')
+"""
 # dump_leas(find_leas(rom_path), ja_tbl, raw_menu_tbl)
