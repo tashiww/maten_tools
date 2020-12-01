@@ -48,6 +48,18 @@ class LEA:
 		self.table = table
 
 
+item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
+monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
+npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
+# shop strings start = 0x21000
+# shop strings stop = 0x21660
+
+fixed_len_blocks = [item_block, monster_block, npc_block]
+
+exclusions = [(s.start, s.end) for s in fixed_len_blocks]
+exclusions.append((0xb3a0, 0xbb00))
+
+
 def cwd_path(name):
 	return Path(str(cwd) + "/" + str(name))
 
@@ -129,7 +141,7 @@ ja_tbl = build_tbl(ja_tbl_path)
 en_tbl = build_tbl(en_tbl_path, True)
 menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'), reverse=True)
 raw_menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'))
-en_menu_tbl = build_tbl(cwd_path('en_menu_font.tbl'), reverse=True)
+en_menu_tbl = build_tbl(cwd_path('en_menu.tbl'), reverse=True)
 
 
 def target_dump(rom, tbl, StringBlock):
@@ -164,6 +176,19 @@ def target_dump(rom, tbl, StringBlock):
 
 		# get back in position to read next ptr
 		rom.seek(ptr_loc+4)
+
+
+def bin_len(rom_path: Path, offset: int) -> int:
+	""" Return length of \x00 terminated string in
+		rom_path at offset, not including terminator """
+
+	with open(rom_path, "rb") as rom:
+		rom.seek(offset)
+		while nibble := rom.read(1):
+			if nibble == b'\x00':
+				break
+
+		return rom.tell()-1 - offset
 
 
 def raw_dump(rom, tbl):
@@ -347,7 +372,7 @@ def text_to_hex(tbl, string):
 def script_insert(script_path, table, rom):
 	""" inserts script badly and should be replaced """
 
-	""" obsoleted by find_freespace function
+	""" obsoleted by find_total_freespace function
 	# a list of ROM offsets and available space at each one
 	spaces = [
 			(0x41a40, 34208),
@@ -360,7 +385,7 @@ def script_insert(script_path, table, rom):
 			]
 	"""
 
-	spaces = find_freespace(rom)[0:7]
+	spaces = find_total_freespace(rom)[0:7]
 	size = 0
 	freespace = sum([b[1] for b in spaces])
 	with open(script_path, "r", encoding='utf-8') as script:
@@ -563,7 +588,42 @@ def dump_leas(leas, normal_table, menu_table):
 				fprint("# " + text + "\n")
 
 
-def find_freespace(
+def find_space(
+		rom_path: Path,
+		start: int = 0,
+		stop: int = None,
+		desired_size: int = 16) -> int:
+	""" Searches rom for continguous segments of FFs or 00s
+		of at least desired_size, with optional exclusion zones
+		given as a list of (lower, upper) tuples.
+		Returns offset of free space """
+
+	global exclusions
+	size = 0
+	offset = 0
+	with open(rom_path, "rb") as rom:
+		rom.seek(start)
+		while nibble := rom.read(1):
+			if nibble in [b'\x00', b'\xff']:
+				# offset is after first match in case it was a string terminator
+				offset = rom.tell()
+
+				# leave a 1 byte buffer at end of freespace
+				size = -1
+
+				# search for contiguous bytes of same value
+				while rom.read(1) == nibble:
+					size += 1
+
+			if size >= desired_size and \
+				not any(lower <= offset <= upper for
+												(lower, upper) in exclusions):
+				return(offset)
+			if stop and rom.tell() > stop:
+				break
+	return None
+
+def find_total_freespace(
 		rom_path: Path,
 		start: int = 0,
 		stop: int = None,
@@ -619,14 +679,15 @@ def parse_leas(script_path: Path, tbls: dict) -> list:
 			if line.startswith("{"):
 				str_info = json.loads(line)
 			else:
-				hex_line = text_to_hex(tbls[str_info['table']], line) + '00'
+				hex_line = text_to_hex(tbls[str_info['table']], line)
 				bin_line = bytes.fromhex(hex_line)
-				str_info['bin_line'] = bin_line
-				lea_lines.append(str_info)
+				if len(bin_line) > 0:
+					str_info['bin_line'] = bin_line
+					lea_lines.append(str_info)
 	return lea_lines
 
 
-def move_leas(rom_path: Path, lea_list: list):
+def move_leas(rom_path: Path, lea_list: list) -> int:
 
 	# binary representations of opcodes
 	bsr = b'\x61\x00'
@@ -634,58 +695,86 @@ def move_leas(rom_path: Path, lea_list: list):
 	rts = b'\x4e\x75'
 	with open(rom_path, "rb+") as rom:
 		for line in lea_list:
+			pc = line.get('pc')
 			bin_line = line.get('bin_line')
 			if bin_line:
-				pc = line.get('pc')
-				print(f'0x{pc=:0x}')
-				start = pc - 0x7fff if pc > 0x7fff else 0
-				stop = pc + 0x7fff
-				print(bin_line)
-				try:
-					lea_space = find_freespace(rom_path, start, stop, 'ascending')[0]
-					string_space = find_freespace(rom_path)[0]
-					if string_space[1] > len(bin_line):
-					rom.seek(pc)
-					rom.write(bsr)
-					rom.write(bytes(lea_space[0]))
-					print(f'wrote 0x{lea_space[0]:0x} to 0x{pc+2:0x}')
+				bin_line += b'\x00'
+				new_len = len(bin_line)
+				orig_len = bin_len(rom_path, line['abs_offset'])
 
-					rom.seek(lea_space[0])
-					rom.write(lea)
-					# this should be its own function :/
-					rom.write(bytes(string_space[0]))
-					rom.write(rts)
-					print(f'wrote 0x{string_space:0x} to 0x{lea_space[0]+2:0x}')
-					rom.seek(string_space)
-					rom.write(bin_line)
-					print(f'wrote 0x{bin_line.hex()} to 0x{string_space:0x}')
+				# can we overwrite old string?
+				# this should really be in an "insert_leas" function...
+				if new_len <= orig_len:
+					rom.seek(line['abs_offset'])
+					rom.write(bin_line + b'\x00' * (orig_len - new_len))
 
-				except IndexError:
-					print("No nearby free space found :(")
-					break
-				#	print(f'{space[0]:0x}')
+				# can't fit in old string space
+				else:
+					# 16 bit relative addressing limit
+					start = pc - 0x7fff if pc > 0x7fff else 0
+					stop = pc + 0x7fff
+
+					# check for freespace for string
+					# minimum 16 bytes to avoid overwriting meaningful \x00s
+					if string_space := find_space(rom_path, start, stop, max(20, new_len)+1):
+
+						# if string fits somewhere nearby
+						# keep lea, change address
+						rom.seek(pc+2, 0)
+						# print(struct.pack(">h", (string_space - pc)).hex())
+						rom.write(struct.pack(">h", (string_space - pc - 2)))
+
+						rom.seek(string_space + rom.tell() % 2)
+						rom.write(bin_line)
+						print(f'rewrote lea to 0x{string_space:0x}')
+
+
+					# need to move lea to use absolute offset
+					else:
+						print(f"0x{pc=:0x}, 0x{line['abs_offset']=:0x}")
+						print(f"{new_len=}, {orig_len=}")
+						print(f"{bin_line.hex()=}")
+						if lea_space := find_space(rom_path, start, stop, 10):
+							if string_space := find_space(rom_path, 0x20000, desired_size=new_len):
+								print(f"{string_space=:0x}")
+								rom.seek(pc, 0)
+								rom.write(bsr)
+								rom.write(struct.pack(">h", (lea_space - pc - 2)))
+
+								rom.seek(lea_space, 0)
+								rom.write(lea)
+								rom.write(struct.pack(">i", (string_space - pc - 2)))
+								rom.write(rts)
+
+								rom.seek(string_space, 0)
+								rom.write(bin_line)
+								print("i'm a hero")
+								print(f'rewrote lea as bsr to {lea_space - pc}')
+								print(f'rewrote lea to 0x{string_space:0x}')
+
+							else:
+								print("No space to insert string :/")
+								continue
+
+						else:
+							print("No space to relocate LEA at 0x{pc:0x}:/")
+							continue
+
+	return 0
 
 
 tables = {'normal': en_tbl, 'menu': en_menu_tbl}
 lea_lines = parse_leas(cwd_path("lea_strings.txt"), tables)
 
+# print(len([x for x in lea_lines if x.get('bin_line')]))
 move_leas(tling_rom_path, lea_lines)
 
 # print(lea_lines)
 
-item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
-monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
-npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
-# shop strings start = 0x21000
-# shop strings stop = 0x21660
-
-fixed_len_blocks = [item_block, monster_block, npc_block]
-
-exclusions = [(s.start, s.end) for s in fixed_len_blocks]
 """
 total_space = sum(
 		[x[1] for x in
-			find_freespace(tling_rom_path, exclusions=exclusions)])
+			find_total_freespace(tling_rom_path, exclusions=exclusions)])
 print(f'total space: {total_space/1024:.2f}KB')
 """
 
@@ -697,7 +786,7 @@ for block in fixed_len_blocks:
 script_insert(cwd_path('debug_script.txt'), en_tbl, tling_rom_path)
 
 """
-foo = find_freespace(tling_rom_path, 'x', exclusions)
+foo = find_total_freespace(tling_rom_path, 'x', exclusions)
 for f in foo:
 	print(f'0x{f[0]:0x}: {f[1]} bytes')
 """
