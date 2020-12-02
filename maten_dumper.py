@@ -727,7 +727,7 @@ def move_leas(rom_path: Path, lea_list: list) -> int:
 						rom.seek(string_space + rom.tell() % 2)
 						rom.write(bin_line)
 						print(f'rewrote lea to 0x{string_space:0x}')
-
+						"""
 
 					# need to move lea to use absolute offset
 					else:
@@ -759,6 +759,7 @@ def move_leas(rom_path: Path, lea_list: list) -> int:
 						else:
 							print("No space to relocate LEA at 0x{pc:0x}:/")
 							continue
+					"""
 
 	return 0
 
