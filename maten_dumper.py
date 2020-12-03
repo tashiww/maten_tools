@@ -58,6 +58,7 @@ fixed_len_blocks = [item_block, monster_block, npc_block]
 
 exclusions = [(s.start, s.end) for s in fixed_len_blocks]
 exclusions.append((0xb3a0, 0xbb00))
+# exclusions.append((0x0000, 0x1000))
 
 
 def cwd_path(name):
@@ -599,29 +600,37 @@ def find_space(
 		Returns offset of free space """
 
 	global exclusions
-	size = 0
 	offset = 0
 	with open(rom_path, "rb") as rom:
-		rom.seek(start)
-		while nibble := rom.read(1):
-			if nibble in [b'\x00', b'\xff']:
+		if not stop:
+			rom.seek(0, 2)
+			stop = rom.tell()
+		rom.seek(start, 0)
+		while rom.tell() < stop:
+			nibble = rom.read(1)
+			if nibble in [b'\x00', b'\xff'] and \
+						not any(lower <= offset <= upper for
+														(lower, upper) in exclusions):
+
 				# offset is after first match in case it was a string terminator
 				offset = rom.tell()
-
-				# leave a 1 byte buffer at end of freespace
-				size = -1
+				# print(f'first nibble: {offset=}, {size=}')
 
 				# search for contiguous bytes of same value
-				while rom.read(1) == nibble:
-					size += 1
+				chunk = bytearray(rom.read(desired_size))
+				# print(f'{offset=}')
+				# print(f'{nibble=}, {chunk=}')
+				if all(b == int.from_bytes(nibble, "big") for b in chunk):
+					# print(f'out: {offset=}, {size=}')
 
-			if size >= desired_size and \
-				not any(lower <= offset <= upper for
-												(lower, upper) in exclusions):
-				return(offset)
-			if stop and rom.tell() > stop:
-				break
+					# make sure we return a word-aligned offset
+					return ((offset + 1) - (offset + 1) % 4) + 2
+
+				else:
+					rom.seek(offset)
+
 	return None
+
 
 def find_total_freespace(
 		rom_path: Path,
@@ -667,6 +676,9 @@ def find_total_freespace(
 		return freelist
 
 
+# print(find_space(tling_rom_path, 0x63000, 0x67000))
+
+
 def parse_leas(script_path: Path, tbls: dict) -> list:
 	""" Parses a script file that has LEA addresses specified,
 		and moves them to other free spaces and repoints them
@@ -690,84 +702,77 @@ def parse_leas(script_path: Path, tbls: dict) -> list:
 def move_leas(rom_path: Path, lea_list: list) -> int:
 
 	# binary representations of opcodes
+	i = 0
 	bsr = b'\x61\x00'
 	lea = b'\x41\xf9'
 	rts = b'\x4e\x75'
-	with open(rom_path, "rb+") as rom:
+	with open(rom_path, "rb+", 0) as rom:
 		for line in lea_list:
 			pc = line.get('pc')
 			bin_line = line.get('bin_line')
 			if bin_line:
 				bin_line += b'\x00'
 				new_len = len(bin_line)
-				orig_len = bin_len(rom_path, line['abs_offset'])
+				# orig_len = bin_len(rom_path, line['abs_offset'])
+				# 16 bit relative addressing limit
+				start = pc - 0x7fff if pc > 0x7fff else 0
+				stop = pc + 0x7fff
+				# need to move lea to use absolute offset
 
-				# can we overwrite old string?
-				# this should really be in an "insert_leas" function...
-				if new_len <= orig_len:
-					rom.seek(line['abs_offset'])
-					rom.write(bin_line + b'\x00' * (orig_len - new_len))
+				print(f"0x{pc=:0x}, 0x{line['abs_offset']=:0x}")
+				# print(f"{new_len=}, {orig_len=}")
+				# print(f"{bin_line.hex()=}")
 
-				# can't fit in old string space
-				else:
-					# 16 bit relative addressing limit
-					start = pc - 0x7fff if pc > 0x7fff else 0
-					stop = pc + 0x7fff
+				lea_space = find_space(rom_path, start, stop, 0x16)
+				if lea_space and False:
+					string_space = find_space(rom_path, 0x1f000, desired_size=new_len+0x10)
+					if string_space:
+						rom.seek(pc, 0)
+						# rom.write(bsr)
+						# rom.write(struct.pack(">h", (lea_space - pc - 2)))
 
-					# check for freespace for string
-					# minimum 16 bytes to avoid overwriting meaningful \x00s
-					if string_space := find_space(rom_path, start, stop, max(20, new_len)+1):
+						rom.seek(lea_space, 0)
+						# rom.write(lea)
+						# rom.write(struct.pack(">I", (string_space)))
+						# rom.write(rts)
 
-						# if string fits somewhere nearby
-						# keep lea, change address
-						rom.seek(pc+2, 0)
-						# print(struct.pack(">h", (string_space - pc)).hex())
-						rom.write(struct.pack(">h", (string_space - pc - 2)))
+						rom.seek(string_space, 0)
+						# rom.write(bin_line)
+						# rom.flush()
+						print(f'rewrote lea as bsr to 0x{(lea_space):0x}')
+						print(f'wrote {len(bin_line)} bytes to 0x{string_space:0x}')
+						i += 1
 
-						rom.seek(string_space + rom.tell() % 2)
-						rom.write(bin_line)
-						print(f'rewrote lea to 0x{string_space:0x}')
-						"""
-
-					# need to move lea to use absolute offset
 					else:
-						print(f"0x{pc=:0x}, 0x{line['abs_offset']=:0x}")
-						print(f"{new_len=}, {orig_len=}")
-						print(f"{bin_line.hex()=}")
-						if lea_space := find_space(rom_path, start, stop, 10):
-							if string_space := find_space(rom_path, 0x20000, desired_size=new_len):
-								print(f"{string_space=:0x}")
-								rom.seek(pc, 0)
-								rom.write(bsr)
-								rom.write(struct.pack(">h", (lea_space - pc - 2)))
+						print("No space to insert string :/")
 
-								rom.seek(lea_space, 0)
-								rom.write(lea)
-								rom.write(struct.pack(">i", (string_space - pc - 2)))
-								rom.write(rts)
+				else:
+					print(f"No space to relocate LEA at 0x{pc:0x}:/")
+	print(f"wrote {i} lea strings")
 
-								rom.seek(string_space, 0)
-								rom.write(bin_line)
-								print("i'm a hero")
-								print(f'rewrote lea as bsr to {lea_space - pc}')
-								print(f'rewrote lea to 0x{string_space:0x}')
+	return i
 
-							else:
-								print("No space to insert string :/")
-								continue
 
-						else:
-							print("No space to relocate LEA at 0x{pc:0x}:/")
-							continue
-					"""
-
-	return 0
+def make_space(rom_path: Path, offset_list: list) -> int:
+	""" Looks for 'abs_offset' key in list of dicts, blanking out data
+		until \x00 is found """
+	space = 0
+	with open(rom_path, "rb+") as rom:
+		for str_info in offset_list:
+			rom.seek(str_info['abs_offset'])
+			orig_len = bin_len(rom_path, str_info['abs_offset'])
+			rom.write(b'\x00' * orig_len)
+			space += orig_len
+	return space
 
 
 tables = {'normal': en_tbl, 'menu': en_menu_tbl}
+
 lea_lines = parse_leas(cwd_path("lea_strings.txt"), tables)
+lea_lines = sorted(lea_lines, key=lambda x: x['pc'])
 
 # print(len([x for x in lea_lines if x.get('bin_line')]))
+print(f'freed {make_space(tling_rom_path, lea_lines)} bytes for LEAs')
 move_leas(tling_rom_path, lea_lines)
 
 # print(lea_lines)

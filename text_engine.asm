@@ -139,7 +139,7 @@ NotZero:
 	LEA $43cc, a0
 	BSR.w	$3628
 	
-	WHILE *<$3fe6
-		dc.b	$00
-	ENDW
+;	WHILE *<$3fe6
+;		dc.b	$00
+;	ENDW
 	
