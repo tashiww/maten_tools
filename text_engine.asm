@@ -121,25 +121,26 @@ NotZero:
 ; org $366e
 ;	move.w	$E550, d2
 	
- org $3fac
+; org $3fac
 ; capital letters
-	MOVEQ #3, d1
-	LEA	$42DC, a0
-	BSR.w	$3628
+	;MOVEQ #3, d1
+;	LEA	$42DC.w, a0
+;	BSR.w	$3628
 
-	NOP
+;	NOP
 ; formerly katakana, now blank
-	LEA	$4354, a0
-	NOP
-	NOP
-; lower case letters/numbers
-; d0 was originally $1C
+ org $3fb6
+	WHILE *<$3fc2
+		NOP
+	ENDW	
+	
+	
+ org $3fc2
 	MOVEQ #$1C, d0
 	MOVEQ	#$3, d1
-	LEA $43cc, a0
+	LEA $43cc.w, a0
 	BSR.w	$3628
-	
-;	WHILE *<$3fe6
-;		dc.b	$00
-;	ENDW
-	
+; it goes back and adds dakuten and stuff, blank it all
+	WHILE *<$3fe6
+		NOP
+	ENDW

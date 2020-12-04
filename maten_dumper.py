@@ -40,12 +40,19 @@ class LEA:
 		abs_offset: absolute offset loaded by the LEA
 		table: type of table to parse text at the offset location """
 
-	def __init__(self, pc=None, abs_offset=None, table=None):
+	def __init__(self, pc=None, abs_offset=None, table=None, redirect=False):
 		self.pc = pc
 		self.pc_hex = f'0x{pc:00x}'
 		self.abs_offset = abs_offset
 		self.abs_offset_hex = f'0x{abs_offset:00x}'
 		self.table = table
+		self.redirect = redirect
+		"""
+		self.ja_text = None
+		self.ja_bin = None
+		self.en_text = None
+		self.ja_bin = None
+		"""
 
 
 item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
@@ -252,11 +259,15 @@ def direct_dump(rom_path, start_offset, stop_offset=None):
 	if stop_offset:
 		bin_string = rom.read(stop_offset - start_offset)
 	else:
+		last_char = None
 		bin_string = bytes()
 		while char := rom.read(1):
 			if char == b'\x00':
-				break
+				if last_char != b'\x04':
+					break
+
 			bin_string += char
+			last_char = char
 
 	# put this somewhere else?
 	# text = bin_to_text(bin_string, tbl, rom_path.name, True)
@@ -264,7 +275,6 @@ def direct_dump(rom_path, start_offset, stop_offset=None):
 
 
 def bin_to_text(bin_string, tbl):
-	print(type(bin_string))
 	""" Parses bin_string through tbl, returning tuple
 		of the string and count of failed lookups """
 	missing = 0
@@ -286,7 +296,7 @@ def bin_to_text(bin_string, tbl):
 				ret_str += tbl[nibble]
 			except KeyError:
 				missing += 1
-				ret_str += nibble
+				ret_str += r"\x" + nibble
 
 	return ret_str, missing
 
@@ -340,7 +350,7 @@ def text_to_hex(tbl, string):
 	# <scroll> is 0x0c
 	space = '60'
 
-	# TODO: make the length check add by each character, reset at 0D
+	# TODO: make the length check add by each character's length, not just 1
 
 	while len(string) >= 1:
 		for x in range(longest_lookup, 0, -1):
@@ -553,18 +563,39 @@ def find_leas(rom_path: Path) -> list:
 		offsets and PC addresses """
 	lea_list = []
 	pc = 0
+	abs_offsets = []
 	with rom_path.open("rb") as rom:
 		for nibble in struct.iter_unpack(">H", rom.read()):
 			pc += 2
 			nibble = nibble[0]
 			if nibble == 0x41fa:
 				rom.seek(pc)
-				rel_offset = struct.unpack(">H", rom.read(2))[0]
-				abs_offset = pc + rel_offset
+				rel_offset = struct.unpack(">h", rom.read(2))[0]
 
+				abs_offset = pc + rel_offset
+				abs_offsets.append(abs_offset)
+
+				# check if the string has already been referenced and included
+				# if yes, we don't need to re-insert/translate it
+				if len([o for o in abs_offsets if o == abs_offset]) > 1:
+					redirect = True
+				else:
+					redirect = False
+
+				# create a LEA object for menu table and normal table
+				# would like to cut out garbage but it's hard to determine
 				lea_info = LEA(
 						pc-2,
-						abs_offset
+						abs_offset,
+						"menu",
+						redirect
+						)
+				lea_list.append(lea_info)
+				lea_info = LEA(
+						pc-2,
+						abs_offset,
+						"normal",
+						redirect
 						)
 				lea_list.append(lea_info)
 	return lea_list
@@ -577,16 +608,24 @@ def dump_leas(leas, normal_table, menu_table):
 		~30% of the strings are garbage and must be
 		removed manually """
 
+	lea_lines = []
 	tables = {'normal': normal_table, 'menu': menu_table}
-	for tbl_name, tbl in tables.items():
-		for lea in leas:
-			lea.table = tbl_name
-			text, missing = bin_to_text(
-									direct_dump(rom_path, lea.abs_offset),
-									tbl)
-			if len(text) > 2 and len(text) < 130 and missing == 0:
-				fprint(json.dumps(lea.__dict__))
-				fprint("# " + text + "\n")
+	for lea in leas:
+		tbl = tables[lea.table]
+		text, missing = bin_to_text(
+								direct_dump(rom_path, lea.abs_offset),
+								tbl)
+		if len(text) > 2 and missing < len(text)//3:
+			if lea.redirect:
+				lea.ja_text = "# REDIRECT ONLY" + text
+			else:
+				lea.ja_text = text
+
+			lea.missing = missing
+			lea_lines.append(lea)
+			# fprint(json.dumps(lea.__dict__))
+			# fprint("# " + text + "\n")
+	return lea_lines
 
 
 def find_space(
@@ -613,7 +652,7 @@ def find_space(
 														(lower, upper) in exclusions):
 
 				# offset is after first match in case it was a string terminator
-				offset = rom.tell()
+				offset = rom.tell() - 1
 				# print(f'first nibble: {offset=}, {size=}')
 
 				# search for contiguous bytes of same value
@@ -624,10 +663,11 @@ def find_space(
 					# print(f'out: {offset=}, {size=}')
 
 					# make sure we return a word-aligned offset
-					return ((offset + 1) - (offset + 1) % 4) + 2
+					# return ((offset + 1) - (offset + 1) % 4) + 2
+					return (offset + 1) & ~3 | 2
 
 				else:
-					rom.seek(offset)
+					rom.seek(offset + 1)
 
 	return None
 
@@ -689,6 +729,7 @@ def parse_leas(script_path: Path, tbls: dict) -> list:
 					li.strip() for li in script.readlines()
 					if not li.startswith('#') and len(li) > 1]:
 			if line.startswith("{"):
+				# print(line)
 				str_info = json.loads(line)
 			else:
 				hex_line = text_to_hex(tbls[str_info['table']], line)
@@ -707,6 +748,7 @@ def move_leas(rom_path: Path, lea_list: list) -> int:
 	lea = b'\x41\xf9'
 	rts = b'\x4e\x75'
 	with open(rom_path, "rb+", 0) as rom:
+		redirect_offsets = {}
 		for line in lea_list:
 			pc = line.get('pc')
 			bin_line = line.get('bin_line')
@@ -719,32 +761,49 @@ def move_leas(rom_path: Path, lea_list: list) -> int:
 				stop = pc + 0x7fff
 				# need to move lea to use absolute offset
 
-				print(f"0x{pc=:0x}, 0x{line['abs_offset']=:0x}")
+				# print(f"0x{pc=:0x}, 0x{line['abs_offset']=:0x}")
 				# print(f"{new_len=}, {orig_len=}")
 				# print(f"{bin_line.hex()=}")
 
 				lea_space = find_space(rom_path, start, stop, 0x16)
-				if lea_space and False:
-					string_space = find_space(rom_path, 0x1f000, desired_size=new_len+0x10)
-					if string_space:
+				if lea_space:
+					if line.get('redirect'):
+						redir = redirect_offsets[line['abs_offset']]
 						rom.seek(pc, 0)
-						# rom.write(bsr)
-						# rom.write(struct.pack(">h", (lea_space - pc - 2)))
+						rom.write(bsr)
+						rom.write(struct.pack(">h", (lea_space - pc - 2)))
 
 						rom.seek(lea_space, 0)
-						# rom.write(lea)
-						# rom.write(struct.pack(">I", (string_space)))
-						# rom.write(rts)
-
-						rom.seek(string_space, 0)
-						# rom.write(bin_line)
-						# rom.flush()
-						print(f'rewrote lea as bsr to 0x{(lea_space):0x}')
-						print(f'wrote {len(bin_line)} bytes to 0x{string_space:0x}')
-						i += 1
+						rom.write(lea)
+						rom.write(struct.pack(">I", redir))
+						rom.write(rts)
 
 					else:
-						print("No space to insert string :/")
+
+						string_space = find_space(rom_path, 0x1f000, desired_size=new_len+0x10)
+						if string_space:
+							rom.seek(pc, 0)
+							rom.write(bsr)
+							rom.write(struct.pack(">h", (lea_space - pc - 2)))
+
+							rom.seek(lea_space, 0)
+							rom.write(lea)
+							rom.write(struct.pack(">I", (string_space)))
+							rom.write(rts)
+
+							rom.seek(string_space, 0)
+							rom.write(bin_line)
+							rom.flush()
+
+							redirect_offsets[line['abs_offset']] = string_space
+
+							# print(f'rewrote lea as bsr to 0x{(lea_space):0x}')
+							# print(f'wrote {len(bin_line)} bytes to 0x{string_space:0x}')
+
+						else:
+							print("No space to insert string :/")
+
+					i += 1
 
 				else:
 					print(f"No space to relocate LEA at 0x{pc:0x}:/")
@@ -768,6 +827,20 @@ def make_space(rom_path: Path, offset_list: list) -> int:
 
 tables = {'normal': en_tbl, 'menu': en_menu_tbl}
 
+# print([x.__dict__ for x in find_leas(rom_path)])
+# this dumps hard-coded ("lea") strings to fstring's out file
+leas = (dump_leas(find_leas(rom_path), ja_tbl, raw_menu_tbl))
+leas = sorted(leas, key=lambda x: x.abs_offset)
+i = 0
+for lea in leas:
+	string = lea.__dict__.pop('ja_text')
+	print(json.dumps(lea.__dict__))
+	print("# " + string)
+	if i % 2 == 1:
+		print("\n")
+	i += 1
+	# add flag in lea for "redirect only, no insert"
+die()
 lea_lines = parse_leas(cwd_path("lea_strings.txt"), tables)
 lea_lines = sorted(lea_lines, key=lambda x: x['pc'])
 
@@ -796,4 +869,3 @@ foo = find_total_freespace(tling_rom_path, 'x', exclusions)
 for f in foo:
 	print(f'0x{f[0]:0x}: {f[1]} bytes')
 """
-# dump_leas(find_leas(rom_path), ja_tbl, raw_menu_tbl)

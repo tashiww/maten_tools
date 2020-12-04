@@ -5,6 +5,29 @@
 ; # Analysis Region: 0x00003628 - 0x00003682
 ; ########################################################################################
 
+ org $3fac
+; capital letters
+	;MOVEQ #3, d1
+;	LEA	$42DC.w, a0
+;	BSR.w	$3628
+
+;	NOP
+; formerly katakana, now blank
+	LEA	$4354.w, a0
+	NOP
+	NOP
+; lower case letters/numbers
+; d0 was originally $1C
+	MOVEQ #$1C, d0
+	MOVEQ	#$3, d1
+	LEA $43cc.w, a0
+	BSR.w	$3628
+	
+	WHILE *<$3fe6
+		dc.b	$00
+	ENDW
+	
+
  org $00003628
 
 	MOVEM.l	A1/A0/D3/D2/D1/D0, -(A7)
