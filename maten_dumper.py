@@ -827,6 +827,7 @@ def make_space(rom_path: Path, offset_list: list) -> int:
 
 tables = {'normal': en_tbl, 'menu': en_menu_tbl}
 
+"""
 # print([x.__dict__ for x in find_leas(rom_path)])
 # this dumps hard-coded ("lea") strings to fstring's out file
 leas = (dump_leas(find_leas(rom_path), ja_tbl, raw_menu_tbl))
@@ -841,9 +842,9 @@ for lea in leas:
 	i += 1
 	# add flag in lea for "redirect only, no insert"
 die()
+"""
 lea_lines = parse_leas(cwd_path("lea_strings.txt"), tables)
 lea_lines = sorted(lea_lines, key=lambda x: x['pc'])
-
 # print(len([x for x in lea_lines if x.get('bin_line')]))
 print(f'freed {make_space(tling_rom_path, lea_lines)} bytes for LEAs')
 move_leas(tling_rom_path, lea_lines)
