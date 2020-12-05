@@ -147,8 +147,8 @@ def build_tbl(tbl_path: Path, reverse: bool = False) -> dict:
 
 ja_tbl = build_tbl(ja_tbl_path)
 en_tbl = build_tbl(en_tbl_path, True)
-menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'), reverse=True)
-raw_menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'))
+# menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'), reverse=True)
+ja_menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'))
 en_menu_tbl = build_tbl(cwd_path('en_menu.tbl'), reverse=True)
 
 
@@ -199,10 +199,11 @@ def bin_len(rom_path: Path, offset: int) -> int:
 		return rom.tell()-1 - offset
 
 
-def raw_dump(rom, tbl):
+def raw_dump(rom_path: Path, tables: dict) -> None:
 	rom_size = rom_path.stat().st_size
 	rom = rom_path.open("rb")
 	i = 0
+	inserted_strings = []
 	while rom.tell() < rom_size:
 		prefix = struct.unpack(">H", rom.read(2))[0]
 
@@ -215,11 +216,11 @@ def raw_dump(rom, tbl):
 			# did some guessing and checking for upper/lower bounds
 			# might be too strict, but only returns good strings
 			if str(f'{ptr:08x}')[0:3] == '000' \
-						and ptr_loc > 0x00023000 \
-						and ptr_loc < 0x0045000 \
-						and ptr > 0x00023000 \
-						and ptr < 0x0045000:
-				text, missing, bin_len = tbl_read(ja_tbl, rom, ptr)
+						and ptr_loc < 0x50000 \
+						and ptr < 0x50000:
+				bin_string = direct_dump(rom_path, ptr)
+				text, missing = bin_to_text(bin_string, tables['normal'])
+				menu_text, menu_missing = bin_to_text(bin_string, tables['menu'])
 
 				# if len(text) > 0 and not missing:
 				if len(text) > 0 and not missing:
@@ -230,25 +231,32 @@ def raw_dump(rom, tbl):
 							'ptr_pos': ptr_loc,
 							'str_pos': ptr,
 							'ptr_pos_hex': f'0x{ptr_loc:0000x}',
-							'str_pos_hex': f'0x{ptr:0000x}'
+							'str_pos_hex': f'0x{ptr:0000x}',
+							'table': 'normal'
 							}
-					"""
-					fprint(f'{{"String": {i}, ' +
-												f'"prefix": 0x{prefix:00x}, ' +
-												f'"ptr_pos": 0x{ptr_loc:00x}, ' +
-												f'"str_pos": 0x{ptr:00x}}}')
-					"""
-					fprint(json.dumps(str_info))
-					if missing:
-						fprint(f"# WARNING: {missing} failed lookup bytes")
 
-					fprint("#" + text)
-					tags = re.findall(r'<[^sb>]+>', text)
-					fprint(f'test string #{i}' + ''.join(tags))
+					if ptr not in inserted_strings:
+						fprint(json.dumps(str_info))
+						fprint("#" + text)
+						if not menu_missing:
+							fprint(
+									"# " +
+									menu_text +
+									" # if this line is right, "
+									"change 'table' to 'menu'")
+						# this copies control codes down
+						tags = re.findall(r'<[^sb>]+>', text)
+						fprint(f'test string #{i}' + ''.join(tags))
+					else:
+						str_info['repoint'] = True
+						fprint(json.dumps(str_info))
+						fprint(f'# ~~REPOINT ONLY~~')
 					fprint('\n')
+					inserted_strings.append(ptr)
 					i += 1
 				# this should seek after the prev ptr for small optimization
 				rom.seek(ptr_loc, 0)
+	return None
 
 
 def direct_dump(rom_path, start_offset, stop_offset=None):
@@ -364,7 +372,7 @@ def text_to_hex(tbl, string):
 		# TODO: make an actual table of lengths instead of assuming 1
 		cur_len += len(nibble)
 
-		if tbl[nibble] in ['00', '0000', '0d']:
+		if tbl[nibble] in ['00', '0d']:
 			cur_len = 0
 
 		if cur_len > 30:
@@ -380,7 +388,7 @@ def text_to_hex(tbl, string):
 	return ret_str
 
 
-def script_insert(script_path, table, rom):
+def script_insert(script_path, tables, rom):
 	""" inserts script badly and should be replaced """
 
 	""" obsoleted by find_total_freespace function
@@ -399,18 +407,35 @@ def script_insert(script_path, table, rom):
 	spaces = find_total_freespace(rom)[0:7]
 	size = 0
 	freespace = sum([b[1] for b in spaces])
+	inserted_strings = {}
 	with open(script_path, "r", encoding='utf-8') as script:
 		script_idx = 0
 		i = 0
+		z = 0
 		script_cursor, size = spaces[script_idx]
 		for line in [
 						li[:-1] for li in script.readlines()
 						if not li.startswith('#') and len(li) > 1]:
 			if line.startswith("{"):
 				str_info = json.loads(line)
+				ptr_pos = str_info['ptr_pos']
+				str_pos = str_info['str_pos']
 				# print(str_info)
+				if str_info.get('repoint'):
+					with open(rom, "rb+") as tl_rom:
+						try:
+							tl_rom.seek(ptr_pos, 0)
+							new_offset = inserted_strings[str_pos]
+							tl_rom.write(struct.pack(">I", new_offset))
+							z += 1
+							continue
+						except KeyError:
+							print(f"Couldn't find repoint pos for {ptr_pos=:0x}")
+
 			else:
-				hex_line = text_to_hex(table, line)
+				table = str_info.get('table')
+				tbl = tables.get(table) if table else tables.get('normal')
+				hex_line = text_to_hex(tbl, line)
 				bin_line = bytes.fromhex(hex_line)
 				if len(bin_line) + script_cursor > sum(spaces[script_idx]):
 					script_idx += 1
@@ -423,8 +448,6 @@ def script_insert(script_path, table, rom):
 
 				with open(rom, "rb+") as tl_rom:
 
-					ptr_pos = str_info['ptr_pos']
-					# ptr_pos = int(str_info['ptr_pos'], 16)
 					i += 1
 
 					if ptr_pos > 0:
@@ -433,25 +456,21 @@ def script_insert(script_path, table, rom):
 						tl_rom.seek(ptr_pos, 0)
 						tl_rom.write(script_ptr)
 						tl_rom.seek(script_cursor, 0)
-						tl_rom.write(bin_line)
+						tl_rom.write(bin_line + b'\x00')
 						# script_cursor += len(bin_line)
 						script_cursor = tl_rom.tell()
+						inserted_strings[str_info['str_pos']] = script_cursor
 
 					else:
+						# i apparently used this function for in-place
+						# insertions? i probably don't want to do that anymore
 						tl_rom.seek(str_info['str_pos'])
 						# tl_rom.seek(int(str_info['str_pos'], 16))
 						tl_rom.write(bin_line)
 
-					"""
-					print(
-							f"str {str_info['str_num']} " +
-							f"- ptr_pos 0x{ptr_pos:0x} - " +
-							f"new ptr 0x{script_cursor:0x}")
-					fprint(line)
-					"""
-					# fprint(hex_line)
 	print(f'inserted {i} script strings in {size} bytes, ' +
 							f'{freespace-size} remaining')
+	print(f'repointed {z} strings, too')
 
 
 def fixed_str_parse(rom_path, tbl, StringBlock):
@@ -480,7 +499,6 @@ def fixed_str_parse(rom_path, tbl, StringBlock):
 	print(f"inserted {StringBlock.desc}")
 
 
-# raw_dump(rom_path, ja_tbl)
 # target_dump(rom_path, ja_tbl)
 
 # hc_strings = cwd_path('hard_coded_strings.txt')
@@ -827,10 +845,12 @@ def make_space(rom_path: Path, offset_list: list) -> int:
 
 tables = {'normal': en_tbl, 'menu': en_menu_tbl}
 
+# raw_dump(rom_path, {'normal': ja_tbl, 'menu': ja_menu_tbl})
+
 """
 # print([x.__dict__ for x in find_leas(rom_path)])
 # this dumps hard-coded ("lea") strings to fstring's out file
-leas = (dump_leas(find_leas(rom_path), ja_tbl, raw_menu_tbl))
+leas = (dump_leas(find_leas(rom_path), ja_tbl, ja_menu_tbl))
 leas = sorted(leas, key=lambda x: x.abs_offset)
 i = 0
 for lea in leas:
@@ -843,6 +863,7 @@ for lea in leas:
 	# add flag in lea for "redirect only, no insert"
 die()
 """
+
 lea_lines = parse_leas(cwd_path("lea_strings.txt"), tables)
 lea_lines = sorted(lea_lines, key=lambda x: x['pc'])
 # print(len([x for x in lea_lines if x.get('bin_line')]))
@@ -861,9 +882,9 @@ print(f'total space: {total_space/1024:.2f}KB')
 
 # these lines fill fixed length text blocks with debug strings
 for block in fixed_len_blocks:
-	fixed_str_parse(tling_rom_path, menu_tbl, block)
+	fixed_str_parse(tling_rom_path, en_menu_tbl, block)
 
-script_insert(cwd_path('debug_script.txt'), en_tbl, tling_rom_path)
+script_insert(cwd_path('debug_script.txt'), tables, tling_rom_path)
 
 """
 foo = find_total_freespace(tling_rom_path, 'x', exclusions)
