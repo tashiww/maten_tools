@@ -54,7 +54,25 @@ class LEA:
 		self.ja_bin = None
 		"""
 
+class String:
+	""" Basic data for Strings identified by pointers:
+		ptr_loc: where the pointer itself is located
+		str_loc: where the string was located
+		table: type of table to parse text at the offset location """
 
+	def __init__(self, ptr_loc=None, str_loc=None, table=None, redirect=False):
+		self.ptr_loc = ptr_loc
+		self.ptr_loc_hex = f'0x{ptr_loc:00x}'
+		self.str_loc = str_loc
+		self.str_loc_hex = f'0x{str_loc:00x}'
+		self.table = table
+		self.redirect = redirect
+		"""
+		self.ja_text = None
+		self.ja_bin = None
+		self.en_text = None
+		self.ja_bin = None
+		"""
 item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
 monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
 npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
@@ -192,14 +210,21 @@ def bin_len(rom_path: Path, offset: int) -> int:
 
 	with open(rom_path, "rb") as rom:
 		rom.seek(offset)
+		last_char = None
 		while nibble := rom.read(1):
+			# TODO: handle control codes / kanji using 00
 			if nibble == b'\x00':
-				break
+				if last_char not in [b'\x04', b'\x01', b'\x02']:
+					break
+			last_char = nibble
 
 		return rom.tell()-1 - offset
 
 
-def raw_dump(rom_path: Path, tables: dict) -> None:
+def raw_dump(rom_path: Path, tables: dict) -> list:
+	""" Return list of Script objects dumped out of rom_path,
+		parsed according to the normal/menu tables specified by tables """
+	# this should return a dict like the LEA function instead of hard-printing
 	rom_size = rom_path.stat().st_size
 	rom = rom_path.open("rb")
 	i = 0
@@ -250,7 +275,7 @@ def raw_dump(rom_path: Path, tables: dict) -> None:
 					else:
 						str_info['repoint'] = True
 						fprint(json.dumps(str_info))
-						fprint(f'# ~~REPOINT ONLY~~')
+						fprint('# ~~REPOINT ONLY~~')
 					fprint('\n')
 					inserted_strings.append(ptr)
 					i += 1
@@ -271,7 +296,7 @@ def direct_dump(rom_path, start_offset, stop_offset=None):
 		bin_string = bytes()
 		while char := rom.read(1):
 			if char == b'\x00':
-				if last_char != b'\x04':
+				if last_char not in [b'\x04', b'\x01', b'\x02']:
 					break
 
 			bin_string += char
@@ -499,80 +524,11 @@ def fixed_str_parse(rom_path, tbl, StringBlock):
 	print(f"inserted {StringBlock.desc}")
 
 
-# target_dump(rom_path, ja_tbl)
-
-# hc_strings = cwd_path('hard_coded_strings.txt')
-# script_insert(script_path, en_tbl, tling_rom_path)
-
-
 def direct_insert(rom_path, bin_string, start):
 	rom = open(rom_path, "rb+")
 	rom.seek(start, 0)
 	rom.write(bin_string)
 	return f'inserted {len(bin_string):0x} bytes at {start}'
-
-
-"""
-for x in menu_msg_asm_offsets:
-	rom = open(tling_rom_path, "rb+")
-	rom.seek(x+2, 0)
-	lea_offset = struct.unpack(">h", rom.read(2))[0]
-	# lea_offset += 2
-	lea_offset = struct.pack(">h", lea_offset)
-	rom.seek(-2, 1)
-	rom.write(lea_offset)
-"""
-
-
-# fprint(json.dumps(menu_msgs.__dict__))
-
-menu_msgs = StringBlock('menumsg', 0x8a14, 0x8a9a)
-
-
-def update_menu_msgs():
-	menu_msg_asm_offsets = [
-						0x855c,  # $8a14
-						0x856a,  # $8a20
-						0x8678,  # $8a32
-						0x86a4,  # $8a3e
-						0x8774,  # $8a4a
-						0x877e,  # $8a58
-						0x87b2,  # $8a66
-						0x89e0,  # $8a76
-						0x876e,  # $8a82
-						0x8a02,  # $8a90
-						]
-	insert_path = cwd_path('menu_msgs.txt')
-	insert_fh = open(insert_path, "r")
-	insert_lines = insert_fh.readlines()
-	insert_bin = insert_lines[1]
-	menu_msg_start = json.loads(insert_lines[0])['start']
-	en_txt = bytes.fromhex((text_to_hex(en_tbl, insert_bin)))
-	direct_insert(tling_rom_path, en_txt, menu_msg_start)
-	en_bin = bin_to_text(en_txt, en_tbl)[0].split('00')
-	print(en_bin)
-
-	ja_bin = direct_dump(rom_path, menu_msgs.start, menu_msgs.end)
-
-	combined_list = []
-	for i in range(len(en_bin)):
-		combo = {}
-		combo['en'] = en_bin[i]['en']
-		combo['ja'] = ja_bin[i]['Maten no Soumetsu (Japan).md']
-		combo['diff'] = int(combo['en'], 16) - int(combo['ja'], 16)
-		print(combo)
-		combined_list.append(combo)
-
-		orig_rom = open(rom_path, "rb")
-		rom = open(tling_rom_path, "rb+")
-		orig_rom.seek(menu_msg_asm_offsets[i]+2, 0)
-		lea_offset = struct.unpack(">h", orig_rom.read(2))[0]
-		lea_offset += combo['diff']
-		lea_offset = struct.pack(">h", lea_offset)
-		rom.seek(menu_msg_asm_offsets[i]+2, 0)
-		rom.write(lea_offset)
-# i broke this :/
-# update_menu_msgs()
 
 
 def find_leas(rom_path: Path) -> list:
@@ -633,7 +589,7 @@ def dump_leas(leas, normal_table, menu_table):
 		text, missing = bin_to_text(
 								direct_dump(rom_path, lea.abs_offset),
 								tbl)
-		if len(text) > 2 and missing < len(text)//3:
+		if len(text) > 2 and not missing:
 			if lea.redirect:
 				lea.ja_text = "# REDIRECT ONLY" + text
 			else:
@@ -660,13 +616,13 @@ def find_space(
 	offset = 0
 	with open(rom_path, "rb") as rom:
 		if not stop:
-			rom.seek(0, 2)
-			stop = rom.tell()
+			stop = rom_path.stat().st_size
 		rom.seek(start, 0)
-		while rom.tell() < stop:
-			nibble = rom.read(1)
-			if nibble in [b'\x00', b'\xff'] and \
-						not any(lower <= offset <= upper for
+		# print(f'{start=:0x}, {stop=:0x}')
+		while rom.tell() + desired_size < stop:
+			nibble = rom.read(1).hex()
+			if nibble in ['00', 'ff'] and \
+						not any(lower <= rom.tell() <= upper for
 														(lower, upper) in exclusions):
 
 				# offset is after first match in case it was a string terminator
@@ -674,21 +630,28 @@ def find_space(
 				# print(f'first nibble: {offset=}, {size=}')
 
 				# search for contiguous bytes of same value
-				chunk = bytearray(rom.read(desired_size))
-				# print(f'{offset=}')
+				chunk = nibble + rom.read(desired_size).hex()
+				# print(f'{offset=:0x}')
 				# print(f'{nibble=}, {chunk=}')
-				if all(b == int.from_bytes(nibble, "big") for b in chunk):
+
+				if all(b == chunk[0] for b in chunk):
 					# print(f'out: {offset=}, {size=}')
 
+					# print("this isn't good")
 					# make sure we return a word-aligned offset
-					# return ((offset + 1) - (offset + 1) % 4) + 2
-					return (offset + 1) & ~3 | 2
+					return ((offset + 1) - (offset + 1) % 4) + 2
+					# return (offset + 1) & ~3 | 2
 
 				else:
-					rom.seek(offset + 1)
+					# print("no good")
+					rom.seek(offset + 1, 0)
+					# print(f'{rom.tell()=:0x}, {stop<rom.tell()=}')
 
+		# print(f'{rom.tell()=:0x}, {stop>rom.tell()=}')
 	return None
 
+
+# print(f'{find_space(tling_rom_path, 0xa008, 0x19307, 0x16):0x}')
 
 def find_total_freespace(
 		rom_path: Path,
@@ -734,9 +697,6 @@ def find_total_freespace(
 		return freelist
 
 
-# print(find_space(tling_rom_path, 0x63000, 0x67000))
-
-
 def parse_leas(script_path: Path, tbls: dict) -> list:
 	""" Parses a script file that has LEA addresses specified,
 		and moves them to other free spaces and repoints them
@@ -761,10 +721,12 @@ def parse_leas(script_path: Path, tbls: dict) -> list:
 def move_leas(rom_path: Path, lea_list: list) -> int:
 
 	# binary representations of opcodes
-	i = 0
 	bsr = b'\x61\x00'
 	lea = b'\x41\xf9'
 	rts = b'\x4e\x75'
+
+	i = 0
+
 	with open(rom_path, "rb+", 0) as rom:
 		redirect_offsets = {}
 		for line in lea_list:
@@ -824,7 +786,9 @@ def move_leas(rom_path: Path, lea_list: list) -> int:
 					i += 1
 
 				else:
-					print(f"No space to relocate LEA at 0x{pc:0x}:/")
+					print(f'{start=:0x}, {stop=:0x}, {pc=:0x}')
+					print(f"0x{pc=:0x}, 0x{line['abs_offset']=:0x}")
+					print(f"No space to relocate LEA at 0x{pc:0x}:/\n")
 	print(f"wrote {i} lea strings")
 
 	return i
@@ -840,12 +804,13 @@ def make_space(rom_path: Path, offset_list: list) -> int:
 			orig_len = bin_len(rom_path, str_info['abs_offset'])
 			rom.write(b'\x00' * orig_len)
 			space += orig_len
+			rom.flush()
 	return space
 
 
 tables = {'normal': en_tbl, 'menu': en_menu_tbl}
 
-# raw_dump(rom_path, {'normal': ja_tbl, 'menu': ja_menu_tbl})
+raw_dump(rom_path, {'normal': ja_tbl, 'menu': ja_menu_tbl})
 
 """
 # print([x.__dict__ for x in find_leas(rom_path)])
@@ -855,29 +820,22 @@ leas = sorted(leas, key=lambda x: x.abs_offset)
 i = 0
 for lea in leas:
 	string = lea.__dict__.pop('ja_text')
-	print(json.dumps(lea.__dict__))
-	print("# " + string)
-	if i % 2 == 1:
-		print("\n")
+	fprint(json.dumps(lea.__dict__))
+	fprint("# " + string)
+	# tags = re.findall(r'<[^sb>]+>', string)
+	# fprint(f'lea string #{i}' + ''.join(tags))
+	fprint("\n")
 	i += 1
 	# add flag in lea for "redirect only, no insert"
 die()
 """
 
+# load relative LEAs from file
 lea_lines = parse_leas(cwd_path("lea_strings.txt"), tables)
 lea_lines = sorted(lea_lines, key=lambda x: x['pc'])
 # print(len([x for x in lea_lines if x.get('bin_line')]))
 print(f'freed {make_space(tling_rom_path, lea_lines)} bytes for LEAs')
 move_leas(tling_rom_path, lea_lines)
-
-# print(lea_lines)
-
-"""
-total_space = sum(
-		[x[1] for x in
-			find_total_freespace(tling_rom_path, exclusions=exclusions)])
-print(f'total space: {total_space/1024:.2f}KB')
-"""
 
 
 # these lines fill fixed length text blocks with debug strings
@@ -885,6 +843,7 @@ for block in fixed_len_blocks:
 	fixed_str_parse(tling_rom_path, en_menu_tbl, block)
 
 script_insert(cwd_path('debug_script.txt'), tables, tling_rom_path)
+
 
 """
 foo = find_total_freespace(tling_rom_path, 'x', exclusions)
