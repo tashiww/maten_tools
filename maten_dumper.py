@@ -22,6 +22,14 @@ script_path = Path(str(cwd) + "/" + script)
 tling_rom_path = Path(str(cwd) + "/" + tling_rom)
 
 
+class FilePath:
+	""" Creates .path property from a filename to return a Path
+		for the filename in the current working directory """
+	cwd = Path(__file__).resolve().parent
+	def __init__(self, fn):
+		self.fn = fn
+		self.path = Path(str(cwd) + "/" + fn)
+
 class StringBlock:
 	""" Basic data for script blocks: description of string block,
 		start offset in ROM, end offset,
@@ -54,25 +62,74 @@ class LEA:
 		self.ja_bin = None
 		"""
 
+
+def build_tbl(tbl_path: Path, reverse: bool = False) -> dict:
+	"""build lookup dictionary from thingy table: code=char,
+		output dict is optionally reversed as char=code """
+	tbl = {}
+	with open(tbl_path, "r", encoding="utf-8") as tbl_file:
+		raw_tbl = tbl_file.read().splitlines()
+		for line in raw_tbl:
+			split = line.split("=", 1)
+			if split[1]:
+				tbl[split[0].lower()] = split[1]
+	if reverse:
+		return {v: k for k, v in tbl.items()}
+	else:
+		return tbl
+
+
 class String:
 	""" Basic data for Strings identified by pointers:
 		ptr_loc: where the pointer itself is located
 		str_loc: where the string was located
-		table: type of table to parse text at the offset location """
+		table: type of table to parse text (normal or menu)
+		redirect: whether the ptr is moved w/o re-inserting text
+		ptr_type: absolute or relative pointer type """
 
-	def __init__(self, ptr_loc=None, str_loc=None, table=None, redirect=False):
-		self.ptr_loc = ptr_loc
-		self.ptr_loc_hex = f'0x{ptr_loc:00x}'
-		self.str_loc = str_loc
-		self.str_loc_hex = f'0x{str_loc:00x}'
+	en_tables = {
+				"normal": build_tbl(FilePath("en_tbl.tbl").path, reverse=True),
+				"menu": build_tbl(FilePath('en_menu.tbl').path, reverse=True)}
+
+	ja_tables = {
+					"normal": build_tbl(FilePath("ja_tbl.tbl").path),
+					"menu": build_tbl(FilePath('menu_tbl.tbl').path)}
+
+	def __init__(
+					self,
+					ptr_pos=None, str_pos=None,
+					table=None, repoint=False, ptr_type=None):
+
+		self.ptr_pos = ptr_pos
+		self.ptr_pos_hex = f'0x{ptr_pos:00x}'
+		self.str_pos = str_pos
+		self.str_pos_hex = f'0x{str_pos:00x}'
 		self.table = table
-		self.redirect = redirect
-		"""
+		self.repoint = repoint
+		self.ptr_type = ptr_type
 		self.ja_text = None
 		self.ja_bin = None
 		self.en_text = None
-		self.ja_bin = None
-		"""
+		self._en_bin = None
+
+	@property
+	def en_bin(self):
+		return self._en_bin
+
+	@en_bin.setter
+	def en_text(self, val):
+		self.__dict__['en_text'] = val
+		self._en_bin = text_to_hex(self.en_tables[self.table], val)
+
+
+original_rom = FilePath("Maten no Soumetsu (Japan).md")
+ja_tbl_file = FilePath("ja_tbl.tbl")
+en_tbl_file = FilePath("en_tbl.tbl")
+insert_script = FilePath("foo.txt")
+tling_rom = FilePath("foobar.bin")
+output_file = FilePath("test_dump.txt")
+
+
 item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
 monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
 npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
@@ -91,8 +148,8 @@ def cwd_path(name):
 
 
 # empty the file before we start writing to it
-out.open("w").close()
-out = out.open("a")
+output_file.path.open("w").close()
+out = output_file.path.open("a")
 
 
 def fprint(text, mode="both", fout=out):
@@ -146,28 +203,10 @@ def tbl_read(tbl, rom, start_offset, end_offset=None):
 	return parsed, missing, bin_len
 
 
-def build_tbl(tbl_path: Path, reverse: bool = False) -> dict:
-	"""build lookup dictionary from thingy table
-	code=char
-	"""
-	tbl = {}
-	with open(tbl_path, "r", encoding="utf-8") as tbl_file:
-		raw_tbl = tbl_file.read().splitlines()
-		for line in raw_tbl:
-			split = line.split("=", 1)
-			if split[1]:
-				tbl[split[0].lower()] = split[1]
-	if reverse:
-		return {v: k for k, v in tbl.items()}
-	else:
-		return tbl
-
-
 ja_tbl = build_tbl(ja_tbl_path)
-en_tbl = build_tbl(en_tbl_path, True)
-# menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'), reverse=True)
-ja_menu_tbl = build_tbl(cwd_path('menu_tbl.tbl'))
-en_menu_tbl = build_tbl(cwd_path('en_menu.tbl'), reverse=True)
+en_tbl = build_tbl(en_tbl_path, reverse=True)
+ja_menu_tbl = build_tbl(FilePath('menu_tbl.tbl').path)
+en_menu_tbl = build_tbl(FilePath('en_menu.tbl').path, reverse=True)
 
 
 def target_dump(rom, tbl, StringBlock):
@@ -211,9 +250,10 @@ def bin_len(rom_path: Path, offset: int) -> int:
 	with open(rom_path, "rb") as rom:
 		rom.seek(offset)
 		last_char = None
+		# read one byte at a time
 		while nibble := rom.read(1):
-			# TODO: handle control codes / kanji using 00
 			if nibble == b'\x00':
+				# sometimes \x00 is used in control codes, not as string terminator
 				if last_char not in [b'\x04', b'\x01', b'\x02']:
 					break
 			last_char = nibble
@@ -380,12 +420,12 @@ def text_to_hex(tbl, string):
 	longest_lookup = len(max(tbl.keys(), key=len))
 	cur_len = 0
 	br = '0d'
-	# <scroll> is 0x0c
+	# scroll = '0c'
 	space = '60'
 
 	# TODO: make the length check add by each character's length, not just 1
 
-	while len(string) >= 1:
+	while string and len(string) >= 1:
 		for x in range(longest_lookup, 0, -1):
 			nibble = string[0:x]
 			if nibble in tbl.keys():
@@ -397,7 +437,7 @@ def text_to_hex(tbl, string):
 		# TODO: make an actual table of lengths instead of assuming 1
 		cur_len += len(nibble)
 
-		if tbl[nibble] in ['00', '0d']:
+		if tbl[nibble] in ['00', '0d', '0c']:
 			cur_len = 0
 
 		if cur_len > 30:
@@ -433,16 +473,57 @@ def script_insert(script_path, tables, rom):
 	size = 0
 	freespace = sum([b[1] for b in spaces])
 	inserted_strings = {}
-	with open(script_path, "r", encoding='utf-8') as script:
+	with open(script_path, "r", encoding='utf-8', newline=None) as script:
 		script_idx = 0
 		i = 0
 		z = 0
 		script_cursor, size = spaces[script_idx]
+		tlstring = ""
+		str_info = None
+		ptr_pos = None
 		for line in [
 						li[:-1] for li in script.readlines()
 						if not li.startswith('#') and len(li) > 1]:
 			if line.startswith("{"):
+				if str_info and len(tlstring) > 0:
+					table = str_info.get('table')
+					tbl = tables.get(table) if table else tables.get('normal')
+					hex_line = text_to_hex(tbl, tlstring)
+					bin_line = bytes.fromhex(hex_line)
+					if len(bin_line) + script_cursor > sum(spaces[script_idx]):
+						script_idx += 1
+						size += len(bin_line)
+						try:
+							script_cursor, size = spaces[script_idx]
+						except IndexError:
+							print("no more space")
+							break
+
+					with open(rom, "rb+") as tl_rom:
+
+						i += 1
+
+						if ptr_pos > 0:
+							tl_rom.seek(ptr_pos, 0)
+							script_ptr = struct.pack(">I", script_cursor)
+							tl_rom.seek(ptr_pos, 0)
+							tl_rom.write(script_ptr)
+							tl_rom.seek(script_cursor, 0)
+							tl_rom.write(bin_line + b'\x00')
+							# script_cursor += len(bin_line)
+							script_cursor = tl_rom.tell()
+							inserted_strings[str_info['str_pos']] = script_cursor
+
+						else:
+							# i apparently used this function for in-place
+							# insertions? i probably don't want to do that anymore
+							tl_rom.seek(str_info['str_pos'])
+							# tl_rom.seek(int(str_info['str_pos'], 16))
+							tl_rom.write(bin_line)
+
+
 				str_info = json.loads(line)
+				tlstring = ""
 				ptr_pos = str_info['ptr_pos']
 				str_pos = str_info['str_pos']
 				# print(str_info)
@@ -458,40 +539,43 @@ def script_insert(script_path, tables, rom):
 							print(f"Couldn't find repoint pos for {ptr_pos=:0x}")
 
 			else:
-				table = str_info.get('table')
-				tbl = tables.get(table) if table else tables.get('normal')
-				hex_line = text_to_hex(tbl, line)
-				bin_line = bytes.fromhex(hex_line)
-				if len(bin_line) + script_cursor > sum(spaces[script_idx]):
-					script_idx += 1
-					size += len(bin_line)
-					try:
-						script_cursor, size = spaces[script_idx]
-					except IndexError:
-						print("no more space")
-						break
+				tlstring += line.rstrip("\n")
+				if tlstring[-8:] != "<scroll>":
+					tlstring += "<br>"
 
-				with open(rom, "rb+") as tl_rom:
+	table = str_info.get('table')
+	tbl = tables.get(table) if table else tables.get('normal')
+	hex_line = text_to_hex(tbl, line)
+	bin_line = bytes.fromhex(hex_line)
+	if len(bin_line) + script_cursor > sum(spaces[script_idx]):
+		script_idx += 1
+		size += len(bin_line)
+		try:
+			script_cursor, size = spaces[script_idx]
+		except IndexError:
+			print("no more space")
 
-					i += 1
+	with open(rom, "rb+") as tl_rom:
 
-					if ptr_pos > 0:
-						tl_rom.seek(ptr_pos, 0)
-						script_ptr = struct.pack(">I", script_cursor)
-						tl_rom.seek(ptr_pos, 0)
-						tl_rom.write(script_ptr)
-						tl_rom.seek(script_cursor, 0)
-						tl_rom.write(bin_line + b'\x00')
-						# script_cursor += len(bin_line)
-						script_cursor = tl_rom.tell()
-						inserted_strings[str_info['str_pos']] = script_cursor
+		i += 1
 
-					else:
-						# i apparently used this function for in-place
-						# insertions? i probably don't want to do that anymore
-						tl_rom.seek(str_info['str_pos'])
-						# tl_rom.seek(int(str_info['str_pos'], 16))
-						tl_rom.write(bin_line)
+		if ptr_pos > 0:
+			tl_rom.seek(ptr_pos, 0)
+			script_ptr = struct.pack(">I", script_cursor)
+			tl_rom.seek(ptr_pos, 0)
+			tl_rom.write(script_ptr)
+			tl_rom.seek(script_cursor, 0)
+			tl_rom.write(bin_line + b'\x00')
+			# script_cursor += len(bin_line)
+			script_cursor = tl_rom.tell()
+			inserted_strings[str_info['str_pos']] = script_cursor
+
+		else:
+			# i apparently used this function for in-place
+			# insertions? i probably don't want to do that anymore
+			tl_rom.seek(str_info['str_pos'])
+			# tl_rom.seek(int(str_info['str_pos'], 16))
+			tl_rom.write(bin_line)
 
 	print(f'inserted {i} script strings in {size} bytes, ' +
 							f'{freespace-size} remaining')
@@ -508,16 +592,23 @@ def fixed_str_parse(rom_path, tbl, StringBlock):
 	while current_string_offset < end_offset:
 		rom.seek(current_string_offset, 0)
 		# name = rom.read(11)
-		debug_str = StringBlock.desc.upper() + str(i)
-		debug_hex = text_to_hex(tbl, debug_str)
-		debug_bin = bytes.fromhex(debug_hex)
+		# debug_str = StringBlock.desc.upper() + str(i)
+		# debug_hex = text_to_hex(tbl, debug_str)
+		# debug_bin = bytes.fromhex(debug_hex)
+		orig_str = rom.read(12)
+		itm_name = bin_to_text(orig_str, tbl)[0].rstrip("<end>")
+
+		fprint(f"0x{current_string_offset:0x}\t{itm_name}")
+		rom.seek(current_string_offset, 0)
 
 		# print(f'{debug_str=}')
 		# print(f'{debug_hex=}')
-		debug_bin += b'\0' * (StringBlock.max_len-len(debug_bin))
+		# debug_bin += b'\0' * (StringBlock.max_len-len(debug_bin))
 
 		# print(debug_bin)
-		rom.write(debug_bin)
+
+		# uncomment THIS LATER
+		# rom.write(debug_bin)
 		# print(f"wrote {debug_str} to {current_string_offset:00x}")
 		i += 1
 		current_string_offset = start_offset + (i * StringBlock.step)
@@ -697,6 +788,48 @@ def find_total_freespace(
 		return freelist
 
 
+
+def parse_script(script_path: Path) -> list:
+	""" Returns list of String objects built from script file """
+
+
+	string_list = []
+	tlstring = ""
+	str_info = None
+
+	with open(script_path, "r", encoding="utf-8") as script:
+		for line in [
+					li.strip() for li in script.readlines()
+					if not li.startswith('#') and len(li) > 1]:
+			if line.startswith("{"):
+				if len(tlstring) > 0:
+					str_info.en_text = tlstring
+					string_list.append(str_info)
+					tlstring = ""
+
+				metadata = json.loads(line)
+				str_info = String(
+								metadata['ptr_pos'],
+								metadata['str_pos'],
+								metadata['table'],
+								metadata['repoint']
+								)
+
+
+			else:
+				tlstring += line
+
+	return string_list
+
+foo = parse_script(FilePath("lea_strings.txt").path)
+for f in foo:
+	# print(f.__dict__)
+	print(f.en_bin)
+die()
+
+
+
+
 def parse_leas(script_path: Path, tbls: dict) -> list:
 	""" Parses a script file that has LEA addresses specified,
 		and moves them to other free spaces and repoints them
@@ -810,7 +943,9 @@ def make_space(rom_path: Path, offset_list: list) -> int:
 
 tables = {'normal': en_tbl, 'menu': en_menu_tbl}
 
-raw_dump(rom_path, {'normal': ja_tbl, 'menu': ja_menu_tbl})
+# fixed_str_parse(rom_path, ja_menu_tbl, monster_block)
+
+# raw_dump(rom_path, {'normal': ja_tbl, 'menu': ja_menu_tbl})
 
 """
 # print([x.__dict__ for x in find_leas(rom_path)])
@@ -831,7 +966,7 @@ die()
 """
 
 # load relative LEAs from file
-lea_lines = parse_leas(cwd_path("lea_strings.txt"), tables)
+lea_lines = parse_leas(FilePath("lea_strings.txt").path, tables)
 lea_lines = sorted(lea_lines, key=lambda x: x['pc'])
 # print(len([x for x in lea_lines if x.get('bin_line')]))
 print(f'freed {make_space(tling_rom_path, lea_lines)} bytes for LEAs')
@@ -842,7 +977,7 @@ move_leas(tling_rom_path, lea_lines)
 for block in fixed_len_blocks:
 	fixed_str_parse(tling_rom_path, en_menu_tbl, block)
 
-script_insert(cwd_path('debug_script.txt'), tables, tling_rom_path)
+script_insert(cwd_path('foo.txt'), tables, tling_rom_path)
 
 
 """
