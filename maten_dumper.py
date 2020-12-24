@@ -110,16 +110,16 @@ class String:
 		self.ja_text = None
 		self.ja_bin = None
 		self.en_text = None
-		self._en_bin = None
+		self.en_bin = None
 
 	@property
-	def en_bin(self):
-		return self._en_bin
+	def en_text(self):
+		return self.en_text
 
-	@en_bin.setter
+	@en_text.setter
 	def en_text(self, val):
 		self.__dict__['en_text'] = val
-		self._en_bin = text_to_hex(self.en_tables[self.table], val)
+		self.en_bin = text_to_hex(self.en_tables[self.table], val)
 
 
 original_rom = FilePath("Maten no Soumetsu (Japan).md")
@@ -788,10 +788,8 @@ def find_total_freespace(
 		return freelist
 
 
-
 def parse_script(script_path: Path) -> list:
 	""" Returns list of String objects built from script file """
-
 
 	string_list = []
 	tlstring = ""
@@ -815,40 +813,10 @@ def parse_script(script_path: Path) -> list:
 								metadata['repoint']
 								)
 
-
 			else:
 				tlstring += line
 
 	return string_list
-
-foo = parse_script(FilePath("lea_strings.txt").path)
-for f in foo:
-	# print(f.__dict__)
-	print(f.en_bin)
-die()
-
-
-
-
-def parse_leas(script_path: Path, tbls: dict) -> list:
-	""" Parses a script file that has LEA addresses specified,
-		and moves them to other free spaces and repoints them
-	"""
-	lea_lines = []
-	with open(script_path, "r", encoding="utf-8") as script:
-		for line in [
-					li.strip() for li in script.readlines()
-					if not li.startswith('#') and len(li) > 1]:
-			if line.startswith("{"):
-				# print(line)
-				str_info = json.loads(line)
-			else:
-				hex_line = text_to_hex(tbls[str_info['table']], line)
-				bin_line = bytes.fromhex(hex_line)
-				if len(bin_line) > 0:
-					str_info['bin_line'] = bin_line
-					lea_lines.append(str_info)
-	return lea_lines
 
 
 def move_leas(rom_path: Path, lea_list: list) -> int:
