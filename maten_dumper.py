@@ -2,6 +2,7 @@ from pathlib import Path
 import struct
 import re
 import json
+from timeit import default_timer as timer
 
 # maten no shoumetsu ROM
 rom_filename = "Maten no Soumetsu (Japan).md"
@@ -111,15 +112,17 @@ class String:
 		self.ja_bin = None
 		self.en_text = None
 		self.en_bin = None
+		self.en_bin_len = None
 
 	@property
 	def en_text(self):
-		return self.en_text
+		return self.__dict__['en_text']
 
 	@en_text.setter
 	def en_text(self, val):
 		self.__dict__['en_text'] = val
-		self.en_bin = text_to_hex(self.en_tables[self.table], val)
+		self.en_bin = bytearray.fromhex(text_to_hex(self.en_tables[self.table], val))
+		self.en_bin_len = len(self.en_bin)
 
 
 original_rom = FilePath("Maten no Soumetsu (Japan).md")
@@ -693,54 +696,32 @@ def dump_leas(leas, normal_table, menu_table):
 	return lea_lines
 
 
+def word_align(offset: int) -> int:
+	""" return word aligned offset """
+	return (offset + 1) & ~3 | 2
+
 def find_space(
 		rom_path: Path,
 		start: int = 0,
 		stop: int = None,
 		desired_size: int = 16) -> int:
 	""" Searches rom for continguous segments of FFs or 00s
-		of at least desired_size, with optional exclusion zones
-		given as a list of (lower, upper) tuples.
+		of at least desired_size bytes
 		Returns offset of free space """
 
 	global exclusions
-	offset = 0
+	offset = word_align(start)
 	with open(rom_path, "rb") as rom:
 		if not stop:
 			stop = rom_path.stat().st_size
-		rom.seek(start, 0)
-		# print(f'{start=:0x}, {stop=:0x}')
-		while rom.tell() + desired_size < stop:
-			nibble = rom.read(1).hex()
-			if nibble in ['00', 'ff'] and \
-						not any(lower <= rom.tell() <= upper for
-														(lower, upper) in exclusions):
+		rom.seek(offset, 0)
+		haystack = rom.read(stop-offset)
+		i = min(haystack.index(b'\x00' * desired_size),
+				haystack.index(b'\xff' * desired_size))
 
-				# offset is after first match in case it was a string terminator
-				offset = rom.tell() - 1
-				# print(f'first nibble: {offset=}, {size=}')
+		return i+offset
 
-				# search for contiguous bytes of same value
-				chunk = nibble + rom.read(desired_size).hex()
-				# print(f'{offset=:0x}')
-				# print(f'{nibble=}, {chunk=}')
-
-				if all(b == chunk[0] for b in chunk):
-					# print(f'out: {offset=}, {size=}')
-
-					# print("this isn't good")
-					# make sure we return a word-aligned offset
-					return ((offset + 1) - (offset + 1) % 4) + 2
-					# return (offset + 1) & ~3 | 2
-
-				else:
-					# print("no good")
-					rom.seek(offset + 1, 0)
-					# print(f'{rom.tell()=:0x}, {stop<rom.tell()=}')
-
-		# print(f'{rom.tell()=:0x}, {stop>rom.tell()=}')
 	return None
-
 
 # print(f'{find_space(tling_rom_path, 0xa008, 0x19307, 0x16):0x}')
 
@@ -748,15 +729,14 @@ def find_total_freespace(
 		rom_path: Path,
 		start: int = 0,
 		stop: int = None,
-		sortby: str = 'size',
-		exclusions: list = None) -> list:
+		sortby: str = 'size') -> list:
 	""" Searches rom for continguous segments of FFs or 00s
 		returning a list of offset and size tuples,
 		sortby 'size' descending or address ascending,
 		with optional exclusion zones given as a list of
 		(lower, upper) tuples """
 
-	exclusions = [] if not exclusions else exclusions
+	global exclusions
 	freelist = []
 	size = 0
 	offset = 0
@@ -787,6 +767,8 @@ def find_total_freespace(
 	else:
 		return freelist
 
+# print(find_total_freespace(tling_rom.path))
+# die()
 
 def parse_script(script_path: Path) -> list:
 	""" Returns list of String objects built from script file """
@@ -810,13 +792,34 @@ def parse_script(script_path: Path) -> list:
 								metadata['ptr_pos'],
 								metadata['str_pos'],
 								metadata['table'],
-								metadata['repoint']
+								metadata['repoint'],
+								metadata['ptr_type']
 								)
 
 			else:
 				tlstring += line
 
 	return string_list
+
+def insert_string(rom_path: Path, str_info: String) -> int:
+	""" Insert string and repoint pointer, returning new ptr_pos for success and 0 for failure """
+	with open(file=rom_path, mode="rb+", buffering=0) as rom:
+		if str_info.en_bin:
+			new_pos = find_space(rom_path, 0x20000, desired_size=max(40, str_info.en_bin_len))
+			if new_pos:
+				print(f"{new_pos=:00x}")
+				rom.seek(str_info.ptr_pos, 0)
+				rom.write(struct.pack(">I", new_pos))
+
+				rom.seek(new_pos)
+				rom.write(str_info.en_bin)
+				return new_pos
+			else:
+				return 0
+
+		else:
+			return 0
+
 
 
 def move_leas(rom_path: Path, lea_list: list) -> int:
@@ -831,7 +834,7 @@ def move_leas(rom_path: Path, lea_list: list) -> int:
 	with open(rom_path, "rb+", 0) as rom:
 		redirect_offsets = {}
 		for line in lea_list:
-			pc = line.get('pc')
+			pc = line.get('ptr_pos')
 			bin_line = line.get('bin_line')
 			if bin_line:
 				bin_line += b'\x00'
@@ -934,10 +937,29 @@ die()
 """
 
 # load relative LEAs from file
-lea_lines = parse_leas(FilePath("lea_strings.txt").path, tables)
-lea_lines = sorted(lea_lines, key=lambda x: x['pc'])
+lea_lines = parse_script(FilePath("lea_strings.txt").path)
+lea_lines = sorted(lea_lines, key=lambda x: x.ptr_pos)
 # print(len([x for x in lea_lines if x.get('bin_line')]))
-print(f'freed {make_space(tling_rom_path, lea_lines)} bytes for LEAs')
+normal_lines = parse_script(FilePath("foo.txt").path)
+total_dur = 0
+for x in normal_lines[0:500]:
+	print(x.__dict__)
+	start = timer()
+	new_pos = insert_string(tling_rom.path, x)
+	if new_pos > 0:
+		print(f"Repointed string {x.en_text} from 0x{x.ptr_pos:00x} to 0x{new_pos:00x}")
+	else:
+		print(f"error on {x.en_text}")
+	end = timer()
+	dur = end - start
+	total_dur += dur
+	print(f"One string insertion took {dur} seconds")
+
+print(f"Total time: {total_dur} seconds")
+print(f"Average time: {total_dur/500} seconds")
+die()
+# print(f'freed {make_space(tling_rom_path, lea_lines)} bytes for LEAs')
+
 move_leas(tling_rom_path, lea_lines)
 
 
