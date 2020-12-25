@@ -716,9 +716,13 @@ def find_space(
 			stop = rom_path.stat().st_size
 		rom.seek(offset, 0)
 		haystack = rom.read(stop-offset)
-		i = min(haystack.index(b'\x00' * desired_size),
-				haystack.index(b'\xff' * desired_size))
-
+		try:
+			i = haystack.index(b'\x00' * desired_size)
+		except ValueError:
+			try:
+				i = haystack.index(b'\xff' * desired_size)
+			except ValueError:
+				return None
 		return i+offset
 
 	return None
@@ -801,24 +805,75 @@ def parse_script(script_path: Path) -> list:
 
 	return string_list
 
-def insert_string(rom_path: Path, str_info: String) -> int:
-	""" Insert string and repoint pointer, returning new ptr_pos for success and 0 for failure """
-	with open(file=rom_path, mode="rb+", buffering=0) as rom:
-		if str_info.en_bin:
-			new_pos = find_space(rom_path, 0x20000, desired_size=max(40, str_info.en_bin_len))
-			if new_pos:
-				print(f"{new_pos=:00x}")
+
+def repoint_relative(rom_path: Path, str_info: String, new_ptr: int) -> int:
+	""" Convert relative pointer to absolute pointer
+		by changing a LEA with relative pointer to a branch
+		to a LEA with an absolute pointer. Return offset of
+		new LEA or None if no space available """
+
+	# binary representations of opcodes
+	bsr = b'\x61\x00'
+	lea = b'\x41\xf9'
+	rts = b'\x4e\x75'
+
+	pc = str_info.ptr_pos
+	start = max(pc - 0x7fff, 0)
+	stop = pc + 0x7fff
+	lea_space = find_space(rom_path, start, stop, 0x16)
+	if lea_space:
+		with open(rom_path, "rb+", 0) as rom:
+			# replace asm lea with branch to offset with free space
+			rom.seek(pc, 0)
+			rom.write(bsr)
+			# >h is signed short (2 bytes)
+			rom.write(struct.pack(">h", (lea_space - pc - 2)))
+
+			# create new lea for absolute ptr offset
+			rom.seek(lea_space, 0)
+			rom.write(lea)
+			rom.write(struct.pack(">I", new_ptr))
+			rom.write(rts)
+
+	return lea_space
+
+
+def repoint(rom_path: Path, str_info: String) -> int:
+	""" Find free space for new string and repoint pointer """
+
+	new_pos = find_space(rom_path, 0x20000, desired_size=str_info.en_bin_len)
+	if new_pos:
+		print(f"{new_pos=}")
+		if str_info.ptr_type == 'absolute':
+			with open(file=rom_path, mode="rb+", buffering=0) as rom:
 				rom.seek(str_info.ptr_pos, 0)
 				rom.write(struct.pack(">I", new_pos))
+			return new_pos
 
+		elif str_info.ptr_type == 'relative':
+			if repoint_relative(rom_path, str_info, new_pos):
+				return new_pos
+
+	else:
+		return None
+
+
+def insert_string(rom_path: Path, str_info: String) -> int:
+	""" Insert string and repoint pointer """
+	if str_info.en_bin:
+		new_pos = repoint(rom_path, str_info)
+		if new_pos:
+			with open(file=rom_path, mode="rb+", buffering=0) as rom:
 				rom.seek(new_pos)
 				rom.write(str_info.en_bin)
 				return new_pos
-			else:
-				return 0
-
 		else:
+			# if can't find space for string
 			return 0
+
+	else:
+		# if str_info is missing en_bin
+		return 0
 
 
 
@@ -942,8 +997,8 @@ lea_lines = sorted(lea_lines, key=lambda x: x.ptr_pos)
 # print(len([x for x in lea_lines if x.get('bin_line')]))
 normal_lines = parse_script(FilePath("foo.txt").path)
 total_dur = 0
-for x in normal_lines[0:500]:
-	print(x.__dict__)
+for x in normal_lines:
+	# print(x.__dict__)
 	start = timer()
 	new_pos = insert_string(tling_rom.path, x)
 	if new_pos > 0:
@@ -956,7 +1011,7 @@ for x in normal_lines[0:500]:
 	print(f"One string insertion took {dur} seconds")
 
 print(f"Total time: {total_dur} seconds")
-print(f"Average time: {total_dur/500} seconds")
+print(f"Average time: {total_dur/len(normal_lines)} seconds")
 die()
 # print(f'freed {make_space(tling_rom_path, lea_lines)} bytes for LEAs')
 
