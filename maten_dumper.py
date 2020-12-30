@@ -2,6 +2,7 @@ from pathlib import Path
 import struct
 import re
 import json
+from typing import BinaryIO
 from timeit import default_timer as timer
 
 # maten no shoumetsu ROM
@@ -27,9 +28,11 @@ class FilePath:
 	""" Creates .path property from a filename to return a Path
 		for the filename in the current working directory """
 	cwd = Path(__file__).resolve().parent
+
 	def __init__(self, fn):
 		self.fn = fn
 		self.path = Path(str(cwd) + "/" + fn)
+
 
 class StringBlock:
 	""" Basic data for script blocks: description of string block,
@@ -143,7 +146,7 @@ fixed_len_blocks = [item_block, monster_block, npc_block]
 
 exclusions = [(s.start, s.end) for s in fixed_len_blocks]
 exclusions.append((0xb3a0, 0xbb00))
-# exclusions.append((0x0000, 0x1000))
+exclusions = sorted(exclusions)
 
 
 def cwd_path(name):
@@ -456,135 +459,6 @@ def text_to_hex(tbl, string):
 	return ret_str
 
 
-def script_insert(script_path, tables, rom):
-	""" inserts script badly and should be replaced """
-
-	""" obsoleted by find_total_freespace function
-	# a list of ROM offsets and available space at each one
-	spaces = [
-			(0x41a40, 34208),
-			(0xef310, 27872),
-			(0x20300, 3000),
-			(0x5f780, 2000),
-			(0xdeee0, 4000),
-			(0xfefe0, 4000),
-			(0x65500, 0x3b90)
-			]
-	"""
-
-	spaces = find_total_freespace(rom)[0:7]
-	size = 0
-	freespace = sum([b[1] for b in spaces])
-	inserted_strings = {}
-	with open(script_path, "r", encoding='utf-8', newline=None) as script:
-		script_idx = 0
-		i = 0
-		z = 0
-		script_cursor, size = spaces[script_idx]
-		tlstring = ""
-		str_info = None
-		ptr_pos = None
-		for line in [
-						li[:-1] for li in script.readlines()
-						if not li.startswith('#') and len(li) > 1]:
-			if line.startswith("{"):
-				if str_info and len(tlstring) > 0:
-					table = str_info.get('table')
-					tbl = tables.get(table) if table else tables.get('normal')
-					hex_line = text_to_hex(tbl, tlstring)
-					bin_line = bytes.fromhex(hex_line)
-					if len(bin_line) + script_cursor > sum(spaces[script_idx]):
-						script_idx += 1
-						size += len(bin_line)
-						try:
-							script_cursor, size = spaces[script_idx]
-						except IndexError:
-							print("no more space")
-							break
-
-					with open(rom, "rb+") as tl_rom:
-
-						i += 1
-
-						if ptr_pos > 0:
-							tl_rom.seek(ptr_pos, 0)
-							script_ptr = struct.pack(">I", script_cursor)
-							tl_rom.seek(ptr_pos, 0)
-							tl_rom.write(script_ptr)
-							tl_rom.seek(script_cursor, 0)
-							tl_rom.write(bin_line + b'\x00')
-							# script_cursor += len(bin_line)
-							script_cursor = tl_rom.tell()
-							inserted_strings[str_info['str_pos']] = script_cursor
-
-						else:
-							# i apparently used this function for in-place
-							# insertions? i probably don't want to do that anymore
-							tl_rom.seek(str_info['str_pos'])
-							# tl_rom.seek(int(str_info['str_pos'], 16))
-							tl_rom.write(bin_line)
-
-
-				str_info = json.loads(line)
-				tlstring = ""
-				ptr_pos = str_info['ptr_pos']
-				str_pos = str_info['str_pos']
-				# print(str_info)
-				if str_info.get('repoint'):
-					with open(rom, "rb+") as tl_rom:
-						try:
-							tl_rom.seek(ptr_pos, 0)
-							new_offset = inserted_strings[str_pos]
-							tl_rom.write(struct.pack(">I", new_offset))
-							z += 1
-							continue
-						except KeyError:
-							print(f"Couldn't find repoint pos for {ptr_pos=:0x}")
-
-			else:
-				tlstring += line.rstrip("\n")
-				if tlstring[-8:] != "<scroll>":
-					tlstring += "<br>"
-
-	table = str_info.get('table')
-	tbl = tables.get(table) if table else tables.get('normal')
-	hex_line = text_to_hex(tbl, line)
-	bin_line = bytes.fromhex(hex_line)
-	if len(bin_line) + script_cursor > sum(spaces[script_idx]):
-		script_idx += 1
-		size += len(bin_line)
-		try:
-			script_cursor, size = spaces[script_idx]
-		except IndexError:
-			print("no more space")
-
-	with open(rom, "rb+") as tl_rom:
-
-		i += 1
-
-		if ptr_pos > 0:
-			tl_rom.seek(ptr_pos, 0)
-			script_ptr = struct.pack(">I", script_cursor)
-			tl_rom.seek(ptr_pos, 0)
-			tl_rom.write(script_ptr)
-			tl_rom.seek(script_cursor, 0)
-			tl_rom.write(bin_line + b'\x00')
-			# script_cursor += len(bin_line)
-			script_cursor = tl_rom.tell()
-			inserted_strings[str_info['str_pos']] = script_cursor
-
-		else:
-			# i apparently used this function for in-place
-			# insertions? i probably don't want to do that anymore
-			tl_rom.seek(str_info['str_pos'])
-			# tl_rom.seek(int(str_info['str_pos'], 16))
-			tl_rom.write(bin_line)
-
-	print(f'inserted {i} script strings in {size} bytes, ' +
-							f'{freespace-size} remaining')
-	print(f'repointed {z} strings, too')
-
-
 def fixed_str_parse(rom_path, tbl, StringBlock):
 	rom = rom_path.open("rb+")
 	start_offset = StringBlock.start
@@ -595,34 +469,27 @@ def fixed_str_parse(rom_path, tbl, StringBlock):
 	while current_string_offset < end_offset:
 		rom.seek(current_string_offset, 0)
 		# name = rom.read(11)
-		# debug_str = StringBlock.desc.upper() + str(i)
-		# debug_hex = text_to_hex(tbl, debug_str)
-		# debug_bin = bytes.fromhex(debug_hex)
-		orig_str = rom.read(12)
-		itm_name = bin_to_text(orig_str, tbl)[0].rstrip("<end>")
+		debug_str = StringBlock.desc.upper() + str(i)
+		debug_hex = text_to_hex(tbl, debug_str)
+		debug_bin = bytes.fromhex(debug_hex)
+		# orig_str = rom.read(12)
+		# itm_name = bin_to_text(orig_str, tbl)[0].rstrip("<end>")
 
-		fprint(f"0x{current_string_offset:0x}\t{itm_name}")
+		# fprint(f"0x{current_string_offset:0x}\t{itm_name}")
 		rom.seek(current_string_offset, 0)
 
 		# print(f'{debug_str=}')
 		# print(f'{debug_hex=}')
-		# debug_bin += b'\0' * (StringBlock.max_len-len(debug_bin))
+		debug_bin += b'\0' * (StringBlock.max_len-len(debug_bin))
 
 		# print(debug_bin)
 
 		# uncomment THIS LATER
-		# rom.write(debug_bin)
+		rom.write(debug_bin)
 		# print(f"wrote {debug_str} to {current_string_offset:00x}")
 		i += 1
 		current_string_offset = start_offset + (i * StringBlock.step)
 	print(f"inserted {StringBlock.desc}")
-
-
-def direct_insert(rom_path, bin_string, start):
-	rom = open(rom_path, "rb+")
-	rom.seek(start, 0)
-	rom.write(bin_string)
-	return f'inserted {len(bin_string):0x} bytes at {start}'
 
 
 def find_leas(rom_path: Path) -> list:
@@ -700,8 +567,9 @@ def word_align(offset: int) -> int:
 	""" return word aligned offset """
 	return (offset + 1) & ~3 | 2
 
+
 def find_space(
-		rom_path: Path,
+		rom: BinaryIO,
 		start: int = 0,
 		stop: int = None,
 		desired_size: int = 16) -> int:
@@ -710,24 +578,41 @@ def find_space(
 		Returns offset of free space """
 
 	global exclusions
-	offset = word_align(start)
-	with open(rom_path, "rb") as rom:
-		if not stop:
-			stop = rom_path.stat().st_size
-		rom.seek(offset, 0)
-		haystack = rom.read(stop-offset)
+	# add space padding for word-align
+	desired_size += 4
+	if not stop:
+		rom.seek(0, 2)
+		stop = rom.tell()
+
+	# print(f"0x{start=:00x}, 0x{stop=:00x}")
+	rom.seek(0, 0)
+	haystack = rom.read()
+	while start < stop:
+		for exclusion in exclusions:
+			if exclusion[0] <= start <= exclusion[1]:
+				start = exclusion[1]+1
+				break
 		try:
-			i = haystack.index(b'\x00' * desired_size)
+			upper_limit = min([n[0] for n in exclusions if n[0] > start])
+		except ValueError:
+			upper_limit = stop
+		upper_limit = min(upper_limit, stop)
+
+		# print(f"new {start=:00x}, {upper_limit=:00x}, {stop=:00x}")
+		try:
+			i = haystack.index(b'\x00' * desired_size, start, upper_limit)
 		except ValueError:
 			try:
-				i = haystack.index(b'\xff' * desired_size)
+				i = haystack.index(b'\xff' * desired_size, start, upper_limit)
 			except ValueError:
-				return None
-		return i+offset
+				start = upper_limit
+				continue
+
+		# print(f"{word_align(i+start)=:00x}")
+		return word_align(i+1)
 
 	return None
 
-# print(f'{find_space(tling_rom_path, 0xa008, 0x19307, 0x16):0x}')
 
 def find_total_freespace(
 		rom_path: Path,
@@ -771,8 +656,6 @@ def find_total_freespace(
 	else:
 		return freelist
 
-# print(find_total_freespace(tling_rom.path))
-# die()
 
 def parse_script(script_path: Path) -> list:
 	""" Returns list of String objects built from script file """
@@ -806,7 +689,7 @@ def parse_script(script_path: Path) -> list:
 	return string_list
 
 
-def repoint_relative(rom_path: Path, str_info: String, new_ptr: int) -> int:
+def repoint_relative(rom, str_info: String, new_ptr: int) -> int:
 	""" Convert relative pointer to absolute pointer
 		by changing a LEA with relative pointer to a branch
 		to a LEA with an absolute pointer. Return offset of
@@ -820,53 +703,60 @@ def repoint_relative(rom_path: Path, str_info: String, new_ptr: int) -> int:
 	pc = str_info.ptr_pos
 	start = max(pc - 0x7fff, 0)
 	stop = pc + 0x7fff
-	lea_space = find_space(rom_path, start, stop, 0x16)
+	lea_space = find_space(rom, start, stop, 0x16)
+	# print(f"{pc=:00x}")
+	# print(f"{lea_space=:00x}")
 	if lea_space:
-		with open(rom_path, "rb+", 0) as rom:
-			# replace asm lea with branch to offset with free space
-			rom.seek(pc, 0)
-			rom.write(bsr)
-			# >h is signed short (2 bytes)
-			rom.write(struct.pack(">h", (lea_space - pc - 2)))
+		# replace asm lea with branch to offset with free space
+		rom.seek(pc, 0)
+		rom.write(bsr)
+		# >h is signed short (2 bytes)
+		rom.write(struct.pack(">h", (lea_space - pc - 2)))
 
-			# create new lea for absolute ptr offset
-			rom.seek(lea_space, 0)
-			rom.write(lea)
-			rom.write(struct.pack(">I", new_ptr))
-			rom.write(rts)
+		# create new lea for absolute ptr offset
+		rom.seek(lea_space, 0)
+		rom.write(lea)
+		rom.write(struct.pack(">I", new_ptr))
+		rom.write(rts)
 
 	return lea_space
 
 
-def repoint(rom_path: Path, str_info: String) -> int:
+def repoint_absolute(rom, ptr_pos: int, new_pos: int) -> int:
+	rom.seek(ptr_pos, 0)
+	rom.write(struct.pack(">I", new_pos))
+	return new_pos
+
+
+def repoint(rom: BinaryIO, str_info: String) -> int:
 	""" Find free space for new string and repoint pointer """
 
-	new_pos = find_space(rom_path, 0x20000, desired_size=str_info.en_bin_len)
+	desired_size = max(0x40, str_info.en_bin_len)
+	new_pos = find_space(rom, 0x20000, None, desired_size)
 	if new_pos:
-		print(f"{new_pos=}")
+		# print(f"{new_pos=}")
 		if str_info.ptr_type == 'absolute':
-			with open(file=rom_path, mode="rb+", buffering=0) as rom:
-				rom.seek(str_info.ptr_pos, 0)
-				rom.write(struct.pack(">I", new_pos))
-			return new_pos
+			if repoint_absolute(rom, str_info.ptr_pos, new_pos):
+				return new_pos
 
 		elif str_info.ptr_type == 'relative':
-			if repoint_relative(rom_path, str_info, new_pos):
+			if repoint_relative(rom, str_info, new_pos):
 				return new_pos
 
 	else:
 		return None
 
 
-def insert_string(rom_path: Path, str_info: String) -> int:
+def insert_string(rom: BinaryIO, str_info: String) -> int:
 	""" Insert string and repoint pointer """
 	if str_info.en_bin:
-		new_pos = repoint(rom_path, str_info)
+		# write new pointer
+		new_pos = repoint(rom, str_info)
 		if new_pos:
-			with open(file=rom_path, mode="rb+", buffering=0) as rom:
-				rom.seek(new_pos)
-				rom.write(str_info.en_bin)
-				return new_pos
+			rom.seek(new_pos)
+			rom.write(str_info.en_bin + b'\x00')
+			# print(f"{new_pos=:00x}")
+			return new_pos
 		else:
 			# if can't find space for string
 			return 0
@@ -876,93 +766,22 @@ def insert_string(rom_path: Path, str_info: String) -> int:
 		return 0
 
 
-
-def move_leas(rom_path: Path, lea_list: list) -> int:
-
-	# binary representations of opcodes
-	bsr = b'\x61\x00'
-	lea = b'\x41\xf9'
-	rts = b'\x4e\x75'
-
-	i = 0
-
-	with open(rom_path, "rb+", 0) as rom:
-		redirect_offsets = {}
-		for line in lea_list:
-			pc = line.get('ptr_pos')
-			bin_line = line.get('bin_line')
-			if bin_line:
-				bin_line += b'\x00'
-				new_len = len(bin_line)
-				# orig_len = bin_len(rom_path, line['abs_offset'])
-				# 16 bit relative addressing limit
-				start = pc - 0x7fff if pc > 0x7fff else 0
-				stop = pc + 0x7fff
-				# need to move lea to use absolute offset
-
-				# print(f"0x{pc=:0x}, 0x{line['abs_offset']=:0x}")
-				# print(f"{new_len=}, {orig_len=}")
-				# print(f"{bin_line.hex()=}")
-
-				lea_space = find_space(rom_path, start, stop, 0x16)
-				if lea_space:
-					if line.get('redirect'):
-						redir = redirect_offsets[line['abs_offset']]
-						rom.seek(pc, 0)
-						rom.write(bsr)
-						rom.write(struct.pack(">h", (lea_space - pc - 2)))
-
-						rom.seek(lea_space, 0)
-						rom.write(lea)
-						rom.write(struct.pack(">I", redir))
-						rom.write(rts)
-
-					else:
-
-						string_space = find_space(rom_path, 0x1f000, desired_size=new_len+0x10)
-						if string_space:
-							rom.seek(pc, 0)
-							rom.write(bsr)
-							rom.write(struct.pack(">h", (lea_space - pc - 2)))
-
-							rom.seek(lea_space, 0)
-							rom.write(lea)
-							rom.write(struct.pack(">I", (string_space)))
-							rom.write(rts)
-
-							rom.seek(string_space, 0)
-							rom.write(bin_line)
-							rom.flush()
-
-							redirect_offsets[line['abs_offset']] = string_space
-
-							# print(f'rewrote lea as bsr to 0x{(lea_space):0x}')
-							# print(f'wrote {len(bin_line)} bytes to 0x{string_space:0x}')
-
-						else:
-							print("No space to insert string :/")
-
-					i += 1
-
-				else:
-					print(f'{start=:0x}, {stop=:0x}, {pc=:0x}')
-					print(f"0x{pc=:0x}, 0x{line['abs_offset']=:0x}")
-					print(f"No space to relocate LEA at 0x{pc:0x}:/\n")
-	print(f"wrote {i} lea strings")
-
-	return i
-
-
-def make_space(rom_path: Path, offset_list: list) -> int:
+def make_space(rom_path: Path, strings: list) -> int:
 	""" Looks for 'abs_offset' key in list of dicts, blanking out data
 		until \x00 is found """
 	space = 0
 	with open(rom_path, "rb+") as rom:
-		for str_info in offset_list:
-			rom.seek(str_info['abs_offset'])
-			orig_len = bin_len(rom_path, str_info['abs_offset'])
-			rom.write(b'\x00' * orig_len)
-			space += orig_len
+		haystack = rom.read()
+		for str_info in strings:
+			try:
+				index = haystack.index(b'\x00', str_info.str_pos)
+				bin_len = index - str_info.str_pos
+			except ValueError:
+				bin_len = 0
+			# print(f"{index=}, {str_info.__dict__=}, {bin_len=}")
+			rom.seek(str_info.str_pos)
+			rom.write(b'\x00' * bin_len)
+			space += bin_len
 			rom.flush()
 	return space
 
@@ -991,38 +810,58 @@ for lea in leas:
 die()
 """
 
-# load relative LEAs from file
-lea_lines = parse_script(FilePath("lea_strings.txt").path)
-lea_lines = sorted(lea_lines, key=lambda x: x.ptr_pos)
-# print(len([x for x in lea_lines if x.get('bin_line')]))
-normal_lines = parse_script(FilePath("foo.txt").path)
-total_dur = 0
-for x in normal_lines:
-	# print(x.__dict__)
-	start = timer()
-	new_pos = insert_string(tling_rom.path, x)
-	if new_pos > 0:
-		print(f"Repointed string {x.en_text} from 0x{x.ptr_pos:00x} to 0x{new_pos:00x}")
-	else:
-		print(f"error on {x.en_text}")
-	end = timer()
-	dur = end - start
-	total_dur += dur
-	print(f"One string insertion took {dur} seconds")
 
-print(f"Total time: {total_dur} seconds")
-print(f"Average time: {total_dur/len(normal_lines)} seconds")
-die()
+def insert_from_file(rom_path: Path, *filenames: str) -> None:
+	""" Parses script files and inserts strings into a ROM """
+	total_dur = 0
+	good_lines = 0
+	bad_lines = 0
+	if filenames:
+		for script_file in filenames:
+			lines = parse_script(FilePath(script_file).path)
+
+			with open(rom_path, "rb+") as rom:
+				for line in lines:
+					# print(line.__dict__)
+					start = timer()
+					new_pos = insert_string(rom, line)
+					if new_pos > 0:
+						# print(f"Repointed string from 0x{line.ptr_pos:00x} to 0x{new_pos:00x}")
+						good_lines += 1
+					else:
+						print(f"error on {line.en_text}")
+						bad_lines += 1
+					end = timer()
+					dur = end - start
+					total_dur += dur
+					# print(f"One string insertion took {dur} seconds")
+
+		print(f"Total: {total_dur}s, {good_lines} inserted, {bad_lines} failed")
+		print(f"Average time: {total_dur/(good_lines+bad_lines)} seconds")
+
+
+def make_space_from_file(rom_path: Path, script_files: list) -> int:
+	space = 0
+	for script in script_files:
+		lines = parse_script(FilePath(script).path)
+		space += make_space(rom_path, lines)
+	return space
+
+
+script_files = ["foo.txt", "lea_strings.txt"]
+
+
+free_space = make_space_from_file(tling_rom_path, script_files)
+print(f"cleared {free_space} bytes")
+
+insert_from_file(tling_rom_path, "lea_strings.txt", "foo.txt")
+
 # print(f'freed {make_space(tling_rom_path, lea_lines)} bytes for LEAs')
-
-move_leas(tling_rom_path, lea_lines)
 
 
 # these lines fill fixed length text blocks with debug strings
 for block in fixed_len_blocks:
 	fixed_str_parse(tling_rom_path, en_menu_tbl, block)
-
-script_insert(cwd_path('foo.txt'), tables, tling_rom_path)
 
 
 """
