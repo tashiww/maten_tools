@@ -106,10 +106,11 @@ output_file = FilePath("test_dump.txt")
 item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
 monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
 npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
+skill_block = StringBlock('skl', 0x1c2fa, 0x1d45c, 0x40, 0x10)
 # shop strings start = 0x21000
 # shop strings stop = 0x21660
 
-fixed_len_blocks = [item_block, monster_block, npc_block]
+fixed_len_blocks = [item_block, monster_block, npc_block, skill_block]
 
 exclusions = [(s.start, s.end) for s in fixed_len_blocks]
 exclusions.append((0xb3a0, 0xbb00))
@@ -196,9 +197,9 @@ def sloppy_strings(rom_path: Path, tables: dict) -> list:
 	valid_prefix = [b'\x00\x07', b'\x00\x27', b'\x41\xf9']
 	with rom_path.open("rb") as rom:
 		haystack = rom.read()
-		start = 0x2
+		start = 0x21000
 		stop = len(haystack)
-		for ptr_pos in range(start, stop-4, 4):
+		for ptr_pos in range(start, stop-4, 2):
 			prefix = haystack[ptr_pos-2:ptr_pos]
 			if prefix in valid_prefix:
 				continue
@@ -231,7 +232,7 @@ def find_strings(rom_path: Path, tables: dict) -> list:
 		parsed according to the normal/menu tables specified by tables """
 
 	string_list = []
-	valid_prefix = [b'\x07', b'\x27', b'\x41\xf9']
+	valid_prefix = [b'\x00\x07', b'\x00\x27', b'\x41\xf9']
 	# valid_prefix = [b'\x41\xf9']
 
 	rom_size = rom_path.stat().st_size
@@ -249,12 +250,11 @@ def find_strings(rom_path: Path, tables: dict) -> list:
 				except ValueError:
 					break
 
-				ptr_pos = match
-				ptr_slice = ptr_pos + len(prefix)
-				if ptr_slice > rom_size:
+				ptr_pos = match + len(prefix)
+				if ptr_pos > rom_size:
 					break
 				else:
-					str_pos = struct.unpack(">I", haystack[ptr_slice:ptr_slice+4])[0]
+					str_pos = struct.unpack(">I", haystack[ptr_pos:ptr_pos+4])[0]
 
 				bin_str = binary_dump(rom, str_pos)
 
@@ -280,7 +280,7 @@ def find_strings(rom_path: Path, tables: dict) -> list:
 							inserted_strings.append(str_pos)
 							# fprint(json.dumps(str_info), 'stdout')
 
-				start = ptr_slice+1
+				start = ptr_pos+1
 
 	return string_list
 
@@ -432,17 +432,17 @@ def dump_fixed_str(rom_path: Path, tbl: dict, block_info: StringBlock) -> list:
 	return None
 
 
-def fixed_str_parse(rom_path, tbl, StringBlock):
+def fixed_str_parse(rom_path, tbl, string_block):
 	rom = rom_path.open("rb+")
-	start_offset = StringBlock.start
-	end_offset = StringBlock.end
+	start_offset = string_block.start
+	end_offset = string_block.end
 
 	i = 0
-	current_string_offset = start_offset + (i * StringBlock.step)
+	current_string_offset = start_offset + (i * string_block.step)
 	while current_string_offset < end_offset:
 		rom.seek(current_string_offset, 0)
 		# name = rom.read(11)
-		debug_str = StringBlock.desc.upper() + str(i)
+		debug_str = string_block.desc.upper() + str(i)
 		debug_hex = text_to_hex(tbl, debug_str)
 		debug_bin = bytes.fromhex(debug_hex)
 		# orig_str = rom.read(12)
@@ -453,7 +453,7 @@ def fixed_str_parse(rom_path, tbl, StringBlock):
 
 		# print(f'{debug_str=}')
 		# print(f'{debug_hex=}')
-		debug_bin += b'\0' * (StringBlock.max_len-len(debug_bin))
+		debug_bin += b'\0' * (string_block.max_len-len(debug_bin))
 
 		# print(debug_bin)
 
@@ -461,8 +461,8 @@ def fixed_str_parse(rom_path, tbl, StringBlock):
 		rom.write(debug_bin)
 		# print(f"wrote {debug_str} to {current_string_offset:00x}")
 		i += 1
-		current_string_offset = start_offset + (i * StringBlock.step)
-	print(f"inserted {StringBlock.desc}")
+		current_string_offset = start_offset + (i * string_block.step)
+	print(f"inserted {string_block.desc}")
 
 
 def find_leas(rom_path: Path) -> list:
@@ -750,8 +750,8 @@ def make_space(rom_path: Path, strings: list) -> int:
 				index = haystack.index(b'\x00', str_info.str_pos)
 				bin_len = index - str_info.str_pos
 			except ValueError:
-				bin_len = 0
-			print(f"{index=}, {str_info.__dict__=}, {bin_len=}")
+				continue
+			# print(f"{index=}, {str_info.__dict__=}, {bin_len=}")
 			rom.seek(str_info.str_pos)
 			rom.write(b'\x00' * bin_len)
 			space += bin_len
@@ -829,7 +829,6 @@ def insert_from_file(rom_path: Path, *filenames: str) -> None:
 
 def make_space_from_file(rom_path: Path, script_files: list) -> int:
 	space = 0
-	script_files = [script_files]
 	for script in script_files:
 		lines = parse_script(FilePath(script).path)
 		space += make_space(rom_path, lines)
@@ -838,7 +837,7 @@ def make_space_from_file(rom_path: Path, script_files: list) -> int:
 
 """
 foo = sloppy_strings(original_rom.path, ja_tables)
-foo = sorted(foo, key=lambda k: k.repoint)
+foo = sorted(foo, key=lambda k: (k.repoint, k.str_pos))
 for f in foo:
 	text = f.ja_text
 	del f.ja_text
@@ -849,16 +848,17 @@ for f in foo:
 """
 script_files = ["lea_strings.txt", "foo.txt"]
 
-# free_space = make_space_from_file(tling_rom.path, script_files[0])
-# print(f"cleared {free_space} bytes")
+free_space = make_space_from_file(tling_rom.path, script_files)
+print(f"cleared {free_space} bytes")
 
-# insert_from_file(tling_rom.path, "foo.txt")
+insert_from_file(tling_rom.path, "lea_strings.txt", "foo.txt")
 
 # these lines fill fixed length text blocks with debug strings
 for block in fixed_len_blocks:
-	# fixed_str_parse(tling_rom.path, en_menu_tbl, block)
+	fixed_str_parse(tling_rom.path, en_menu_tbl, block)
 	# dump_fixed_str(original_rom.path, ja_menu_tbl, item_block)
 	pass
+"""
 foo = parse_script(FilePath('item_list.txt').path)
 # foo = sorted(foo, key=lambda k: k.en_bin_len, reverse=True)
 with open(tling_rom.path, "rb+") as rom:
@@ -872,3 +872,4 @@ with open(tling_rom.path, "rb+") as rom:
 		rom.write(f.en_bin + b'\x00' * 2)
 		rom.seek(new_pos + 0x1e + (f.id * 0x20))
 		rom.write(old_byte)
+"""
