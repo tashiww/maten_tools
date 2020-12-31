@@ -24,3 +24,7 @@
 
 ; adjust font routine for 8x16 font instead of 16x16
 	include "text_engine.asm"
+	
+	org $a45a
+	; LEA $000130C6, A0
+	LEA $00041a3e, A0

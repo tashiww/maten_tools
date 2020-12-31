@@ -1,70 +1,9 @@
 from pathlib import Path
 import struct
-import re
+# import re
 import json
 from typing import BinaryIO
 from timeit import default_timer as timer
-
-# maten no shoumetsu ROM
-rom_filename = "Maten no Soumetsu (Japan).md"
-ja_tbl_fn = "ja_tbl.tbl"
-en_tbl_fn = "en_tbl.tbl"
-script = "tling.txt"
-tling_rom = "foobar.bin"
-
-# place output file in current script directory
-cwd = Path(__file__).resolve().parent
-out = Path(str(cwd) + "/test_dump.txt")
-
-rom_path = Path(str(cwd) + "/" + rom_filename)
-ja_tbl_path = Path(str(cwd) + "/" + ja_tbl_fn)
-en_tbl_path = Path(str(cwd) + "/" + en_tbl_fn)
-
-script_path = Path(str(cwd) + "/" + script)
-tling_rom_path = Path(str(cwd) + "/" + tling_rom)
-
-
-class FilePath:
-	""" Creates .path property from a filename to return a Path
-		for the filename in the current working directory """
-	cwd = Path(__file__).resolve().parent
-
-	def __init__(self, fn):
-		self.fn = fn
-		self.path = Path(str(cwd) + "/" + fn)
-
-
-class StringBlock:
-	""" Basic data for script blocks: description of string block,
-		start offset in ROM, end offset,
-		step value to reach next string, max_len of string """
-	def __init__(self, desc=None, start=None, end=None, step=None, max_len=None):
-		self.desc = desc
-		self.start = start
-		self.end = end
-		self.step = step
-		self.max_len = max_len
-
-
-class LEA:
-	""" Basic data for LEA ops which load relative pointers:
-		pc: pc offset of LEA op
-		abs_offset: absolute offset loaded by the LEA
-		table: type of table to parse text at the offset location """
-
-	def __init__(self, pc=None, abs_offset=None, table=None, redirect=False):
-		self.pc = pc
-		self.pc_hex = f'0x{pc:00x}'
-		self.abs_offset = abs_offset
-		self.abs_offset_hex = f'0x{abs_offset:00x}'
-		self.table = table
-		self.redirect = redirect
-		"""
-		self.ja_text = None
-		self.ja_bin = None
-		self.en_text = None
-		self.ja_bin = None
-		"""
 
 
 def build_tbl(tbl_path: Path, reverse: bool = False) -> dict:
@@ -83,6 +22,39 @@ def build_tbl(tbl_path: Path, reverse: bool = False) -> dict:
 		return tbl
 
 
+class FilePath:
+	""" Creates .path property from a filename to return a Path
+		for the filename in the current working directory """
+	cwd = Path(__file__).resolve().parent
+
+	def __init__(self, fn):
+		self.fn = fn
+		self.path = Path(str(self.cwd) + "/" + fn)
+
+
+ja_tbl = build_tbl(FilePath("ja_tbl.tbl").path)
+en_tbl = build_tbl(FilePath("en_tbl.tbl").path, reverse=True)
+ja_menu_tbl = build_tbl(FilePath('menu_tbl.tbl').path)
+en_menu_tbl = build_tbl(FilePath('en_menu.tbl').path, reverse=True)
+
+# place output file in current script directory
+out = FilePath("test_dump.txt").path
+
+
+class StringBlock:
+	""" Basic data for script blocks: description of string block,
+		start offset in ROM, end offset,
+		step value to reach next string, max_len of string """
+	def __init__(self, desc=None, start=None, end=None, step=None, max_len=None):
+		self.desc = desc
+		self.start = start
+		self.start_hex = f'0x{start:00x}'
+		self.end = end
+		self.end_hex = f'0x{end:00x}'
+		self.step = step
+		self.max_len = max_len
+
+
 class String:
 	""" Basic data for Strings identified by pointers:
 		ptr_loc: where the pointer itself is located
@@ -91,13 +63,8 @@ class String:
 		redirect: whether the ptr is moved w/o re-inserting text
 		ptr_type: absolute or relative pointer type """
 
-	en_tables = {
-				"normal": build_tbl(FilePath("en_tbl.tbl").path, reverse=True),
-				"menu": build_tbl(FilePath('en_menu.tbl').path, reverse=True)}
-
-	ja_tables = {
-					"normal": build_tbl(FilePath("ja_tbl.tbl").path),
-					"menu": build_tbl(FilePath('menu_tbl.tbl').path)}
+	en_tables = {"normal": en_tbl, "menu": en_menu_tbl}
+	ja_tables = {"normal": ja_tbl, "menu": ja_menu_tbl}
 
 	def __init__(
 					self,
@@ -147,10 +114,6 @@ fixed_len_blocks = [item_block, monster_block, npc_block]
 exclusions = [(s.start, s.end) for s in fixed_len_blocks]
 exclusions.append((0xb3a0, 0xbb00))
 exclusions = sorted(exclusions)
-
-
-def cwd_path(name):
-	return Path(str(cwd) + "/" + str(name))
 
 
 # empty the file before we start writing to it
@@ -209,46 +172,6 @@ def tbl_read(tbl, rom, start_offset, end_offset=None):
 	return parsed, missing, bin_len
 
 
-ja_tbl = build_tbl(ja_tbl_path)
-en_tbl = build_tbl(en_tbl_path, reverse=True)
-ja_menu_tbl = build_tbl(FilePath('menu_tbl.tbl').path)
-en_menu_tbl = build_tbl(FilePath('en_menu.tbl').path, reverse=True)
-
-
-def target_dump(rom, tbl, StringBlock):
-	rom = rom_path.open("rb")
-	i = 0
-	start_offset = StringBlock.start
-	stop_offset = StringBlock.stop
-	rom.seek(start_offset, 0)
-	while rom.tell() < stop_offset:
-		ptr = None
-
-		if ptr:
-			ptr_loc = rom.tell()
-			ptr = struct.unpack(">I", rom.read(4))[0]
-
-		# print(f'{rom.tell():0x}')
-
-		text, missing = tbl_read(tbl, rom, rom.tell())
-
-		# if len(text) > 0 and not missing:
-		if len(text) > 0:
-			fprint(f"{{'String': {i}, " +
-										f"'ptr_pos': 0x{ptr_loc:00x}, " +
-										f"'str_pos': 0x{ptr:00x}}}")
-			if missing:
-				fprint(f"# WARNING: {missing} failed lookup bytes")
-			fprint("#" + text)
-			# tags = re.findall(r'<[^sb>]+>', text)
-			# fprint(f'test string #{i}' + ''.join(tags))
-			fprint('\n')
-			i += 1
-
-		# get back in position to read next ptr
-		rom.seek(ptr_loc+4)
-
-
 def bin_len(rom_path: Path, offset: int) -> int:
 	""" Return length of \x00 terminated string in
 		rom_path at offset, not including terminator """
@@ -267,73 +190,104 @@ def bin_len(rom_path: Path, offset: int) -> int:
 		return rom.tell()-1 - offset
 
 
-def raw_dump(rom_path: Path, tables: dict) -> list:
-	""" Return list of Script objects dumped out of rom_path,
-		parsed according to the normal/menu tables specified by tables """
-	# this should return a dict like the LEA function instead of hard-printing
-	rom_size = rom_path.stat().st_size
-	rom = rom_path.open("rb")
-	i = 0
-	inserted_strings = []
-	while rom.tell() < rom_size:
-		prefix = struct.unpack(">H", rom.read(2))[0]
-
-		# text pointers are prefixed with certain bytes
-		valid_prefix = [0x07, 0x27, 0x41f9]
-		if prefix in valid_prefix:
-			ptr_loc = rom.tell()
-			ptr = struct.unpack(">I", rom.read(4))[0]
-
-			# did some guessing and checking for upper/lower bounds
-			# might be too strict, but only returns good strings
-			if str(f'{ptr:08x}')[0:3] == '000' \
-						and ptr_loc < 0x50000 \
-						and ptr < 0x50000:
-				bin_string = direct_dump(rom_path, ptr)
-				text, missing = bin_to_text(bin_string, tables['normal'])
-				menu_text, menu_missing = bin_to_text(bin_string, tables['menu'])
-
-				# if len(text) > 0 and not missing:
-				if len(text) > 0 and not missing:
-					# fprint(f"{ptr}\t{bin_len}\t'{ptr:00x}\t'{bin_len:00x}")
-					str_info = {
-							'str_num': i,
-							'prefix': f'0x{prefix:00x}',
-							'ptr_pos': ptr_loc,
-							'str_pos': ptr,
-							'ptr_pos_hex': f'0x{ptr_loc:0000x}',
-							'str_pos_hex': f'0x{ptr:0000x}',
-							'table': 'normal'
-							}
-
-					if ptr not in inserted_strings:
-						fprint(json.dumps(str_info))
-						fprint("#" + text)
-						if not menu_missing:
-							fprint(
-									"# " +
-									menu_text +
-									" # if this line is right, "
-									"change 'table' to 'menu'")
-						# this copies control codes down
-						tags = re.findall(r'<[^sb>]+>', text)
-						fprint(f'test string #{i}' + ''.join(tags))
+def sloppy_strings(rom_path: Path, tables: dict) -> list:
+	string_list = []
+	repoint_list = []
+	valid_prefix = [b'\x00\x07', b'\x00\x27', b'\x41\xf9']
+	with rom_path.open("rb") as rom:
+		haystack = rom.read()
+		start = 0x2
+		stop = len(haystack)
+		for ptr_pos in range(start, stop-4, 4):
+			prefix = haystack[ptr_pos-2:ptr_pos]
+			if prefix in valid_prefix:
+				continue
+			str_pos = struct.unpack(">I", haystack[ptr_pos:ptr_pos+4])[0]
+			if str_pos < stop:
+				# print(f'{ptr_pos=:00x}, {str_pos=:00x}')
+				bin_str = binary_dump(rom, str_pos)
+				if len(bin_str) > 2 and len(bin_str) < 200:
+					if str_pos in repoint_list:
+						repoint = True
 					else:
-						str_info['repoint'] = True
-						fprint(json.dumps(str_info))
-						fprint('# ~~REPOINT ONLY~~')
-					fprint('\n')
-					inserted_strings.append(ptr)
-					i += 1
-				# this should seek after the prev ptr for small optimization
-				rom.seek(ptr_loc, 0)
-	return None
+						repoint = False
+
+					for name, tbl in tables.items():
+						text, missing = bin_to_text(bin_str, tbl)
+						if len(text) > 0 and missing == 0:
+							# print(f'{text=}, {missing=}')
+							str_info = String(ptr_pos, str_pos, name, repoint, 'absolute')
+							str_info.prefix = '0x' + prefix.hex()
+							str_info.ja_text = text
+
+							string_list.append(str_info)
+							repoint_list.append(str_pos)
+
+	return string_list
 
 
-def direct_dump(rom_path, start_offset, stop_offset=None):
+def find_strings(rom_path: Path, tables: dict) -> list:
+	""" Return list of String objects dumped out of rom_path,
+		parsed according to the normal/menu tables specified by tables """
+
+	string_list = []
+	valid_prefix = [b'\x07', b'\x27', b'\x41\xf9']
+	# valid_prefix = [b'\x41\xf9']
+
+	rom_size = rom_path.stat().st_size
+	with rom_path.open("rb") as rom:
+		haystack = rom.read()
+		stop = len(haystack)-4
+
+		for prefix in valid_prefix:
+			start = 0
+			inserted_strings = []
+
+			while True:
+				try:
+					match = haystack.index(prefix, start, stop)
+				except ValueError:
+					break
+
+				ptr_pos = match
+				ptr_slice = ptr_pos + len(prefix)
+				if ptr_slice > rom_size:
+					break
+				else:
+					str_pos = struct.unpack(">I", haystack[ptr_slice:ptr_slice+4])[0]
+
+				bin_str = binary_dump(rom, str_pos)
+
+				if len(bin_str) > 0:
+
+					if str_pos in inserted_strings:
+						repoint = True
+					else:
+						repoint = False
+
+					# print(f'{ptr_pos=:00x}, {str_pos=:00x}, {bin_str=}')
+					for name, tbl in tables.items():
+						text, missing = bin_to_text(bin_str, tbl)
+						# print(f'{text=}, {missing=}')
+						if len(text) > 0 and missing == 0:
+							str_info = String(ptr_pos, str_pos, 'normal', repoint, 'absolute')
+							str_info.ja_text = text
+							str_info.table = name
+							str_info.prefix = prefix.hex()
+							# print(str_info.__dict__)
+
+							string_list.append(str_info)
+							inserted_strings.append(str_pos)
+							# fprint(json.dumps(str_info), 'stdout')
+
+				start = ptr_slice+1
+
+	return string_list
+
+
+def binary_dump(rom: BinaryIO, start_offset, stop_offset=None):
 	""" Dump bytes from rom_path from start_offset until
 		stop_offset or first NULL """
-	rom = rom_path.open("rb")
 	rom.seek(start_offset)
 	if stop_offset:
 		bin_string = rom.read(stop_offset - start_offset)
@@ -348,8 +302,6 @@ def direct_dump(rom_path, start_offset, stop_offset=None):
 			bin_string += char
 			last_char = char
 
-	# put this somewhere else?
-	# text = bin_to_text(bin_string, tbl, rom_path.name, True)
 	return bin_string
 
 
@@ -459,6 +411,27 @@ def text_to_hex(tbl, string):
 	return ret_str
 
 
+def dump_fixed_str(rom_path: Path, tbl: dict, block_info: StringBlock) -> list:
+	start_offset = block_info.start
+	end_offset = block_info.end
+
+	i = 0
+	current_string_offset = start_offset
+	with rom_path.open("rb+") as rom:
+		while current_string_offset < end_offset:
+			rom.seek(current_string_offset, 0)
+			orig_str = rom.read(12)
+			itm_name = bin_to_text(orig_str, tbl)[0].rstrip("<end>")
+			block_info.id = i
+			fprint(f'{block_info.__dict__}')
+			fprint(f"# {itm_name}\n\n")
+
+			i += 1
+			current_string_offset = start_offset + (i * block_info.step)
+
+	return None
+
+
 def fixed_str_parse(rom_path, tbl, StringBlock):
 	rom = rom_path.open("rb+")
 	start_offset = StringBlock.start
@@ -512,21 +485,21 @@ def find_leas(rom_path: Path) -> list:
 
 				# check if the string has already been referenced and included
 				# if yes, we don't need to re-insert/translate it
-				if len([o for o in abs_offsets if o == abs_offset]) > 1:
+				if abs_offsets.count(abs_offset) > 1:
 					redirect = True
 				else:
 					redirect = False
 
 				# create a LEA object for menu table and normal table
 				# would like to cut out garbage but it's hard to determine
-				lea_info = LEA(
+				lea_info = String(
 						pc-2,
 						abs_offset,
 						"menu",
 						redirect
 						)
 				lea_list.append(lea_info)
-				lea_info = LEA(
+				lea_info = String(
 						pc-2,
 						abs_offset,
 						"normal",
@@ -547,9 +520,7 @@ def dump_leas(leas, normal_table, menu_table):
 	tables = {'normal': normal_table, 'menu': menu_table}
 	for lea in leas:
 		tbl = tables[lea.table]
-		text, missing = bin_to_text(
-								direct_dump(rom_path, lea.abs_offset),
-								tbl)
+		text, missing = bin_to_text("xxx", tbl)
 		if len(text) > 2 and not missing:
 			if lea.redirect:
 				lea.ja_text = "# REDIRECT ONLY" + text
@@ -669,7 +640,7 @@ def parse_script(script_path: Path) -> list:
 					li.strip() for li in script.readlines()
 					if not li.startswith('#') and len(li) > 1]:
 			if line.startswith("{"):
-				if len(tlstring) > 0:
+				if len(tlstring) > 0 or (str_info and str_info.repoint):
 					str_info.en_text = tlstring
 					string_list.append(str_info)
 					tlstring = ""
@@ -682,6 +653,8 @@ def parse_script(script_path: Path) -> list:
 								metadata['repoint'],
 								metadata['ptr_type']
 								)
+				if str_info.ptr_type == 'fixed':
+					str_info.id = metadata.get('id')
 
 			else:
 				tlstring += line
@@ -731,7 +704,7 @@ def repoint_absolute(rom, ptr_pos: int, new_pos: int) -> int:
 def repoint(rom: BinaryIO, str_info: String) -> int:
 	""" Find free space for new string and repoint pointer """
 
-	desired_size = max(0x40, str_info.en_bin_len)
+	desired_size = max(0x80, str_info.en_bin_len)
 	new_pos = find_space(rom, 0x20000, None, desired_size)
 	if new_pos:
 		# print(f"{new_pos=}")
@@ -778,19 +751,16 @@ def make_space(rom_path: Path, strings: list) -> int:
 				bin_len = index - str_info.str_pos
 			except ValueError:
 				bin_len = 0
-			# print(f"{index=}, {str_info.__dict__=}, {bin_len=}")
+			print(f"{index=}, {str_info.__dict__=}, {bin_len=}")
 			rom.seek(str_info.str_pos)
 			rom.write(b'\x00' * bin_len)
 			space += bin_len
-			rom.flush()
 	return space
 
 
 tables = {'normal': en_tbl, 'menu': en_menu_tbl}
-
-# fixed_str_parse(rom_path, ja_menu_tbl, monster_block)
-
-# raw_dump(rom_path, {'normal': ja_tbl, 'menu': ja_menu_tbl})
+ja_tables = {'normal': ja_tbl, 'menu': ja_menu_tbl}
+# ja_tables = {'normal': ja_tbl}
 
 """
 # print([x.__dict__ for x in find_leas(rom_path)])
@@ -816,56 +786,89 @@ def insert_from_file(rom_path: Path, *filenames: str) -> None:
 	total_dur = 0
 	good_lines = 0
 	bad_lines = 0
+	repoints = 0
+	new_ptrs = {}
 	if filenames:
 		for script_file in filenames:
 			lines = parse_script(FilePath(script_file).path)
 
 			with open(rom_path, "rb+") as rom:
 				for line in lines:
-					# print(line.__dict__)
-					start = timer()
-					new_pos = insert_string(rom, line)
-					if new_pos > 0:
-						# print(f"Repointed string from 0x{line.ptr_pos:00x} to 0x{new_pos:00x}")
-						good_lines += 1
+					if line.repoint:
+						new_pos = new_ptrs.get(line.str_pos)
+						try:
+							if line.ptr_type == "absolute":
+								repoint_absolute(rom, line.ptr_pos, int(new_pos))
+							elif line.ptr_type == "relative":
+								repoint_relative(rom, line, int(new_pos))
+
+							repoints += 1
+						except TypeError:
+							print(f"failed to repoint {line.__dict__}")
+
 					else:
-						print(f"error on {line.en_text}")
-						bad_lines += 1
-					end = timer()
-					dur = end - start
-					total_dur += dur
+						# print(line.__dict__)
+						start = timer()
+						new_pos = insert_string(rom, line)
+						if new_pos > 0:
+							new_ptrs[line.str_pos] = new_pos
+							# print(f"Repointed from 0x{line.ptr_pos:00x} to 0x{new_pos:00x}")
+							good_lines += 1
+						else:
+							print(f"error on {line.en_text}")
+							bad_lines += 1
+						end = timer()
+						dur = end - start
+						total_dur += dur
 					# print(f"One string insertion took {dur} seconds")
 
 		print(f"Total: {total_dur}s, {good_lines} inserted, {bad_lines} failed")
+		print(f"Repoints: {repoints}")
 		print(f"Average time: {total_dur/(good_lines+bad_lines)} seconds")
 
 
 def make_space_from_file(rom_path: Path, script_files: list) -> int:
 	space = 0
+	script_files = [script_files]
 	for script in script_files:
 		lines = parse_script(FilePath(script).path)
 		space += make_space(rom_path, lines)
 	return space
 
 
-script_files = ["foo.txt", "lea_strings.txt"]
+"""
+foo = sloppy_strings(original_rom.path, ja_tables)
+foo = sorted(foo, key=lambda k: k.repoint)
+for f in foo:
+	text = f.ja_text
+	del f.ja_text
+	fprint(json.dumps(f.__dict__))
+	fprint('# ' + text)
+	fprint('\n')
 
+"""
+script_files = ["lea_strings.txt", "foo.txt"]
 
-free_space = make_space_from_file(tling_rom_path, script_files)
-print(f"cleared {free_space} bytes")
+# free_space = make_space_from_file(tling_rom.path, script_files[0])
+# print(f"cleared {free_space} bytes")
 
-insert_from_file(tling_rom_path, "lea_strings.txt", "foo.txt")
-
-# print(f'freed {make_space(tling_rom_path, lea_lines)} bytes for LEAs')
-
+# insert_from_file(tling_rom.path, "foo.txt")
 
 # these lines fill fixed length text blocks with debug strings
 for block in fixed_len_blocks:
-	fixed_str_parse(tling_rom_path, en_menu_tbl, block)
-
-
-"""
-foo = find_total_freespace(tling_rom_path, 'x', exclusions)
-for f in foo:
-	print(f'0x{f[0]:0x}: {f[1]} bytes')
-"""
+	# fixed_str_parse(tling_rom.path, en_menu_tbl, block)
+	# dump_fixed_str(original_rom.path, ja_menu_tbl, item_block)
+	pass
+foo = parse_script(FilePath('item_list.txt').path)
+# foo = sorted(foo, key=lambda k: k.en_bin_len, reverse=True)
+with open(tling_rom.path, "rb+") as rom:
+	old_pos = 0x130c6
+	new_pos = find_space(rom, 0x20000, None, len(foo) * 0x20)
+	print(f'{new_pos=:00x}')
+	for f in foo:
+		rom.seek(old_pos + 0x1e + (f.id * 0x20))
+		old_byte = rom.read(2)
+		rom.seek(new_pos + (f.id * 0x20))
+		rom.write(f.en_bin + b'\x00' * 2)
+		rom.seek(new_pos + 0x1e + (f.id * 0x20))
+		rom.write(old_byte)
