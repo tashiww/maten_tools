@@ -1,0 +1,806 @@
+{"ptr_pos": 1014, "pc_hex": "0x3f6", "str_pos": 1754, "abs_offset_hex": "0x6da", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# はじめから<br>つづきから
+New game<br>Continue
+
+{"ptr_pos": 1170, "pc_hex": "0x492", "str_pos": 1766, "abs_offset_hex": "0x6e6", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 主人公の名前をきめてください
+Please enter your name.
+
+{"ptr_pos": 16302, "pc_hex": "0x3fae", "str_pos": 17116, "abs_offset_hex": "0x42dc", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# あ い う え お<br>か き く け こ<br>さ し す せ そ<br>た ち つ て と<br>な に ぬ ね の<br>は ひ ふ へ ほ<br>ま み む め も<br>や   ゆ   よ<br>ら り る れ ろ<br>わ   を   ん<br>ぁ ぃ ぅ ぇ ぉ<br>ゃ ゅ ょ   っ
+A B C D E<br>F G H I J<br>K L M N O<br>P Q R S T<br>U V W X Y<br>Z ! ?
+
+
+{"ptr_pos": 16314, "pc_hex": "0x3fba", "str_pos": 17236, "abs_offset_hex": "0x4354", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ア イ ウ エ オ<br>カ キ ク ケ コ<br>サ シ ス セ ソ<br>タ チ ツ テ ト<br>ナ ニ ヌ ネ ノ<br>ハ ヒ フ ヘ ホ<br>マ ミ ム メ モ<br>ヤ   ユ   ヨ<br>ラ リ ル レ ロ<br>ワ   ヲ   ン<br>ァ ィ ゥ ェ ォ<br>ャ ュ ョ   ッ
+# left intentionally blank
+
+{"ptr_pos": 16326, "pc_hex": "0x3fc6", "str_pos": 17356, "abs_offset_hex": "0x43cc", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 0 1 2 3 4<br>5 6 7 8 9<br>A B C D E<br>F G H I J<br>K L M N O<br>P Q R S T<br>U V W X Y<br>    ー   Z<br>もと゛る   おわり
+0 1 2 3 4<br>5 6 7 8 9<br>a b c d e<br>f g h i j<br>k l m n o<br>p q r s t<br>u v w x y<br>z        <br>Back  End
+
+{"ptr_pos": 20348, "pc_hex": "0x4f7c", "str_pos": 21138, "abs_offset_hex": "0x5292", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# カギがかかっている。
+It's locked
+
+
+{"ptr_pos": 23112, "pc_hex": "0x5a48", "str_pos": 23216, "abs_offset_hex": "0x5ab0", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，死んでしまった。
+<pc_itm> is no more.
+
+
+{"ptr_pos": 23556, "pc_hex": "0x5c04", "str_pos": 23434, "abs_offset_hex": "0x5b8a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# か う<br>う る
+Buy<br>Sell
+
+
+{"ptr_pos": 24686, "pc_hex": "0x606e", "str_pos": 25932, "abs_offset_hex": "0x654c", "table": "normal", "repoint": false, "missing": 2, "ptr_type": "relative"}
+# 預< >け< >る<br>引き取る
+Store<br>Take
+
+
+{"ptr_pos": 24844, "pc_hex": "0x610c", "str_pos": 25946, "abs_offset_hex": "0x655a", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# アイテム<br>\x0eお 金
+Item<br>Money
+
+
+{"ptr_pos": 24636, "pc_hex": "0x603c", "str_pos": 25958, "abs_offset_hex": "0x6566", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# いらっしゃいませ。
+Welcome.
+
+
+{"ptr_pos": 24720, "pc_hex": "0x6090", "str_pos": 25968, "abs_offset_hex": "0x6570", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ありがとうございました。
+Thank you.
+
+
+{"ptr_pos": 24804, "pc_hex": "0x60e4", "str_pos": 25982, "abs_offset_hex": "0x657e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 何を預けますか？
+What will you store?
+
+
+{"ptr_pos": 24810, "pc_hex": "0x60ea", "str_pos": 25992, "abs_offset_hex": "0x6588", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 何をお返ししますか？
+What will you take?
+
+
+{"ptr_pos": 24786, "pc_hex": "0x60d2", "str_pos": 26004, "abs_offset_hex": "0x6594", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ほかに何かありますか？
+Is there something else?
+
+{"ptr_pos": 24912, "pc_hex": "0x6150", "str_pos": 26016, "abs_offset_hex": "0x65a0", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 誰のアイテム預けますか？
+Whose items will you store?
+
+
+{"ptr_pos": 25060, "pc_hex": "0x61e4", "str_pos": 26016, "abs_offset_hex": "0x65a0", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLY誰のアイテム預けますか？
+
+
+{"ptr_pos": 24986, "pc_hex": "0x619a", "str_pos": 26030, "abs_offset_hex": "0x65ae", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# どれを預けますか？
+Which will you leave?
+
+
+{"ptr_pos": 25194, "pc_hex": "0x626a", "str_pos": 26030, "abs_offset_hex": "0x65ae", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLYどれを預けますか？
+
+
+{"ptr_pos": 25274, "pc_hex": "0x62ba", "str_pos": 26030, "abs_offset_hex": "0x65ae", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLYどれを預けますか？
+
+
+{"ptr_pos": 25122, "pc_hex": "0x6222", "str_pos": 26042, "abs_offset_hex": "0x65ba", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# 引き出すときに<val>G<br>かかりますが，よろしいですか？
+It will cost <val> to retrieve this item. Is that okay?
+
+
+{"ptr_pos": 25248, "pc_hex": "0x62a0", "str_pos": 26070, "abs_offset_hex": "0x65d6", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# それでは，お預かりします。
+I'll store it right away.
+
+
+{"ptr_pos": 25754, "pc_hex": "0x649a", "str_pos": 26070, "abs_offset_hex": "0x65d6", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLYそれでは，お預かりします。
+
+
+{"ptr_pos": 25312, "pc_hex": "0x62e0", "str_pos": 26086, "abs_offset_hex": "0x65e6", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 何もお預かりしていません。
+You don't have anything in storage.
+
+{"ptr_pos": 25776, "pc_hex": "0x64b0", "str_pos": 26086, "abs_offset_hex": "0x65e6", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLY何もお預かりしていません。
+
+
+{"ptr_pos": 25326, "pc_hex": "0x62ee", "str_pos": 26102, "abs_offset_hex": "0x65f6", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 何をお返ししますか？
+What would you like returned?
+
+{"ptr_pos": 25496, "pc_hex": "0x6398", "str_pos": 26102, "abs_offset_hex": "0x65f6", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLY何をお返ししますか？
+
+
+{"ptr_pos": 25540, "pc_hex": "0x63c4", "str_pos": 26102, "abs_offset_hex": "0x65f6", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLY何をお返ししますか？
+
+
+{"ptr_pos": 25636, "pc_hex": "0x6424", "str_pos": 26102, "abs_offset_hex": "0x65f6", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLY何をお返ししますか？
+
+{"ptr_pos": 25430, "pc_hex": "0x6356", "str_pos": 26114, "abs_offset_hex": "0x6602", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <val>Gいただきます<br>誰に渡しますか？。
+That will be <val>G. Who should take it?
+
+{"ptr_pos": 25522, "pc_hex": "0x63b2", "str_pos": 26134, "abs_offset_hex": "0x6616", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# お金がたりないようですね。
+You seem to have insufficient funds.
+
+{"ptr_pos": 25726, "pc_hex": "0x647e", "str_pos": 26134, "abs_offset_hex": "0x6616", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLYお金がたりないようですね。
+
+
+{"ptr_pos": 25574, "pc_hex": "0x63e6", "str_pos": 26150, "abs_offset_hex": "0x6626", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 持ち物がいっぱいで持てません。<br>誰に渡しますか？
+Their inventory is full. Who should take it?
+
+{"ptr_pos": 25608, "pc_hex": "0x6408", "str_pos": 26176, "abs_offset_hex": "0x6640", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# お返しします。
+I'll return your items.
+
+{"ptr_pos": 25898, "pc_hex": "0x652a", "str_pos": 26176, "abs_offset_hex": "0x6640", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLYお返しします。
+
+
+{"ptr_pos": 24898, "pc_hex": "0x6142", "str_pos": 26186, "abs_offset_hex": "0x664a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# これ以上，お預かりできません。
+Your storage is full.
+
+{"ptr_pos": 25670, "pc_hex": "0x6446", "str_pos": 26186, "abs_offset_hex": "0x664a", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLYこれ以上，お預かりできません。
+
+
+{"ptr_pos": 25684, "pc_hex": "0x6454", "str_pos": 26204, "abs_offset_hex": "0x665c", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# いくら，お預かりしましょう？
+How much would you like to deposit?
+
+
+{"ptr_pos": 25796, "pc_hex": "0x64c4", "str_pos": 26220, "abs_offset_hex": "0x666c", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <val>Gお預かりしています。<br>いくら，お返ししますか？
+You have <val>G stored here. How much would you like to withdraw?
+
+{"ptr_pos": 25864, "pc_hex": "0x6508", "str_pos": 26250, "abs_offset_hex": "0x668a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# そんなに，お預かりしていません。
+We can't store that much.
+
+{"ptr_pos": 25892, "pc_hex": "0x6524", "str_pos": 26268, "abs_offset_hex": "0x669c", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# 持ちきれないようですので<br><val>Gだけ，お返しします。
+You can't hold that much, so I'll return <val>G for now.
+
+{"ptr_pos": 25184, "pc_hex": "0x6260", "str_pos": 26296, "abs_offset_hex": "0x66b8", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# かりている物はお預かりできません。
+You can't store rental items.
+
+{"ptr_pos": 26394, "pc_hex": "0x671a", "str_pos": 26910, "abs_offset_hex": "0x691e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 泊まる<br>セ―ブ
+Sleep<br>Save
+
+
+{"ptr_pos": 27010, "pc_hex": "0x6982", "str_pos": 27726, "abs_offset_hex": "0x6c4e", "table": "normal", "repoint": false, "missing": 2, "ptr_type": "relative"}
+# 死者の復活<br>石化の治療<br>マヒの治療<br>< >毒< >の治療
+Revive<br>Petrify<br>Paralyze<br>Poison
+
+{"ptr_pos": 27924, "pc_hex": "0x6d14", "str_pos": 29080, "abs_offset_hex": "0x7198", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# アイテム<br>魔法の書
+Item<br>Magic
+
+
+{"ptr_pos": 27842, "pc_hex": "0x6cc2", "str_pos": 29094, "abs_offset_hex": "0x71a6", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# いらっしゃいませ。
+Welcome.
+
+
+{"ptr_pos": 27872, "pc_hex": "0x6ce0", "str_pos": 29104, "abs_offset_hex": "0x71b0", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 何をおかししましょう？
+What would you like to rent?
+
+{"ptr_pos": 28174, "pc_hex": "0x6e0e", "str_pos": 29104, "abs_offset_hex": "0x71b0", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLY何をおかししましょう？
+
+
+{"ptr_pos": 27958, "pc_hex": "0x6d36", "str_pos": 29116, "abs_offset_hex": "0x71bc", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# また，おこしください。
+Please come again.
+
+
+{"ptr_pos": 28686, "pc_hex": "0x700e", "str_pos": 29116, "abs_offset_hex": "0x71bc", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLYまた，おこしください。
+
+
+{"ptr_pos": 28030, "pc_hex": "0x6d7e", "str_pos": 29128, "abs_offset_hex": "0x71c8", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# どれになさいますか？
+Which would you like?
+
+
+{"ptr_pos": 28218, "pc_hex": "0x6e3a", "str_pos": 29140, "abs_offset_hex": "0x71d4", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>ですね。<br>誰にお渡ししますか？
+<pc_itm>?<br>Who should take it?
+
+{"ptr_pos": 28494, "pc_hex": "0x6f4e", "str_pos": 29158, "abs_offset_hex": "0x71e6", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# はい，<pc_itm>さん。
+Here you go, <pc_itm>.
+
+{"ptr_pos": 28432, "pc_hex": "0x6f10", "str_pos": 29166, "abs_offset_hex": "0x71ee", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 持ち物がいっぱいのようですね。<br>誰かほかの人にお渡ししますか？
+Their inventory is full. Would you like to give it to someone else?
+
+{"ptr_pos": 28504, "pc_hex": "0x6f58", "str_pos": 29200, "abs_offset_hex": "0x7210", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ありがとうございました。
+Thank you.
+
+
+{"ptr_pos": 28782, "pc_hex": "0x706e", "str_pos": 29200, "abs_offset_hex": "0x7210", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLYありがとうございました。
+
+
+{"ptr_pos": 29050, "pc_hex": "0x717a", "str_pos": 29200, "abs_offset_hex": "0x7210", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLYありがとうございました。
+
+
+{"ptr_pos": 28284, "pc_hex": "0x6e7c", "str_pos": 29214, "abs_offset_hex": "0x721e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# おやめになるのですですね。<br>ほかの物はいかがですか？
+You've changed your mind?<br>Is there anything else you would like?
+
+
+{"ptr_pos": 28624, "pc_hex": "0x6fd0", "str_pos": 29242, "abs_offset_hex": "0x723a", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# <pc_itm>を返しますか？<br>料金は，<val>Gです。
+You'd like to return <pc_itm>? The rental fee comes to <val>G.
+
+{"ptr_pos": 28750, "pc_hex": "0x704e", "str_pos": 29266, "abs_offset_hex": "0x7252", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# おや？<br>お金がたりないようですね。<br>のこりの<val>Gは，あとで<br>いただきます。
+What's this? You don't seem to have enough money. You need to come up with another <val>G.
+
+{"ptr_pos": 28996, "pc_hex": "0x7144", "str_pos": 29266, "abs_offset_hex": "0x7252", "table": "normal", "repoint": true, "missing": 1, "ptr_type": "relative"}
+# # REDIRECT ONLYおや？<br>お金がたりないようですね。<br>のこりの<val>Gは，あとで<br>いただきます。
+
+
+{"ptr_pos": 28526, "pc_hex": "0x6f6e", "str_pos": 29306, "abs_offset_hex": "0x727a", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# あと<val>G料金が<br>のこっています。
+You still owe <val>G.
+
+{"ptr_pos": 28890, "pc_hex": "0x70da", "str_pos": 29326, "abs_offset_hex": "0x728e", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# <pc_itm>さん。<br>レンタル料金をはらって下さい。<br><val>Gになります。
+<pc_itm>, please honor your debts. You owe <val>G.
+
+{"ptr_pos": 28914, "pc_hex": "0x70f2", "str_pos": 29360, "abs_offset_hex": "0x72b0", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# <pc_itm>さん。<br>レンタル料金をはらって下さい。<br>あと<val>Gになります。
+<pc_itm>, please honor your debts. You still owe <val>G.
+
+
+{"ptr_pos": 29040, "pc_hex": "0x7170", "str_pos": 29396, "abs_offset_hex": "0x72d4", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は<br>返していただきますよ。
+I'll take back <pc_itm> now.
+
+{"ptr_pos": 28354, "pc_hex": "0x6ec2", "str_pos": 29412, "abs_offset_hex": "0x72e4", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>さんは，装備できません<br>けれど，よろしていですか？
+<pc_itm> can't equip this item, is that okay?
+
+
+{"ptr_pos": 29486, "pc_hex": "0x732e", "str_pos": 29752, "abs_offset_hex": "0x7438", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 休 む<br>セ―ブ
+Rest<br>Save
+
+
+{"ptr_pos": 29738, "pc_hex": "0x742a", "str_pos": 29762, "abs_offset_hex": "0x7442", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# セ―ブしました。
+Game saved.
+
+
+{"ptr_pos": 30584, "pc_hex": "0x7778", "str_pos": 30748, "abs_offset_hex": "0x781c", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ここでは，おりられない。 # i think this is the flying message
+You can't land here.
+
+
+{"ptr_pos": 30892, "pc_hex": "0x78ac", "str_pos": 30762, "abs_offset_hex": "0x782a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 何もはいっていなかった。
+There's nothing inside.
+
+
+{"ptr_pos": 31022, "pc_hex": "0x792e", "str_pos": 30776, "abs_offset_hex": "0x7838", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，<pc_itm>を<br>みつけた。
+<pc_itm> found <pc_itm>.
+
+{"ptr_pos": 31108, "pc_hex": "0x7984", "str_pos": 30788, "abs_offset_hex": "0x7844", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# <pc_itm>は，<val>Gをみつけた。
+<pc_itm> found <val>G.
+
+
+{"ptr_pos": 31036, "pc_hex": "0x793c", "str_pos": 30802, "abs_offset_hex": "0x7852", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# しかし，これ以上持てない。
+
+
+{"ptr_pos": 33480, "pc_hex": "0x82c8", "str_pos": 33558, "abs_offset_hex": "0x8316", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，死んでしまった。
+<pc_itm> has bit the dust.
+
+{"ptr_pos": 33528, "pc_hex": "0x82f8", "str_pos": 33572, "abs_offset_hex": "0x8324", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 全滅してしまった。
+There were no survivors.
+
+{"ptr_pos": 33674, "pc_hex": "0x838a", "str_pos": 33766, "abs_offset_hex": "0x83e6", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 持ち物<br>装 備<br>状 態<br>能 力
+Items<br>Equip<br>Party<br>Skills
+
+
+{"ptr_pos": 33822, "pc_hex": "0x841e", "str_pos": 33782, "abs_offset_hex": "0x83f6", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 使 う<br>渡 す<br>捨てる
+Use<br>Give<br>Drop
+
+
+{"ptr_pos": 34972, "pc_hex": "0x889c", "str_pos": 34760, "abs_offset_hex": "0x87c8", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ふ゛ き:<br>よろい:<br>かふ゛と:<br>た て:
+WPN:<br>ARM:<br>HLM:<br>SHL:
+
+
+{"ptr_pos": 34984, "pc_hex": "0x88a8", "str_pos": 34782, "abs_offset_hex": "0x87de", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# アイテム:
+ITM:
+
+
+{"ptr_pos": 34996, "pc_hex": "0x88b4", "str_pos": 34788, "abs_offset_hex": "0x87e4", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 攻撃力<br>防御力
+ATK<br>DEF
+
+{"ptr_pos": 37152, "pc_hex": "0x9120", "str_pos": 34788, "abs_offset_hex": "0x87e4", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLY攻撃力<br>防御力
+
+
+{"ptr_pos": 34806, "pc_hex": "0x87f6", "str_pos": 34796, "abs_offset_hex": "0x87ec", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+#         
+         
+
+{"ptr_pos": 34140, "pc_hex": "0x855c", "str_pos": 35348, "abs_offset_hex": "0x8a14", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，<pc_itm>を<br>捨てた。
+<pc_itm> dropped <pc_itm>.
+
+{"ptr_pos": 34154, "pc_hex": "0x856a", "str_pos": 35360, "abs_offset_hex": "0x8a20", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，かり物なので<br>捨てられない。
+You can't drop <pc_itm> because it's a rented item.
+
+{"ptr_pos": 34424, "pc_hex": "0x8678", "str_pos": 35378, "abs_offset_hex": "0x8a32", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，<pc_itm>を<br>使った。
+<pc_itm> used <pc_itm>.
+
+
+{"ptr_pos": 34468, "pc_hex": "0x86a4", "str_pos": 35390, "abs_offset_hex": "0x8a3e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 何もおこらなかった。
+... but nothing happened.
+
+
+{"ptr_pos": 34676, "pc_hex": "0x8774", "str_pos": 35402, "abs_offset_hex": "0x8a4a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，<pc_itm>に<br><pc_itm>を渡した。
+<pc_itm> gave <pc_itm> the <pc_itm>.
+
+{"ptr_pos": 34686, "pc_hex": "0x877e", "str_pos": 35416, "abs_offset_hex": "0x8a58", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，<br>これ以上持てない。
+<pc_itm> can't hold anymore.
+
+
+{"ptr_pos": 34738, "pc_hex": "0x87b2", "str_pos": 35430, "abs_offset_hex": "0x8a66", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，<pc_itm>を<br>取り出してみた。
+<pc_itm> took off <pc_itm>.
+
+{"ptr_pos": 35296, "pc_hex": "0x89e0", "str_pos": 35446, "abs_offset_hex": "0x8a76", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，死んでいる。
+<pc_itm> is dead.
+
+
+{"ptr_pos": 34670, "pc_hex": "0x876e", "str_pos": 35458, "abs_offset_hex": "0x8a82", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，<pc_itm>の<br><pc_itm>を取った。
+<pc_itm> took <pc_itm>'s <pc_itm>.
+
+{"ptr_pos": 35330, "pc_hex": "0x8a02", "str_pos": 35472, "abs_offset_hex": "0x8a90", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，うごけない。
+<pc_itm> can't move.
+
+{"ptr_pos": 35518, "pc_hex": "0x8abe", "str_pos": 35482, "abs_offset_hex": "0x8a9a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# つよさ<br>ならび
+Stats<br>Order
+
+
+{"ptr_pos": 36874, "pc_hex": "0x900a", "str_pos": 37460, "abs_offset_hex": "0x9254", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# LV<br>経験
+LVL<br>EXP
+
+
+{"ptr_pos": 36988, "pc_hex": "0x907c", "str_pos": 37468, "abs_offset_hex": "0x925c", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# HP<br>MP
+HP<br>MP
+
+
+{"ptr_pos": 37000, "pc_hex": "0x9088", "str_pos": 37474, "abs_offset_hex": "0x9262", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ／<br>／
+/<br>/
+
+
+{"ptr_pos": 37076, "pc_hex": "0x90d4", "str_pos": 37478, "abs_offset_hex": "0x9266", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# 体 力<br>知 力<br>生命力<br>素早さ
+STR<br>INT<br>VIT<br>SPD
+
+
+{"ptr_pos": 37216, "pc_hex": "0x9160", "str_pos": 37500, "abs_offset_hex": "0x927c", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ふ゛ き<br>よろい<br>かふ゛と<br>た て<br>アイテム
+WPN<br>ARM<br>HLM<br>SHL<br>ITM
+
+
+{"ptr_pos": 41538, "pc_hex": "0xa242", "str_pos": 41782, "abs_offset_hex": "0xa336", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# HP      MP
+HP      MP
+
+
+{"ptr_pos": 41740, "pc_hex": "0xa30c", "str_pos": 41804, "abs_offset_hex": "0xa34c", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ト゛ク
+PSN
+
+
+{"ptr_pos": 41874, "pc_hex": "0xa392", "str_pos": 42062, "abs_offset_hex": "0xa44e", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+#          
+          
+
+{"ptr_pos": 41962, "pc_hex": "0xa3ea", "str_pos": 42062, "abs_offset_hex": "0xa44e", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLY         
+          
+
+{"ptr_pos": 42190, "pc_hex": "0xa4ce", "str_pos": 42216, "abs_offset_hex": "0xa4e8", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# もっていない
+You don't have any.
+
+{"ptr_pos": 43016, "pc_hex": "0xa808", "str_pos": 43038, "abs_offset_hex": "0xa81e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# は い<br>いいえ
+Yes<br>No
+
+
+{"ptr_pos": 48668, "pc_hex": "0xbe1c", "str_pos": 52486, "abs_offset_hex": "0xcd06", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# モンスタ―があらわれた。
+Monsters appeared!
+
+
+{"ptr_pos": 50892, "pc_hex": "0xc6cc", "str_pos": 52500, "abs_offset_hex": "0xcd14", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，<pc_itm>を<br>使った。
+<pc_itm> used <pc_itm>.
+
+{"ptr_pos": 48734, "pc_hex": "0xbe5e", "str_pos": 52512, "abs_offset_hex": "0xcd20", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 戦 う<br>A I<br>逃げる
+Fight<br>Auto<br>Flee
+
+
+{"ptr_pos": 48824, "pc_hex": "0xbeb8", "str_pos": 52526, "abs_offset_hex": "0xcd2e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，逃げだした。
+<pc_itm> ran away.
+
+{"ptr_pos": 48838, "pc_hex": "0xbec6", "str_pos": 52538, "abs_offset_hex": "0xcd3a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>たちは，逃げだした。
+<pc_itm>'s party ran away.
+
+{"ptr_pos": 49200, "pc_hex": "0xc030", "str_pos": 52552, "abs_offset_hex": "0xcd48", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 逃げられなかった。
+Couldn't escape!
+
+
+{"ptr_pos": 51540, "pc_hex": "0xc954", "str_pos": 52564, "abs_offset_hex": "0xcd54", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 戦いに勝った。
+You won the battle.
+
+
+{"ptr_pos": 51916, "pc_hex": "0xcacc", "str_pos": 52574, "abs_offset_hex": "0xcd5e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 全滅してしまった。
+You've fallen.
+
+
+{"ptr_pos": 51570, "pc_hex": "0xc972", "str_pos": 52586, "abs_offset_hex": "0xcd6a", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# 経験が<val>上がった。<br><val>Gをてにいれた。
+You gained <val> experience and <val>G.
+
+
+{"ptr_pos": 52046, "pc_hex": "0xcb4e", "str_pos": 52610, "abs_offset_hex": "0xcd82", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，レベルが上がった。
+<pc_itm> leveled up.
+
+{"ptr_pos": 52762, "pc_hex": "0xce1a", "str_pos": 53680, "abs_offset_hex": "0xd1b0", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 戦 う<br>能 力<br>防 御<br>持ち物
+Attack<br>Skills<br>Defend<br>Items
+
+{"ptr_pos": 52828, "pc_hex": "0xce5c", "str_pos": 53698, "abs_offset_hex": "0xd1c2", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 戦 う<br>防 御<br>持ち物
+Attack<br>Defend<br>Items
+
+{"ptr_pos": 55680, "pc_hex": "0xd980", "str_pos": 55616, "abs_offset_hex": "0xd940", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative"}
+#        
+        
+
+
+{"ptr_pos": 58670, "pc_hex": "0xe52e", "str_pos": 58688, "abs_offset_hex": "0xe540", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# クリティカルヒット！！
+OH BABY A CRIT!!
+
+
+{"ptr_pos": 58936, "pc_hex": "0xe638", "str_pos": 59004, "abs_offset_hex": "0xe67c", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# <pc_itm>は，毒で<val>ポイント失った。
+<pc_itm> lost <val>HP from poison.
+
+
+{"ptr_pos": 58942, "pc_hex": "0xe63e", "str_pos": 59022, "abs_offset_hex": "0xe68e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm><val>は，毒で<val>ポイント失った。
+<pc_itm><val> lost <val>HP from poison.
+
+
+{"ptr_pos": 63646, "pc_hex": "0xf89e", "str_pos": 63666, "abs_offset_hex": "0xf8b2", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <player>「さあ，行こう。この中<br> に「女神像」があるはずだ。」<scroll><npc1>「そうね。<br> 行きましょう。」<scroll><npc9>「ぼくが必ず見つけだし<br> てみせるよ。」
+<player> "Let's go, the Goddess Statue should be inside."<scroll><npc1> "Yes, let's go inside."<scroll><npc9> "I'll find it for sure!"
+
+{"ptr_pos": 65502, "pc_hex": "0xffde", "str_pos": 65786, "abs_offset_hex": "0x100fa", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は<br><pc_itm>をとなえた。
+<pc_itm> cast <pc_itm>.
+
+{"ptr_pos": 65582, "pc_hex": "0x1002e", "str_pos": 65786, "abs_offset_hex": "0x100fa", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLY<pc_itm>は<br><pc_itm>をとなえた。
+
+
+{"ptr_pos": 65674, "pc_hex": "0x1008a", "str_pos": 65786, "abs_offset_hex": "0x100fa", "table": "menu", "repoint": true, "missing": 2, "ptr_type": "relative"}
+# # REDIRECT ONLY\x06そ<br>\x06ぁくこG/?
+{"ptr_pos": 65674, "pc_hex": "0x1008a", "str_pos": 65786, "abs_offset_hex": "0x100fa", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLY<pc_itm>は<br><pc_itm>をとなえた。
+
+
+{"ptr_pos": 65684, "pc_hex": "0x10094", "str_pos": 65798, "abs_offset_hex": "0x10106", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm><val>は<br><pc_itm>をとなえた。
+<pc_itm><val> cast <pc_itm>.
+
+
+{"ptr_pos": 65756, "pc_hex": "0x100dc", "str_pos": 65812, "abs_offset_hex": "0x10114", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# MPがたりない。
+Need more MP!
+
+{"ptr_pos": 66160, "pc_hex": "0x10270", "str_pos": 66200, "abs_offset_hex": "0x10298", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>をしょうかんした。
+You summoned <pc_itm>.
+
+{"ptr_pos": 66186, "pc_hex": "0x1028a", "str_pos": 66212, "abs_offset_hex": "0x102a4", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は帰っていった。
+<pc_itm> went back home.
+
+{"ptr_pos": 67138, "pc_hex": "0x10642", "str_pos": 67338, "abs_offset_hex": "0x1070a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# あながあいたよ。
+A hole opened up.
+
+{"ptr_pos": 70408, "pc_hex": "0x11308", "str_pos": 70492, "abs_offset_hex": "0x1135c", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# スライムは，<pc_itm>におおいかぶさった。
+Slym absorbed <pc_itm>!
+
+{"ptr_pos": 70418, "pc_hex": "0x11312", "str_pos": 70510, "abs_offset_hex": "0x1136e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# スライムは，<pc_itm><val>におおいかぶさった。
+Slym absorbed <pc_itm><val>.
+
+
+{"ptr_pos": 70560, "pc_hex": "0x113a0", "str_pos": 70590, "abs_offset_hex": "0x113be", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# スライムは，ひろがりなかまを防御した。
+Slym is defending his allies.
+
+{"ptr_pos": 70628, "pc_hex": "0x113e4", "str_pos": 70710, "abs_offset_hex": "0x11436", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ナイトメアは，夢しばりの術をかけた。
+Nytmare used Dream Eater.
+
+{"ptr_pos": 70732, "pc_hex": "0x1144c", "str_pos": 70762, "abs_offset_hex": "0x1146a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ナイトメアは，夢界陣をはった。
+Nytmare used Dreamcatcher.
+
+{"ptr_pos": 70782, "pc_hex": "0x1147e", "str_pos": 70958, "abs_offset_hex": "0x1152e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# キリカゼは，分身の術を使った。
+Kirikaze used Double
+
+{"ptr_pos": 70978, "pc_hex": "0x11542", "str_pos": 71074, "abs_offset_hex": "0x115a2", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# キリカゼは，ヤミどうかの術を使った。
+Kirikaze used Darkness.
+
+{"ptr_pos": 71094, "pc_hex": "0x115b6", "str_pos": 71160, "abs_offset_hex": "0x115f8", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# キリカゼは，おぼろかげの術を使った。
+Kirikaze used Shadow.
+
+{"ptr_pos": 71204, "pc_hex": "0x11624", "str_pos": 71310, "abs_offset_hex": "0x1168e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ワ―タイガ―は，タイガ―形態に変身した。
+Wyte Tiger changed to Tiger form.
+
+{"ptr_pos": 71334, "pc_hex": "0x116a6", "str_pos": 71432, "abs_offset_hex": "0x11708", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ワ―タイガ―は，しんどうはをはっせいした。
+Wyte Tiger sent out an energy blast.
+
+{"ptr_pos": 71454, "pc_hex": "0x1171e", "str_pos": 71498, "abs_offset_hex": "0x1174a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ネビュロスは，魔法のけっかいをはった。
+Nebulous set up a magic barrier.
+
+{"ptr_pos": 71554, "pc_hex": "0x11782", "str_pos": 71678, "abs_offset_hex": "0x117fe", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ソ―ドマンは，<pc_itm>に剣をつきさした。
+Swordman stabbed <pc_itm>.
+
+{"ptr_pos": 71568, "pc_hex": "0x11790", "str_pos": 71698, "abs_offset_hex": "0x11812", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# ソ―ドマンは，<pc_itm><val>に剣をつきさした。
+Swordman stabbed <pc_itm><val>.
+
+{"ptr_pos": 71614, "pc_hex": "0x117be", "str_pos": 71720, "abs_offset_hex": "0x11828", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# <pc_itm>は，<val>ポイントのエネルギ―をすいとられた。
+<pc_itm> absorbed <val> points of energy.
+
+{"ptr_pos": 71608, "pc_hex": "0x117b8", "str_pos": 71744, "abs_offset_hex": "0x11840", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# <pc_itm><val>は，<val>ポイントのエネルギ―をすいとられた。
+<pc_itm><val> absorbed <val> points of energy.
+
+{"ptr_pos": 71770, "pc_hex": "0x1185a", "str_pos": 71918, "abs_offset_hex": "0x118ee", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ソ―ドマンは，念呪縛をおこなった。
+Swordman used Spell Chain.
+
+{"ptr_pos": 72146, "pc_hex": "0x119d2", "str_pos": 72176, "abs_offset_hex": "0x119f0", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，<br>デスド―ルになった。
+<pc_itm> became a Death Doll.
+
+{"ptr_pos": 72420, "pc_hex": "0x11ae4", "str_pos": 72438, "abs_offset_hex": "0x11af6", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# 魔法は，はねかえされ<br>自分にふりそそいだ。
+The spell was reflected back.
+
+{"ptr_pos": 73110, "pc_hex": "0x11d96", "str_pos": 73124, "abs_offset_hex": "0x11da4", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>は，ふしぎな力が<br>みなぎるのを，かんじた。
+<pc_itm> feels the magic flowing through them.
+
+{"ptr_pos": 73748, "pc_hex": "0x12014", "str_pos": 73784, "abs_offset_hex": "0x12038", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <player>「よ～し。バクダンを<br> セットしたぞ。いそいでこのどうく<br> つの外に逃げるんだ！！」
+<player> "Alrighty! The bomb's set, let's blow this popsicle stand!!"
+
+{"ptr_pos": 74070, "pc_hex": "0x12156", "str_pos": 74132, "abs_offset_hex": "0x12194", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <player>「<npc1>。ほら，<br> これをのむんだ。早くよくなって<br> くれよ。」<br><npc1>「・・・・・」<br><player>「なんだか，かおにあかみが<br> もどってきたようだな。」<br><npc1>「う―ん。わたし，どう<br> しちゃったのかしら。」<br><player>「きみは毒をのまされて<br> 気をうしなっていたんだよ。くわし<br> い話はあとにしよう，とにかく今は<br> ゆっくり休むんだ。」
+<player> "Here, <npc1>, drink this. It'll heal you.<br><npc1> "....."<br><player> "Hey, you're getting some color back in your face."<br><npc1> "Huh.. how did I get here?"<br><player> "You just drank some poison. Earlier. And then you passed out. I'll tell you about it later. You should just take a load off here."
+
+{"ptr_pos": 74340, "pc_hex": "0x12264", "str_pos": 74366, "abs_offset_hex": "0x1227e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+#  うっ！<br> こ，この楽は・・・・
+Ugh! This medicine...
+
+{"ptr_pos": 74352, "pc_hex": "0x12270", "str_pos": 74384, "abs_offset_hex": "0x12290", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+#  うでわのこうかがきえた。
+The bracer's power was nullified.
+
+{"ptr_pos": 74524, "pc_hex": "0x1231c", "str_pos": 74620, "abs_offset_hex": "0x1237c", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ドラゴン「ありがとう，ふたりとも。<br> やっとタマゴからかえる事ができた<br> よ。そうだ，ぼくに名前をつけて<br> おくれよ。まだないんだ。」
+Dragon "Thank you both. I finally hatched. As my parents, why don't you give me a name?"
+
+{"ptr_pos": 74562, "pc_hex": "0x12342", "str_pos": 74692, "abs_offset_hex": "0x123c4", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ドラゴン「<npc9>か。<br> とっても，いい名前だね。どうも<br> ありがとう！！<br> さてと。２人とも，これからはぼく<br> がいるからもうあんしんだよ。」<scroll><npc1>「えっ，どういう事？」<scroll><npc9>「ぼくも，いっしょに旅<br> をするという事さ。」<scroll><player>「何を考えてるんだ。<br> どうなっても知らんぞ。」<scroll><npc9>「まあ，大船にのった<br> 気持ちでいてくれよ。」<scroll><npc1>「これからよろしくね，<br> <npc9>。」
+Dragon "<npc9>? What a beautiful name. Thank you soooo much. From now on, you can leave things to me.<scroll><npc1> "Err, what?"<scroll><npc9> "I'm going to travel with you from now on."<scroll><player> "What the heck? Okay, but don't come crying to me if you get killed."<scroll><npc> "Hey, have some faith here."<scroll><npc1>"I look forward to working with you, <npc9>."
+
+{"ptr_pos": 76148, "pc_hex": "0x12974", "str_pos": 76162, "abs_offset_hex": "0x12982", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# アガリアレプトは本来の防御力を<br>はっき出来なくなった。
+Agaliarept lost his true defensive power.
+
+{"ptr_pos": 76236, "pc_hex": "0x129cc", "str_pos": 76250, "abs_offset_hex": "0x129da", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# アスモデウスは本来の攻撃力をはっき<br>出来なくなった。
+Asmodeus lost his true offensive power.
+
+{"ptr_pos": 76322, "pc_hex": "0x12a22", "str_pos": 76336, "abs_offset_hex": "0x12a30", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# レビィアタンは本来の魔力をはっき<br>出来なくなった。
+Leviathan lost his true magical power.
+
+{"ptr_pos": 76408, "pc_hex": "0x12a78", "str_pos": 76422, "abs_offset_hex": "0x12a86", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# アスタロスは本来の精神力をはっき<br>出来なくなった。
+Astaroth lost his true magical defense.
+
+{"ptr_pos": 76496, "pc_hex": "0x12ad0", "str_pos": 76510, "abs_offset_hex": "0x12ade", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# まほうきゅうによりベ―ルゼブブの力<br>は，よわまった。
+The crystal ball weakened Beelzebub.
+
+{"ptr_pos": 73620, "pc_hex": "0x11f94", "str_pos": 78010, "abs_offset_hex": "0x130ba", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ここでは，使えない。
+You can't use that here.
+
+{"ptr_pos": 103392, "pc_hex": "0x193e0", "str_pos": 104392, "abs_offset_hex": "0x197c8", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# オ―クションをはじめます。<br>こんかいのしなものは，こちら
+The auction will now begin. The next item is:
+
+{"ptr_pos": 103538, "pc_hex": "0x19472", "str_pos": 104422, "abs_offset_hex": "0x197e6", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# それでは，<val>Gからはじめてみましょう。
+Let's start with <val>G.
+
+
+{"ptr_pos": 103876, "pc_hex": "0x195c4", "str_pos": 104444, "abs_offset_hex": "0x197fc", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <val>G！
+<val>G!!
+
+{"ptr_pos": 103916, "pc_hex": "0x195ec", "str_pos": 104450, "abs_offset_hex": "0x19802", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# おっと！！<br>いきなり<val>Gがでました。
+Hot dog! We have a bid for <val>G.
+
+{"ptr_pos": 103638, "pc_hex": "0x194d6", "str_pos": 104470, "abs_offset_hex": "0x19816", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# もうこれ以上は，ありませんか？
+Going once... going twice...
+
+{"ptr_pos": 103940, "pc_hex": "0x19604", "str_pos": 104486, "abs_offset_hex": "0x19826", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative"}
+# それでは，<val>Gでけっていします。<br>こちらに取りに来て下さい。
+Sold! For <val>G. Please take your item.
+
+{"ptr_pos": 104230, "pc_hex": "0x19726", "str_pos": 104520, "abs_offset_hex": "0x19848", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# こんかいは，これでおわりです。
+This is the end of the auction for tonight.
+
+{"ptr_pos": 103526, "pc_hex": "0x19466", "str_pos": 104536, "abs_offset_hex": "0x19858", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <player>「あっ！！あの剣は！！<br> 父さんの，かたみの剣だ。<br> ぜったいにとりもどさなくては。」
+<player> "That sword!! It's the sword of my father. I have to get it back."
+
+{"ptr_pos": 104068, "pc_hex": "0x19684", "str_pos": 104586, "abs_offset_hex": "0x1988a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <player>「ちくしょう！！<br> 負けちまった！！<br> こうなったら，ちょくせつ<br> こうしょうしてやる。」
+<player> "Dagnabbit, I lost!! I'll have to deal with him personally."
+
+{"ptr_pos": 105414, "pc_hex": "0x19bc6", "str_pos": 106202, "abs_offset_hex": "0x19eda", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# おや，<player><br>誰のレベルを上げたいの？
+Whose level do you want to raise?
+
+{"ptr_pos": 105542, "pc_hex": "0x19c46", "str_pos": 106222, "abs_offset_hex": "0x19eee", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>さんね。<br>それで，レベルをいくつに上げるの？
+<pc_itm>? How many levels do you want to increase?
+
+{"ptr_pos": 105614, "pc_hex": "0x19c8e", "str_pos": 106246, "abs_offset_hex": "0x19f06", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# それなら上げる必要がないじゃない！<br>誰かほかにいる？
+You can't raise their level anymore! Would you like to choose someone else?
+
+{"ptr_pos": 105644, "pc_hex": "0x19cac", "str_pos": 106276, "abs_offset_hex": "0x19f24", "table": "normal", "repoint": false, "missing": 2, "ptr_type": "relative"}
+# <pc_itm>さんをレベル<val2>に<br>あげるのね。
+You want to raise <pc_itm>'s level to <val2>, right?
+
+{"ptr_pos": 105572, "pc_hex": "0x19c64", "str_pos": 106294, "abs_offset_hex": "0x19f36", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# あら，ちがうの？<br>誰かほかにいる？
+You changed your mind? Perhaps someone else?
+
+{"ptr_pos": 105712, "pc_hex": "0x19cf0", "str_pos": 106294, "abs_offset_hex": "0x19f36", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLYあら，ちがうの？<br>誰かほかにいる？
+
+
+{"ptr_pos": 105728, "pc_hex": "0x19d00", "str_pos": 106312, "abs_offset_hex": "0x19f48", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ちょっとまっててね。
+Wait a sec.
+
+{"ptr_pos": 106186, "pc_hex": "0x19eca", "str_pos": 106324, "abs_offset_hex": "0x19f54", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# おわったわよ。<br>誰かほかにいる？
+All done. Anyone else?
+
+{"ptr_pos": 105486, "pc_hex": "0x19c0e", "str_pos": 106342, "abs_offset_hex": "0x19f66", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ここでレベルが上げられる事は<br>秘密にしておくのよ。
+Keep it a secret that you can level up here.
+
+{"ptr_pos": 106422, "pc_hex": "0x19fb6", "str_pos": 106818, "abs_offset_hex": "0x1a142", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# あら，<player>。<br>誰にする？
+My, <player>, who will you choose?
+
+{"ptr_pos": 106542, "pc_hex": "0x1a02e", "str_pos": 106832, "abs_offset_hex": "0x1a150", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>さんを<br>パ―ティ―からはずすのね。
+You want to remove <pc_itm> from the party, right?
+
+{"ptr_pos": 106612, "pc_hex": "0x1a074", "str_pos": 106852, "abs_offset_hex": "0x1a164", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# あら，ちがうの。<br>それじゃ，誰にするの？
+No? Then, whom will you choose?
+
+{"ptr_pos": 106764, "pc_hex": "0x1a10c", "str_pos": 106852, "abs_offset_hex": "0x1a164", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative"}
+# # REDIRECT ONLYあら，ちがうの。<br>それじゃ，誰にするの？
+
+{"ptr_pos": 106638, "pc_hex": "0x1a08e", "str_pos": 106874, "abs_offset_hex": "0x1a17a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>さん。おつかれさま。<br>ほかに誰かいる。
+Good work, <pc_itm>. Anyone else?
+
+{"ptr_pos": 106678, "pc_hex": "0x1a0b6", "str_pos": 106896, "abs_offset_hex": "0x1a190", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# もうこれ以上つれて行けないわよ。<br>ほかに誰かいる。
+You can't take anymore. Choose someone else.
+
+{"ptr_pos": 106694, "pc_hex": "0x1a0c6", "str_pos": 106924, "abs_offset_hex": "0x1a1ac", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>さんをよぶのね。
+You want <pc_itm>, right?
+
+{"ptr_pos": 106790, "pc_hex": "0x1a126", "str_pos": 106934, "abs_offset_hex": "0x1a1b6", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# <pc_itm>さん。<br>パ―ティ―にさんかしてください。
+<pc_itm>, please join the party.
+
+{"ptr_pos": 106802, "pc_hex": "0x1a132", "str_pos": 106956, "abs_offset_hex": "0x1a1cc", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative"}
+# ほかに誰かいる。
+Anyone else?
