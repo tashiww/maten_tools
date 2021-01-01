@@ -805,6 +805,7 @@ def insert_from_file(rom_path: Path, *filenames: str) -> None:
 	bad_lines = 0
 	repoints = 0
 	new_ptrs = {}
+	inserted_size = 0
 	if filenames:
 		for script_file in filenames:
 			lines = parse_script(FilePath(script_file).path)
@@ -830,6 +831,7 @@ def insert_from_file(rom_path: Path, *filenames: str) -> None:
 						if new_pos > 0:
 							new_ptrs[line.str_pos] = new_pos
 							# print(f"Repointed from 0x{line.ptr_pos:00x} to 0x{new_pos:00x}")
+							inserted_size += line.en_bin_len
 							good_lines += 1
 						else:
 							print(f"error on {line.en_text}")
@@ -840,7 +842,7 @@ def insert_from_file(rom_path: Path, *filenames: str) -> None:
 					# print(f"One string insertion took {dur} seconds")
 
 		print(f"Total: {total_dur}s, {good_lines} inserted, {bad_lines} failed")
-		print(f"Repoints: {repoints}")
+		print(f"Repoints: {repoints}, inserted size: {inserted_size} bytes")
 		print(f"Average time: {total_dur/(good_lines+bad_lines)} seconds")
 
 
@@ -871,21 +873,29 @@ print(f"cleared {free_space} bytes")
 insert_from_file(tling_rom.path, "lea_strings.txt", "foo.txt")
 
 # these lines fill fixed length text blocks with debug strings
-for block in fixed_len_blocks:
+for block in fixed_len_blocks[1:]:
 	fixed_str_parse(tling_rom.path, en_menu_tbl, block)
 	# dump_fixed_str(original_rom.path, ja_menu_tbl, item_block)
-"""
-foo = parse_script(FilePath('item_list.txt').path)
-# foo = sorted(foo, key=lambda k: k.en_bin_len, reverse=True)
-with open(tling_rom.path, "rb+") as rom:
-	old_pos = 0x130c6
-	new_pos = find_space(rom, 0x20000, None, len(foo) * 0x20)
-	print(f'{new_pos=:00x}')
-	for f in foo:
-		rom.seek(old_pos + 0x1e + (f.id * 0x20))
-		old_byte = rom.read(2)
-		rom.seek(new_pos + (f.id * 0x20))
-		rom.write(f.en_bin + b'\x00' * 2)
-		rom.seek(new_pos + 0x1e + (f.id * 0x20))
-		rom.write(old_byte)
-"""
+
+
+def insert_fixed_str(rom_path: Path, script_name: str) -> int:
+
+	lines = parse_script(FilePath(script_name).path)
+	# foo = sorted(foo, key=lambda k: k.en_bin_len, reverse=True)
+	# for f in foo[0:8]:
+	# 	# print(f.__dict__)
+	# die()
+	step = 16
+	with open(rom_path, "rb+") as rom:
+		# old_pos = 0x130c6
+		new_pos = find_space(rom, 0x20000, None, len(lines) * step)
+		if new_pos:
+			print(f'{new_pos=:00x}')
+			for line in lines:
+				rom.seek(new_pos + (line.id * step))
+				rom.write(line.en_bin[0:step-1] + b'\x00')
+		else:
+			print("not enough space for items :(")
+
+
+insert_fixed_str(tling_rom.path, 'item_list.txt')

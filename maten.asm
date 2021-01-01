@@ -24,7 +24,11 @@
 
 ; adjust font routine for 8x16 font instead of 16x16
 	include "text_engine.asm"
+
+; changes menus to fill every row instead of every other row, shops and menus
+	include "menu_item_layout.asm"
+
 	
-	;org $a45a
+	;org $a45a ; hacky base item offset change ...
 	; LEA $000130C6, A0
 	;LEA $00041a3e, A0

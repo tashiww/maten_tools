@@ -12,8 +12,9 @@ PartyList	equ	$00FFCED6	; used for getting selected party member, whose inventor
 PlayerRAMOffset	equ	$00FFCEDC	; start of player data block in RAM
 Stack	equr	a7 
  
- org $0000
- incbin "foobar.bin"
+; org $0000
+; incbin "foobar.bin"
+
  org $a1f2
 
 get_player_ram_offset:
@@ -94,7 +95,7 @@ draw_e_or_not_leftside:
 	;ADDQ.w	#8, D0	; move over for second column, maybe?
 	ADDQ.w	#1, d1	; go down instead of over
 	ADDQ.w	#1, D6	; printed item counter maybe?
-	ADDQ.w	#1, D3	; ?? both these went from $0 to $1
+	ADDQ.w	#1, D3	; ?? both these went from $0 to $1, adding d3 to a1 gets next item in RAM
 	ADD.w	D7, D3	; new d3 == $2 after first item printed, d3 is $6 after the third item printed ..
 	BRA.b	draw_rightside
 no_more_items_leftside:
@@ -160,20 +161,32 @@ loop_print_rows:
 	DBF	D4, start_drawing_row	; d4 was set to 5 a very long time ago ... 6 rows of items? probably
 	MOVEM.l	(Stack)+, D0/D1/D2/D3/D4/D5/D7/A0
 	RTS
-blank_spaces_x9:
-	dc.b	$3F ;0x0 (0x0000A44E-0x0000A44F, Entry count: 0x1)
-	dc.b	$3F, $3F, $3F, $3F, $3F, $3F, $3F, $3F, $00 ;0x0 (0x0000A44F-0x0000A458, Entry count: 0x9)
+	
+	
+;blank_spaces_x9:
+;	dc.b	$3F ;0x0 (0x0000A44E-0x0000A44F, Entry count: 0x1)
+;	dc.b	$3F, $3F, $3F, $3F, $3F, $3F, $3F, $3F, $00 ;0x0 (0x0000A44F-0x0000A458, Entry count: 0x9)
 
-; $a458
+; org $a450
+;get_item_offset:
+; bsr new_item_offset
+; rts
+ 
+ org $a458
+ ;org $68000
 get_item_offset:
 	MOVE.l	D2, -(Stack)	; item id to stack
-	LEA	$000130C6, A0	; item data base offset
+	;LEA	$000130C6, A0	; item data base offset
+	LEA	$000f000e, A0	; item data base offset
 	ANDI.w	#$00FF, D2	; mask out rental / equip status of item
 	SUBQ.w	#1, D2	
-	MULU.w	#$0020, D2	; each item block is $20 bytes of data
+	;MULU.w	#$0020, D2	; each item block is $20 bytes of data
+	MULU.w	#$0010, D2	
 	ADDA.l	D2, A0	; gets offset of current item name
 	MOVE.l	(Stack)+, D2	
 	RTS		; $a3d0
+	
+	
 	
  org $a4b4
 loc_0000a4b4:
@@ -185,22 +198,24 @@ loc_0000a4b4:
 	MOVEQ	#1, D3
 	BSR.w	menu_draw_setup
 	TST.w	D6
-	BNE.b	loc_0000A4D8
+	BNE.b	setup_item_window
 	BSR.w	mystery_label	;Predicted (Code-scan)
 	;ADDQ.w	#1, D0	;Predicted (Code-scan)
 	NOP
 	BSR.w	write_string	;Predicted (Code-scan)
-loc_0000A4D8:
-	MOVEQ	#7, D2
-	MOVEQ	#0, D3
-	MOVEQ	#2, D4
-	MOVEQ	#6, D5
-	SUBQ.w	#1, D6
+	
+setup_item_window:
+	MOVEQ	#$e, D2	; highlight width
+	MOVEQ	#0,  D3	; highlight height
+	MOVEQ	#1,  D4	; column count
+	MOVEQ	#$b, D5	; row count
+	SUBQ.w	#1,  D6	; ???
 	MOVEM.l	(Stack)+, A0/A1
 	RTS
 
- org $00003628
 
+ org $3628
+write_string:
 	MOVEM.l	A1/A0/D3/D2/D1/D0, -(A7)
 	MOVEA.l	A0, A1
 	MOVEA.w	#$C000, A0
@@ -248,8 +263,79 @@ loc_0000367C:
 	MOVEM.l	(A7)+, D0/D1/D2/D3/A0/A1
 	RTS
 
- org $3628
-write_string:
+ org $3734
+draw_price:
+
+ org $3682
+draw_G_after_price:
+
+ org $34ba
+	NOP	; this was double incrementing row offset, but i don't want to skip rows so NOP
+
+; ########################################################################################
+;	item shop window hack - print on every row instead of every other row
+; ########################################################################################
+
+ org $00005C90	; item shop subroutine
+
+	MOVE.w	D0, $6(A3)
+	CLR.w	$8(A3)
+	CLR.w	D6
+	CLR.w	D5
+	MOVEQ	#4, D1
+loc_00005C9E:
+	MOVE.w	(A4,D5.w), D2
+	BEQ.w	loc_00005CD6
+	MOVEQ	#$0000000B, D0
+	BSR.w	get_item_offset
+	BSR.w	write_string
+	MOVEQ	#$00000014, D0
+	CLR.l	D2
+	MOVE.w	$2(A4,D5.w), D2
+	BNE.b	loc_00005CBE
+	MOVE.w	$1E(A0), D2
+loc_00005CBE:
+	MOVEQ	#5, D3
+	BSR.w	draw_price
+	MOVEQ	#$00000019, D0
+	;LEA	*+$6024, A0
+	LEA	$6024.w, a0	; hopefully my assembler translates this correctly
+	
+	BSR.w	draw_G_after_price
+	ADDQ.w	#1, D1	; i changed this to 1 instead of 2 so it wouldn't leave empty rows
+	ADDQ.w	#1, D6
+	ADDQ.w	#4, D5
+	BRA.b	loc_00005C9E
+loc_00005CD6:
+	SUBQ.w	#1, D6
+	MOVEQ	#$0000000B, D0
+	MOVEQ	#4, D1
+	MOVEQ	#7, D2
+	MOVEQ	#0, D3
+	MOVEQ	#1, D4
+	MOVEQ	#6, D5
+	MOVE.w	$8(A3), D7
+	;BSR.w	*+$D63E	; goes to $3328
+	BSR.w	$3328	; goes to $3328
+
+; ########################################################################################
+; rental shop window hack - print every row instead of every other row
+;	full routine $6d98 - $6dfc, bsr to $3328
+; ########################################################################################
+ org $00006DE2
+
+	ADDQ.w	#1, D1	; row incrementer
+	ADDQ.w	#1, D6
+	ADDQ.w	#2, D5
+	BRA.b	$6dae
+	SUBQ.w	#1, D6
+	MOVEQ	#$0000000B, D0
+	MOVEQ	#4, D1
+	MOVEQ	#$a, D2	; highlight width
+	MOVEQ	#0, D3
+	MOVEQ	#1, D4
+	MOVEQ	#6, D5
+	MOVE.w	$12(A3), D7
 
  org $1dee
 write_to_vdp:
