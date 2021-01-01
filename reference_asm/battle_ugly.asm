@@ -2557,7 +2557,7 @@ check_enemy_id_GT100:
 	MOVE.b	(A0), D2
 	JSR	player_id_loop
 	CLR.w	D0
-	MOVE.b	$18(A0), D0	; this was $0000 but nearby were $8023, $802b, $8047 .. mystery
+	MOVE.b	$18(A0), D0	; this was $0000 but nearby were $8023, $802b, $8047 <- these are equipped items, $80 = equipped, $23 is item ID
 	MOVEM.l	(A7)+, D2/A0	; pull player ram offset and damage amount back from stack
 enemy_id_LT100:
 	RTS	; $DE28

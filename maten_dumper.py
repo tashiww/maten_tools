@@ -69,7 +69,8 @@ class String:
 	def __init__(
 					self,
 					ptr_pos=None, str_pos=None,
-					table=None, repoint=False, ptr_type=None):
+					table=None, repoint=False, ptr_type=None,
+					prefix=None):
 
 		self.ptr_pos = ptr_pos
 		self.ptr_pos_hex = f'0x{ptr_pos:00x}'
@@ -83,6 +84,7 @@ class String:
 		self.en_text = None
 		self.en_bin = None
 		self.en_bin_len = None
+		self.prefix = prefix
 
 	@property
 	def en_text(self):
@@ -442,7 +444,7 @@ def fixed_str_parse(rom_path, tbl, string_block):
 	while current_string_offset < end_offset:
 		rom.seek(current_string_offset, 0)
 		# name = rom.read(11)
-		debug_str = string_block.desc.upper() + str(i)
+		debug_str = string_block.desc.upper() + f'{i+1:00x}'
 		debug_hex = text_to_hex(tbl, debug_str)
 		debug_bin = bytes.fromhex(debug_hex)
 		# orig_str = rom.read(12)
@@ -476,6 +478,7 @@ def find_leas(rom_path: Path) -> list:
 		for nibble in struct.iter_unpack(">H", rom.read()):
 			pc += 2
 			nibble = nibble[0]
+			# 0x41fa is LEA to a0, but you can LEA to anything....
 			if nibble == 0x41fa:
 				rom.seek(pc)
 				rel_offset = struct.unpack(">h", rom.read(2))[0]
@@ -496,14 +499,18 @@ def find_leas(rom_path: Path) -> list:
 						pc-2,
 						abs_offset,
 						"menu",
-						redirect
+						redirect,
+						'relative',
+						f'0x{nibble:00x}'
 						)
 				lea_list.append(lea_info)
 				lea_info = String(
 						pc-2,
 						abs_offset,
 						"normal",
-						redirect
+						redirect,
+						'relative',
+						f'0x{nibble:00x}'
 						)
 				lea_list.append(lea_info)
 	return lea_list
@@ -518,11 +525,13 @@ def dump_leas(leas, normal_table, menu_table):
 
 	lea_lines = []
 	tables = {'normal': normal_table, 'menu': menu_table}
+	rom = open(original_rom.path, "rb+")
 	for lea in leas:
 		tbl = tables[lea.table]
-		text, missing = bin_to_text("xxx", tbl)
-		if len(text) > 2 and not missing:
-			if lea.redirect:
+
+		text, missing = bin_to_text(binary_dump(rom, lea.str_pos), tbl)
+		if len(text) > 0 and not missing:
+			if lea.repoint:
 				lea.ja_text = "# REDIRECT ONLY" + text
 			else:
 				lea.ja_text = text
@@ -543,7 +552,8 @@ def find_space(
 		rom: BinaryIO,
 		start: int = 0,
 		stop: int = None,
-		desired_size: int = 16) -> int:
+		desired_size: int = 16,
+		tight: bool = False) -> int:
 	""" Searches rom for continguous segments of FFs or 00s
 		of at least desired_size bytes
 		Returns offset of free space """
@@ -555,6 +565,7 @@ def find_space(
 		rom.seek(0, 2)
 		stop = rom.tell()
 
+	pad = 1 - tight
 	# print(f"0x{start=:00x}, 0x{stop=:00x}")
 	rom.seek(0, 0)
 	haystack = rom.read()
@@ -580,7 +591,7 @@ def find_space(
 				continue
 
 		# print(f"{word_align(i+start)=:00x}")
-		return word_align(i+1)
+		return word_align(i+pad)
 
 	return None
 
@@ -651,7 +662,8 @@ def parse_script(script_path: Path) -> list:
 								metadata['str_pos'],
 								metadata['table'],
 								metadata['repoint'],
-								metadata['ptr_type']
+								metadata['ptr_type'],
+								metadata['prefix']
 								)
 				if str_info.ptr_type == 'fixed':
 					str_info.id = metadata.get('id')
@@ -662,7 +674,7 @@ def parse_script(script_path: Path) -> list:
 	return string_list
 
 
-def repoint_relative(rom, str_info: String, new_ptr: int) -> int:
+def repoint_relative(rom: BinaryIO, str_info: String, new_ptr: int) -> int:
 	""" Convert relative pointer to absolute pointer
 		by changing a LEA with relative pointer to a branch
 		to a LEA with an absolute pointer. Return offset of
@@ -670,13 +682,17 @@ def repoint_relative(rom, str_info: String, new_ptr: int) -> int:
 
 	# binary representations of opcodes
 	bsr = b'\x61\x00'
-	lea = b'\x41\xf9'
 	rts = b'\x4e\x75'
+	# lea to a0 is 41f9, but sometimes lea to a1 has text
+	# lea = b'\x41\xf9'
+	# the first byte of the lea contains register information
+	# the second byte is addressing mode (rel / abs), $f9 is abs
+	lea = int(str_info.prefix, 16).to_bytes(2, 'big')[0:1] + b'\xf9'
 
 	pc = str_info.ptr_pos
 	start = max(pc - 0x7fff, 0)
 	stop = pc + 0x7fff
-	lea_space = find_space(rom, start, stop, 0x16)
+	lea_space = find_space(rom, start, stop, 0x14, True)
 	# print(f"{pc=:00x}")
 	# print(f"{lea_space=:00x}")
 	if lea_space:
@@ -762,23 +778,24 @@ tables = {'normal': en_tbl, 'menu': en_menu_tbl}
 ja_tables = {'normal': ja_tbl, 'menu': ja_menu_tbl}
 # ja_tables = {'normal': ja_tbl}
 
-"""
-# print([x.__dict__ for x in find_leas(rom_path)])
-# this dumps hard-coded ("lea") strings to fstring's out file
-leas = (dump_leas(find_leas(rom_path), ja_tbl, ja_menu_tbl))
-leas = sorted(leas, key=lambda x: x.abs_offset)
-i = 0
-for lea in leas:
-	string = lea.__dict__.pop('ja_text')
-	fprint(json.dumps(lea.__dict__))
-	fprint("# " + string)
-	# tags = re.findall(r'<[^sb>]+>', string)
-	# fprint(f'lea string #{i}' + ''.join(tags))
-	fprint("\n")
-	i += 1
-	# add flag in lea for "redirect only, no insert"
-die()
-"""
+
+def dump_leas_to_file():
+	# print([x.__dict__ for x in find_leas(rom_path)])
+	# this dumps hard-coded ("lea") strings to fstring's out file
+	leas = dump_leas(find_leas(original_rom.path), ja_tbl, ja_menu_tbl)
+	leas = sorted(leas, key=lambda x: (x.repoint, x.str_pos))
+	i = 0
+	for lea in leas:
+		string = lea.__dict__.pop('ja_text')
+		fprint(json.dumps(lea.__dict__))
+		fprint("# " + string)
+		# tags = re.findall(r'<[^sb>]+>', string)
+		# fprint(f'lea string #{i}' + ''.join(tags))
+		fprint("\n")
+		i += 1
+
+
+# dump_leas_to_file()
 
 
 def insert_from_file(rom_path: Path, *filenames: str) -> None:
@@ -857,7 +874,6 @@ insert_from_file(tling_rom.path, "lea_strings.txt", "foo.txt")
 for block in fixed_len_blocks:
 	fixed_str_parse(tling_rom.path, en_menu_tbl, block)
 	# dump_fixed_str(original_rom.path, ja_menu_tbl, item_block)
-	pass
 """
 foo = parse_script(FilePath('item_list.txt').path)
 # foo = sorted(foo, key=lambda k: k.en_bin_len, reverse=True)
