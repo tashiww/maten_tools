@@ -648,7 +648,7 @@ def parse_script(script_path: Path) -> list:
 
 	with open(script_path, "r", encoding="utf-8") as script:
 		for line in [
-					li.strip() for li in script.readlines()
+					li.strip('\r\n') for li in script.readlines()
 					if not li.startswith('#') and len(li) > 1]:
 			if line.startswith("{"):
 				if len(tlstring) > 0 or (str_info and str_info.repoint):
@@ -762,6 +762,7 @@ def make_space(rom_path: Path, strings: list) -> int:
 	with open(rom_path, "rb+") as rom:
 		haystack = rom.read()
 		for str_info in strings:
+			# if not hasattr(str_info, 'dont_blank'):
 			try:
 				index = haystack.index(b'\x00', str_info.str_pos)
 				bin_len = index - str_info.str_pos
