@@ -176,12 +176,12 @@ loop_print_rows:
  ;org $68000
 get_item_offset:
 	MOVE.l	D2, -(Stack)	; item id to stack
-	;LEA	$000130C6, A0	; item data base offset
-	LEA	$000f000e, A0	; item data base offset
+	LEA	$000130C6, A0	; item data base offset
+	;LEA	$000f000e, A0	; item data base offset
 	ANDI.w	#$00FF, D2	; mask out rental / equip status of item
 	SUBQ.w	#1, D2	
-	;MULU.w	#$0020, D2	; each item block is $20 bytes of data
-	MULU.w	#$0010, D2	
+	MULU.w	#$0020, D2	; each item block is $20 bytes of data
+	;MULU.w	#$0010, D2	
 	ADDA.l	D2, A0	; gets offset of current item name
 	MOVE.l	(Stack)+, D2	
 	RTS		; $a3d0
@@ -263,6 +263,9 @@ loc_0000367C:
 	MOVEM.l	(A7)+, D0/D1/D2/D3/A0/A1
 	RTS
 
+ org $32d6
+draw_background_window:
+
  org $3734
 draw_price:
 
@@ -276,10 +279,20 @@ draw_G_after_price:
 ;	item shop window hack - print on every row instead of every other row
 ; ########################################################################################
 
- org $00005C90	; item shop subroutine
+ ;org $00005C90	; item shop subroutine
+ org $00005C80
+	moveq #$0A, d0	; left-padding
+	moveq #$2, d1	; top padding
+	moveq #$13, d2	; width - increased from 11 to 13
+	moveq #$e, d3	; height
+	moveq #$43, d4
+	bsr.w	draw_background_window
 
+item_shop_subroutine:
 	MOVE.w	D0, $6(A3)
 	CLR.w	$8(A3)
+	
+item_shop_insertion_point:
 	CLR.w	D6
 	CLR.w	D5
 	MOVEQ	#4, D1
@@ -289,15 +302,17 @@ loc_00005C9E:
 	MOVEQ	#$0000000B, D0
 	BSR.w	get_item_offset
 	BSR.w	write_string
-	MOVEQ	#$00000014, D0
+	MOVEQ	#$00000016, D0 ; probably x offset of price?
 	CLR.l	D2
 	MOVE.w	$2(A4,D5.w), D2
 	BNE.b	loc_00005CBE
 	MOVE.w	$1E(A0), D2
 loc_00005CBE:
 	MOVEQ	#5, D3
+	ADDQ.w	#1, D1	; i changed this to 1 instead of 2 so it wouldn't leave empty rows
+
 	BSR.w	draw_price
-	MOVEQ	#$00000019, D0
+	addq #5, D0 ; price seems to be 5 digits
 	;LEA	*+$6024, A0
 	LEA	$6024.w, a0	; hopefully my assembler translates this correctly
 	
@@ -308,35 +323,106 @@ loc_00005CBE:
 	BRA.b	loc_00005C9E
 loc_00005CD6:
 	SUBQ.w	#1, D6
-	MOVEQ	#$0000000B, D0
-	MOVEQ	#4, D1
-	MOVEQ	#7, D2
-	MOVEQ	#0, D3
+	MOVEQ	#$0000000B, D0	
+	MOVEQ	#4, D1	
+	MOVEQ	#$10, D2	; highlight width
+	MOVEQ	#1, D3
 	MOVEQ	#1, D4
 	MOVEQ	#6, D5
 	MOVE.w	$8(A3), D7
 	;BSR.w	*+$D63E	; goes to $3328
 	BSR.w	$3328	; goes to $3328
 
+; item shop "give to npc" window
+ org $00005D46
+
+; setting window parameters
+	MOVEQ	#$0000001d, D0	; x offset to draw window
+	MOVEQ	#2, D1	; y offset
+	MOVEQ	#8, D2	; width
+	MOVEQ	#$0000000E, D3	; height
+	MOVE.w	#$0043, D4	; palette , not sure exactly how to set it...
+	BSR.w	draw_background_window
+	MOVE.w	D0, $C(A3)
+	CLR.w	$E(A3)
+	
+	; setting text list position
+	MOVEQ	#$0000001e, D0	
+	MOVEQ	#4, D1	
+	MOVEQ	#1, D2	
+	BSR.w	$a22e	; no idea
+	MOVE.w	$E(A3), D7
+	BSR.w	$3328
+
+
+
+
+ org $5e6a
+	bra.w item_shop_insertion_point
+	
+	
+	
+	
+	
 ; ########################################################################################
 ; rental shop window hack - print every row instead of every other row
-;	full routine $6d98 - $6dfc, bsr to $3328
+;	full routine $6d88 - $6dfc, bsr to $3328
 ; ########################################################################################
- org $00006DE2
-
+  org $00006D88
+  
+; window positioning things..
+	MOVEQ	#$0000000A, D0	; x offset
+	MOVEQ	#2, D1	; y offset
+	MOVEQ	#$00000011, D2	; window width, bumped it to 11 to match item shop
+	MOVEQ	#$0000000E, D3 ; window height probably
+	;MOVE.w	#$00C3, D4	
+	MOVEQ 	#$43, d4	; need to save 2 bytes to squeeze in addq below
+	BSR.w	draw_background_window	; draws window background
+	MOVE.w	D0, $4(A3)
+	CLR.w	$12(A3)
+	CLR.w	D5
+	TST.w	$10(A3)
+	BEQ.b	loc_00006DAA
+	MOVEQ	#$00000010, D5
+loc_00006DAA:
+	CLR.w	D6
+	MOVEQ	#4, D1
+loc_00006DAE:
+	MOVE.w	(A4,D5.w), D2
+	BEQ.w	loc_00006DEA
+	MOVEQ	#$0000000B, D0
+	BSR.w	get_item_offset
+	BSR.w	write_string	
+	BSR.w	$a470	; gets price $1E(item offset)? $2710
+	MOVE.l	D0, D2
+	MULU.w	#$000C, D2	
+	LSR.l	#8, D2	; converted $2710 to $1d4 - rental price?
+	BNE.b	loc_00006DD0
+	MOVEQ	#1, D2	;Predicted (Code-scan)
+loc_00006DD0:
+	MOVEQ	#$00000014, D0	; x offset of price probably
+	MOVEQ	#4, D3
+	addq.w	 #1,	d1	; draw price on second line
+	BSR.w	draw_price
+	MOVEQ	#$00000018, D0
+	LEA	$6024.w, A0
+	BSR.w	draw_G_after_price
 	ADDQ.w	#1, D1	; row incrementer
 	ADDQ.w	#1, D6
 	ADDQ.w	#2, D5
-	BRA.b	$6dae
+	BRA.b	loc_00006DAE
+loc_00006DEA:
 	SUBQ.w	#1, D6
 	MOVEQ	#$0000000B, D0
 	MOVEQ	#4, D1
-	MOVEQ	#$a, D2	; highlight width
-	MOVEQ	#0, D3
+	MOVEQ	#$e, D2	; highlight width
+	MOVEQ	#1, D3	; highlight height
 	MOVEQ	#1, D4
 	MOVEQ	#6, D5
 	MOVE.w	$12(A3), D7
+	BSR.w	$3328
 
+ 
  org $1dee
 write_to_vdp:
 

@@ -885,15 +885,16 @@ def insert_fixed_str(rom_path: Path, script_name: str) -> int:
 	# for f in foo[0:8]:
 	# 	# print(f.__dict__)
 	# die()
-	step = 16
+	step = 0x20
 	with open(rom_path, "rb+") as rom:
-		# old_pos = 0x130c6
-		new_pos = find_space(rom, 0x20000, None, len(lines) * step)
+		old_pos = 0x130c6
+		# new_pos = find_space(rom, 0x20000, None, len(lines) * step)
+		new_pos = old_pos
 		if new_pos:
 			print(f'{new_pos=:00x}')
 			for line in lines:
 				rom.seek(new_pos + (line.id * step))
-				rom.write(line.en_bin[0:step-1] + b'\x00')
+				rom.write(line.en_bin[0:15] + b'\x00')
 		else:
 			print("not enough space for items :(")
 
