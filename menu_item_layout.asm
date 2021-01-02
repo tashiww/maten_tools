@@ -37,7 +37,7 @@ found_player_offset:
 	MOVEM.l	(Stack)+, D0	; one d0 value was $b
 	RTS		; $a4bc
 	
-loc_0000a21c:
+start_item_writing:
 	MOVE.l	A0, -(Stack)	; put previous string pointer on stack (the use/give/drop submenu, for example)
 	EXT.w	D2	; d2 was loaded from RAM $ff32ce , around PC $84BE, has selected party member index
 	LEA	PartyList, A0	
@@ -189,7 +189,7 @@ get_item_offset:
 	
 	
  org $a4b4
-loc_0000a4b4:
+start_drawing_item_window:
 	MOVEM.l	A1/A0, -(Stack)
 	BSR.w	get_player_ram_offset	
 	MOVEA.l	A0, A1	; copy player ram offset to a1
@@ -230,7 +230,7 @@ loc_00003634:
 	BEQ.b	loc_00003652
 	CMPI.b	#$0D, D2
 	BNE.b	loc_00003664
-	ADDQ.w	#2, D1	;Predicted (Code-scan)
+	ADDQ.w	#1, D1	; single space, not double
 	MOVE.w	D3, D0	;Predicted (Code-scan)
 	BRA.b	loc_00003634	;Predicted (Code-scan)
 loc_00003652:
@@ -310,7 +310,6 @@ loc_00005C9E:
 loc_00005CBE:
 	MOVEQ	#5, D3
 	ADDQ.w	#1, D1	; i changed this to 1 instead of 2 so it wouldn't leave empty rows
-
 	BSR.w	draw_price
 	addq #5, D0 ; price seems to be 5 digits
 	;LEA	*+$6024, A0
@@ -336,6 +335,7 @@ loc_00005CD6:
 ; item shop "give to npc" window
  org $00005D46
 
+give_to_npc_window:
 ; setting window parameters
 	MOVEQ	#$0000001d, D0	; x offset to draw window
 	MOVEQ	#2, D1	; y offset
@@ -373,10 +373,10 @@ loc_00005CD6:
 ; window positioning things..
 	MOVEQ	#$0000000A, D0	; x offset
 	MOVEQ	#2, D1	; y offset
-	MOVEQ	#$00000011, D2	; window width, bumped it to 11 to match item shop
+	MOVEQ	#$00000013, D2	; window width, bumped it to 11 to match item shop
 	MOVEQ	#$0000000E, D3 ; window height probably
-	;MOVE.w	#$00C3, D4	
-	MOVEQ 	#$43, d4	; need to save 2 bytes to squeeze in addq below
+	MOVE.w	#$00C3, D4	
+	;MOVEQ 	#$43, d4	; need to save 2 bytes to squeeze in addq below
 	BSR.w	draw_background_window	; draws window background
 	MOVE.w	D0, $4(A3)
 	CLR.w	$12(A3)
@@ -397,14 +397,15 @@ loc_00006DAE:
 	MOVE.l	D0, D2
 	MULU.w	#$000C, D2	
 	LSR.l	#8, D2	; converted $2710 to $1d4 - rental price?
-	BNE.b	loc_00006DD0
-	MOVEQ	#1, D2	;Predicted (Code-scan)
+	;BNE.b	loc_00006DD0
+	;MOVEQ	#1, D2	; price should never be 0 anyway right
+	NOP
 loc_00006DD0:
-	MOVEQ	#$00000014, D0	; x offset of price probably
-	MOVEQ	#4, D3
-	addq.w	 #1,	d1	; draw price on second line
+	MOVEQ	#$00000017, D0	; x offset of price probably
+	MOVEQ	#4, D3	; oh maybe this is digit padding
+	addq.w	 #1, d1	; draw price on second line
 	BSR.w	draw_price
-	MOVEQ	#$00000018, D0
+	addq	#$4, D0	; maybe the max rental price is only 4 digits
 	LEA	$6024.w, A0
 	BSR.w	draw_G_after_price
 	ADDQ.w	#1, D1	; row incrementer
@@ -415,14 +416,146 @@ loc_00006DEA:
 	SUBQ.w	#1, D6
 	MOVEQ	#$0000000B, D0
 	MOVEQ	#4, D1
-	MOVEQ	#$e, D2	; highlight width
-	MOVEQ	#1, D3	; highlight height
+	MOVEQ	#$10, D2	; highlight width
+	MOVEQ	#1, D3	; highlight height (0 is 1 tile)
 	MOVEQ	#1, D4
 	MOVEQ	#6, D5
 	MOVE.w	$12(A3), D7
 	BSR.w	$3328
 
- 
+; rental shop "hand to x" menu window
+  org $00006E44
+; keep this aligned with above window...
+	MOVEQ	#$0000001d, D0
+	MOVEQ	#2, D1
+	MOVEQ	#8, D2
+	MOVEQ	#$0000000E, D3
+	MOVE.w	#$0043, D4
+	BSR.w	draw_background_window
+	MOVE.w	D0, $6(A3)	; these a3 offsets are different from the item shop routine...
+	CLR.w	$16(A3)
+	
+	MOVEQ	#$0000001e, D0
+	MOVEQ	#4, D1
+	MOVEQ	#1, D2
+	BSR.w	$a22e
+	MOVE.w	$16(A3), D7
+	BSR.w	$3328
+
+; ########################################################################################
+; equipment menu adjustments (moving atk/def window, spacing)
+;
+; ########################################################################################
+
+ org $3778
+draw_atk_def_value:
+
+ org $87f6
+draw_equipped_item:
+
+ org $00008856
+
+	MOVEQ	#$0000000A, D0	; x offset for current equipment
+	MOVEQ	#2, D1        	; y offset
+	MOVEQ	#$0000001C, D2	; width 
+	MOVEQ	#$0000000A, D3	; height
+	MOVE.w	#$0043, D4	; palette info maybe?
+	BSR.w	draw_background_window	; the currently equipped item window
+	MOVE.w	D0, $4(A6)
+
+; this could all be nopped out really
+	MOVEQ	#$0000001e, D0	; same as above, but for atk/def smaller window
+	MOVEQ	#$c, D1	
+	MOVEQ	#$00000008, D2	
+	MOVEQ	#6, D3	
+	MOVEQ	#3, D4	
+	;BSR.w	*+$A776	
+	; BSR.w	$2fec	; draw smaller atk/def window
+	NOP		; using equipment window, no longer need a separate one.. unless i show all stats! spd/vit etc
+	NOP
+	MOVEQ	#$0000000A, D0
+	MOVEQ	#$0000000C, D1
+	MOVEQ	#$00000014, D2
+	MOVEQ	#$0000000E, D3
+	MOVE.w	#$0043, D4
+	BSR.w	draw_background_window	; draw item window
+	MOVE.w	D0, $6(A6)
+	MOVE.w	A1, $4(A5)
+	CLR.w	$6(A5)
+	MOVEA.w	$4(A5), A1
+	
+	MOVEQ	#$0000000B, D0	; x offset for text
+	MOVEQ	#3, D1	; y offset
+	LEA	$FFFF87C8.w, A0	; this line will be automatically overwritten by my python script..
+	BSR.w	write_string	; writes wpn/arm/hlm etc
+	
+	MOVEQ	#$0000000b, D0	; reposition for "item" label
+	addQ	#4, D1	; draw under the wpn/arm etc
+	LEA	$FFFF87DE.w, A0	; another automated python line...
+	BSR.w	write_string
+	
+	MOVEQ	#$0000000b, D0	; offsets for atk/def text
+	MOVEQ	#$9, D1	
+	LEA	$FFFF87E4.w, A0	
+	BSR.w	$36f2	; different string writing subroutine
+	MOVE.w	$2(A5), D2
+	BSR.w	start_item_writing
+	BSR.w	get_player_ram_offset
+	MOVEA.l	A0, A2
+	MOVE.b	$14(A2), D2
+	MOVEQ	#$00000013, D0	; position for weapon
+	MOVEQ	#3, D1	
+	BSR.w	draw_equipped_item	; weap
+	MOVE.b	$15(A2), D2	; loading equipped gear into d2
+	MOVEQ	#$00000013, D0	; could maybe delete this unless d0 gets messed up by the drawing sr
+	addq	#1, D1	; increment by 1 instead of 2!
+	BSR.w	draw_equipped_item	; armor
+	MOVE.b	$16(A2), D2	
+	MOVEQ	#$00000013, D0	
+	addq	#1, D1
+	BSR.w	draw_equipped_item	; helmet
+	MOVE.b	$17(A2), D2
+	MOVEQ	#$00000013, D0
+	addq	#1, D1
+	BSR.w	draw_equipped_item	; shield
+	MOVE.b	$18(A2), D2	
+	MOVEQ	#$00000013, D0	; x offset for equipped item
+	addq	#1, D1
+	BSR.w	draw_equipped_item	; item
+	CLR.l	D2
+	MOVE.w	$A(A2), D2	; get atk stat into d2
+	;CMPI.w	#$03E8, D2	; compare to 1k
+	CMPI.w	#$2710, D2	; compare to 10k :D
+	BCS.b	loc_00008916
+	MOVE.w	#$270f, D2	; cap display at 9999 
+	
+loc_00008916:
+	MOVEQ	#5, D3	; digit padding?
+	MOVEQ	#$00000013, D0	; x offset
+	MOVEQ	#$9, D1	; y offset
+	BSR.w	draw_atk_def_value	; draw atk/def number
+	CLR.l	D2	
+	MOVE.w	$C(A2), D2	; same as above but for defense
+	;CMPI.w	#$03E8, D2
+	CMPI.w	#$2710, D2	; compare to 10k :D
+	BCS.b	loc_00008930
+	MOVE.w	#$270f, D2	; set at 9999
+loc_00008930:
+	MOVEQ	#6, D3
+	MOVEQ	#$00000021, D0
+	MOVEQ	#$9, D1
+	BSR.w	draw_atk_def_value
+	MOVE.w	$2(A5), D2
+	BSR.w	start_item_writing	; item writing routine
+	MOVEQ	#$0000000B, D0	; maybe highlight parameters?
+	MOVEQ	#$0000000E, D1	
+	BSR.w	start_drawing_item_window	; draw items
+	ADDQ.w	#1, D0
+	MOVE.w	$6(A5), D7	
+	BSR.w	$3328	; maybe branch to idle / highlighting
+
+
+
  org $1dee
 write_to_vdp:
 
