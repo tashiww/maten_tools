@@ -24,9 +24,11 @@ BaseFontOffset	equr	a0
 	LEA	$000648E6, BaseFontOffset	; base font address in ROM
 	ADDA.l	FontTileOffset, BaseFontOffset	; font tile offset for current character
 	MOVEM.l	BaseFontOffset/FontTileOffset, -(A7)
-	MOVE.w	#$0080, D0
+	MOVE.w	#$0020, D0	; i have no idea what this is supposed to be lol? $40? $80?
 	BSR.w	$3b24	; vdp stuff?
 
+ org $2024
+	move.w #$0020, d0	; very nice! this changes the DMA size so it's much faster / cleaner for 8x16 tile now. less flickering.
 
 Xoffset	equr	d0	; X offset to draw letter (3 is left-most column)
 Yoffset	equr	d1	; Y offset (15 is top row)

@@ -457,6 +457,10 @@ draw_stat_value:
 draw_equipped_item:
 
  org $00008856
+	WHILE *<$8950
+		NOP
+	ENDW
+ org $00008856
 draw_equipment_backgrounds:
 	MOVEQ	#$0000000A, D0	; x offset for current equipment
 	MOVEQ	#2, D1        	; y offset
@@ -464,31 +468,35 @@ draw_equipment_backgrounds:
 	MOVEQ	#$0000000A, D3	; height
 	MOVE.w	#$0043, D4	; palette info maybe?
 	BSR.w	draw_background_window	; the currently equipped item window
+ org $8866
 	MOVE.w	D0, $4(A6)
 
 ; this could all be nopped out really
-	MOVEQ	#$0000001e, D0	; same as above, but for atk/def smaller window
-	MOVEQ	#$c, D1	
-	MOVEQ	#$00000008, D2	
-	MOVEQ	#6, D3	
-	MOVEQ	#3, D4	
-	;BSR.w	*+$A776	
-	; BSR.w	$2fec	; draw smaller atk/def window
-	NOP		; using equipment window, no longer need a separate one.. unless i show all stats! spd/vit etc
-	NOP
+			; using equipment window, no longer need a separate one.. unless i show all stats! spd/vit etc
+	
 	MOVEQ	#$0000000A, D0
 	MOVEQ	#$0000000C, D1
-	MOVEQ	#$00000014, D2
+	MOVEQ	#$0000001c, D2
 	MOVEQ	#$0000000E, D3
 	MOVE.w	#$0043, D4
 	BSR.w	draw_background_window	; draw item window
-	MOVE.w	D0, $6(A6)
+	MOVE.w	D0, $6(A6)	; this might have something to do with destroying the window later?
+
+	MOVEQ	#$0000001e, D0	; same as above, but for atk/def smaller window
+	MOVEQ	#$c, D1	
+	MOVEQ	#$00000008, D2	
+	MOVEQ	#$e, D3	
+	MOVEQ	#$3, D4	
+	BSR.w	$2fec	; draw smaller atk/def window
+	; this window wasn't disappearing so i stacked it on top of the other one...
 	MOVE.w	A1, $4(A5)
 	CLR.w	$6(A5)
+ org $8894
 	MOVEA.w	$4(A5), A1
-	
 	MOVEQ	#$0000000B, D0	; x offset for text
 	MOVEQ	#3, D1	; y offset
+
+ org $889c
 	LEA	$FFFF87C8.w, A0	; this line will be automatically overwritten by my python script..
 	BSR.w	write_label_8x8	; writes wpn/arm/hlm etc
 	
@@ -528,23 +536,27 @@ draw_equipment_backgrounds:
 	CLR.l	D2
 	MOVE.w	$A(A2), D2	; get atk stat into d2
 	;CMPI.w	#$03E8, D2	; compare to 1k
-	CMPI.w	#$2710, D2	; compare to 10k :D
-	BCS.b	loc_00008916
-	MOVE.w	#$270f, D2	; cap display at 9999 
-	
+	;CMPI.w	#$2710, D2	; compare to 10k :D
+	;BCS.b	loc_00008916
+	;MOVE.w	#$270f, D2	; cap display at 9999 
+
 loc_00008916:
-	MOVEQ	#5, D3	; digit padding?
+	MOVEQ	#4, D3	; digit padding? in VRAM, space to reserve
 	MOVEQ	#$00000013, D0	; x offset
 	MOVEQ	#$9, D1	; y offset
 	BSR.w	draw_stat_value	; draw atk/def number
 	CLR.l	D2	
+	jsr draw_substats
+	
 	MOVE.w	$C(A2), D2	; same as above but for defense
 	;CMPI.w	#$03E8, D2
+	
+ org $8926
 	CMPI.w	#$2710, D2	; compare to 10k :D
 	BCS.b	loc_00008930
 	MOVE.w	#$270f, D2	; set at 9999
 loc_00008930:
-	MOVEQ	#6, D3
+	MOVEQ	#4, D3
 	MOVEQ	#$00000021, D0
 	MOVEQ	#$9, D1
 	BSR.w	draw_stat_value
@@ -555,7 +567,9 @@ loc_00008930:
 	BSR.w	start_drawing_item_window	; draw items
 	ADDQ.w	#1, D0
 	MOVE.w	$6(A5), D7	
-	BSR.w	$3328	; maybe branch to idle / highlighting
+	BSR.w	$3328	; maybe branch to idle / highlighting,this is at pc $8950, might be important for spacing?
+	
+	
 
 ; ########################################################################################
 ; # Full page stat screen!!
@@ -727,6 +741,7 @@ draw_gear_labels:
 	
 	MOVE.b	$14(A4), D2	; currently equipped weapon
 	jsr	write_equipment_8x16	
+	addq	#$1, d1
 	MOVE.b	$15(A4), D2	; equipped armor
 	jsr	write_equipment_8x16	
 	MOVE.b	$16(A4), D2	; equipped helm
@@ -737,9 +752,10 @@ draw_gear_labels:
 	jsr	write_equipment_8x16	
 	
 	MOVE.l	$00FFD5D6, D2	; gold amount
-	MOVEQ	#5, D3
-	MOVEQ	#$0000001B, x_tile_offset
+	MOVEQ	#7, D3
+	MOVEQ	#$0000001d, x_tile_offset
 	MOVEQ	#1, y_tile_offset
+;	jsr small_number_indenter ; this overwrites important stuff :/
 	BSR.w	draw_stat_value	
 
  org $91b8	; needed for lea string
@@ -800,7 +816,42 @@ get_xp_to_next_level:
 
 	rts
 	
+; ########################################################################################
+; # fully original asm!! display str/int/spd etc stats on equip menu
+; # 
+; #
+; ########################################################################################
 	
+ org $68980
+ ; window is offset $1e, $c  x,y
+draw_substats:
+	LEA	$1234.w, A0	; strings for stat labels (str, vit, etc) ; my python script will redirect this...
+	MOVEQ	#$1f, x_tile_offset
+	MOVEQ	#$d, y_tile_offset
+	JSR	write_label_8x8
+
+	CLR.l	D2
+	MOVE.b	$F(A2), D2	; str value
+	MOVEQ	#3, D3
+	MOVEQ	#$22, x_tile_offset	; set x offset for str / int stat values
+	addq	#$1, y_tile_offset
+	JSR	draw_stat_value
+
+	CLR.l	D2
+	MOVE.b	$10(A2), D2	; intelligence value
+	addq	#3, y_tile_offset
+	JSR	draw_stat_value
+	CLR.l	D2
+	MOVE.b	$11(A2), D2	; vitality
+	addq	#3, y_tile_offset
+	JSR	draw_stat_value
+	CLR.l	D2
+	MOVE.b	$12(A2), D2	; speed
+	addq	#3, y_tile_offset
+	JSR	draw_stat_value
+	RTS
+
+
  org $1dee
 write_to_vdp:
 
