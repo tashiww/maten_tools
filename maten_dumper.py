@@ -106,7 +106,9 @@ output_file = FilePath("test_dump.txt")
 
 
 item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
+# monster block really starts $1519a but string starts at $151be i guess
 monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
+
 npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
 skill_block = StringBlock('skl', 0x1c2fa, 0x1d45c, 0x40, 0x10)
 # shop strings start = 0x21000
@@ -874,12 +876,12 @@ script_files = ["lea_strings.txt", "foo.txt"]
 free_space = make_space_from_file(tling_rom.path, script_files)
 print(f"cleared {free_space} bytes")
 
-insert_from_file(tling_rom.path, "lea_strings.txt", "foo.txt")
+#insert_from_file(tling_rom.path, "lea_strings.txt", "foo.txt")
 
 # these lines fill fixed length text blocks with debug strings
-for block in fixed_len_blocks[1:]:
-	fixed_str_parse(tling_rom.path, en_menu_tbl, block)
-	# dump_fixed_str(original_rom.path, ja_menu_tbl, item_block)
+for block in fixed_len_blocks[1:2]:
+	# fixed_str_parse(tling_rom.path, en_menu_tbl, block)
+	dump_fixed_str(original_rom.path, ja_menu_tbl, block)
 
 
 def insert_fixed_str(rom_path: Path, script_name: str) -> int:

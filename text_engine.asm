@@ -24,7 +24,7 @@ BaseFontOffset	equr	a0
 	LEA	$000648E6, BaseFontOffset	; base font address in ROM
 	ADDA.l	FontTileOffset, BaseFontOffset	; font tile offset for current character
 	MOVEM.l	BaseFontOffset/FontTileOffset, -(A7)
-	MOVE.w	#$0020, D0	; i have no idea what this is supposed to be lol? $40? $80?
+	MOVE.w	#$0040, D0	; i have no idea what this does but setting to $20 breaks monster display code in battles...
 	BSR.w	$3b24	; vdp stuff?
 
  org $2024
