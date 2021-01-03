@@ -652,7 +652,8 @@ def parse_script(script_path: Path) -> list:
 					if not li.startswith('#') and len(li) > 1]:
 			if line.startswith("{"):
 				if len(tlstring) > 0 or (str_info and str_info.repoint):
-					str_info.en_text = tlstring
+					# remove trailing <br>?
+					str_info.en_text = tlstring.rstrip("<br>")
 					string_list.append(str_info)
 					tlstring = ""
 
@@ -670,6 +671,8 @@ def parse_script(script_path: Path) -> list:
 
 			else:
 				tlstring += line
+				if tlstring[-4:] not in ["oll>", "<br>"]:
+					tlstring += "<br>"
 
 	return string_list
 

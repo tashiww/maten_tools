@@ -28,6 +28,9 @@
 ; changes menus to fill every row instead of every other row, shops and menus
 	include "menu_item_layout.asm"
 
+; changes behavior of name selection screen to match smaller english alphabet
+	include "menu_name_selection.asm"
+	
 	
 	;org $a45a ; hacky base item offset change ...
 	; LEA $000130C6, A0

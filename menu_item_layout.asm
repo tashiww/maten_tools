@@ -233,7 +233,7 @@ loc_00003634:
 	BEQ.b	loc_00003652
 	CMPI.b	#$0D, D2
 	BNE.b	loc_00003664
-	ADDQ.w	#1, D1	; single space, not double
+	ADDQ.w	#1, D1	; single space, not double, affects choose name menu, maybe others?
 	MOVE.w	D3, D0	;Predicted (Code-scan)
 	BRA.b	loc_00003634	;Predicted (Code-scan)
 loc_00003652:
