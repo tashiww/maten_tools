@@ -85,6 +85,7 @@ class String:
 		self.en_bin = None
 		self.en_bin_len = None
 		self.prefix = prefix
+		self.step = None
 
 	@property
 	def en_text(self):
@@ -416,6 +417,7 @@ def text_to_hex(tbl, string):
 
 
 def dump_fixed_str(rom_path: Path, tbl: dict, block_info: StringBlock) -> list:
+	# TODO: make this dump proper json...
 	start_offset = block_info.start
 	end_offset = block_info.end
 
@@ -427,7 +429,13 @@ def dump_fixed_str(rom_path: Path, tbl: dict, block_info: StringBlock) -> list:
 			orig_str = rom.read(12)
 			itm_name = bin_to_text(orig_str, tbl)[0].rstrip("<end>")
 			block_info.id = i
-			fprint(f'{block_info.__dict__}')
+			block_info.ptr_type = "fixed"
+			block_info.table = "menu"
+			block_info.ptr_pos = None
+			block_info.repoint = False
+			block_info.str_pos = block_info.start
+			json_block = json.dumps(block_info.__dict__)
+			fprint(f'{json_block}')
 			fprint(f"# {itm_name}\n\n")
 
 			i += 1
@@ -649,13 +657,15 @@ def parse_script(script_path: Path) -> list:
 	str_info = None
 
 	with open(script_path, "r", encoding="utf-8") as script:
+		# i think this is actually cutting off trailing r's ???
 		for line in [
-					li.strip('\r\n') for li in script.readlines()
+					li.strip('\r').strip('\n') for li in script.readlines()
 					if not li.startswith('#') and len(li) > 1]:
 			if line.startswith("{"):
 				if len(tlstring) > 0 or (str_info and str_info.repoint):
-					# remove trailing <br>?
-					str_info.en_text = tlstring.rstrip("<br>")
+					# remove trailing <br>? this removes letters b, r, etc...
+					# str_info.en_text = tlstring.rstrip("<br>")
+					str_info.en_text = tlstring
 					string_list.append(str_info)
 					tlstring = ""
 
@@ -664,12 +674,13 @@ def parse_script(script_path: Path) -> list:
 								metadata['ptr_pos'],
 								metadata['str_pos'],
 								metadata['table'],
-								metadata['repoint'],
+								metadata.get('repoint'),
 								metadata['ptr_type'],
-								metadata['prefix']
+								metadata.get('prefix')
 								)
 				if str_info.ptr_type == 'fixed':
 					str_info.id = metadata.get('id')
+					str_info.step = metadata.get('step')
 
 			else:
 				tlstring += line
@@ -876,13 +887,12 @@ script_files = ["lea_strings.txt", "foo.txt"]
 free_space = make_space_from_file(tling_rom.path, script_files)
 print(f"cleared {free_space} bytes")
 
-#insert_from_file(tling_rom.path, "lea_strings.txt", "foo.txt")
+insert_from_file(tling_rom.path, "lea_strings.txt", "foo.txt")
 
 # these lines fill fixed length text blocks with debug strings
-for block in fixed_len_blocks[1:2]:
+# for block in fixed_len_blocks[2:3]:
 	# fixed_str_parse(tling_rom.path, en_menu_tbl, block)
-	dump_fixed_str(original_rom.path, ja_menu_tbl, block)
-
+	# dump_fixed_str(original_rom.path, ja_menu_tbl, block)
 
 def insert_fixed_str(rom_path: Path, script_name: str) -> int:
 
@@ -891,18 +901,17 @@ def insert_fixed_str(rom_path: Path, script_name: str) -> int:
 	# for f in foo[0:8]:
 	# 	# print(f.__dict__)
 	# die()
-	step = 0x20
+	step = lines[0].step
+	# old_pos = 0x130c6
+	new_pos = lines[0].str_pos
 	with open(rom_path, "rb+") as rom:
-		old_pos = 0x130c6
 		# new_pos = find_space(rom, 0x20000, None, len(lines) * step)
-		new_pos = old_pos
-		if new_pos:
-			print(f'{new_pos=:00x}')
-			for line in lines:
-				rom.seek(new_pos + (line.id * step))
-				rom.write(line.en_bin[0:15] + b'\x00')
-		else:
-			print("not enough space for items :(")
+		for line in lines:
+			rom.seek(new_pos + (line.id * step))
+			rom.write(line.en_bin[0:15] + b'\x00')
 
 
 insert_fixed_str(tling_rom.path, 'item_list.txt')
+insert_fixed_str(tling_rom.path, 'enemy_list.txt')
+insert_fixed_str(tling_rom.path, 'skill_list.txt')
+insert_fixed_str(tling_rom.path, 'npc_list.txt')

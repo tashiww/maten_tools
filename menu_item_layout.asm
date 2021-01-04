@@ -1105,6 +1105,54 @@ finished_drawing_enemies
 	RTS	; returns to drawing the command selection menu, this was pc $daf8
 
 
+; ########################################################################################
+; # stealth hack
+; # skills window expansion
+; # Battle menu adjustments!
+; #
+; ########################################################################################
+
+; sets up skill window dimensions
+ org $cf06
+	moveq #$10, d2	; width
+	moveq #$8, d3	; height
+ org $cf22
+	addq	#$1, d1	; y offset for skill text ?? initial..
+ org $cf72 ; changing to right page
+	addq	#$1, d1	; y offset for skill text ?? after page changes
+ org $cf92 ; moving to previous page
+	addq	#$1, d1	; y offset for skill text ?? after page changes	
+
+
+ ; org $0000AA82
+	; MOVE.w	$00FFDAA6, D6	
+	; ADDQ.w	#$8, D6	; # to increase per page advance
+	; BRA.b	$aad2
+	; MOVE.w	$00FFDAA6, D6	
+	; subq	#$8, d6	; # to decrease per .. going back a page
+
+; org $aaf4
+;	moveq #$7, d4	; increase rows per page	; it calculated a number of pages initially based on #5 instead of #7 i think? so latter pages have repeated items
+ org $ab06
+ 	addq #$1, d1	; changes skill printing to single space instead of double-space
+ org $ab10
+	moveq #$d, d2	; highlight width
+	
+; ########################################################################################
+; # non-battle skills menu expansion
+; #
+; ########################################################################################
+
+ org $00009416
+	TST.w	D0
+	BEQ.w	*+$8C
+	MOVEQ	#$12, D0	; x offset
+	MOVEQ	#2, D1	; y offset
+	MOVEQ	#$10, D2	; width
+	MOVEQ	#$a, D3; height
+	MOVEQ	#3, D4
+	;BSR.w	$32d6 or something
+
 
  org $1dee
 write_to_vdp:
