@@ -665,6 +665,9 @@ def parse_script(script_path: Path) -> list:
 				if len(tlstring) > 0 or (str_info and str_info.repoint):
 					# remove trailing <br>? this removes letters b, r, etc...
 					# str_info.en_text = tlstring.rstrip("<br>")
+					if tlstring.endswith("<br>"):
+						tlstring = tlstring[0:-4]
+
 					str_info.en_text = tlstring
 					string_list.append(str_info)
 					tlstring = ""
@@ -686,6 +689,15 @@ def parse_script(script_path: Path) -> list:
 				tlstring += line
 				if tlstring[-4:] not in ["oll>", "<br>"]:
 					tlstring += "<br>"
+
+	if len(tlstring) > 0 or (str_info and str_info.repoint):
+		# remove trailing <br>? this removes letters b, r, etc...
+		# str_info.en_text = tlstring.rstrip("<br>")
+		if tlstring.endswith("<br>"):
+			tlstring = tlstring[0:-4]
+
+		str_info.en_text = tlstring
+		string_list.append(str_info)
 
 	return string_list
 
@@ -896,6 +908,7 @@ insert_from_file(tling_rom.path, "lea_strings.txt", "foo.txt")
 
 def insert_fixed_str(rom_path: Path, script_name: str) -> int:
 
+	# TODO: check if this needs to pad to max_len to avoid leftover jp chars
 	lines = parse_script(FilePath(script_name).path)
 	# foo = sorted(foo, key=lambda k: k.en_bin_len, reverse=True)
 	# for f in foo[0:8]:
@@ -915,3 +928,4 @@ insert_fixed_str(tling_rom.path, 'item_list.txt')
 insert_fixed_str(tling_rom.path, 'enemy_list.txt')
 insert_fixed_str(tling_rom.path, 'skill_list.txt')
 insert_fixed_str(tling_rom.path, 'npc_list.txt')
+insert_fixed_str(tling_rom.path, 'battle_status_list.txt')

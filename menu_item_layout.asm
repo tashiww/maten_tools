@@ -569,7 +569,17 @@ loc_00008930:
 	MOVE.w	$6(A5), D7	
 	BSR.w	$3328	; maybe branch to idle / highlighting,this is at pc $8950, might be important for spacing?
 	
+
+; $8f18 drawing party-> stats window
+
+ org $8f1c
+	moveq #$1a, d2	; width
+	moveq #$8, d3
 	
+ org $a318
+	addq #1, d1	; changed this to 1 for single spacing
+
+
 
 ; ########################################################################################
 ; # Full page stat screen!!
@@ -579,6 +589,15 @@ loc_00008930:
 ; # Creation Date:   2021-1-2 10:22:43
 ; # Analysis Region: 0x00009002 - 0x000091C4
 ; ########################################################################################
+
+ org $00008F86
+	; dimensions for xxx G small window in top right
+	MOVEQ	#$0000001d, D0
+	MOVEQ	#0, D1
+	MOVEQ	#$0000000b, D2
+	MOVEQ	#4, D3
+	MOVEQ	#3, D4
+	BSR.w	draw_small_window
 
  org $00009002
  	WHILE *<$91c4 ; blank whole section so old code isn't leftover
@@ -610,12 +629,13 @@ player_ram_offset	equr	a4	; starting with $ffcedc, incrementing $50ish? for each
 	MOVEQ	#5, y_tile_offset
 	MOVEQ	#0, D3
 	BSR.w	draw_stat_value
-	MOVEQ	#$00000015, x_tile_offset
-	MOVEQ	#5, y_tile_offset
+	
+	MOVEQ	#$0000003, x_tile_offset
+	MOVEQ	#2, y_tile_offset
 	TST.w	$2(A4)	; check if hp is 0
 	BNE.b	not_dead	
 	LEA	$FFFF9294.w, A0	; dead string
-	BSR.w	write_label_8x16	;Predicted (Code-scan)
+	BSR.w	write_label_8x8	;Predicted (Code-scan)
 	BRA.b	not_poisoned	;Predicted (Code-scan)
 
 ; $9048 , checks status effects
@@ -624,21 +644,21 @@ not_dead:
 	BTST.l	#2, D4
 	BEQ.b	not_petrified
 	LEA	$FFFF929A.w, A0	; petrifed string
-	BSR.w	write_label_8x16	;Predicted (Code-scan)
-	ADDQ.w	#5, D0	;Predicted (Code-scan)
+	BSR.w	write_label_8x8	;Predicted (Code-scan)
+	ADDQ.w	#7, d0	;Predicted (Code-scan)
 	BRA.b	not_paralyzed	;Predicted (Code-scan)
 	
 not_petrified:
 	BTST.l	#1, D4
 	BEQ.b	not_paralyzed
-	LEA	$FFFF92A0.w, A0	; paralyzed string
-	BSR.w	write_label_8x16	;
-	ADDQ.w	#5, D0	;
+	LEA	$FFFF92A0.w, A0	; paralyzed string these leas can't move :(
+	BSR.w	write_label_8x8	;
+	ADDQ.w	#8, D0	;
 not_paralyzed:
 	BTST.l	#0, D4
 	BEQ.b	not_poisoned
 	LEA	$FFFF92A4.w, A0	; poisoned string
-	BSR.w	write_label_8x16	;Predicted (Code-scan)
+	BSR.w	write_label_8x8	;Predicted (Code-scan)
 	
 ; finished stat checks, start with hp/mp
 not_poisoned:
@@ -753,7 +773,7 @@ draw_gear_labels:
 	
 	MOVE.l	$00FFD5D6, D2	; gold amount
 	MOVEQ	#7, D3
-	MOVEQ	#$0000001d, x_tile_offset
+	MOVEQ	#$0000001f, x_tile_offset
 	MOVEQ	#1, y_tile_offset
 ;	jsr small_number_indenter ; this overwrites important stuff :/
 	BSR.w	draw_stat_value	
@@ -967,33 +987,36 @@ loc_0000D980:
 	ADDQ.w	#1, x_tile_offset
 	MOVE.w	D7, y_tile_offset
 	ADDQ.w	#1, y_tile_offset
-	LEA	loc_0000D8C4(PC), A1
+	LEA	loc_0000D8C4(PC), A0	; rewrite status effects here
 	TST.w	$2(A6)	; check for 0hp lol
 	BEQ.b	special_status_printer
 	MOVE.w	$16(A6), D3	; load status effects? $34c8+$16 = $34de
 	MOVEQ	#8, D4
 	
 check_for_status_effects:
-	ADDQ.l	#8, A1	; skip past シボウ
-	ADDQ.l	#2, A1	; and there was an initial FF for some reason.. maybe the bit to check
-	MOVE.w	(A1), D5	; bit to check for status
+	ADDQ.l	#8, A0	; skip past シボウ
+	ADDQ.l	#2, A0	; and there was an initial FF for some reason.. maybe the bit to check
+	MOVE.w	(A0), D5	; bit to check for status
 	BTST.l	D5, D3	; maaybe checking status effects?
 	BNE.b	special_status_printer
 	DBF	D4, check_for_status_effects	; there are 8 of them?!
 	BRA.b	print_hp_mp_vals
 	
 special_status_printer:
-	ADDQ.l	#2, A1
-	MOVEQ	#3, D3	; only write 4 letters (works for シボウ and dead...
-	MOVEA.w	#$C000, A0
+	subq	#1, x_tile_offset
+	ADDQ.l	#2, A0
+	;MOVEQ	#3, D3	; only write 4 letters (works for シボウ and dead...
+	;MOVEA.w	#$C000, A0
 draw_status_effect:
 ; i probably want to bypass this special routine entirely and just use the normal write_label_8x8 routine
-	MOVE.w	(A1)+, D2	; $e200 for シ dead? $e201 for ボ how did they get the dakuten attached? wow at vram $4000, block $100 it has an extra alphabet for status effects
-	JSR	write_to_vdp
-	ADDQ.w	#1, x_tile_offset
-	DBF	D3, draw_status_effect	; draw 4 letters
+	;MOVE.w	(A1)+, D2	; $e200 for シ dead? $e201 for ボ how did they get the dakuten attached? wow at vram $4000, block $100 it has an extra alphabet for status effects
+	;JSR	write_to_vdp
+	;ADDQ.w	#1, x_tile_offset
+	;DBF	D3, draw_status_effect	; draw 4 letters
+	jsr write_label_8x8 ; the original text printed in yellow.. oh the font tiles were yellow :/
 	
 ; if no status effects, perhaps?
+ org $da0e
 print_hp_mp_vals:
 	MOVE.w	D6, x_tile_offset
 	ADDQ.w	#2, x_tile_offset
@@ -1008,10 +1031,11 @@ print_hp_mp_vals:
 	MOVE.w	$6(A6), D2	; max hp
 	MOVEQ	#4, D3
 	JSR	draw_value_8x8
+
 loc_0000DA38:
 	MOVEM.l	(A7)+, D0/D1/D2/D3/D4/D5/D6/D7/A0/A1/A6
 	RTS ; returned way back to $14b0c? that's some deep code...
-	
+ org $da3e ; i think this is right??
 	MOVEM.l	A6/A5/A0/D7/D6/D5/D4/D3/D2/D1/D0, -(A7)
 	MOVEA.l	$00FFDAB4, A6
 	MOVEA.l	A6, A5
