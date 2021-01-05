@@ -1,0 +1,792 @@
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 0, "prefix": null}
+# ショートソート゛
+Short Sword
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 1, "prefix": null}
+# ロンク゛ソート゛
+Long Sword
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 2, "prefix": null}
+# フ゛ロート゛ソート゛
+Broad Sword
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 3, "prefix": null}
+# ハ゛スタート゛ソート゛
+Bastard Sword
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 4, "prefix": null}
+# ク゛レートソート゛
+Great Sword
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 5, "prefix": null}
+# ワースレイヤー
+War Slayer
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 6, "prefix": null}
+# テ゛ヒ゛ルスレイヤー
+Devil Slayer
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 7, "prefix": null}
+# ハント゛アックス
+Hand Axe
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 8, "prefix": null}
+# ハ゛トルアックス
+Battle Axe
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 9, "prefix": null}
+# トマホーク
+Tomahawk
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 10, "prefix": null}
+# ハルハ゛ート゛
+Halbard
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 11, "prefix": null}
+# く゛んしんのおの
+Army Axe
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 12, "prefix": null}
+# ウット゛スタッフ
+Wooden Staff
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 13, "prefix": null}
+# フ゛ロンス゛スタッフ
+Bronze Staff
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 14, "prefix": null}
+# さんこ゛のつえ
+Coral Wand
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 15, "prefix": null}
+# クリスタルロット゛
+Crystal Rod
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 16, "prefix": null}
+# タ゛イヤのつえ
+Diamond Wand
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 17, "prefix": null}
+# かわのむち
+Leather Whip
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 18, "prefix": null}
+# チェーン
+Chain
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 19, "prefix": null}
+# くさりか゛ま
+Sickle & Chain
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 20, "prefix": null}
+# クロスホ゛ウ
+Crossbow
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 21, "prefix": null}
+# ロンク゛ホ゛ウ
+Long Bow
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 22, "prefix": null}
+# ロヒ゛ンのゆみ
+Robin Bow
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 23, "prefix": null}
+# ナックルハ゜ート
+Brass Knuckles
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 24, "prefix": null}
+# ト゛リルホーン
+Drill Horn
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 25, "prefix": null}
+# なまりのつふ゛て
+Lead Balls
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 26, "prefix": null}
+# とくしゅえき
+Special Liquid
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 27, "prefix": null}
+# ナイフのつは゛さ
+Blade Wings
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 28, "prefix": null}
+# しんくうのつは゛さ
+Vacuum Wings
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 29, "prefix": null}
+# しゅりけん
+Shuriken
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 30, "prefix": null}
+# はんそ゛うのつるき゛
+Hanzo Sabre
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 31, "prefix": null}
+# イーク゛ルクロー
+Eagle Claw
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 32, "prefix": null}
+# テ゛ヒ゛ルクロー
+Devil Claw
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 33, "prefix": null}
+# けいやくのつえ
+Binding Wand
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 34, "prefix": null}
+# かたみのけん
+Memento Sword
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 35, "prefix": null}
+# て゛んせつのまけん
+Excalibur
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 36, "prefix": null}
+# あんこくのつるき゛
+Dark Blade
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 37, "prefix": null}
+# らいし゛んのけん
+Zeus Sword
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 38, "prefix": null}
+# さ゛んは゛とう
+Zanbato
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 39, "prefix": null}
+# コス゛モフ゛レート゛
+Cosmo Plate
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 40, "prefix": null}
+# ホーリーロット゛
+Holy Rod
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 41, "prefix": null}
+# ウェンテ゛ィのつえ
+Windy Wand
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 42, "prefix": null}
+# ぬののふく
+Cotton Shirt
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 43, "prefix": null}
+# あさのローフ゛
+Hemp Robe
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 44, "prefix": null}
+# きょうた゛んふく
+Cultist Robe
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 45, "prefix": null}
+# レサ゛ースーツ
+Leather Suit
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 46, "prefix": null}
+# スケールメイル
+Scale Mail
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 47, "prefix": null}
+# きぬのローフ゛
+Silk Robe
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 48, "prefix": null}
+# チェーンメイル
+Chain Mail
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 49, "prefix": null}
+# ワンヒ゜ース
+Dress
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 50, "prefix": null}
+# と゛うのむねあて
+Copper Armor
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 51, "prefix": null}
+# けおりのカ゛ウン
+Wool Gown
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 52, "prefix": null}
+# けんしのマント
+Silk Cape
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 53, "prefix": null}
+# スチールフ゜レート
+Steel Plate
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 54, "prefix": null}
+# ミンクのけか゛わ
+Mink Coat
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 55, "prefix": null}
+# ゆうしゃのよろい
+Hero Armor
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 56, "prefix": null}
+# しゅのはおり
+Leader Tuxedo
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 57, "prefix": null}
+# ト゛ラコ゛ンメイル
+Dragon Mail
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 58, "prefix": null}
+# てんしのト゛レス
+Angel Dress
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 59, "prefix": null}
+# シルフのマント
+Sylph Cape
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 60, "prefix": null}
+# ひかりのころも
+Shining Outfit
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 61, "prefix": null}
+# てつのひふ
+Ironskin
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 62, "prefix": null}
+# タ゛イヤのひふ
+Diamondskin
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 63, "prefix": null}
+# まと゛うマント
+Magic Cape
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 64, "prefix": null}
+# まんけ゛つのよろい
+Full Moon Armor
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 65, "prefix": null}
+# ねむりのつは゛さ
+Sleep Wings
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 66, "prefix": null}
+# てんくうのつは゛さ
+Heavenly Wings
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 67, "prefix": null}
+# やみのころも
+Dark Garments
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 68, "prefix": null}
+# しんひ゜のマント
+Mystery Cape
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 69, "prefix": null}
+# あやしいころも
+Sketchy Clothes
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 70, "prefix": null}
+# かわのたて
+Leather Shield
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 71, "prefix": null}
+# かわのほ゛うし
+Leather Hat
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 72, "prefix": null}
+# きょうた゛んほ゛う
+Cultist Hat
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 73, "prefix": null}
+# はねほ゛うし
+Feather Cap
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 74, "prefix": null}
+# こうらのほ゛うし
+Tortoise Hat
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 75, "prefix": null}
+# こうらのたて
+Tortoise Shield
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 76, "prefix": null}
+# フ゛ロンス゛ヘルム
+Bronze Helm
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 77, "prefix": null}
+# スモールヘルム
+Steel Helm
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 78, "prefix": null}
+# ハ゛ックラー
+Buckler
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 79, "prefix": null}
+# クリスタルのたて
+Crystal Shield
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 80, "prefix": null}
+# ファイアシールト゛
+Fire Shield
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 81, "prefix": null}
+# スチールヘルム
+Steel Helm
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 82, "prefix": null}
+# き゛んのかみかさ゛り
+Silver Hair Pin
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 83, "prefix": null}
+# タワーシールト゛
+Tower Shield
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 84, "prefix": null}
+# やしゃのめん
+Demon Mask
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 85, "prefix": null}
+# へ゛んてんのめん
+Goddess Mask
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 86, "prefix": null}
+# ししのたて
+Lion Shield
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 87, "prefix": null}
+# ト゛ラコ゛ンヘルム
+Dragon Helm
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 88, "prefix": null}
+# フレイムのたて
+Flame Shield
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 89, "prefix": null}
+# ノームのかんむり
+Gnome Crown
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 90, "prefix": null}
+# アホ゜ロンのたて
+Apollo Shield
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 91, "prefix": null}
+# かけ゛のかみかさ゛り
+Shadow Hair Pin
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 92, "prefix": null}
+# サイコシールト゛
+Psycho Shield
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 93, "prefix": null}
+# あやしいほ゛うし
+Suspicious Hat
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 94, "prefix": null}
+# エルフのほ゛うし
+Elf Hat
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 95, "prefix": null}
+# しんひ゜のやくそう
+Mystery Herb
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 96, "prefix": null}
+# やくひんのヒ゛ン
+Potion Bottle
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 97, "prefix": null}
+# ろうやのカキ゛
+Dungeon Key
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 98, "prefix": null}
+# け゛と゛くさ゛い
+Antivenom
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 99, "prefix": null}
+# ライト
+Lantern
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 100, "prefix": null}
+# し゛け゛んは゛くた゛ん
+Dimension Bomb
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 101, "prefix": null}
+# せきは゛ん
+Stone Tablet
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 102, "prefix": null}
+# ト゛ラコ゛ンのたまこ゛
+Dragon Egg
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 103, "prefix": null}
+# た゛いちのまもり
+Earth Amulet
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 104, "prefix": null}
+# こおりのゆひ゛わ
+Ice Ring
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 105, "prefix": null}
+# あまゆきのつえ
+Sleet Staff
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 106, "prefix": null}
+# うみなりのつほ゛
+Tsunami Pot
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 107, "prefix": null}
+# めか゛みそ゛う
+Goddess Statue
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 108, "prefix": null}
+# エルフのうて゛わ
+Elven Bracer
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 109, "prefix": null}
+# てんのカキ゛
+Heaven Key
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 110, "prefix": null}
+# つきのカキ゛
+Moon Key
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 111, "prefix": null}
+# うみのカキ゛
+Ocean Key
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 112, "prefix": null}
+# た゛いちのカキ゛
+Earth Key
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 113, "prefix": null}
+# ほしのカキ゛
+Star Key
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 114, "prefix": null}
+# てんのフルート
+Heaven Flute
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 115, "prefix": null}
+# つきのヘ゛ル
+Moon Bell
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 116, "prefix": null}
+# うみのホルン
+Sea Horn
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 117, "prefix": null}
+# た゛いちのト゛ラム
+Earth Drum
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 118, "prefix": null}
+# ほしのハ゛イオリン
+Star Violin
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 119, "prefix": null}
+# ひくうようせん
+Spirit Airship
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 120, "prefix": null}
+# しんし゛つのかか゛み
+Mirror of Truth
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 121, "prefix": null}
+# かせ゛のたてこ゛と
+Wind Harp
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 122, "prefix": null}
+# よろいのからた゛
+Armor Body
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 123, "prefix": null}
+# れいきゅう
+Spirit Ball
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 124, "prefix": null}
+# まほうきゅう
+Magic Ball
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 125, "prefix": null}
+# ちからのカキ゛
+Power Key
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 126, "prefix": null}
+# まもりのカキ゛
+Protect Key
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 127, "prefix": null}
+# まのカキ゛
+Magic Key
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 128, "prefix": null}
+# こころのカキ゛
+Spirit Key
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 129, "prefix": null}
+# かいふくのみ
+Heal Berry
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 130, "prefix": null}
+# と゛くけしそう
+Antidote
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 131, "prefix": null}
+# ひ゛っくりそう
+Flash Grass
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 132, "prefix": null}
+# てんしのなみた゛
+Angel Tears
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 133, "prefix": null}
+# あいのきせき
+Miracle of Love
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 134, "prefix": null}
+# ト゛ラコ゛ンのキハ゛
+Dragon Fang
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 135, "prefix": null}
+# にんき゛ょのひとみ
+Doll Eyes
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 136, "prefix": null}
+# ロックのはね
+Rock Feather
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 137, "prefix": null}
+# ケルヒ゜ィーのめ
+Kelpie Eye
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 138, "prefix": null}
+# こねす゛みのふえ
+Mouse Whistle
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 139, "prefix": null}
+# エリクサー
+Elixer
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 140, "prefix": null}
+# ようせいのきのみ
+Elf Berry
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 141, "prefix": null}
+# ランフ゜のけむり
+Lantern Smoke
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 142, "prefix": null}
+# ふしき゛なすな
+Mysterious Sand
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 143, "prefix": null}
+# せいすい
+Holy Water
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 144, "prefix": null}
+# ソールのいかり
+Angry Soul
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 145, "prefix": null}
+# アスラのうて゛わ
+Ashura Bracer
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 146, "prefix": null}
+# ウィンク゛フ゛ーツ
+Winged Boots
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 147, "prefix": null}
+# フリック゛のゆひ゛わ
+Frigg"s Ring
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 148, "prefix": null}
+# オーク゛のゆひ゛わ
+Orc Ring
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 149, "prefix": null}
+# はやふ゛さのうて゛わ
+Falcon Bracer
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 150, "prefix": null}
+# せいなるおまもり
+Holy Charm
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 151, "prefix": null}
+# そらのヘ゜ンタ゛ント
+Sky Pendant
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 152, "prefix": null}
+# せいりゅうのつの
+Holy Dragonhorn
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 153, "prefix": null}
+# せきりゅうのつの
+Stone Dragonhorn
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 154, "prefix": null}
+# はくりゅうのつの
+White Dragonhorn
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 155, "prefix": null}
+# オーシ゛ンのうて゛わ
+Odin Bracer
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 156, "prefix": null}
+# ハ゛ルト゛ルのヘ゛ルト
+Baldur's Belt
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 157, "prefix": null}
+# けっこんのしな
+Wedding Ring
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 158, "prefix": null}
+# ホルモンスコッフ゜
+Hormone Shovel
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 159, "prefix": null}
+# はやてのしょ
+<spell> Gale
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 160, "prefix": null}
+# せんこうのしょ
+<spell> Flash
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 161, "prefix": null}
+# いやしのしょ
+<spell> Heal
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 162, "prefix": null}
+# ねむりのしょ
+<spell> Sleep
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 163, "prefix": null}
+# まのみちのしょ
+<spell> Summon
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 164, "prefix": null}
+# はと゛うのしょ
+<spell> Pulse
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 165, "prefix": null}
+# きは゛らしのしょ
+<spell> Relax
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 166, "prefix": null}
+# かいふくのしょ
+<spell> Recovery
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 167, "prefix": null}
+# ひしょうのしょ
+<spell> Retreat
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 168, "prefix": null}
+# おんけいのしょ
+<spell> Blessing
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 169, "prefix": null}
+# け゛と゛くのしょ
+<spell> Antidote
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 170, "prefix": null}
+# ちゆのしょ
+<spell> Cure
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 171, "prefix": null}
+# ふふ゛きのしょ
+<spell> Blizzard
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 172, "prefix": null}
+# て゛んかいのしょ
+<spell> Jolt
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 173, "prefix": null}
+# ちんもくのしょ
+<spell> Silence
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 174, "prefix": null}
+# し゛ょうかのしょ
+<spell> Purify
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 175, "prefix": null}
+# せきかのしょ
+<spell> Petrify
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 176, "prefix": null}
+# そせいのしょ
+<spell> Revive
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 177, "prefix": null}
+# ふゆうのしょ
+<spell> Float
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 178, "prefix": null}
+# きせきのしょ
+<spell> Miracle
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 179, "prefix": null}
+# はめつのしょ
+<spell> Ruin
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 180, "prefix": null}
+# <spell> ひのたま
+<spell>  Light Ball
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 181, "prefix": null}
+# <spell> こおりのたま
+<spell>  Weave Ball
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 182, "prefix": null}
+# <spell> て゛んけ゛き
+<spell>  Lightning
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 183, "prefix": null}
+# <spell> せいしん
+<spell>  Earthquake
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 184, "prefix": null}
+# <spell> つらら
+<spell>  Icicle
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 185, "prefix": null}
+# <spell> たんけん
+<spell>  Explore
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 186, "prefix": null}
+# <spell> ひは゛しら
+<spell>  Fire Pillar
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 187, "prefix": null}
+# <spell> いかす゛ち
+<spell>  Thunderbolt
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 188, "prefix": null}
+# <spell> しんくう
+<spell>  Vacuum
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 189, "prefix": null}
+# <spell> きゅうすい
+<spell>  Absorb
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 190, "prefix": null}
+# ていおうのけん
+Tyrant Sword
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 191, "prefix": null}
+# ていおうのよろい
+Tyrant Armor
+
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 192, "prefix": null}
+# ていおうのたて
+Tyrant Shield
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 193, "prefix": null}
+# ていおうのかふ゛と
+Tyrant Helmet
+
+{"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 194, "prefix": null}
+# たいこうのマント
+Tyrant Cape

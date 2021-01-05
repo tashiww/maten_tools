@@ -1,0 +1,441 @@
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 0, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ルキフェル
+Lucifer
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 1, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ヘ゛ールセ゛フ゛フ゛
+Beelzebub
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 2, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# アスタロス
+Astaroth
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 3, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# レヒ゛ィアタン
+Leviathan
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 4, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# アスモテ゛ウス
+Asmodeus
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 5, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# アカ゛リアレフ゜ト
+Agaliarept
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 6, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# アルナス
+Arnath
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 7, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# サタナチア
+Satanachia
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 8, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ムールムール
+# it"s a red skeleton... with a cape..
+Caped Skeleton
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 9, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# カ゛ルサ゛ラート゛
+# furry guy with staff?
+Galzalard
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 10, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ヒ゛ク゛リーハ゛ロー
+# i think it was a pirate
+Bigly Baloo
+
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 11, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# フレイヤ
+Freyja
+
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 12, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# マルハ゛ス
+Malbas
+
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 13, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# しさいちょう
+Cardinal
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 14, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# とうそ゛くかしら
+Bandit Boss
+
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 15, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ユウレイセン
+Ghost Ship
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 16, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ヨウカイセン
+Spirit Ship
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 17, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ノルン
+Norn
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 18, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ハ゛ルロク゛
+Balrog
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 19, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ハ゛ール
+Baal
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 20, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ク゛レイトテ゛ーモン
+Greater Demon
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 21, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# フロストキンク゛
+Frost King
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 22, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# リッチ
+Lich
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 23, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# フェニックス
+Phoenix
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 24, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ランタ゛
+Landa
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 25, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ト゛ラコ゛ンソ゛ンヒ゛
+Dragon Zombie
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 26, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# タイタン
+Titan
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 27, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# アハ゛ト゛ン
+Abaddon
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 28, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ヘルメッセーシ゛
+Hell Messenger
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 29, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# メテ゛ューサ
+Medusa
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 30, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ウェンテ゛ィコ゛
+Wendigo
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 31, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ワーウルフ
+Werewolf
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 32, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ロート゛マークス
+Lord Marx
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 33, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ト゛ゥーラ
+Dula
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 34, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# フェンリル
+Fenrir
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 35, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# カ゛ーコ゛イル
+Gargoyle
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 36, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# タロス
+Taurus
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 37, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ウィサ゛ート゛
+Wizard
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 38, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# カ゛ーテ゛ィアン
+Guardian
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 39, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ウィルオウイフ゜ス
+Wil-o'-the-wisp
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 40, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ハ゛オアー
+Bower
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 41, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# レイス
+Wraith
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 42, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# マシ゛シャンソ゛ンヒ゛
+Magician Zombie
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 43, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ストーンコ゛ーレム
+Stone Golem
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 44, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ファイアリサ゛ート゛
+Fire Wizard
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 45, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# シニカ゛ミ
+Grim Reaper
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 46, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ライフスティラー
+Lifestealer
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 47, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# スィームルク゛
+#tlcheck
+Swimrug
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 48, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ナイトストーカー
+Night Stalker
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 49, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ハ゛ーサーカー
+Berserker
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 50, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# コ゛ールト゛アーマー
+Golden Armor
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 51, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# シールト゛ナイト
+Shield Knight
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 52, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ファイアマン
+Fireman
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 53, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# テンタキラー
+Tentakiller
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 54, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ク゛ール
+Ghoul
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 55, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# マッテ゛ィモンス
+# tlcheck
+Mad Demon
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 56, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ハ゜ヘ゜ットキラー
+Puppet Killer
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 57, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# スチールナイト
+Steel Knight
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 58, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ネクロマンサー
+Necromancer
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 59, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# スカルクルー
+Skull Crew
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 60, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# レット゛ワーム
+Red Worm
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 61, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# テ゛ーウ
+Deux
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 62, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# オクトクルース゛
+#tlcheck
+Octocruise
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 63, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# マークス
+Marx
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 64, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# メイシ゛
+Mage
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 65, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ハ゛ァルキー
+Valkyrie
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 66, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# テ゛スアーマ
+Death Armor
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 67, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# フ゛ェハ゜ル
+#tlcheck
+Burple
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 68, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ホルモン
+Hormone
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 69, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ストーンエルーシ゛
+Stone Lion
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 70, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# シールト゛マン
+Shield Man
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 71, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# スノーマン
+Snowman
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 72, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ウット゛コ゛ーレム
+Wood Golem
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 73, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# アマソ゛ニア
+Amazonia
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 74, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ソ゛ンヒ゛
+Zombie
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 75, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# リサ゛ート゛ウインク゛
+Lizard Wing
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 76, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# リサ゛ート゛マン
+Lizard Man
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 77, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# オーカ゛
+Ogre
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 78, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# テ゛スロック
+Death Rock
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 79, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ヒ゜ラニアス
+Piranhas
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 80, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ハ゛ンハ゜イアハ゛ット
+Vampire Bat
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 81, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ミースト
+#tlcheck
+Mist
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 82, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# マット゛フ゜ラント
+Mad Plant
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 83, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ナイトメア
+Nightmare
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 84, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# オアンネス
+Oannes
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 85, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# マト゛ホ゛ーン
+#tlcheck
+Mad Bone
+
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 86, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# アッシュスライム
+Ash Slime
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 87, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ハンキ゛ンク゛ト゛ール
+Hanging Doll
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 88, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ト゛ワーフ
+Dwarf
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 89, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# フ゛ロンス゛ナイト
+Bronze Knight
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 90, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# きょうた゛んいん
+Cultist
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 91, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# スケルトン
+Skeleton
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 92, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# エルーシ゛
+Lion
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 93, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# リカ゛ート゛アーマ
+Reguard Armor
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 94, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# コ゛ルト
+Gold
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 95, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# スライム
+Slime
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 96, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ソルシ゛ャー
+Soldier
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 97, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ク゛リーンスネーク
+Green Snake
+
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 98, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ハ゛ット
+Bat
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 99, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# シュロフ゛
+Syrup
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 100, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ころしや
+Assassin
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 101, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# アルナスあくま
+Evil Arnath
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 102, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# カ゛ルサ゛ラート゛
+# his second appearance?
+Galzalard
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 103, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# しさいちょう
+# does he appear twice?
+Cardinal
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 104, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# テ゛ースト゛ール
+Death Doll
+
+
+{"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 105, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
+# ト゛ッヘ゜ルケ゛ンカ゛ー
+Doppelganger

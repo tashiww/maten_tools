@@ -1,0 +1,31 @@
+{"desc": "debuff", "start_hex": "0xd8c6", "step": 10, "max_len": 8, "id": 0, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 55494, "table": "menu"}
+# status effect strings for battle window
+Dead
+
+{"desc": "debuff", "start_hex": "0xd8c6", "step": 10, "max_len": 8, "id": 1, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 55494, "table": "menu"}
+Stoned
+
+{"desc": "debuff", "start_hex": "0xd8c6", "step": 10, "max_len": 8, "id": 2, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 55494, "table": "menu"}
+Parlyz
+
+{"desc": "debuff", "start_hex": "0xd8c6", "step": 10, "max_len": 8, "id": 3, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 55494, "table": "menu"}
+Hold
+
+{"desc": "debuff", "start_hex": "0xd8c6", "step": 10, "max_len": 8, "id": 4, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 55494, "table": "menu"}
+Hold
+
+{"desc": "debuff", "start_hex": "0xd8c6", "step": 10, "max_len": 8, "id": 5, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 55494, "table": "menu"}
+Sleep
+
+{"desc": "debuff", "start_hex": "0xd8c6", "step": 10, "max_len": 8, "id": 6, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 55494, "table": "menu"}
+Cnfuse
+
+{"desc": "debuff", "start_hex": "0xd8c6", "step": 10, "max_len": 8, "id": 7, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 55494, "table": "menu"}
+Fear
+
+{"desc": "debuff", "start_hex": "0xd8c6", "step": 10, "max_len": 8, "id": 8, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 55494, "table": "menu"}
+Blind
+
+{"desc": "debuff", "start_hex": "0xd8c6", "step": 10, "max_len": 8, "id": 9, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 55494, "table": "menu"}
+Poison
+

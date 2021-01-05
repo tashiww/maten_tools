@@ -1,0 +1,288 @@
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 0, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ファイアホ゛ール
+Fireball
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 1, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ファイアストーム
+Firestorm
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 2, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ファイアホ゛ム
+Firebomb
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 3, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ヒートホ゛テ゛ィ
+Heat Body
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 4, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# サンレイ
+Sunray
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 5, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ムーンレイ
+Moonray
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 6, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# フラッシュ
+Flash
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 7, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# エナシ゛ーフ゛ラスト
+Energy Burst
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 8, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# メルト
+Melt
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 9, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# レイス゛
+Raise
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 10, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# アイスホ゛ール
+Ice Ball
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 11, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# フリース゛ロック
+Freeze Rock
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 12, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# テ゛スフ゛リサ゛ート゛
+Death Blizzard
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 13, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# アイスホ゛テ゛ィ
+Ice Body
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 14, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# キュアー
+Cure
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 15, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ヒール
+Heal
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 16, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ヒーラー
+Healer
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 17, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ヒーラス゛ム
+Healerism
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 18, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# モアヒール
+More Heal
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 19, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# モストヒール
+Most Heal
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 20, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# アクアト゛ライ
+Aqua Dry
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 21, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# アシット゛スフ゜レイ
+Acid Spray
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 22, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# サンタ゛ーアロー
+Thunder Arrow
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 23, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ライトニンク゛
+Lightning
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 24, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# エレクトリック
+Electric
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 25, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# サンタ゛ーホ゛テ゛ィ
+Thunder Body
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 26, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# サイレス
+#tlcheck
+Silence
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 27, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# テ゛ット゛リーエアー
+Deadly Air
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 28, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ヘルウイント゛
+Hellwind
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 29, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# リターン
+Return
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 30, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ヘイスト
+Haste
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 31, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# スロー
+Slow
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 32, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ストッフ゜サ゛エアー
+Stop the Air
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 33, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# メテオシャワー
+Meteor Shower
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 34, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# アーマーシールト゛
+Armor Shield
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 35, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# マシ゛ックケ゛ート
+# maybe call this summon?
+Magic Gate
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 36, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# フ゛レース゛
+Blaze
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 37, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ホールト゛
+Hold
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 38, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# クリアランス
+Clearance
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 39, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# アンチマシ゛ック
+Anti-magic
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 40, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ストーン
+Stone
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 41, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ハイシールト゛
+High Shield
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 42, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# シ゛ャンフ゜
+Jump
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 43, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# フロート
+Float
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 44, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# サイオフ゛ラスト
+Psyblast
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 45, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# コンフュース゛
+Confuse
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 46, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# スリーフ゜
+Sleep
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 47, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# テラー
+Terror
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 48, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# フ゛レス
+Bless
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 49, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# レサ゛レクション
+Resurrection
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 50, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# テ゛ィスヘ゜ル
+Dispel
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 51, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# リフレッシュ
+Refresh
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 52, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# マイント゛ハ゛スター
+Mind Buster
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 53, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# サイコアッフ゜
+Psychic Up
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 54, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# テ゛スト゛ール
+Death Doll
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 55, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# あっさつけいたい
+#tlcheck
+Crush
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 56, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ほ゛うこ゛けいたい
+#tlcheck
+Guard
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 57, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ゆめしは゛り
+#tlcheck
+Dream Chains
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 58, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# むかいし゛ん
+#tlcheck
+Other World
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 59, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ふ゛んしんのし゛ゅつ
+Body Double
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 60, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# やみと゛うか
+Darkness
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 61, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# おほ゛ろかけ゛
+Shadow
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 62, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# へんしん
+Transform
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 63, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# しんと゛うは
+Shockwave
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 64, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# まほうけっかい
+Magic Barrier
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 65, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# エナシ゛ート゛レイン
+Energy Drain
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 66, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ねんし゛ゅは゛く
+Soul Curse
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 67, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ねんし゛ゅは゛く
+Soul Curse
+
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 68, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ねんし゛ゅは゛く
+Soul Curse
+
+{"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 69, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
+# ねんし゛ゅは゛く
+Soul Curse
+
+
