@@ -1,9 +1,7 @@
 from pathlib import Path
 import struct
-# import re
 import json
 from typing import BinaryIO
-from timeit import default_timer as timer
 
 
 def build_tbl(tbl_path: Path, reverse: bool = False) -> dict:
@@ -32,17 +30,9 @@ class FilePath:
 		self.path = Path(str(self.cwd) + "/" + fn)
 
 
-ja_tbl = build_tbl(FilePath("ja_tbl.tbl").path)
-en_tbl = build_tbl(FilePath("en_tbl.tbl").path, reverse=True)
-ja_menu_tbl = build_tbl(FilePath('menu_tbl.tbl').path)
-en_menu_tbl = build_tbl(FilePath('en_menu.tbl').path, reverse=True)
-
-# place output file in current script directory
-out = FilePath("test_dump.txt").path
-
-
 class StringBlock:
-	""" Basic data for script blocks: description of string block,
+	""" Basic data for fixed size script blocks: (items, skills, enemies, etc)
+		description of string block,
 		start offset in ROM, end offset,
 		step value to reach next string, max_len of string """
 	def __init__(self, desc=None, start=None, end=None, step=None, max_len=None):
@@ -53,6 +43,56 @@ class StringBlock:
 		self.end_hex = f'0x{end:00x}'
 		self.step = step
 		self.max_len = max_len
+
+
+ja_tbl = build_tbl(FilePath("tables/ja_tbl.tbl").path)
+en_tbl = build_tbl(FilePath("tables/en_tbl.tbl").path, reverse=True)
+ja_menu_tbl = build_tbl(FilePath('tables/menu_tbl.tbl').path)
+en_menu_tbl = build_tbl(FilePath('tables/en_menu.tbl').path, reverse=True)
+
+tables = {'normal': en_tbl, 'menu': en_menu_tbl}
+ja_tables = {'normal': ja_tbl, 'menu': ja_menu_tbl}
+
+
+original_rom = FilePath("Maten no Soumetsu (Japan).md")
+
+script_files = [
+				"translations/relative_strings.txt",
+				"translations/main_script.txt"
+				]
+
+fixed_len_strings = [
+					'translations/item_list.txt',
+					'translations/enemy_list.txt',
+					'translations/skill_list.txt',
+					'translations/npc_list.txt',
+					'translations/battle_status_list.txt'
+					]
+
+# asm hacks should be applied to this file before inserting strings
+tling_rom = FilePath("foobar.bin")
+
+# place output file in current directory (only for if dumping functions
+# are uncommented)
+output_file = FilePath("test_dump.txt")
+# empty the file before we start writing to it
+output_file.path.open("w").close()
+out = output_file.path.open("a")
+
+
+item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
+# monster block really starts $1519a but string starts at $151be i guess
+monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
+npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
+skill_block = StringBlock('skl', 0x1c2fa, 0x1d45c, 0x40, 0x10)
+
+fixed_len_blocks = [item_block, monster_block, npc_block, skill_block]
+# dump_fixed_str(original_rom.path, ja_menu_tbl, block)
+
+# make sure we don't try inserting strings in this juicy whitespace
+exclusions = [(s.start, s.end) for s in fixed_len_blocks]
+exclusions.append((0xb3a0, 0xbb00))
+exclusions = sorted(exclusions)
 
 
 class String:
@@ -96,35 +136,6 @@ class String:
 		self.__dict__['en_text'] = val
 		self.en_bin = bytearray.fromhex(text_to_hex(self.en_tables[self.table], val))
 		self.en_bin_len = len(self.en_bin)
-
-
-original_rom = FilePath("Maten no Soumetsu (Japan).md")
-ja_tbl_file = FilePath("ja_tbl.tbl")
-en_tbl_file = FilePath("en_tbl.tbl")
-insert_script = FilePath("foo.txt")
-tling_rom = FilePath("foobar.bin")
-output_file = FilePath("test_dump.txt")
-
-
-item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
-# monster block really starts $1519a but string starts at $151be i guess
-monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
-
-npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
-skill_block = StringBlock('skl', 0x1c2fa, 0x1d45c, 0x40, 0x10)
-# shop strings start = 0x21000
-# shop strings stop = 0x21660
-
-fixed_len_blocks = [item_block, monster_block, npc_block, skill_block]
-
-exclusions = [(s.start, s.end) for s in fixed_len_blocks]
-exclusions.append((0xb3a0, 0xbb00))
-exclusions = sorted(exclusions)
-
-
-# empty the file before we start writing to it
-output_file.path.open("w").close()
-out = output_file.path.open("a")
 
 
 def fprint(text, mode="both", fout=out):
@@ -335,47 +346,6 @@ def bin_to_text(bin_string, tbl):
 				ret_str += r"\x" + nibble
 
 	return ret_str, missing
-
-
-def bin_to_text_list(bin_string, tbl, name, ignore_terminators=False):
-	""" Parses binary string according to tbl, splitting lines
-		by \x00s """
-	missing = 0
-	offset = 0x8a14
-	ret_list = []
-
-	i = 0
-	ret_str = f'{offset=:0x}\n'
-	bin_string = [x[0].hex() for x in struct.iter_unpack("1s", bin_string)]
-
-	ret_dict = {}
-	ret_dict[name] = f'{offset:0x}'
-	while len(bin_string) > 0:
-		# multibyte control codes max length is 2
-		nibble = ''.join(bin_string[0:2])
-		if nibble in tbl.keys():
-			ret_str += tbl[nibble]
-			bin_string = bin_string[2:]
-			offset += 2
-		else:
-			nibble = bin_string.pop(0)
-			try:
-				ret_str += tbl[nibble]
-			except KeyError:
-				missing += 1
-				ret_str += nibble
-			offset += 1
-		if nibble[-2:] == '00':
-			ret_dict['str_id'] = i
-			# ret_dict['ja_str'] = ret_str
-			# ret_list.append(json.dumps(ret_dict))
-			ret_list.append(ret_dict)
-			ret_dict = {}
-			ret_dict[name] = f'{offset:0x}'
-			ret_str = ''
-			i += 1
-
-	return ret_list
 
 
 def text_to_hex(tbl, string):
@@ -803,11 +773,6 @@ def make_space(rom_path: Path, strings: list) -> int:
 	return space
 
 
-tables = {'normal': en_tbl, 'menu': en_menu_tbl}
-ja_tables = {'normal': ja_tbl, 'menu': ja_menu_tbl}
-# ja_tables = {'normal': ja_tbl}
-
-
 def dump_leas_to_file():
 	# print([x.__dict__ for x in find_leas(rom_path)])
 	# this dumps hard-coded ("lea") strings to fstring's out file
@@ -824,12 +789,8 @@ def dump_leas_to_file():
 		i += 1
 
 
-# dump_leas_to_file()
-
-
 def insert_from_file(rom_path: Path, *filenames: str) -> None:
 	""" Parses script files and inserts strings into a ROM """
-	total_dur = 0
 	good_lines = 0
 	bad_lines = 0
 	repoints = 0
@@ -854,25 +815,17 @@ def insert_from_file(rom_path: Path, *filenames: str) -> None:
 							print(f"failed to repoint {line.__dict__}")
 
 					else:
-						# print(line.__dict__)
-						start = timer()
 						new_pos = insert_string(rom, line)
 						if new_pos > 0:
 							new_ptrs[line.str_pos] = new_pos
-							# print(f"Repointed from 0x{line.ptr_pos:00x} to 0x{new_pos:00x}")
 							inserted_size += line.en_bin_len
 							good_lines += 1
 						else:
 							print(f"error on {line.en_text}")
 							bad_lines += 1
-						end = timer()
-						dur = end - start
-						total_dur += dur
-					# print(f"One string insertion took {dur} seconds")
 
-		print(f"Total: {total_dur}s, {good_lines} inserted, {bad_lines} failed")
-		print(f"Repoints: {repoints}, inserted size: {inserted_size} bytes")
-		print(f"Average time: {total_dur/(good_lines+bad_lines)} seconds")
+		print(f"{good_lines} inserted, {repoints} repointed, ", end="")
+		print(f"{bad_lines} failed. Size: {inserted_size}B from {script_file}")
 
 
 def make_space_from_file(rom_path: Path, script_files: list) -> int:
@@ -883,39 +836,11 @@ def make_space_from_file(rom_path: Path, script_files: list) -> int:
 	return space
 
 
-"""
-foo = sloppy_strings(original_rom.path, ja_tables)
-foo = sorted(foo, key=lambda k: (k.repoint, k.str_pos))
-for f in foo:
-	text = f.ja_text
-	del f.ja_text
-	fprint(json.dumps(f.__dict__))
-	fprint('# ' + text)
-	fprint('\n')
-
-"""
-script_files = ["lea_strings.txt", "foo.txt"]
-
-free_space = make_space_from_file(tling_rom.path, script_files)
-print(f"cleared {free_space} bytes")
-
-insert_from_file(tling_rom.path, "lea_strings.txt", "foo.txt")
-
-# these lines fill fixed length text blocks with debug strings
-# for block in fixed_len_blocks[2:3]:
-	# fixed_str_parse(tling_rom.path, en_menu_tbl, block)
-	# dump_fixed_str(original_rom.path, ja_menu_tbl, block)
-
 def insert_fixed_str(rom_path: Path, script_name: str) -> int:
 
 	# TODO: check if this needs to pad to max_len to avoid leftover jp chars
 	lines = parse_script(FilePath(script_name).path)
-	# foo = sorted(foo, key=lambda k: k.en_bin_len, reverse=True)
-	# for f in foo[0:8]:
-	# 	# print(f.__dict__)
-	# die()
 	step = lines[0].step
-	# old_pos = 0x130c6
 	new_pos = lines[0].str_pos
 	with open(rom_path, "rb+") as rom:
 		# new_pos = find_space(rom, 0x20000, None, len(lines) * step)
@@ -924,8 +849,14 @@ def insert_fixed_str(rom_path: Path, script_name: str) -> int:
 			rom.write(line.en_bin[0:15] + b'\x00')
 
 
-insert_fixed_str(tling_rom.path, 'item_list.txt')
-insert_fixed_str(tling_rom.path, 'enemy_list.txt')
-insert_fixed_str(tling_rom.path, 'skill_list.txt')
-insert_fixed_str(tling_rom.path, 'npc_list.txt')
-insert_fixed_str(tling_rom.path, 'battle_status_list.txt')
+free_space = make_space_from_file(tling_rom.path, script_files)
+print(f"cleared {free_space} bytes")
+
+for script_file in script_files:
+	insert_from_file(tling_rom.path, script_file)
+
+# these lines fill fixed length text blocks with debug strings
+for block in fixed_len_strings:
+	insert_fixed_str(tling_rom.path, block)
+
+print("Inserted fixed length strings")

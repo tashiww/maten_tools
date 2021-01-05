@@ -7,15 +7,15 @@
 ; ############################################################################
 
 	org $0000
-	incbin "Maten no Soumetsu (Japan).md"
+	incbin "./Maten no Soumetsu (Japan).md"
 
 ; insert 8x8 english font to replace original menu font
 	org $60000
-	incbin "8x8 font.bin"
+	incbin "./fonts/8x8 font.bin"
 	
 ; insert 8x16 english font to replace original 16x16 Japanese font
 	org $648e6
-	incbin "8x16 font.bin"
+	incbin "./fonts/8x16 font.bin"
 	
 ; blank out the rest of the original Japanese font
 	DO
@@ -23,13 +23,13 @@
 	UNTIL *>$68A00
 
 ; adjust font routine for 8x16 font instead of 16x16
-	include "text_engine.asm"
+	include "./asm/text_engine.asm"
 
 ; changes menus to fill every row instead of every other row, shops and menus
-	include "menu_item_layout.asm"
+	include "./asm/menu_item_layout.asm"
 
 ; changes behavior of name selection screen to match smaller english alphabet
-	include "menu_name_selection.asm"
+	include "./asm/menu_name_selection.asm"
 	
 	
 	;org $a45a ; hacky base item offset change ...
