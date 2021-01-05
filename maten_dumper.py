@@ -372,6 +372,8 @@ def text_to_hex(tbl, string):
 
 		if tbl[nibble] in ['00', '0d', '0c']:
 			cur_len = 0
+		if tbl[nibble] in ['0501', '0502', '0509']:
+			cur_len += 5
 
 		if cur_len > 30:
 			last_space = ret_str.rfind(space)

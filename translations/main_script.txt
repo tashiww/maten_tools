@@ -1801,9 +1801,9 @@ Oh, my beloved Prince Abel. I will always watch over you.
 # すまぬがとってきてもらえぬか。」<scroll><player>「わかりました。必ずや<br>
 # 楽草をとってまいります。」
 King "Well met, <player>. Zafan has told me much about you."<scroll>
-<player> "Your Highness, actually, my father passed away last night from injuries he suffered while fulfilling his duties to you. Now that I've had some time to process, I've come to ask if I can work for you in order to avenge his death."
+<player> "Your Majesty, actually, my father passed away last night from injuries he suffered while fulfilling his duties to you. Now that I've had some time to process, I've come to ask if I can work for you in order to avenge his death."
 King "Zafan is dead?! Good grief... He was supposed to be investigating the cause of the unrest in the world. I never thought it would end like this... Sorry, kid."<scroll>
-<player> "Your Highness, please let me continue my father's work!"<scroll>
+<player> "Your Majesty, please let me continue my father's work!"<scroll>
 King "Patience! I have another task for you to complete first. Queen Erin has taken ill recently and suddenly, and nothing seems to be helping. There is a forest south of here where you can find Holy Herbs that can cure any ailment. With a heavy heart do I ask you to bring me a Holy Herb."<scroll>
 <player> "I understand. I will not fail you."
 
@@ -2114,7 +2114,7 @@ Prince "He's gone."<scroll>
 # っていってましたよ？」<scroll>王子「あの人がなぜ，ぼくの命を・・<br>
 # ほんとうなのだろうか。」<scroll><npc1>「とにかく本人にたしか<br>
 # めてみましょう。」
-<npc1> "Your Royal Highness, are you hurt?"<scroll>
+<npc1> "Your Royal Majesty, are you hurt?"<scroll>
 Prince "I'm fine, thanks."<scroll>
 <player> "That man said he was working for the Queen-Consort, didn't he?"<scroll>
 Prince "Why would she want to hurt me... It just doesn't make any sense."<scroll>

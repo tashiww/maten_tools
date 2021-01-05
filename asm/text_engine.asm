@@ -44,7 +44,7 @@ DrawFontTile	equ	$1dee
 	addq.w #1, Yoffset
 	ADDQ.w	#1, VramTile ;increment tile offset
 	BSR.w	DrawFontTile
-	addq.w	#1,	d6
+	addq.w	#1,	d6	; this is x tile incrementer
 	NOP
 	NOP
 	NOP
@@ -56,26 +56,36 @@ DrawFontTile	equ	$1dee
 	movem.l	(a7)+,d0/d1/d2/a0/a1
 	RTS
 
+; there were two non-contiguous segments of VRAM it used for writing
 NextVRAMTile	equr	a2	; Offset for next VRAM tile to fill
 VRAMBaseOffset	equ	$F000	
 VRAMUpperBound	equ	$FFC0	; don't write to VRAM if we hit this offset
 VRAMOffsetStep	equ	$0040	; step value for incrementing VRAM offset, $40 is suitable for 8x16 font
 
+VRAMOverflowBase	equ	$AE00
+VRAMOverflowBound	equ	$B4C0
+
  org $000038BE
+	WHILE *<$38dc
+		NOP
+	ENDW
+
+ org $000038BE
+	;ADDQ.w	#2, D6	; is this for auto-line breaking? probably
 	ADDA.w	#VRAMOffsetStep, NextVRAMTile	
+	CMPA.w	#VRAMOverflowBound, NextVRAMTile	
+	BNE.b	CheckNormalLimit
+	MOVEA.w	#VRAMBaseOffset, NextVRAMTile
+	BRA.b	Done
+CheckNormalLimit:
 	CMPA.w	#VRAMUpperBound, NextVRAMTile	
 	BNE.b	Done
-	MOVEA.w	#VRAMBaseOffset, NextVRAMTile
-
+	MOVEA.w	#VRAMOverflowBase, NextVRAMTile
 Done:
-	MOVE.w	D4, D0	; this is critical, if you skip it it takes FOREVER to render text...
-	NOP
-	NOP
-	NOP
-	NOP
-	NOP
-	NOP
-	NOP
+	MOVE.w	D4, D0
+
+ org $38dc
+	trap #5
 
 ;	vram fix for "choose a name" start screen
 	org $3726
