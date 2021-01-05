@@ -2,6 +2,7 @@
  Tools for hacking maten no soumetsu SMD. Patches are available in the ./patches/ folder in xdelta, ips, and bps formats. Build instructions are below the feature list.
 
 2021-01-05	ver 01a	fixed vram overflow (text being overwritten) and made line breaks more aggressive to prevent words being split
+
 2021-01-04	ver 00a	initial feature complete?
 ## features
 fully playable in English: all strings translated from Japanese to English
