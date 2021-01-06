@@ -495,7 +495,7 @@ It's locked.
 # それじゃあ，しょうがねえ。者ども<br>
 # やっちまえ。」<scroll><player>「うわっ！何をする・・<br>
 # ・・。」
-Bandit "Hey broski, unless you want to wake up without any kidneys, you'd better just hand me all your stuff.<scroll>
+Bandit "Hey broski, unless you want to wake up without any kidneys, you'd better just hand me all your stuff."<scroll>
 <player> "Who are you?! You've got another thing coming if you think I'm easy prey!"<scroll>
 Bandit "Drats! You've foiled my scheme."<scroll>
 Bandit "Just kidding. Kill him, boys."<scroll>
@@ -861,7 +861,7 @@ This is Syles, the city of sadness.
 # この村では毎年毎年，わかい娘を<br>
 # 魔物にさし出さなくてはならないの<br>
 # です。
-Every year, a young girl from this town is sacrified to a monster in the mountains.
+Every year, a young girl from this town is sacrificed to a monster in the mountains.
 
 
 {"prefix":"0x7","ptr_pos":151320,"str_pos":151868,"ptr_hex":"24F18","str_hex":"2513C","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -875,7 +875,7 @@ Is it just my imagination or is Granny off her rocker?
 # ゅう」という教団がかつどうを行な<br>
 # っているらしいけど，ほんとうに<br>
 # ふこうな人がすくわれるのかしら。
-The Happiness Gate church is active here in Alf. I wonder if they really help people, though.
+The Happyology church is active here in Alf. I wonder if they really help people, though.
 
 
 {"prefix":"0x7","ptr_pos":151352,"str_pos":151714,"ptr_hex":"24F38","str_hex":"250A2","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -1094,7 +1094,7 @@ In the dead of night, there are lights flickering over the lake to the west. Wha
 # ここから南にあるサウスリ―バの町<br>
 # は「しあわせのがくしゅう」のかつ<br>
 # どうの中心地になっている。
-The town south of here, South River, is the base of operations for Happiness Gate.
+The town south of here, South River, is the base of operations for Happyology.
 
 
 {"prefix":"0x7","ptr_pos":154078,"str_pos":154290,"ptr_hex":"259DE","str_hex":"25AB2","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -1112,7 +1112,7 @@ Don't just toss items, make sure to throw them away in the appropriate receptacl
 {"prefix":"0x7","ptr_pos":154094,"str_pos":154366,"ptr_hex":"259EE","str_hex":"25AFE","table":"normal","repoint":false,"ptr_type":"absolute"}
 # もしよかったらこんや，のみながら<br>
 # 旅の話を聞かせて下さい。
-Why don't we pass away the night with drink and stories of glory?
+Why don't we pass away the night with drinking and stories of glory?
 
 
 {"prefix":"0x7","ptr_pos":154734,"str_pos":154876,"ptr_hex":"25C6E","str_hex":"25CFC","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -1189,7 +1189,7 @@ What should I believe in now..?
 # 町のぼうさんは，口かずがすくない<br>
 # けれど，とても良いお方でした。
 # tlcheck
-?? not many men? check
+Our priest doesn't have many followers, but he's a good man.
 
 
 {"prefix":"0x7","ptr_pos":154862,"str_pos":155342,"ptr_hex":"25CEE","str_hex":"25ECE","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -1374,8 +1374,8 @@ Hum.. dum..
 # すばらしい本がたくさんおいてある<br>
 # んだ。「３」や「１７」をしらべて<br>
 # みな。
-# TODO what is this hint
-I work at the castle. There lots of fancy books here. Might I recommend books "3" and "17"?
+# there are items hidden on the bookshelves
+I work at the castle. There are lots of fancy books here. Might I recommend books "3" and "17"?
 
 
 {"prefix":"0x7","ptr_pos":158096,"str_pos":158102,"ptr_hex":"26990","str_hex":"26996","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -1431,7 +1431,7 @@ Thanks, you really helped me out... Out of the hole! Now I'm going to exact my m
 # かわり，もう悪さをするなよ。」<scroll>スライム「ありがとう。オレが必要な<br>
 # 時はいつでもよんでくれ。」
 <player> "Learn your place!"<scroll>
-Slime "Please, wait! I admit I made a faux pas. Won't you spare my life? I'll do anything you ask.<scroll>
+Slime "Please, wait! I admit I made a faux pas. Won't you spare my life? I'll do anything you ask."<scroll>
 <player> "Fine, just don't attack any more random adventurers."<scroll>
 Slime "Oh, naturally, I wouldn't dream of it. Summon me with Magic Gate if you want me to join your party later."
 
@@ -1526,7 +1526,7 @@ I was chilling in Leam for the day, and when I got back, I saw bandits abscondin
 # なくちゃならないが，パワ―はおれ<br>
 # の船より上だからな。じゃあおれは<br>
 # いくぜ，みんな元気でな！！」
-Cynak "<player>. This has been enough for me. I'm out. What will you do?<scroll>
+Cynak "<player>. This has been enough for me. I'm out. What will you do?"<scroll>
 <player> "I'm going to find the Goddess Statue and bring it back to Miona in Pron."<scroll>
 Cynak "Then this is where we part ways. Oh, you'll be stranded here without a ship, won't you? As thanks, I'll give you my old ship. I'll take that nice, new pirate ship. It needs some repairs, but it's way better than my old ship. Smell ya later!"
 
@@ -1563,7 +1563,7 @@ Cynak "Then this is where we part ways. Oh, you'll be stranded here without a sh
 <player> "It's.. it's my father!!"<scroll>
 Zafan "<player>. You are a man now. I'm so proud of you. There was something I tried to tell you on my deathbed.<scroll>
 .........<scroll>
-Listen, <player>, you're not actually my son.<scroll>
+Listen, <player>, you're not actually my son."<scroll>
 <player> "What are you saying, Father?!"<scroll>
 Zafan "16 years ago, I was taking a stroll near my home, and I saw a flying monster with a baby. That monster was struck down by lightning. I went to check it out and found you. You had angel wings on your back. I felt the force of destiny surrounding you and raised you as my own child. I sealed your wings and true power, but now I will break that seal."
 
@@ -1859,9 +1859,9 @@ King "Have you figured out the source of all evil in the world yet?"<scroll>
 # としか，おもえん。<br>
 # それで王子のけいごを頼みたいのだ<br>
 # が。」
-King "Oh, it's you, <player>. I actually have something new to ask of you.<scroll>
+King "Oh, it's you, <player>. I actually have something new to ask of you."<scroll>
 <player> "Your wish is my command, Your Majesty."<scroll>
-King "Lately, suspicious things have been happening to the prince. The only explanation is that someone is trying to assassinate him. I want you to protect him.
+King "Lately, suspicious things have been happening to the prince. The only explanation is that someone is trying to assassinate him. I want you to protect him."
 
 
 {"prefix":"0x7","ptr_pos":164618,"str_pos":166052,"ptr_hex":"2830A","str_hex":"288A4","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -1970,7 +1970,7 @@ How are your travels going?
 # みます。」
 King "<player>, <npc1>, I don't know how to thank you for guarding the prince last night."<scroll>
 <player> "We're honored to be of service."<scroll>
-King "I can't believe the Queen-Consort, Freya, would hire assassins to kill my son... So soon after the death of Queen Erin, we can't afford for anything to happen to Abel. <player>, you must continue your search for the cause of all of the problems in the world, while also searching for Freya.<scroll>
+King "I can't believe the Queen-Consort, Freya, would hire assassins to kill my son, and so soon after the death of Queen Erin. We can't afford for anything to happen to Abel. <player>, you must continue your search for the cause of all of the problems in the world, while also searching for Freya."<scroll>
 <player> "I will do my best, Your Majesty."
 
 
@@ -2165,7 +2165,7 @@ This is His Majesty's private room. Scram!
 # 盗賊ボス「おや，どこかで見たかお<br>
 # だとおもったら，あの時の兄ちゃん<br>
 # じゃないか。
-Bandit Boss "I thought you looked familiar. We crossed paths before, didn't we?
+Bandit Boss "I thought you looked familiar. We crossed paths before, didn't we?"
 
 
 {"prefix":"0x7","ptr_pos":169324,"str_pos":169440,"ptr_hex":"2956C","str_hex":"295E0","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -2211,7 +2211,7 @@ Looks like you want to lose another kidney."
 <player> "Yeah..."<scroll>
 <npc1> "Oh, God, why! Now I'm all alone in the world."<scroll>
 <player> "Hey, cheer up. I'm still here."<scroll>
-<npc1> "Uh.. yeah, I guess. Could you do me a favor, <player>?"<scroll>
+<npc1> "Um... yeah, I guess. Could you do me a favor, <player>?"<scroll>
 <player> "Sure, ask me anything."<scroll>
 <npc1> "Can I join your party? I want to look for my long lost brother."<scroll>
 <player> "Yeah, come along. Don't worry, I'm sure I can find your brother for you."
@@ -2446,7 +2446,7 @@ Child "Dude, chill out, how thirsty are you?"
 # う。」<scroll><player>「どうか，ぶじでいて<br>
 # くれたらよいのだが。」
 <player> "Good morning. Feel better?"<scroll>
-<npc1> "Yes, I think I'm fine now.
+<npc1> "Yes, I think I'm fine now."
 .......
 I can't wait to see my brother again."<scroll>
 <player> "Your brother? Oh yeah! I forgot all about him. He went with me into the church basement to find the antidote for you. The cultists found us and he stayed behind to fight them while I escaped."<scroll>
@@ -2511,7 +2511,7 @@ Happiness is the most important thing for people.
 {"prefix":"0x7","ptr_pos":174084,"str_pos":174170,"ptr_hex":"2A804","str_hex":"2A85A","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 「しあわせのがくしゅう」のおしえ<br>
 # は，すごいぞ！！
-I love the teachings of Happiness gate!!
+I love the teachings of Happyology!!
 
 
 {"prefix":"0x7","ptr_pos":174092,"str_pos":174198,"ptr_hex":"2A80C","str_hex":"2A876","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -2577,7 +2577,7 @@ Priest "Drink this poison!!"<scroll>
 {"prefix":"0x7","ptr_pos":175066,"str_pos":176926,"ptr_hex":"2ABDA","str_hex":"2B31E","table":"normal","repoint":false,"ptr_type":"absolute"}
 # リヒエル「時間がないから手分けして<br>
 # 探そう。」<scroll><player>「わかりました。」
-Lichiel "There's no time. Let's split up"<scroll>
+Lichiel "There's no time. Let's split up."<scroll>
 <player> "Good idea."
 
 
@@ -2678,9 +2678,7 @@ Cardinal "What are you doing over there?! Intruders! Men, capture them!"
 # ・・・・・・。<br>
 # わかりました。ごぶじで！！」
 Lichiel "<player>. Take the medicine and don't look back! Take care of <npc1> for me, okay?"<scroll>
-<player> "Lichiel!!
-.........
-Okay, see ya!"
+<player> "Lichiel!! ......... Okay, see ya!"
 
 
 {"prefix":"0x7","ptr_pos":175842,"str_pos":176486,"ptr_hex":"2AEE2","str_hex":"2B166","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -3076,9 +3074,9 @@ Nightmare "Yes, of course, whatever you say. If you ever need my help, you can s
 # ありがとうございました。」<scroll><player>「シャイアスさんは，<br>
 # どうしました？」<scroll>宿屋人「妹さんが，つれてかえりまし<br>
 # たよ。」
-Innkeeper "Good morning. Thanks for your help. Hopefully we'll get more guests now.<scroll>
+Innkeeper "Good morning. Thanks for your help. Hopefully we'll get more guests now."<scroll>
 <player> "What happened to Isaiah?"<scroll>
-Innkeeper "His sister came and took him home.
+Innkeeper "His sister came and took him home."
 
 
 {"prefix":"0x7","ptr_pos":183058,"str_pos":183140,"ptr_hex":"2CB12","str_hex":"2CB64","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -3131,7 +3129,7 @@ I want to grow up to be a powerful sage like Isaiah.
 {"prefix":"0x7","ptr_pos":183134,"str_pos":183422,"ptr_hex":"2CB5E","str_hex":"2CC7E","table":"normal","repoint":false,"ptr_type":"absolute"}
 # シャイアス「<player>。旅のぶじ<br>
 # をいのってるぞ。」
-Isaiah "Safe travels, <player>"
+Isaiah "Safe travels, <player>."
 
 
 {"prefix":"0x7","ptr_pos":183578,"str_pos":183600,"ptr_hex":"2CD1A","str_hex":"2CD30","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -3198,7 +3196,7 @@ My mother says I'm not allowed to leave the village at night.
 # あんたの国では「しあわせのがくし<br>
 # ゅう」という教団の信者がふえてる<br>
 # といううわさだが，ほんとうかい。
-Is the rumor true that Happiness Gate is gaining followers in your country?
+Is the rumor true that Happyology is gaining followers in your country?
 
 
 {"prefix":"0x7","ptr_pos":184388,"str_pos":184454,"ptr_hex":"2D044","str_hex":"2D086","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -3680,8 +3678,8 @@ Monster "What do you guys want?"
 # あんたをたおさせてもらう。」<scroll>魔物「命がいらぬらしいな。ではかか<br>
 # ってこい。」
 Monster "What brings you all this way? Surely you aren't dreaming of trying to defeat me? I already got the sacrifice for this year, so you can go back home now."
-Cline "You already ate her..?! Reno, forgive me...
-Foul beast! You won't be eating any more of our maidens!"<scroll><scroll>
+Cline "You already ate her..?! Reno, forgive me..."
+"Foul beast! You won't be eating any more of our maidens!"<scroll><scroll>
 Monster "Don't get so heated. The old lady in your village made a deal with me ages ago. I give my blessing to the village, and they feed me a new maiden every year."<scroll>
 Cline "Granny is behind this?! That explains so much... Listen, I don't care about her deal. Now you have to deal with me, and I only deal in death!"<scroll>
 Monster "Very good, it looks like I'll have some dessert this year. Bring it on."
@@ -3845,7 +3843,7 @@ Clergy 2 "How on Earth should I know?"
 # 何ですか，それは。」
 Founder "You two don't look like you're from around here."<scroll>
 <player> "We are adventurers, on an adventure. Who are you?"<scroll>
-Founder "I'm the founder of Happiness Gate. My name is Bigly Balou. If you're not part of my cult, what are you doing here?"<scroll>
+Founder "I'm the founder of Happyology. My name is Bigly Balou. If you're not part of my cult, what are you doing here?"<scroll>
 <player> "We noticed everyone in South River looked sorta brainwashed so we were trying to figure out what happened to them. That led us here."<scroll>
 Bigly "So the brainwashing is already working? That's great, we're ahead of schedule."<scroll>
 <player> "Schedule? What do you mean?"
@@ -4039,7 +4037,7 @@ Some of the townspeople are still behaving strangely. I wonder if they'll go bac
 # おれは「しあわせのがくしゅう」の<br>
 # やつらはきらいだね。町をわがもの<br>
 # がおであるきやがって。
-I hate Happiness Gate. They just showed up and acted like they owned the place.
+I hate Happyology. They just showed up and acted like they owned the place.
 
 
 {"prefix":"0x7","ptr_pos":198156,"str_pos":198272,"ptr_hex":"3060C","str_hex":"30680","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4059,7 +4057,7 @@ I knew that cult was bad news. You gotta get up pretty early to pull the wool ov
 # あまり「しあわせのがくしゅう」の<br>
 # 悪口は，町の者の前ではいえないん<br>
 # だ。信じている者がおおいからね。
-It's dangerous to disagree with the Happiness Gate doctrine openly. There are a lot of believers in this town.
+It's dangerous to disagree with the Happyology doctrine openly. There are a lot of believers in this town.
 
 
 {"prefix":"0x7","ptr_pos":198200,"str_pos":198422,"ptr_hex":"30638","str_hex":"30716","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4072,7 +4070,7 @@ I heard one of the church members mention something about a cave behind the wate
 # まだ，「しあわせのがくしゅう」を<br>
 # 信じている者がいるんだ。<br>
 # はやく目覚めてほしいものだ。
-Some people still follow Happiness Gate. I wish they'd come to their senses.
+Some people still follow Happyology. I wish they'd come to their senses.
 
 
 {"prefix":"0x7","ptr_pos":198216,"str_pos":198506,"ptr_hex":"30648","str_hex":"3076A","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4103,7 +4101,7 @@ The church has two tenets: Psychology of Happiness and Teachings of the Infinite
 # あなたも「しあわせのがくしゅう」<br>
 # の教えを信じなさい。そうすれば，<br>
 # かならずしあわせになれますよ。
-You should join Happiness Gate. You'll definitely be happier if you do.
+You should join Happyology. You'll definitely be happier if you do.
 
 
 {"prefix":"0x7","ptr_pos":198900,"str_pos":199088,"ptr_hex":"308F4","str_hex":"309B0","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4125,7 +4123,7 @@ This village is indebted to the church. Just when the well dried up, they swoope
 # わたしは「しあわせのがくしゅう」<br>
 # の教えを信じています。だって，<br>
 # 毎日がしあわせでしたから。
-I believe the teachings of Happiness Gate. I am happy every day.
+I believe the teachings of Happyology. I am happy every day.
 
 
 {"prefix":"0x7","ptr_pos":198940,"str_pos":199268,"ptr_hex":"3091C","str_hex":"30A64","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4248,7 +4246,7 @@ Amasso "If it's for Zafan's son, I'll see what I can do."
 {"prefix":"0x7","ptr_pos":200274,"str_pos":200812,"ptr_hex":"30E52","str_hex":"3106C","table":"normal","repoint":false,"ptr_type":"absolute"}
 # アマソ「<player>，いつでもあそ<br>
 # びに来てくれ。」
-Amasso "Come back and visit whenever you like, <player>"
+Amasso "Come back and visit whenever you like, <player>."
 
 
 {"prefix":"0x7","ptr_pos":200942,"str_pos":201020,"ptr_hex":"310EE","str_hex":"3113C","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4269,7 +4267,7 @@ Good morning. Please visit again.
 # 「しんどうは」は強力なしんどうは<br>
 # をはっして，かたい物はこなごなに<br>
 # する事ができる。
-Let me explain your party member's abilities. White Tiger can use "Transform" and "Sonic Wave." Transform unleashes his lycanthropic powers, doubling his attack and defense. sonic Wave is a powerful blast that can shatter solid objects.
+Let me explain your party member's abilities. White Tiger can use "Transform" and "Sonic Wave." Transform unleashes his lycanthropic powers, doubling his attack and defense. Sonic Wave is a powerful blast that can shatter solid objects.
 
 
 {"prefix":"0x7","ptr_pos":201690,"str_pos":201824,"ptr_hex":"313DA","str_hex":"31460","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4385,7 +4383,7 @@ I will defend the King with my life.
 # います。まあ，せっかくですから，<br>
 # ゆっくりしていって下さい。」<scroll>アベル「ありがとうございます。」
 Utork "Why, if it isn't Prince Abel. What a surprise. To what do we owe this pleasure?"<scroll>
-Abel "I came to congratulate you on your recent marriage.<scroll>
+Abel "I came to congratulate you on your recent marriage."<scroll>
 Utork "That's very thoughtful of you."<scroll>
 Abel "Might I further inquire where the new Queen is?"<scroll>
 Utork "The Queen prefers to avoid large gatherings, so she is in her room. You've come a long way, why don't you stay a while?"<scroll>
@@ -4468,7 +4466,7 @@ Freya "I can't afford to let you leave now that you've uncovered my secret. Prep
 # 世界の者かもしれない。<br>
 # これから旅をつづけていく上でも<br>
 # ゆだんはできないな。」
-Freya "I am defeated. I wanted power so badly I made a deal with the devil, but I still failed. Maybe this is for the best.<scroll>
+Freya "I am defeated. I wanted power so badly I made a deal with the devil, but I still failed. Maybe this is for the best."<scroll>
 <player> "Queen Freya..."<scroll>
 Abel "Freya was a bit tragic, wasn't she?<scroll>
 <player> "I guess, but she said she made a deal with the devil. The Demon Lord could be responsible for all of this. Let's keep our guard up as we continue our journey."
@@ -4580,7 +4578,7 @@ The auction takes place next door.
 # また，「夢界陣」は敵を夢の世界に<br>
 # さそいこみ，敵に自分自身を<br>
 # 攻撃させてしまうワザである。
-Allow me to explain your party member's abilities. Nightmare has Dream Eater and Dream Army. Dream Eater has a chance to kill an enemy in one hit if it's using on a sleeping foe. Dream Army pulls an enemy into the dream world and makes them attack themselves.
+Allow me to explain your party member's abilities. Nightmare has Dream Eater and Dream Army. Dream Eater has a chance to kill an enemy in one hit if it's used on a sleeping foe. Dream Army pulls an enemy into the dream world and makes them attack themselves.
 
 
 {"prefix":"0x27","ptr_pos":205726,"str_pos":206526,"ptr_hex":"3239E","str_hex":"326BE","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4635,7 +4633,7 @@ I'm hoping to bag an authentic Rita Kreutz, but there are lots of forgeries out 
 # SSのサ－ベルをさがしています。<br>
 # あなた，もってないですよね？
 # tlcheck
-I'm looking for an top-tier sabre. Do you have one?
+I'm looking for a top-tier sabre. Do you have one?
 
 
 {"prefix":"0x7","ptr_pos":205858,"str_pos":206752,"ptr_hex":"32422","str_hex":"327A0","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5183,7 +5181,7 @@ The Elf Queen is super racist. I'm not allowed in the castle.
 # が。」
 Elder "Woe is me."<scroll>
 <player> "What's wrong, old timer?"<scroll>
-Elder "Nana, my granddaughter, is supposed to get married soon, but the ring bearer disappeared.
+Elder "Nana, my granddaughter, is supposed to get married soon, but the ring bearer disappeared."
 
 
 {"prefix":"0x7","ptr_pos":214226,"str_pos":215232,"ptr_hex":"344D2","str_hex":"348C0","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5454,7 +5452,7 @@ Call me Broseph from now on!
 {"prefix":"0x7","ptr_pos":217944,"str_pos":217950,"ptr_hex":"35358","str_hex":"3535E","table":"normal","repoint":false,"ptr_type":"absolute"}
 # オイラにエリクサ―をおごっておく<br>
 # れ。
-Please, hook me up with some elixer.
+Please, hook me up with an elixer.
 
 
 {"prefix":"0x7","ptr_pos":218058,"str_pos":218126,"ptr_hex":"353CA","str_hex":"3540E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5842,7 +5840,7 @@ Cynac "Heya, <player>! How's it going, landlubber?"
 <player> "How is life on the high seas treating you?"<scroll>
 Cynac "I'm like a fish in water. I have a new ship, and you know what? I found something inside it."<scroll>
 <player> "You're showing me a pot?"<scroll>
-Cynac "Yeah, I don't see pots, so you can have it."<scroll>
+Cynac "Yeah, I've never cared for pots, so you can have it."<scroll>
 <player> "O-okay, thanks?"
 
 
@@ -5867,7 +5865,7 @@ I heard Cynac is a noble pirate that doesn't attack innocents.
 
 {"prefix":"0x7","ptr_pos":224510,"str_pos":224524,"ptr_hex":"36CFE","str_hex":"36D0C","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 湖がうごくって信じられますか。
-Would you believe in a lake that moves around?
+Would you believe there's a lake that moves around?
 
 
 {"prefix":"0x7","ptr_pos":224518,"str_pos":224544,"ptr_hex":"36D06","str_hex":"36D20","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5991,11 +5989,11 @@ How are you just gonna resurrect dead people? That's crazy.
 # できない。」<scroll><npc9>「それは大変だよね。」<scroll>ソ―ドマン「すまないが，見つけて来<br>
 # てくれないだろうか。」<scroll><npc1>「わかりました。<br>
 # 見つけたら必ずもってきますね。」
-Swordman "Greetings, I am Swordman. Did I scare you?<scroll>
+Swordman "Greetings, I am Swordman. Did I scare you?"<scroll>
 <npc1> "A bit, I suppose."<scroll>
 Swordman "This sword is my body. I used to have an Armor Body that I could use to move around, but it was stolen right from under my nose. Now I can't even move."<scroll>
 <npc9> "Sucks to be you, man."<scroll>
-Swordman "Please guys, you gotta help me"<scroll>
+Swordman "Please guys, you gotta help me."<scroll>
 <npc1> "Okay, we'll let you know if we find it."
 
 
@@ -6296,7 +6294,7 @@ Good morning. I hope you enjoyed your stay.
 # あなたたちはこれから，いろいろと<br>
 # 信じられないこうけいをまのあたり<br>
 # にする事でしょう。
-You guys are going to see some truly spectatular things in the future.
+You guys are going to see some truly spectacular things in the future.
 
 
 {"prefix":"0x7","ptr_pos":230352,"str_pos":230434,"ptr_hex":"383D0","str_hex":"38422","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6347,7 +6345,7 @@ Manager "It should be in a cave. However, you need to activate all of the gemsto
 # かんり人「あの塔ですか。このカギが<br>
 # あればどれかの塔の入り口のとびら<br>
 # をあける事ができますよ。」
-Manager "Oh, the towers? They're locked, but each one has an instrument. Here's a key for one of them, no telling which one, though.
+Manager "Oh, the towers? They're locked, but each one has an instrument. Here's a key for one of them, no telling which one, though."
 
 
 {"prefix":"0x7","ptr_pos":231264,"str_pos":231278,"ptr_hex":"38760","str_hex":"3876E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6689,9 +6687,9 @@ Selkie "We shall not trust you without the Mirror of Truth."
 # ば何かわかるかもしれませんが。」
 Selkie "Have you found the Mirror of Truth?"<scroll>
 <player> "Yes, as promised, we brought it up here."<scroll>
-Selkie "This mirror will reveal your true intentions. Then We shall decide whether you are trustworthy.
+Selkie "This mirror will reveal your true intentions. Then We shall decide whether you are trustworthy."
 ..........<scroll>
-We do not detect any ill intent. We offer an apology for Our treatment of you."<scroll>
+"We do not detect any ill intent. We offer an apology for Our treatment of you."<scroll>
 <player> "I'm glad that's behind us."<scroll>
 Selkie "We shall hear your request."<scroll>
 <player> "We are trying to figure out the cause of monsters from Fantasia attacking our world. Do you know anything about that?"<scroll>
@@ -6735,7 +6733,7 @@ Selkie "What madness is this?! <player> has been trapped inside a demon's body?"
 <npc1> "Just so, Your Majesty. Is there any way to save him?"<scroll>
 Selkie "We are familiar with but one way to return someone to their original body after being trapped in a demon's body. <player> will have to engage in a battle of wills with the demon and win his freedom."<scroll>
 <npc9> "That's probably a piece of cake for <player>. Please, tell us what to do."<scroll>
-Selkie "Very well. You need to find Bridgette and get a Spirit Ball. There is a place in Holy Lake where you can summon <player>'s spirit and store it in the Spirit Ball. Finally, you must throw the ball at the demon. After that, it's up to <player> to free himself."<scroll>
+Selkie "Very well. You need to find Brigit and get a Spirit Ball. There is a place in Holy Lake where you can summon <player>'s spirit and store it in the Spirit Ball. Finally, you must throw the ball at the demon. After that, it's up to <player> to free himself."<scroll>
 <npc1> "Thank you, Your Majesty."
 
 
@@ -7047,22 +7045,22 @@ You know it's bad manners to break into someone's house, right?
 # あるわ。そこのどうくつにほかん<br>
 # してある，「こおりのゆびわ」を<br>
 # とってきてちょうだい。」
-Blizzanora "Alright, what has my husband put you up to?"<scroll>
+Blizanora "Alright, what has my husband put you up to?"<scroll>
 <player> "He wants you to go back to him."<scroll>
-Blizzanora "And he couldn't even come to ask me himself? Whatever, I'll go back, under one condition. There's an Ice Ring in the cave behind this house. Give me the ring and I go back to my husband."
+Blizanora "And he couldn't even come to ask me himself? Whatever, I'll go back, under one condition. There's an Ice Ring in the cave behind this house. Give me the ring and I go back to my husband."
 
 
 {"prefix":"0x7","ptr_pos":243208,"str_pos":243468,"ptr_hex":"3B608","str_hex":"3B70C","table":"normal","repoint":false,"ptr_type":"absolute"}
 # ブリザノ―ラ「あら，ほんとうにとっ<br>
 # て来たのね。しょうがない，帰って<br>
 # あげるわ。」
-Blizzanora "Oh, wow, I didn't expect you to actually do it. Anyway, a deal's a deal, I'll go back now."
+Blizanora "Oh, wow, I didn't expect you to actually do it. Anyway, a deal's a deal, I'll go back now."
 
 
 {"prefix":"0x7","ptr_pos":243220,"str_pos":243514,"ptr_hex":"3B614","str_hex":"3B73A","table":"normal","repoint":false,"ptr_type":"absolute"}
 # ブリザノ―ラ「ちゃんと帰るから，<br>
 # あんしんして。」
-Blizzanora "Don't worry, I'll keep my word."
+Blizanora "Don't worry, I'll keep my word."
 
 
 {"prefix":"0x7","ptr_pos":243236,"str_pos":243542,"ptr_hex":"3B624","str_hex":"3B756","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7661,7 +7659,7 @@ When the four keys of armor, power, magic, and sage are combined, the demon gate
 # 勝てるとでもおもっているのか？<br>
 # まあよい，死にたいのならかかって<br>
 # くるがいい。」
-Archduke "I am called Beelzebub. I'm the last thing standing between you and the demon emperor, but you won't be getting through me easily. I'm more than happy to send you to your graves.
+Archduke "I am called Beelzebub. I'm the last thing standing between you and the demon emperor, but you won't be getting through me easily. I'm more than happy to send you to your graves."
 
 
 {"prefix":"0x7","ptr_pos":262582,"str_pos":262734,"ptr_hex":"401B6","str_hex":"4024E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7723,7 +7721,7 @@ Lucifer "Talk is cheap. Let's fight. Your friends can help you, too."
 # のきおくをよびさまさん。<br>
 # 今こそ，その力ときはなち，われの<br>
 # いしのまま敵をせんめつせん。」
-Lucifer "Hidden power, ancient power, heed my call, follow my commands, and annihilate my enemies!
+Lucifer "Hidden power, ancient power, heed my call, follow my commands, and annihilate my enemies!"
 
 
 {"prefix":"0x7","ptr_pos":264464,"str_pos":265256,"ptr_hex":"40910","str_hex":"40C28","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7883,8 +7881,8 @@ Satan "I dunno what you're thinking, but I think I'll do what my dad said and tr
 # もう，その道しかないのだな・・<br>
 # ・・・・・・・・・・・・・・・<br>
 # ・・・・・・・・・・・・・・・」
-<player> "Oh, yes, of course, we have to kill God. That's the only path left for me......
-........"
+<player> "Oh, yes, of course, we have to kill God. It's so obvious now. That's the only path left for me......"
+........
 
 
 {"prefix":"0x7","ptr_pos":267280,"str_pos":267482,"ptr_hex":"41410","str_hex":"414DA","table":"normal","repoint":false,"ptr_type":"absolute"}

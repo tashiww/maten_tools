@@ -102,7 +102,8 @@ class String:
 		table: type of table to parse text (normal or menu)
 		redirect: whether the ptr is moved w/o re-inserting text
 		ptr_type: absolute or relative pointer type """
-
+	# i could probably declare these as Nones and move the code above back to
+	# the bottom
 	en_tables = {"normal": en_tbl, "menu": en_menu_tbl}
 	ja_tables = {"normal": ja_tbl, "menu": ja_menu_tbl}
 
@@ -388,32 +389,6 @@ def text_to_hex(tbl, string):
 	return ret_str
 
 
-def dump_fixed_str(rom_path: Path, tbl: dict, block_info: StringBlock) -> list:
-	# TODO: make this dump proper json...
-	start_offset = block_info.start
-	end_offset = block_info.end
-
-	i = 0
-	current_string_offset = start_offset
-	with rom_path.open("rb+") as rom:
-		while current_string_offset < end_offset:
-			rom.seek(current_string_offset, 0)
-			orig_str = rom.read(12)
-			itm_name = bin_to_text(orig_str, tbl)[0].rstrip("<end>")
-			block_info.id = i
-			block_info.ptr_type = "fixed"
-			block_info.table = "menu"
-			block_info.ptr_pos = None
-			block_info.repoint = False
-			block_info.str_pos = block_info.start
-			json_block = json.dumps(block_info.__dict__)
-			fprint(f'{json_block}')
-			fprint(f"# {itm_name}\n\n")
-
-			i += 1
-			current_string_offset = start_offset + (i * block_info.step)
-
-	return None
 
 
 def fixed_str_parse(rom_path, tbl, string_block):
@@ -850,6 +825,84 @@ def insert_fixed_str(rom_path: Path, script_name: str) -> int:
 			rom.seek(new_pos + (line.id * step))
 			rom.write(line.en_bin[0:15] + b'\x00')
 
+
+def dump_fixed_str(rom_path: Path, tbl: dict, block_info: StringBlock) -> list:
+	# TODO: make this dump proper json...
+	start_offset = block_info.start
+	end_offset = block_info.end
+
+	i = 0
+	current_string_offset = start_offset
+	with rom_path.open("rb+") as rom:
+		while current_string_offset < end_offset:
+			rom.seek(current_string_offset, 0)
+			orig_str = rom.read(12)
+			itm_name = bin_to_text(orig_str, tbl)[0].rstrip("<end>")
+			block_info.id = i
+			block_info.ptr_type = "fixed"
+			block_info.table = "menu"
+			block_info.ptr_pos = None
+			block_info.repoint = False
+			block_info.str_pos = block_info.start
+			json_block = json.dumps(block_info.__dict__)
+			fprint(f'{json_block}')
+			fprint(f"# {itm_name}\n\n")
+
+			i += 1
+			current_string_offset = start_offset + (i * block_info.step)
+
+	return None
+
+
+class Enemy:
+
+	def __init__(self, id: int, data=None):
+
+		self.id = f'0x{id+1:00x}'
+		# size related?
+		self.unk1, self.unk2, self.unk3 = struct.unpack(">BBH", data[0:4])
+
+		self.ptr1,\
+		self.ptr2, \
+		self.ptr3, \
+		self.ptr4 = [f'0x{p:00x}' for p in struct.unpack(">IIII", data[4:0x14])]
+
+		stats = data[0x14:0x24]
+		self.hp, \
+		self.mp, \
+		self.attack, \
+		self.defense, \
+		self.strength, \
+		self.mind, \
+		self.vitality, \
+		self.speed = struct.unpack(">"+"H"*8, stats)
+
+		end_of_string = data.index(b'\x00', 0x24)
+		name_bin = data[0x24:end_of_string]
+		self.name = bin_to_text(name_bin, ja_menu_tbl)[0]
+
+		self.unk4, self.xp, self.gold = struct.unpack(">HHH", data[0x34:0x3a])
+		self.bonus_action1,	self.bonus_action2,	self.bonus_action3 = \
+				struct.unpack(">BBB", data[0x3a:0x3d])
+
+
+def dump_data_blocks(rom_path: Path, block_info: StringBlock) -> list:
+	item_count = (block_info.end - block_info.start) // block_info.step
+	with open(rom_path, "rb") as rom:
+		data = rom.read()
+
+	for i in range(item_count):
+		start = block_info.start + (i * block_info.step)
+		stop = start + block_info.step
+		enemy = Enemy(i, data[start:stop])
+
+		if i == 0:
+			print("\t".join(enemy.__dict__.keys()))
+		print("\t".join([str(x) for x in enemy.__dict__.values()]))
+
+
+real_monster_block = StringBlock('mon', 0x1519a, 0x16c30, 0x40, 10)
+# dump_data_blocks(original_rom.path, real_monster_block)
 
 free_space = make_space_from_file(tling_rom.path, script_files)
 print(f"cleared {free_space} bytes")
