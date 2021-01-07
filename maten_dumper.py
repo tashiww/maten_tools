@@ -863,19 +863,19 @@ class Enemy:
 		self.unk1, self.unk2, self.unk3 = struct.unpack(">BBH", data[0:4])
 
 		self.ptr1,\
-		self.ptr2, \
-		self.ptr3, \
-		self.ptr4 = [f'0x{p:00x}' for p in struct.unpack(">IIII", data[4:0x14])]
+			self.ptr2, \
+			self.ptr3, \
+			self.ptr4 = [f'0x{p:00x}' for p in struct.unpack(">IIII", data[4:0x14])]
 
 		stats = data[0x14:0x24]
 		self.hp, \
-		self.mp, \
-		self.attack, \
-		self.defense, \
-		self.strength, \
-		self.mind, \
-		self.vitality, \
-		self.speed = struct.unpack(">"+"H"*8, stats)
+			self.mp, \
+			self.attack, \
+			self.defense, \
+			self.strength, \
+			self.mind, \
+			self.vitality, \
+			self.speed = struct.unpack(">"+"H"*8, stats)
 
 		end_of_string = data.index(b'\x00', 0x24)
 		name_bin = data[0x24:end_of_string]
@@ -883,7 +883,55 @@ class Enemy:
 
 		self.unk4, self.xp, self.gold = struct.unpack(">HHH", data[0x34:0x3a])
 		self.bonus_action1,	self.bonus_action2,	self.bonus_action3 = \
-				struct.unpack(">BBB", data[0x3a:0x3d])
+			struct.unpack(">BBB", data[0x3a:0x3d])
+
+
+class Item:
+
+	def __init__(self, id: int, data=None):
+
+		self.id = f'0x{id+1:00x}'
+		end_of_string = data.index(b'\x00')
+		name_bin = data[0:end_of_string]
+		self.name = bin_to_text(name_bin, ja_menu_tbl)[0]
+
+		stats = data[0x16:]
+
+		self.attack, \
+			self.defense, \
+			self.speed, \
+			self.mind = struct.unpack(">"+"BBbb", stats[4:8])
+
+		self.buy_price = struct.unpack(">"+"H", stats[8:10])[0]
+		self.sell_price = int(self.buy_price * .75)
+
+		self.property_byte = f'0x{struct.unpack(">I", stats[0:4])[0]:00x}'
+
+		property_bits = f'{struct.unpack(">I", stats[0:4])[0]:0=32b}'[::-1]
+		self.property_bits = '0b' + property_bits[::-1]
+
+		equip_bits = [int(bit) for bit in property_bits[0xd:]]
+		# equip_bits.reverse()
+		#print(equip_bits)
+		slot_bits = [int(bit) for bit in property_bits[3:8]]
+		slots = ['Weapon', 'Head', 'Armor', 'Shield', 'Accessory']
+
+		if 1 in equip_bits:
+			try:
+				self.slot = slots[slot_bits.index(1)]
+			except ValueError:
+				self.slot = slots[-1]
+		else:
+			self.slot = 'Other'
+
+		party = ['Arnath', 'Lilith', 'Lichel', 'Cline', 'Isaiah', 'Abel',
+					'Nana', 'Slay', 'Kamil', 'Cynak', 'Zafan', 'Brigit',
+					'Satan', 'Slime', 'Nightmare', 'Kirikaze', 'White Tiger',
+					'Nebulous', 'Swordman']
+		for i in range(len(party)):
+			setattr(self, party[i], equip_bits[i])
+
+		# self.unk1, self.unk2, self.unk3 = struct.unpack(">BBH", data[0:4])
 
 
 def dump_data_blocks(rom_path: Path, block_info: StringBlock) -> list:
@@ -894,15 +942,17 @@ def dump_data_blocks(rom_path: Path, block_info: StringBlock) -> list:
 	for i in range(item_count):
 		start = block_info.start + (i * block_info.step)
 		stop = start + block_info.step
-		enemy = Enemy(i, data[start:stop])
+		# obj = Enemy(i, data[start:stop])
+		obj = Item(i, data[start:stop])
 
 		if i == 0:
-			print("\t".join(enemy.__dict__.keys()))
-		print("\t".join([str(x) for x in enemy.__dict__.values()]))
+			print("\t".join(obj.__dict__.keys()))
+		print("\t".join([str(x) for x in obj.__dict__.values()]))
 
 
 real_monster_block = StringBlock('mon', 0x1519a, 0x16c30, 0x40, 10)
 # dump_data_blocks(original_rom.path, real_monster_block)
+# dump_data_blocks(original_rom.path, item_block)
 
 free_space = make_space_from_file(tling_rom.path, script_files)
 print(f"cleared {free_space} bytes")
