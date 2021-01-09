@@ -392,7 +392,8 @@ Use<br>Give<br>Drop
 # ふ゛ き:<br>よろい:<br>かふ゛と:<br>た て:
 # WPN:<br>ARM:<br>HLM:<br>SHL:
 # with assembly hack to expand strings/menus:
-Weapon:<br>Armor :<br>Head  :<br>Shield:<br>Item  :
+# equip menu
+Weapon<br> Armor<br>  Head<br>Shield<br>  Item
 
 
 #{"ptr_pos": 34984, "pc_hex": "0x88a8", "str_pos": 34782, "abs_offset_hex": "0x87de", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
@@ -407,7 +408,8 @@ Weapon:<br>Armor :<br>Head  :<br>Shield:<br>Item  :
 # 攻撃力<br>防御力
 # ATK<br>DEF
 # single line asm hacks?　this one is equip menu
-Attack:      Defense:
+Attack<br><br><br>
+Defense
 
 {"ptr_pos": 37152, "pc_hex": "0x9120", "str_pos": 34788, "abs_offset_hex": "0x87e4", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # # REDIRECT ONLY攻撃力<br>防御力	
@@ -496,10 +498,10 @@ HP<br>MP
 {"ptr_pos": 428416, "pc_hex": "0x68980", "str_pos": 37478, "abs_offset_hex": "0x9266", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative", "prefix": "0x41fa"}
 # 体 力<br>知 力<br>生命力<br>素早さ
 # brand new string for new equip menu sub stats
-STA<br><br><br>
-MND<br><br><br>
-VIT<br><br><br>
-SPD
+Stamina<br><br><br>
+Mind<br><br><br>
+Vitality<br><br><br>
+Speed
 
 
 {"ptr_pos": 37216, "pc_hex": "0x9160", "str_pos": 37500, "abs_offset_hex": "0x927c", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
