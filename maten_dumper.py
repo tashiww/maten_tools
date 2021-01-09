@@ -389,8 +389,6 @@ def text_to_hex(tbl, string):
 	return ret_str
 
 
-
-
 def fixed_str_parse(rom_path, tbl, string_block):
 	rom = rom_path.open("rb+")
 	start_offset = string_block.start
@@ -886,8 +884,14 @@ class Enemy:
 			struct.unpack(">BBB", data[0x3a:0x3d])
 
 
-class Item:
+party = [
+		'Arnath', 'Lilith', 'Lichel', 'Cline', 'Isaiah', 'Abel',
+		'Nana', 'Slay', 'Kamil', 'Cynak', 'Zafan', 'Brigit',
+		'Satan', 'Slime', 'Nightmare', 'Kirikaze', 'White Tiger', 'Nebulous',
+		'Swordman']
 
+
+class Item:
 	def __init__(self, id: int, data=None):
 
 		self.id = f'0x{id+1:00x}'
@@ -908,11 +912,12 @@ class Item:
 		self.property_byte = f'0x{struct.unpack(">I", stats[0:4])[0]:00x}'
 
 		property_bits = f'{struct.unpack(">I", stats[0:4])[0]:0=32b}'[::-1]
-		self.property_bits = '0b' + property_bits[::-1]
+
+		# reverse bits to use descending order, spaces every 4 bits
+		self.property_bits = " ".join(
+						[property_bits[::-1][i:i+4] for i in range(0, 32, 4)])
 
 		equip_bits = [int(bit) for bit in property_bits[0xd:]]
-		# equip_bits.reverse()
-		#print(equip_bits)
 		slot_bits = [int(bit) for bit in property_bits[3:8]]
 		slots = ['Weapon', 'Head', 'Armor', 'Shield', 'Accessory']
 
@@ -924,10 +929,6 @@ class Item:
 		else:
 			self.slot = 'Other'
 
-		party = ['Arnath', 'Lilith', 'Lichel', 'Cline', 'Isaiah', 'Abel',
-					'Nana', 'Slay', 'Kamil', 'Cynak', 'Zafan', 'Brigit',
-					'Satan', 'Slime', 'Nightmare', 'Kirikaze', 'White Tiger',
-					'Nebulous', 'Swordman']
 		for i in range(len(party)):
 			setattr(self, party[i], equip_bits[i])
 
@@ -950,9 +951,95 @@ def dump_data_blocks(rom_path: Path, block_info: StringBlock) -> list:
 		print("\t".join([str(x) for x in obj.__dict__.values()]))
 
 
+def dump_encounter_info(rom_path: Path) -> str:
+	# TODO this should return a string instead of just printing it
+	print('enc_ptr', 'enc_id', 'enc_lvl', 'enc_qty', 'enc_rate', 'enemy_id', sep='\t')
+	with open(rom_path, "rb") as rom:
+		encounter_pointer_base = 0x21c24
+		for i in range(16):
+			rom.seek(encounter_pointer_base + (i * 6))
+			enc_id, enc_ptr = struct.unpack(">HI", rom.read(6))
+			rom.seek(enc_ptr)
+			enc_lvl, enc_qty, enc_rate = struct.unpack(">BBH", rom.read(4))
+			for j in range(enc_qty):
+				enemy_id = f'0x{struct.unpack(">H", rom.read(2))[0]:0x}'
+				print(f'0x{enc_ptr:0x}', enc_id, enc_lvl, enc_qty,
+										f'{enc_rate/65535:.0%}', enemy_id, sep="\t")
+	# skip null bytes
+		while True:
+			enc_id, enc_ptr = struct.unpack(">HI", rom.read(6))
+			# print(f'{rom.tell()=:0x}, {enc_ptr=:0x}, {enc_id=:0x}')
+			if enc_ptr > rom.tell() + 2:
+				break
+			rom.seek(enc_ptr)
+			enc_lvl, enc_qty, enc_rate = struct.unpack(">BBH", rom.read(4))
+			for j in range(enc_qty):
+				enemy_id = f'0x{struct.unpack(">H", rom.read(2))[0]:0x}'
+				print(f'0x{enc_ptr:0x}', enc_id, enc_lvl, enc_qty,
+										f'{enc_rate/65535:.0%}', enemy_id, sep="\t")
+
+		encounter_pointer_base = rom.tell()
+		rom.seek(enc_ptr)
+		enc_lvl, enc_qty, enc_rate = struct.unpack(">BBH", rom.read(4))
+		for j in range(enc_qty):
+			enemy_id = f'0x{struct.unpack(">H", rom.read(2))[0]:0x}'
+			print(f'0x{enc_ptr:0x}', enc_id, enc_lvl, enc_qty,
+									f'{enc_rate/65535:.0%}', enemy_id, sep="\t")
+
+		for i in range(14):
+			rom.seek(encounter_pointer_base + (i * 6))
+			enc_id, enc_ptr = struct.unpack(">HI", rom.read(6))
+			rom.seek(enc_ptr)
+			enc_lvl, enc_qty, enc_rate = struct.unpack(">BBH", rom.read(4))
+			for j in range(enc_qty):
+				enemy_id = f'0x{struct.unpack(">H", rom.read(2))[0]:0x}'
+				print(f'0x{enc_ptr:0x}', enc_id, enc_lvl, enc_qty,
+										f'{enc_rate/65535:.0%}', enemy_id, sep="\t")
+
+		while True:
+			enc_id, enc_ptr = struct.unpack(">HI", rom.read(6))
+			if enc_ptr > rom.tell() + 2:
+				break
+			rom.seek(enc_ptr)
+			enc_lvl, enc_qty, enc_rate = struct.unpack(">BBH", rom.read(4))
+			for j in range(enc_qty):
+				enemy_id = f'0x{struct.unpack(">H", rom.read(2))[0]:0x}'
+				print(f'0x{enc_ptr:0x}', enc_id, enc_lvl, enc_qty,
+										f'{enc_rate/65535:.0%}', enemy_id, sep="\t")
+
+
+def dump_level_growth(rom_path: Path, party: list) -> str:
+	# TODO this should return a string instead of just printing it
+	ptr_pos = 0x1d47a
+	# tbl_pos = 0x1d4c6
+	print("name", "level", "stamina", "mind",
+							"vitality", "speed", "hp", "mp", sep="\t")
+	with open(rom_path, "rb") as rom:
+		rom.seek(ptr_pos)
+		# pointers are 4 bytes
+		ptr_data = struct.unpack(
+									">" + "I"*len(party),
+									rom.read(len(party) * struct.calcsize("I")))
+
+		# each party member has a growth table
+		# level up growth data contains 8 bytes
+		# max level is 54, so 53 level ups from 1-53
+		# tbl_data = rom.read(len(party) * struct.calcsize("II") * 53)
+
+		for member, tbl_ptr in zip(party, ptr_data):
+			rom.seek(tbl_ptr)
+			for i in range(53):
+				stats = "\t".join([str(x) for x in struct.unpack(">BBBBHH", rom.read(8))])
+				print(member, i+2, stats, sep="\t")
+
+	# tbl_ptrs = struct.unpack(">"+"I"*len(party), ptr_data)
+
+
 real_monster_block = StringBlock('mon', 0x1519a, 0x16c30, 0x40, 10)
 # dump_data_blocks(original_rom.path, real_monster_block)
 # dump_data_blocks(original_rom.path, item_block)
+# dump_level_growth(original_rom.path, party)
+# dump_encounter_info(original_rom.path)
 
 free_space = make_space_from_file(tling_rom.path, script_files)
 print(f"cleared {free_space} bytes")

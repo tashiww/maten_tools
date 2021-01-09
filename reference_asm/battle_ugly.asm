@@ -244,20 +244,20 @@ jump_to_A1F2:
 	CLR.w	D5	;Predicted (Code-scan)
 	CLR.w	D6	;Predicted (Code-scan)
 	MOVEQ	#4, D1	;Predicted (Code-scan)
-loc_0000A714:
-	CLR.w	D2	;Predicted (Code-scan)
-	MOVE.b	$14(A1,D1.w), D2	;Predicted (Code-scan)
-	BEQ.b	loc_0000A736	;Predicted (Code-scan)
-	BSR.w	get_weapon_data	;Predicted (Code-scan)
-	CLR.w	D0	;Predicted (Code-scan)
-	MOVE.b	$1A(A0), D0	;Predicted (Code-scan)
-	ADD.w	D0, D3	;Predicted (Code-scan)
-	MOVE.b	$1B(A0), D0	;Predicted (Code-scan)
-	ADD.w	D0, D4	;Predicted (Code-scan)
-	ADD.b	$1C(A0), D5	;Predicted (Code-scan)
-	ADD.b	$1D(A0), D6	;Predicted (Code-scan)
+get_gear_stat_bonuses:
+	CLR.w	D2	;
+	MOVE.b	$14(A1,D1.w), D2	;
+	BEQ.b	loc_0000A736	;
+	BSR.w	get_weapon_data	;
+	CLR.w	D0	;
+	MOVE.b	$1A(A0), D0	;
+	ADD.w	D0, D3	;
+	MOVE.b	$1B(A0), D0	;
+	ADD.w	D0, D4	;
+	ADD.b	$1C(A0), D5	;
+	ADD.b	$1D(A0), D6	;
 loc_0000A736:
-	DBF	D1, loc_0000A714	;Predicted (Code-scan)
+	DBF	D1, get_gear_stat_bonuses	;Predicted (Code-scan)
 	MOVEM.l	(A7)+, D0/D1/D2/A0/A1	;Predicted (Code-scan)
 	RTS	;Predicted (Code-scan)
 	dc.b	$48, $E7, $70, $80, $41, $F9, $00, $FF, $CE, $D6, $76, $05, $32, $00, $42, $42, $14, $18, $67, $26, $0C, $02, $00, $01, $67, $12, $0C, $02, $00, $02, $67, $0C ;0x0 (0x0000A740-0x0000A826, Entry count: 0xE6) [Unknown data]
@@ -1421,24 +1421,24 @@ level_up:
 	SUB.b	D5, $12(A1)	;
 	SUB.b	D6, $10(A1)	;
 	CLR.w	D3	;
-	MOVE.b	$E(A1), D3	;
+	MOVE.b	$E(A1), D3	;	current level
 	SUBQ.w	#2, D3	;
-	LSL.w	#3, D3	;
-	JSR	$00001F9C	;
+	LSL.w	#3, D3	; index * 8 for offset into level up stat table?
+	JSR	$00001F9C	; omg rng? checks even/odd bit later, +1 stat if odd
 	MOVE.w	D0, D4	;
 	CLR.w	D1	;
-	MOVE.b	(A3,D3.w), D1	;
-	ANDI.w	#1, D0	;
+	MOVE.b	(A3,D3.w), D1	; $1d4c6 for level 2 stat growth for arnath, val $18
+	ANDI.w	#1, D0	; check for even/odd?
 	ADD.w	D0, D1	;
 	CMPI.w	#$0100, D1	;
 	BCS.b	loc_0000CBA4	;
-	MOVE.w	#$00FF, D1	;
+	MOVE.w	#$00FF, D1	; cap growth at $ff
 loc_0000CBA4:
-	MOVE.b	D1, D2	;Predicted (Code-scan)
-	SUB.b	$F(A1), D2	;Predicted (Code-scan)
-	BMI.b	loc_0000CBB0	;Predicted (Code-scan)
-	MOVE.b	D1, $F(A1)	;Predicted (Code-scan)
-loc_0000CBB0:
+	MOVE.b	D1, D2	;
+	SUB.b	$F(A1), D2	; sub old str from new str
+	BMI.b	get_new_mind	; skip if negative i guess
+	MOVE.b	D1, $F(A1)	; set new str if it was positive
+get_new_mind:
 	LSR.w	#1, D4	;Predicted (Code-scan)
 	CLR.w	D1	;Predicted (Code-scan)
 	MOVE.b	$1(A3,D3.w), D1	;Predicted (Code-scan)
@@ -1446,14 +1446,14 @@ loc_0000CBB0:
 	ANDI.w	#1, D0	;Predicted (Code-scan)
 	ADD.w	D0, D1	;Predicted (Code-scan)
 	CMPI.w	#$0100, D1	;Predicted (Code-scan)
-	BCS.b	loc_0000CBCA	;Predicted (Code-scan)
+	BCS.b	set_new_mind	;Predicted (Code-scan)
 	MOVE.w	#$00FF, D1	;Predicted (Code-scan)
-loc_0000CBCA:
+set_new_mind:
 	MOVE.b	D1, D2	;Predicted (Code-scan)
 	SUB.b	$10(A1), D2	;Predicted (Code-scan)
-	BMI.b	loc_0000CBD6	;Predicted (Code-scan)
+	BMI.b	get_new_vit	;Predicted (Code-scan)
 	MOVE.b	D1, $10(A1)	;Predicted (Code-scan)
-loc_0000CBD6:
+get_new_vit:
 	LSR.w	#1, D4	;Predicted (Code-scan)
 	CLR.w	D1	;Predicted (Code-scan)
 	MOVE.b	$2(A3,D3.w), D1	;Predicted (Code-scan)
@@ -1461,14 +1461,14 @@ loc_0000CBD6:
 	ANDI.w	#1, D0	;Predicted (Code-scan)
 	ADD.w	D0, D1	;Predicted (Code-scan)
 	CMPI.w	#$0100, D1	;Predicted (Code-scan)
-	BCS.b	loc_0000CBF0	;Predicted (Code-scan)
+	BCS.b	set_new_vit	;Predicted (Code-scan)
 	MOVE.w	#$00FF, D1	;Predicted (Code-scan)
-loc_0000CBF0:
+set_new_vit:
 	MOVE.b	D1, D2	;Predicted (Code-scan)
 	SUB.b	$11(A1), D2	;Predicted (Code-scan)
-	BMI.b	loc_0000CBFC	;Predicted (Code-scan)
+	BMI.b	get_new_spd	;Predicted (Code-scan)
 	MOVE.b	D1, $11(A1)	;Predicted (Code-scan)
-loc_0000CBFC:
+get_new_spd:
 	LSR.w	#1, D4	;Predicted (Code-scan)
 	CLR.w	D1	;Predicted (Code-scan)
 	MOVE.b	$3(A3,D3.w), D1	;Predicted (Code-scan)
@@ -1476,14 +1476,14 @@ loc_0000CBFC:
 	ANDI.w	#1, D0	;Predicted (Code-scan)
 	ADD.w	D0, D1	;Predicted (Code-scan)
 	CMPI.w	#$0100, D1	;Predicted (Code-scan)
-	BCS.b	loc_0000CC16	;Predicted (Code-scan)
+	BCS.b	set_new_spd	;Predicted (Code-scan)
 	MOVE.w	#$00FF, D1	;Predicted (Code-scan)
-loc_0000CC16:
+set_new_spd:
 	MOVE.b	D1, D2	;Predicted (Code-scan)
 	SUB.b	$12(A1), D2	;Predicted (Code-scan)
-	BMI.b	loc_0000CC22	;Predicted (Code-scan)
+	BMI.b	set_new_hp	;Predicted (Code-scan)
 	MOVE.b	D1, $12(A1)	;Predicted (Code-scan)
-loc_0000CC22:
+set_new_hp:
 	LSR.w	#1, D4	;Predicted (Code-scan)
 	MOVE.w	$4(A3,D3.w), D1	;Predicted (Code-scan)
 	MOVE.w	D4, D0	;Predicted (Code-scan)
@@ -1491,9 +1491,9 @@ loc_0000CC22:
 	ADD.w	D0, D1	;Predicted (Code-scan)
 	MOVE.w	D1, D2	;Predicted (Code-scan)
 	SUB.w	$A(A1), D2	;Predicted (Code-scan)
-	BMI.b	loc_0000CC3C	;Predicted (Code-scan)
+	BMI.b	set_new_mp	;Predicted (Code-scan)
 	MOVE.w	D1, $A(A1)	;Predicted (Code-scan)
-loc_0000CC3C:
+set_new_mp:
 	LSR.w	#2, D4	;Predicted (Code-scan)
 	MOVE.w	$6(A3,D3.w), D1	;Predicted (Code-scan)
 	MOVE.w	D4, D0	;Predicted (Code-scan)
@@ -1501,49 +1501,49 @@ loc_0000CC3C:
 	ADD.w	D0, D1	;Predicted (Code-scan)
 	MOVE.w	D1, D2	;Predicted (Code-scan)
 	SUB.w	$C(A1), D2	;Predicted (Code-scan)
-	BMI.b	loc_0000CC56	;Predicted (Code-scan)
+	BMI.b	add_vit_bonus_to_hp	;Predicted (Code-scan)
 	MOVE.w	D1, $C(A1)	;Predicted (Code-scan)
-loc_0000CC56:
-	CLR.l	D0	;Predicted (Code-scan)
-	MOVE.b	$11(A1), D0	;Predicted (Code-scan)
-	LSL.l	#1, D0	;Predicted (Code-scan)
-	CLR.l	D1	;Predicted (Code-scan)
-	MOVE.b	$F(A1), D1	;Predicted (Code-scan)
-	ADD.l	D1, D0	;Predicted (Code-scan)
-	DIVU.w	#$0014, D0	;Predicted (Code-scan)
-	MOVE.w	D0, D2	;Predicted (Code-scan)
-	ADD.w	$4(A1), D2	;Predicted (Code-scan)
-	CMPI.w	#$03E8, D2	;Predicted (Code-scan)
-	BCS.b	loc_0000CC80	;Predicted (Code-scan)
-	MOVE.w	#$03E7, D2	;Predicted (Code-scan)
-	MOVE.w	D2, D0	;Predicted (Code-scan)
-	SUB.w	$4(A1), D0	;Predicted (Code-scan)
+add_vit_bonus_to_hp:
+	CLR.l	D0	;
+	MOVE.b	$11(A1), D0	; get vit
+	LSL.l	#1, D0	; double it
+	CLR.l	D1	;
+	MOVE.b	$F(A1), D1	; str ??
+	ADD.l	D1, D0	;
+	DIVU.w	#$0014, D0	; divide by 14
+	MOVE.w	D0, D2	;
+	ADD.w	$4(A1), D2	; max hp
+	CMPI.w	#$03E8, D2	; cap at 999
+	BCS.b	loc_0000CC80	;
+	MOVE.w	#$03E7, D2	;
+	MOVE.w	D2, D0	;
+	SUB.w	$4(A1), D0	;
 loc_0000CC80:
-	MOVE.w	D2, $4(A1)	;Predicted (Code-scan)
-	ADD.w	D0, $2(A1)	;Predicted (Code-scan)
-	CLR.l	D0	;Predicted (Code-scan)
-	MOVE.b	$10(A1), D0	;Predicted (Code-scan)
-	LSL.l	#1, D0	;Predicted (Code-scan)
-	CLR.l	D1	;Predicted (Code-scan)
-	MOVE.b	$11(A1), D1	;Predicted (Code-scan)
-	ADD.l	D1, D0	;Predicted (Code-scan)
-	DIVU.w	#$0014, D0	;Predicted (Code-scan)
-	MOVE.w	D0, D2	;Predicted (Code-scan)
-	ADD.w	$8(A1), D2	;Predicted (Code-scan)
-	CMPI.w	#$03E8, D2	;Predicted (Code-scan)
-	BCS.b	loc_0000CCB2	;Predicted (Code-scan)
-	MOVE.w	#$03E7, D2	;Predicted (Code-scan)
-	MOVE.w	D2, D0	;Predicted (Code-scan)
-	SUB.w	$8(A1), D0	;Predicted (Code-scan)
+	MOVE.w	D2, $4(A1)	;
+	ADD.w	D0, $2(A1)	;
+	CLR.l	D0	;
+	MOVE.b	$10(A1), D0	; get mind
+	LSL.l	#1, D0	; double
+	CLR.l	D1	;
+	MOVE.b	$11(A1), D1	;
+	ADD.l	D1, D0	;
+	DIVU.w	#$0014, D0	;
+	MOVE.w	D0, D2	;
+	ADD.w	$8(A1), D2	;
+	CMPI.w	#$03E8, D2	;
+	BCS.b	loc_0000CCB2	;
+	MOVE.w	#$03E7, D2	;
+	MOVE.w	D2, D0	;
+	SUB.w	$8(A1), D0	;
 loc_0000CCB2:
-	MOVE.w	D2, $8(A1)	;Predicted (Code-scan)
-	ADD.w	D0, $6(A1)	;Predicted (Code-scan)
-	MOVEM.l	(A7)+, D3/D4/D5/D6	;Predicted (Code-scan)
-	ADD.w	D3, $A(A1)	;Predicted (Code-scan)
-	ADD.w	D4, $C(A1)	;Predicted (Code-scan)
-	ADD.b	D5, $12(A1)	;Predicted (Code-scan)
-	ADD.b	D6, $10(A1)	;Predicted (Code-scan)
-	MOVEM.l	(A7)+, D0/D1/D2/D3/D4/D5/A0/A1/A2/A3	;Predicted (Code-scan)
+	MOVE.w	D2, $8(A1)	;
+	ADD.w	D0, $6(A1)	;
+	MOVEM.l	(A7)+, D3/D4/D5/D6	;
+	ADD.w	D3, $A(A1)	;
+	ADD.w	D4, $C(A1)	;
+	ADD.b	D5, $12(A1)	;
+	ADD.b	D6, $10(A1)	; resetting gear bonuses i think
+	MOVEM.l	(A7)+, D0/D1/D2/D3/D4/D5/A0/A1/A2/A3	;
 	RTS	;Predicted (Code-scan)
 	
 loc_0000CEC8
@@ -1972,8 +1972,8 @@ loc_0000DCD0:
 	BEQ.b	loc_0000DCE8
 	MOVE.w	$2C(A6), D1	; $34f4 is $0000 for arnas, dunno what it is
 	BTST.l	#6, D1
-	BEQ.b	loc_0000DCE8
-	LSL.w	#1, D2	;Predicted (Code-scan)
+	BEQ.b	loc_0000DCE8	
+	LSL.w	#1, D2	; double atk if d1 was set..
 loc_0000DCE8:
 	MOVEQ	#$0000001A, D1	; base multiplier, multiplied later by rng number and atk
 	JSR	$00001FD8	; something with RNG .. and multiplying my atk by the RNG !! and LSR #8 to get $A3 or 163dmg in D0
@@ -1988,7 +1988,7 @@ loc_0000DCE8:
 loc_0000DD06:
 	MOVEQ	#$0000001A, D1	; base multiplier
 	JSR	$00001FD8	; randomize enemy defense, turned $16 into $17
-	CMPI.w	#5, (A6)	; check for party member #5 ??
+	CMPI.w	#5, (A6)	; check for party member #5 ?? shyus / isaiah
 	BNE.b	loc_0000DD24
 	MOVE.w	$00FFDAC4, D1	;Predicted (Code-scan)
 	BTST.l	#3, D1	;Predicted (Code-scan)
@@ -1996,7 +1996,7 @@ loc_0000DD06:
 	LSL.w	#1, D3	;Predicted (Code-scan)
 	BRA.b	loc_0000DD38	;Predicted (Code-scan)
 loc_0000DD24:
-	CMPI.w	#2, (A6)
+	CMPI.w	#2, (A6)	; check if we're lilith..
 	BNE.b	loc_0000DD38
 	MOVE.w	$00FFDAC4, D1	;Predicted (Code-scan)
 	BTST.l	#6, D1	;Predicted (Code-scan)
@@ -2016,7 +2016,7 @@ loc_0000DD46:
 	MOVE.w	D0, D3	;Predicted (Code-scan)
 atk_gt_def:
 	MOVE.w	D3, D2
-	CMPI.w	#$0100, (A6)
+	CMPI.w	#$0100, (A6)	; arnath is $0101, not sure when he'd be $0100 ..
 	BCS.b	check_low_hp
 	MOVE.w	$2C(A6), D0
 	BTST.l	#$0C, D0

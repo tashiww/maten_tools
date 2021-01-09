@@ -1576,7 +1576,54 @@
 000042DA 4E75                       	RTS
 000042DA 4E75                       	RTS
 000042DC                            	
-000042DC                            	
-000042DC                            	;org $a45a ; hacky base item offset change ...
-000042DC                            	; LEA $000130C6, A0
-000042DC                            	;LEA $00041a3e, A0
+000042DC                            ; new title graphic
+000042DC                            	include "./asm/title_image.asm"
+000042DC                            ImageSource	equr	a0	; ram.. rom?
+000042DC                            ImageDestination	equr	a5	; vram
+000042DC                            Length	equr	d0	; $314 maybe
+000042DC                            
+000042DC                            ; $21BC is vram copy subroutine?
+000042DC                            
+000042DC                             org $1158
+00001158                            title_screen:
+00001158 323C 0C90                   	MOVE.w	#$c90, d1	; size of DMA copy, long to include "press start"
+0000115C 4EB9 0000 0000             	JSR new_title
+00001162                            		
+00001162                             org $68a00
+00068A00                            new_title:
+00068A00 203C 0000 1411             	MOVE.l	#$1411, d0
+00068A06 43F9 00FF 3CE0             	LEA $FF3ce0, a1
+00068A0C 48E7 8040                  	MOVEm.l	a1/d0, -(a7)
+00068A10 41F9 000F 4480             	LEA	$f4480, a0
+00068A16 43F9 000F 5FFE             	LEA	$F5FFE, a1
+00068A1C 327C 6000                  	MOVE	#$6000, a1
+00068A20 3401                       	move.w	d1, d2
+00068A22                            	;subi.w	#$200, d2
+00068A22 3002                       	move.w	d2, d0
+00068A24 263C 0000 0001             	move.l #$1, d3
+00068A2A 4EB9 0000 21BC             	JSR $21bc
+00068A30 4CDF 0201                  	MOVEm.l	(a7)+, d0/a1
+00068A34                            	;LEA $FF32B8, a0
+00068A34                            	;LEA $FF3ccc, a3
+00068A34                            	;LEA $60e2c, a4
+00068A34 2A7C 0000 6000             	MOVE.l #$6000, a5	; most of this probably isn't necessary.. just trying to set it back to intended state?
+00068A3A 203C 4142 1000             	move.l #$41421000, d0
+00068A40 4241                       	clr	d1
+00068A42 4242                       	clr	d2
+00068A44 4243                       	clr	d3
+00068A46 4DF9 0006 05EA             	LEA	$605ea, a6
+00068A4C 4E75                       	RTS
+00068A4E                            
+00068A4E                             org $19b30
+00019B30                            prologue_title:
+00019B30 323C 09A0                  	MOVE.w	#$9a0, d1
+00019B34 4EB9 0006 8A00             	JSR new_title
+00019B3A                            	WHILE *<$19b42
+00019B3A                            		NOP
+00019B3A 4E71 4E71 4E71 4E71        	ENDW
+00019B42                            ; trying not to step on next LEA at $19b42
+00019B42                             org $f4480
+000F4480                            	incbin "./images/new_title.bin"
+000F57C0                             org $f57c0
+000F57C0                            	incbin	"./images/press_start.bin"
+000F57C0                            	incbin	"./images/press_start.bin"

@@ -31,7 +31,5 @@
 ; changes behavior of name selection screen to match smaller english alphabet
 	include "./asm/menu_name_selection.asm"
 	
-	
-	;org $a45a ; hacky base item offset change ...
-	; LEA $000130C6, A0
-	;LEA $00041a3e, A0
+; new title graphic
+	include "./asm/title_image.asm"

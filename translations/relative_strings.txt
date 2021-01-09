@@ -467,7 +467,7 @@ You can't drop <pc_itm> because it's a rented item.
 
 {"ptr_pos": 35518, "pc_hex": "0x8abe", "str_pos": 35482, "abs_offset_hex": "0x8a9a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # つよさ<br>ならび
-Stats<br>Order
+Status<br>Order
 
 
 {"ptr_pos": 36874, "pc_hex": "0x900a", "str_pos": 37460, "abs_offset_hex": "0x9254", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
@@ -489,14 +489,14 @@ HP<br>MP
 
 
 {"ptr_pos": 37076, "pc_hex": "0x90d4", "str_pos": 37478, "abs_offset_hex": "0x9266", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative", "prefix": "0x41fa"}
-# 体 力<br>知 力<br>生命力<br>素早さ
 #STR<br>INT<br>VIT<br>SPD
-Strength:<br>    Mind:<br>Vitality:<br>   Speed:
+# 体 力<br>知 力<br>生命力<br>素早さ
+ Stamina:<br>    Mind:<br>Vitality:<br>   Speed:
 
 {"ptr_pos": 428416, "pc_hex": "0x68980", "str_pos": 37478, "abs_offset_hex": "0x9266", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative", "prefix": "0x41fa"}
 # 体 力<br>知 力<br>生命力<br>素早さ
 # brand new string for new equip menu sub stats
-STR<br><br><br>
+STA<br><br><br>
 MND<br><br><br>
 VIT<br><br><br>
 SPD
