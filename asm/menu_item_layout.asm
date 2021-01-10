@@ -9,50 +9,6 @@ RowOffset	equr	d1
 WindowWidth	equr	d2
 WindowHeight	equr	d3
 
-PartySelectMenu	macro
-	moveq #$a, ColOffset
-	moveq #$1, RowOffset
-	moveq #$1c, WindowWidth
-	moveq #$5, WindowHeight
-	move.w #$3, d4
-	endm
-PartySelectLabels	macro
-	moveq #$b, ColOffset
-	moveq #$2, RowOffset
-	endm
-	
-PartySelectHighlights	macro
-	moveq	#$a, d2	; highlight width
-	moveq	#$0, d3	; height (0 is 1 tile)
-	moveq	#$2, d4	; maybe cols
-	endm
-ItemListDimensions	macro
-	moveq #$a, ColOffset
-	moveq #$6, RowOffset
-	moveq #$13, WindowWidth
-	moveq #$e, WindowHeight
-	move.w #$3, d4
-	endm
-ItemListLabelOffset	macro
-	moveq #$b, ColOffset
-	moveq #$7, RowOffset
-	endm
-	
-GivePartyMenu	macro
-	moveq #$a, ColOffset
-	moveq #$14, RowOffset
-	moveq #$1c, WindowWidth
-	moveq #$5, WindowHeight
-	move.w #$3, d4
-	endm
-	
-GivePartyLabels	macro
-	moveq #$b, ColOffset
-	moveq #$15, RowOffset
-	endm
-	
-	
-
 ; main menu
  org $8372
 	moveq #$2, ColOffset
@@ -75,104 +31,64 @@ GivePartyLabels	macro
 	moveq	#$1, d4
 	moveq #$4, d5
 	moveq #$3, d6
-
-; sub menu	use/give/drop layout, label, and highlighting
-
- org $8402
-	moveq #$3, ColOffset
-	moveq #$2, RowOffset
-	moveq #$6, WindowWidth
-	moveq #$8, WindowHeight
-	move.w #$83, d4
- org $841a
-	moveq #$4, ColOffset
-	moveq #$3, RowOffset
-; highlights
- org $842a
-	moveq #$4, ColOffset
-	moveq #$3, RowOffset
-	moveq #$3, d2
-	moveq #$1, d3
-	moveq	#$1, d4	; cols
-	moveq	#$3, d5	; rows?
-	moveq	#$3, d6 ; option count?
+	
 	
 
-; primary party select menu (left side originally) for give/drop selection but not use...?
+; primary party select menu (left side originally)
  org $8460
-	PartySelectMenu
+	moveq #$2, ColOffset
+	moveq #$c, RowOffset
+	moveq #$8, WindowWidth
+	moveq #$e, WindowHeight
+	move.w #$3, d4
 	
  org $8478
  ; set label origin for primary party select menu
-	PartySelectLabels
-
-; party select listing two column printing
- org $a318
-	bsr.w	$b3bc
-	NOP
-	;addq	#1, d1	; changed this to 1 for single spacing
-	
-	; the party hp/mp menu is borked, maybe do another btst, for 1 or 2? to skip to evenoddprint
- org $b3bc
- 	addi.b	#$c, d0
-	btst	#$0, d5
-	beq	EvenOddPrint
-	subi.b	#$18, d0
-	addq	#$1, d1
-EvenOddPrint:
-	addq	#$1, d5
-	addq	#$1, d6
-	rts
-	
-	
-	
- org $a326
- ; party select window for drop/give submenus item submenu layout control
-	PartySelectHighlights
-	move.w	d5, d6	; maybe it's incrementing based on party count
-	subq.w	#1, d6	; i think it limits selectable options
+	moveq #$3, ColOffset
+	moveq #$e, RowOffset
 
 
-; equip party select menu
- org $8810
-	PartySelectMenu
-
- org $8828
-	PartySelectLabels
-	
-; ; equip background window
- ; org $8856
-	; moveq #$a, ColOffset
-	; moveq #$2, RowOffset
-	; moveq #$1c, WindowWidth
-	; moveq #$a, WindowHeight
-	; move.w #$43, d4
+; equip background window
+ org $8856
+	moveq #$a, ColOffset
+	moveq #$2, RowOffset
+	moveq #$1c, WindowWidth
+	moveq #$a, WindowHeight
+	move.w #$43, d4
 	
 ; it gets a new d0 during draw subroutine and puts it into $ff32b8, maybe for cleanup later?
-
 ; equipment item menu
  org $886a
 	moveq #$a, ColOffset
-	moveq #$5, RowOffset
+	moveq #$c, RowOffset
 	moveq #$1c, WindowWidth
-	moveq #$d, WindowHeight
+	moveq #$e, WindowHeight
 	move.w #$43, d4
+
+
+ 
+
 
  org $84da
  ; probably item menu in equip screen label offset
 	moveq #$b, ColOffset
-	moveq #$6, RowOffset
+	moveq #$d, RowOffset
 
 
 ; secondary party member window (for giving items)
  org $86b6
 ; draw window
-	GivePartyMenu
+	moveq #$1e, ColOffset
+	moveq #$c, RowOffset
+	moveq #$8, WindowWidth
+	moveq #$e, WindowHeight
+	move.w #$3, d4
 
  org $86ca
 ; set label offset
-	GivePartyLabels
-	moveq #$1, d2	; dunno
+	moveq #$1f, ColOffset
+	moveq #$d, RowOffset
+	moveq #$1, WindowWidth
 
 
 
@@ -196,12 +112,17 @@ Stack	equr	a7
 
  org $84ae
 setup_item_window_dimensions:
-	ItemListDimensions
+	moveq #$a, ColOffset
+	moveq #$c, RowOffset
+	moveq #$14, WindowWidth
+	moveq #$e, WindowHeight
+	move.w #$3, d4
 	
  org $84da
 setup_item_label_origin
-	ItemListLabelOffset
-		
+	moveq #$b, ColOffset	; x offset
+	moveq #$d, RowOffset	; y offset
+	
  org $a1f2
 
 get_player_ram_offset:
@@ -231,8 +152,6 @@ start_item_writing:
 	MOVE.b	(A0,D2.w), D2	; this put $01 in D2, selected party member's ID
 	MOVEA.l	(Stack)+, A0	; puts old string pointer back in a0
 	RTS		; returns to $84DA sometimes. sets d0 = $b, d1 = $e, then branch to $a4b4
-
-
 	
  org $a384
 menu_draw_setup:
@@ -369,6 +288,7 @@ blank_spaces_x9:
 get_item_offset:
 	MOVE.l	D2, -(Stack)	; item id to stack
 	LEA	$000130C6, A0	; item data base offset
+	;LEA	$000f000e, A0	; item data base offset
 	ANDI.w	#$00FF, D2	; mask out rental / equip status of item
 	SUBQ.w	#1, D2	
 	MULU.w	#$0020, D2	; each item block is $20 bytes of data
@@ -396,11 +316,11 @@ start_drawing_item_window:
 	BSR.w	write_label_8x8	;Predicted (Code-scan)
 	
 setup_item_window:
-	MOVEQ	#$f, D2	; highlight width
+	MOVEQ	#$e, D2	; highlight width
 	MOVEQ	#0,  D3	; highlight height
 	MOVEQ	#1,  D4	; column count
 	MOVEQ	#$c, D5	; row count
-	SUBQ.w	#1,  D6	; prob converting itemcount to 0-based count to cap selectables
+	SUBQ.w	#1,  D6	; ???
 	MOVEM.l	(Stack)+, A0/A1
 	RTS
 
@@ -650,10 +570,10 @@ draw_equipped_item:
 	ENDW
  org $00008856
 draw_equipment_backgrounds:
-	MOVEQ	#$2, D0	; x offset for current equipment
-	MOVEQ	#$14, D1        	; y offset
-	MOVEQ	#$1a, D2	; width 
-	MOVEQ	#$7, D3	; height
+	MOVEQ	#$0000000A, D0	; x offset for current equipment
+	MOVEQ	#2, D1        	; y offset
+	MOVEQ	#$0000001C, D2	; width 
+	MOVEQ	#$0000000A, D3	; height
 	MOVE.w	#$0043, D4	; palette info maybe?
 	BSR.w	draw_background_window	; the currently equipped item window
  org $8866
@@ -663,19 +583,18 @@ draw_equipment_backgrounds:
 			; using equipment window, no longer need a separate one.. unless i show all stats! spd/vit etc
 	; small equipment menu stat page etc
 	; $887e ish
-	; this might be item window in equip page
-	MOVEQ	#$00000009, D0
-	MOVEQ	#$00000006, D1
-	MOVEQ	#$00000013, D2
+	MOVEQ	#$0000000A, D0
+	MOVEQ	#$0000000C, D1
+	MOVEQ	#$0000001c, D2
 	MOVEQ	#$0000000E, D3
 	MOVE.w	#$0043, D4
 	BSR.w	draw_background_window	; draw item window
 	MOVE.w	D0, $6(A6)	; this might have something to do with destroying the window later?
 
-	MOVEQ	#$1c, D0	; same as above, but for atk/def smaller window
-	MOVEQ	#$6, D1	
-	MOVEQ	#$a, D2	
-	MOVEQ	#$15, D3	
+	MOVEQ	#$0000001e, D0	; same as above, but for atk/def smaller window
+	MOVEQ	#$c, D1	
+	MOVEQ	#$00000008, D2	
+	MOVEQ	#$e, D3	
 	MOVEQ	#$3, D4	
 	BSR.w	draw_small_window	; draw smaller atk/def window
 	; this window wasn't disappearing so i stacked it on top of the other one...
@@ -683,8 +602,8 @@ draw_equipment_backgrounds:
 	CLR.w	$6(A5)
  org $8894
 	MOVEA.w	$4(A5), A1
-	MOVEQ	#$3, D0	; x offset for text for gear labels
-	MOVEQ	#$15, D1	; y offset
+	MOVEQ	#$0000000B, D0	; x offset for text
+	MOVEQ	#3, D1	; y offset
 
  org $889c
 	LEA	$FFFF87C8.w, A0	; this line will be automatically overwritten by my python script..
@@ -692,39 +611,35 @@ draw_equipment_backgrounds:
 	
 	MOVEQ	#$0000000b, D0	; reposition for "item" label
 	addQ	#4, D1	; draw under the wpn/arm etc
-	LEA	$FFFF87DE.w, A0	; another automated python line... 
-	BSR.w	write_label_8x8	; i actually don't even write this anymore?
+	LEA	$FFFF87DE.w, A0	; another automated python line...
+	BSR.w	write_label_8x8
 	
-	MOVEQ	#$1d, D0	; offsets for atk/def text
-	MOVEQ	#$7, D1	
+	MOVEQ	#$0000000b, D0	; offsets for atk/def text
+	MOVEQ	#$9, D1	
 	LEA	$FFFF87E4.w, A0	
-	BSR.w	write_label_8x8	; different string writing subroutine
+	BSR.w	write_label_8x16	; different string writing subroutine
 	MOVE.w	$2(A5), D2
 	BSR.w	start_item_writing
 	BSR.w	get_player_ram_offset
 	MOVEA.l	A0, A2
 	MOVE.b	$14(A2), D2
-	MOVEQ	#$b, D0	; position for weapon
-	MOVEQ	#$15, D1	
+	MOVEQ	#$00000013, D0	; position for weapon
+	MOVEQ	#3, D1	
 	BSR.w	draw_equipped_item	; weap
 	MOVE.b	$15(A2), D2	; loading equipped gear into d2
-	;MOVEQ	#$00000013, D0	; could maybe delete this unless d0 gets messed up by the drawing sr
-	NOP
+	MOVEQ	#$00000013, D0	; could maybe delete this unless d0 gets messed up by the drawing sr
 	addq	#1, D1	; increment by 1 instead of 2!
 	BSR.w	draw_equipped_item	; armor
 	MOVE.b	$16(A2), D2	
-	;MOVEQ	#$00000013, D0	
-	NOP
+	MOVEQ	#$00000013, D0	
 	addq	#1, D1
 	BSR.w	draw_equipped_item	; helmet
 	MOVE.b	$17(A2), D2
-	;MOVEQ	#$00000013, D0
-	NOP
+	MOVEQ	#$00000013, D0
 	addq	#1, D1
 	BSR.w	draw_equipped_item	; shield
 	MOVE.b	$18(A2), D2	
-	;MOVEQ	#$00000013, D0	; x offset for equipped item
-	NOP
+	MOVEQ	#$00000013, D0	; x offset for equipped item
 	addq	#1, D1
 	BSR.w	draw_equipped_item	; item
 	CLR.l	D2
@@ -736,9 +651,9 @@ draw_equipment_backgrounds:
 
 loc_00008916:
 	MOVEQ	#4, D3	; digit padding? in VRAM, space to reserve
-	MOVEQ	#$21, D0	; x offset
-	MOVEQ	#$8, D1	; y offset
-	BSR.w	draw_value_8x8	; draw atk/def number
+	MOVEQ	#$00000013, D0	; x offset
+	MOVEQ	#$9, D1	; y offset
+	BSR.w	draw_stat_value	; draw atk/def number
 	CLR.l	D2	
 	jsr draw_substats
 	
@@ -750,17 +665,16 @@ loc_00008916:
 	BCS.b	loc_00008930
 	MOVE.w	#$270f, D2	; set at 9999
 	
-
+; item drawing in equipment page
 loc_00008930:
-	MOVEQ	#3, D3
-	MOVEQ	#$22, D0
-	MOVEQ	#$b, D1
-	BSR.w	draw_value_8x8 ; probably defense writing
+	MOVEQ	#4, D3
+	MOVEQ	#$00000021, D0
+	MOVEQ	#$9, D1
+	BSR.w	draw_stat_value
 	MOVE.w	$2(A5), D2
-	; item drawing in equipment page
 	BSR.w	start_item_writing	; item writing routine
-	MOVEQ	#$a, D0	; x / y offsets
-	MOVEQ	#$7, D1	
+	MOVEQ	#$0000000B, D0	; x / y offsets
+	MOVEQ	#$0000000d, D1	
 	BSR.w	start_drawing_item_window	; draw items
 	ADDQ.w	#1, D0
 	MOVE.w	$6(A5), D7	
@@ -791,6 +705,9 @@ loc_00008930:
 	moveq #$2, d2
  
 	
+ org $a318
+	addq #1, d1	; changed this to 1 for single spacing
+
 
 
 ; ########################################################################################
@@ -1058,7 +975,7 @@ get_xp_to_next_level:
  ; window is offset $1e, $c  x,y
 draw_substats:
 	LEA	$1234.w, A0	; strings for stat labels (str, vit, etc) ; my python script will redirect this...
-	MOVEQ	#$1d, x_tile_offset
+	MOVEQ	#$1f, x_tile_offset
 	MOVEQ	#$d, y_tile_offset
 	JSR	write_label_8x8
 
@@ -1067,20 +984,20 @@ draw_substats:
 	MOVEQ	#3, D3
 	MOVEQ	#$22, x_tile_offset	; set x offset for str / int stat values
 	addq	#$1, y_tile_offset
-	JSR	draw_value_8x8
+	JSR	draw_stat_value
 
 	CLR.l	D2
 	MOVE.b	$10(A2), D2	; intelligence value
 	addq	#3, y_tile_offset
-	JSR	draw_value_8x8
+	JSR	draw_stat_value
 	CLR.l	D2
 	MOVE.b	$11(A2), D2	; vitality
 	addq	#3, y_tile_offset
-	JSR	draw_value_8x8
+	JSR	draw_stat_value
 	CLR.l	D2
 	MOVE.b	$12(A2), D2	; speed
 	addq	#3, y_tile_offset
-	JSR	draw_value_8x8
+	JSR	draw_stat_value
 	RTS
 
 ; ########################################################################################

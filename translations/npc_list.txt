@@ -8,7 +8,7 @@ Lilith
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 2, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # リヒエル
-Lichiel
+Lichel
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 3, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # クレイン
@@ -44,11 +44,11 @@ Zafan
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 11, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # フ゛リーイット゛
-Bridget
+Brigit
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 12, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # サタナチア
-Satanachia
+Satan
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 13, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # スライム
@@ -56,20 +56,21 @@ Slime
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 14, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # ナイトメア
-Nightmare
+Nitmar
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 15, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # キリカセ゛
-Kirikaze
+Kikaze
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 16, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # ワータイカ゛ー
-White Tiger
+WTiger
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 17, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # ネヒ゛ュロス
-Nebulous
+Nebulo
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 18, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # ソート゛マン
-Sword Man
+SwdMan
+
