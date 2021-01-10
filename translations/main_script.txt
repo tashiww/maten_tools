@@ -8562,7 +8562,7 @@ What do you want to sell? I'll give you a great price.
 {"prefix":"0x1a34","ptr_pos":136684,"str_pos":137806,"ptr_hex":"215EC","str_hex":"21A4E","table":"normal","repoint":false,"ptr_type":"absolute"}
 # <pc_itm>ね。これなら<br>
 # <val>Gで引き取っちゃうわよ。
-I'll buy your <pc_itm> for <val>. How's that?
+I'll buy your <pc_itm> for <val>G. How's that?
 
 
 {"prefix":"0x1a4e","ptr_pos":136688,"str_pos":137830,"ptr_hex":"215F0","str_hex":"21A66","table":"normal","repoint":false,"ptr_type":"absolute"}

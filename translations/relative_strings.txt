@@ -516,7 +516,8 @@ Item
 
 {"ptr_pos": 41538, "pc_hex": "0xa242", "str_pos": 41782, "abs_offset_hex": "0xa336", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # HP      MP
-HP      MP
+# added 2 spaces so i could fit 9999 hp ? lol
+HP        MP
 
 {"ptr_pos": 41708, "pc_hex": "0xa2ec", "str_pos": 41796, "abs_offset_hex": "0xa344", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # ト゛ク

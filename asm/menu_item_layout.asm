@@ -21,11 +21,6 @@ PartySelectLabels	macro
 	moveq #$2, RowOffset
 	endm
 	
-PartySelectHighlights	macro
-	moveq	#$a, d2	; highlight width
-	moveq	#$0, d3	; height (0 is 1 tile)
-	moveq	#$2, d4	; maybe cols
-	endm
 ItemListDimensions	macro
 	moveq #$a, ColOffset
 	moveq #$6, RowOffset
@@ -113,10 +108,13 @@ GivePartyLabels	macro
 	
 	; the party hp/mp menu is borked, maybe do another btst, for 1 or 2? to skip to evenoddprint
  org $68826
+	btst	#$1, d3
+	bne	NormalIncrement
  	addi.b	#$c, d0
 	btst	#$0, d5
 	beq	EvenOddPrint
 	subi.b	#$18, d0
+NormalIncrement:
 	addq	#$1, d1
 EvenOddPrint:
 	addq	#$1, d5
@@ -127,10 +125,21 @@ EvenOddPrint:
 	
  org $a326
  ; party select window for drop/give submenus item submenu layout control
-	PartySelectHighlights
+	jsr $687c6
+	WHILE *<$a330
+		NOP
+	ENDW
+ org $687c6
+	moveq	#$2, d4	; selectable columns, need to conditionally set to 1 for party status list
+	btst	#1, d3	; check if party status list
+	beq	NotPartyStatusList
+	subq	#$1, d4
+NotPartyStatusList:
+	moveq	#$a, d2	; highlight width
+	moveq	#$0, d3	; height (0 is 1 tile)
 	move.w	d5, d6	; maybe it's incrementing based on party count
 	subq.w	#1, d6	; i think it limits selectable options
-
+	RTS
 
 ; equip party select menu
  org $8810
@@ -469,12 +478,36 @@ draw_label_8x8:
 ;	item shop window hack - print on every row instead of every other row
 ; ########################################################################################
 
- ;org $00005C90	; item shop subroutine
+; buy / sell window dimensions
+ org $5be8
+ 	moveq #$2, ColOffset
+	moveq #$4, RowOffset
+	moveq #$6, WindowWidth
+	moveq #$6, WindowHeight
+
+
+; label offsets for buy/sell
+ org $5c00
+	moveq #$3, ColOffset
+	moveq #$5, RowOffset
+	
+; probably highlights for buy/sell menu
+ org $5c0c
+	moveq #$3, ColOffset
+	moveq #$5, RowOffset
+	moveq #$3, d2
+	moveq #$1, d3
+	moveq	#$1, d4	; cols
+	moveq	#$2, d5	; rows?
+	moveq	#$1, d6 ; option count?
+
+
+; item shop subroutine
  org $00005C80
-	moveq #$0A, d0	; left-padding
-	moveq #$2, d1	; top padding
-	moveq #$13, d2	; width - increased from 11 to 13
-	moveq #$e, d3	; height
+	MOVEQ	#$8, D0	; x offset
+	MOVEQ	#4, D1	; y offset
+	MOVEQ	#$16, D2	; window width, this breaks above $19 for some reason?
+	MOVEQ	#$a, D3 ; window height probably
 	moveq #$43, d4
 	bsr.w	draw_background_window
 
@@ -485,21 +518,22 @@ item_shop_subroutine:
 item_shop_insertion_point:
 	CLR.w	D6
 	CLR.w	D5
-	MOVEQ	#4, D1
+	MOVEQ	#5, D1	; y offset of item names
 loc_00005C9E:
 	MOVE.w	(A4,D5.w), D2
 	BEQ.w	loc_00005CD6
-	MOVEQ	#$0000000B, D0
+	MOVEQ	#$9, D0
 	BSR.w	get_item_offset
 	BSR.w	write_label_8x8
-	MOVEQ	#$00000016, D0 ; probably x offset of price?
+	MOVEQ	#$00000017, D0 ; probably x offset of price?
 	CLR.l	D2
 	MOVE.w	$2(A4,D5.w), D2
 	BNE.b	loc_00005CBE
 	MOVE.w	$1E(A0), D2
 loc_00005CBE:
 	MOVEQ	#5, D3
-	ADDQ.w	#1, D1	; i changed this to 1 instead of 2 so it wouldn't leave empty rows
+	NOP
+	;ADDQ.w	#1, D1	; i changed this to 1 instead of 2 so it wouldn't leave empty rows
 	BSR.w	draw_value_8x8
 	addq #5, D0 ; price seems to be 5 digits
 	;LEA	*+$6024, A0
@@ -512,10 +546,10 @@ loc_00005CBE:
 	BRA.b	loc_00005C9E
 loc_00005CD6:
 	SUBQ.w	#1, D6
-	MOVEQ	#$0000000B, D0	
-	MOVEQ	#4, D1	
-	MOVEQ	#$10, D2	; highlight width
-	MOVEQ	#1, D3
+	MOVEQ	#$9, D0	
+	MOVEQ	#5, D1	
+	MOVEQ	#$13, D2	; highlight width
+	MOVEQ	#0, D3	; highlight height
 	MOVEQ	#1, D4
 	MOVEQ	#6, D5
 	MOVE.w	$8(A3), D7
@@ -527,44 +561,101 @@ loc_00005CD6:
 
 give_to_npc_window:
 ; setting window parameters
-	MOVEQ	#$0000001d, D0	; x offset to draw window
-	MOVEQ	#2, D1	; y offset
-	MOVEQ	#8, D2	; width
-	MOVEQ	#$0000000E, D3	; height
+	moveq #$8, ColOffset
+	moveq #$e, RowOffset
+	moveq #$19, WindowWidth
+	moveq #$5, WindowHeight
 	MOVE.w	#$0043, D4	; palette , not sure exactly how to set it...
 	BSR.w	draw_background_window
 	MOVE.w	D0, $C(A3)
 	CLR.w	$E(A3)
 	
 	; setting text list position
-	MOVEQ	#$0000001e, D0	
-	MOVEQ	#4, D1	
-	MOVEQ	#1, D2	
+	MOVEQ	#$9, D0	
+	MOVEQ	#$f, D1	
+	MOVEQ	#1, D2	; argument for party drawing function :>	
 	BSR.w	$a22e	; no idea
 	MOVE.w	$E(A3), D7
 	BSR.w	$3328
 
+; selling player list window dimensions
+ org $5e78
+	moveq #$b, ColOffset
+	moveq #$1, RowOffset
+	moveq #$19, WindowWidth
+	moveq #$5, WindowHeight
+; label offsets
+ org $5e90
+	moveq #$c, ColOffset
+	moveq #$2, RowOffset
 
+; selling item window...
+ org $5ebe
+	moveq #$b, ColOffset
+	moveq #$6, RowOffset
+	moveq #$16, WindowWidth
+	moveq #$e, WindowHeight
+; selling item label offset
+ org $5ede
+	moveq #$c, ColOffset
+	moveq #$7, RowOffset
 
 
  org $5e6a
 	bra.w item_shop_insertion_point
 	
-	
-	
+; ########################################################################################
+; # 8px "G" window showing current cash in rental shop, maybe other places
+; #
+; ########################################################################################
+ ; current gold G window
+ org $5b78
+ 	moveq #$2, ColOffset
+	moveq #$1, RowOffset
+	moveq #$9, WindowWidth
+	moveq #$3, WindowHeight
+
+; current gold G label offsets
+ org $6006
+  	moveq #$3, ColOffset
+	moveq #$2, RowOffset
+	move.l	$00ffd5d6, d2	
+	moveq	#$6, d3	; digit padding, maybe i should change the hard cap in the padding routine to > 6
+	BSR.w	draw_value_8x8
+	moveq	#$9, ColOffset	; for "G" label
+	moveq	#$2, RowOffset	; for "G" label
+
 	
 	
 ; ########################################################################################
 ; rental shop window hack - print every row instead of every other row
 ;	full routine $6d88 - $6dfc, bsr to $3328
 ; ########################################################################################
+  
+  ; item / magic menu dimensions
+ org $6cf4
+	moveq #$2, ColOffset
+	moveq #$5, RowOffset
+	moveq #$7, WindowWidth
+	moveq #$6, WindowHeight
+ 
+ ; item / magic labels
+  org $6d10
+ 	moveq #$3, ColOffset
+	moveq #$6, RowOffset
+; highlighting for item / magic menu
+ org $6d1c
+  	moveq	#$3, ColOffset
+	moveq	#$6, RowOffset	
+	moveq	#$4, d2	; width, 0 is 1
+
   org $00006D88
   
 ; window positioning things..
-	MOVEQ	#$0000000A, D0	; x offset
-	MOVEQ	#2, D1	; y offset
-	MOVEQ	#$00000013, D2	; window width, bumped it to 11 to match item shop
-	MOVEQ	#$0000000E, D3 ; window height probably
+	MOVEQ	#$9, D0	; x offset
+	MOVEQ	#5, D1	; y offset
+	MOVEQ	#$16, D2	; window width, this breaks above $19 for some reason?
+	MOVEQ	#$a, D3 ; window height probably
 	MOVE.w	#$00C3, D4	
 	;MOVEQ 	#$43, d4	; need to save 2 bytes to squeeze in addq below
 	BSR.w	draw_background_window	; draws window background
@@ -576,38 +667,39 @@ give_to_npc_window:
 	MOVEQ	#$00000010, D5
 loc_00006DAA:
 	CLR.w	D6
-	MOVEQ	#4, D1
+	MOVEQ	#6, D1	; y offset of item name ?? maybe not
 loc_00006DAE:
 	MOVE.w	(A4,D5.w), D2
 	BEQ.w	loc_00006DEA
-	MOVEQ	#$0000000B, D0
+	MOVEQ	#$a, D0
 	BSR.w	get_item_offset
 	BSR.w	write_label_8x8	
 	BSR.w	$a470	; gets price $1E(item offset)? $2710
 	MOVE.l	D0, D2
 	MULU.w	#$000C, D2	
-	LSR.l	#8, D2	; converted $2710 to $1d4 - rental price?
+	LSR.l	#8, D2	; converted $2710 to $1d4 - rental price? daily cost is approx 5% of total cost
 	;BNE.b	loc_00006DD0
 	;MOVEQ	#1, D2	; price should never be 0 anyway right
 	NOP
 loc_00006DD0:
-	MOVEQ	#$00000017, D0	; x offset of price probably
+	MOVEQ	#$19, D0	; x offset of price probably
 	MOVEQ	#4, D3	; oh maybe this is digit padding
-	addq.w	 #1, d1	; draw price on second line
+	;addq.w	 #1, d1	; draw price on second line
+	NOP
 	BSR.w	draw_value_8x8
-	addq	#$4, D0	; maybe the max rental price is only 4 digits
+	addq	#$4, D0	; x offset for "G" label
 	LEA	$6024.w, A0
-	BSR.w	draw_label_8x8
+	BSR.w	draw_label_8x8	; little G ?
 	ADDQ.w	#1, D1	; row incrementer
 	ADDQ.w	#1, D6
 	ADDQ.w	#2, D5
 	BRA.b	loc_00006DAE
 loc_00006DEA:
 	SUBQ.w	#1, D6
-	MOVEQ	#$0000000B, D0
-	MOVEQ	#4, D1
-	MOVEQ	#$10, D2	; highlight width
-	MOVEQ	#1, D3	; highlight height (0 is 1 tile)
+	MOVEQ	#$a, D0
+	MOVEQ	#6, D1
+	MOVEQ	#$13, D2	; highlight width
+	MOVEQ	#0, D3	; highlight height (0 is 1 tile)
 	MOVEQ	#1, D4
 	MOVEQ	#6, D5
 	MOVE.w	$12(A3), D7
@@ -616,17 +708,17 @@ loc_00006DEA:
 ; rental shop "hand to x" menu window
   org $00006E44
 ; keep this aligned with above window...
-	MOVEQ	#$0000001d, D0
-	MOVEQ	#2, D1
-	MOVEQ	#8, D2
-	MOVEQ	#$0000000E, D3
+	moveq #$9, ColOffset
+	moveq #$f, RowOffset
+	moveq #$1c, WindowWidth
+	moveq #$5, WindowHeight
 	MOVE.w	#$0043, D4
 	BSR.w	draw_background_window
 	MOVE.w	D0, $6(A3)	; these a3 offsets are different from the item shop routine...
 	CLR.w	$16(A3)
 	
-	MOVEQ	#$0000001e, D0
-	MOVEQ	#4, D1
+	MOVEQ	#$a, D0	; this might not be what i expected?
+	MOVEQ	#16, D1
 	MOVEQ	#1, D2
 	BSR.w	$a22e
 	MOVE.w	$16(A3), D7
@@ -766,8 +858,8 @@ loc_00008930:
 
 
 ; ########################################################################################
-; # stats -> party submenu !!
-; # slight widening
+; # stats -> party submenu !! renamed to status but it's the menu that lists all party members and their hp / status
+; # slight widening 
 ; ########################################################################################
 
 
@@ -776,18 +868,38 @@ loc_00008930:
 ; $8f18 drawing party-> stats window
 
  org $8f18
-	moveq #$3, ColOffset
-	moveq #$e, RowOffset
-	moveq #$1e, WindowWidth
+	moveq #$2, ColOffset
+	moveq #$d, RowOffset
+	moveq #$24, WindowWidth
 	moveq #$a, WindowHeight
 	moveq #$43, d4
  
  org $8f2e
-	moveq #$4, ColOffset
+	moveq #$3, ColOffset
 	moveq #$f, RowOffset
 	moveq #$2, d2
- 
-	
+
+; offset for HP  MP headers
+ org $a246
+	;addq.w	#$e, ColOffset	; too big for addq...
+	moveq #$f, ColOffset
+	subq.w	#$1, RowOffset
+; offsets for hp / mp values
+ org $a2a6
+	moveq	#$4, d3	; padding for hp
+	;addq.w	#$10, ColOffset	; first hp val
+	moveq #$f, ColOffset
+
+ org $a2b2
+	addq.w	#$4, ColOffset	; slash
+ org $a2c6
+	addq.w	#$5, ColOffset	; current mp x offset
+ org $a2d0
+	addq	#$4, ColOffset	; slash
+ org $a2da
+	addq #$1, ColOffset	; max mp
+ org $a2e0
+	addq #$5, ColOffset	; status debuffs
 
 
 ; ########################################################################################
