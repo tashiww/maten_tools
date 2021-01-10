@@ -822,7 +822,7 @@ def insert_fixed_str(rom_path: Path, script_name: str) -> int:
 		# new_pos = find_space(rom, 0x20000, None, len(lines) * step)
 		for line in lines:
 			rom.seek(new_pos + (line.id * step))
-			rom.write(line.en_bin[0:15] + b'\x00')
+			rom.write(line.en_bin[0:16] + b'\x00')
 
 
 def dump_fixed_str(rom_path: Path, tbl: dict, block_info: StringBlock) -> list:

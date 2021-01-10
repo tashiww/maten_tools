@@ -161,7 +161,7 @@ Zanbato
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 39, "prefix": null}
 # コス゛モフ゛レート゛
-Cosmo Plate
+Cosmo Blade
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 40, "prefix": null}
 # ホーリーロット゛
@@ -646,129 +646,129 @@ Hormone Shovel
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 159, "prefix": null}
 # はやてのしょ
-<spell> Gale
+<spell>Gale
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 160, "prefix": null}
 # せんこうのしょ
-<spell> Flash
+<spell>Flash
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 161, "prefix": null}
 # いやしのしょ
-<spell> Heal
+<spell>Heal
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 162, "prefix": null}
 # ねむりのしょ
-<spell> Sleep
+<spell>Sleep
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 163, "prefix": null}
 # まのみちのしょ
-<spell> Summon
+<spell>Summon
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 164, "prefix": null}
 # はと゛うのしょ
-<spell> Pulse
+<spell>Pulse
 
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 165, "prefix": null}
 # きは゛らしのしょ
-<spell> Relax
+<spell>Relax
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 166, "prefix": null}
 # かいふくのしょ
-<spell> Recovery
+<spell>Recovery
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 167, "prefix": null}
 # ひしょうのしょ
-<spell> Retreat
+<spell>Retreat
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 168, "prefix": null}
 # おんけいのしょ
-<spell> Blessing
+<spell>Blessing
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 169, "prefix": null}
 # け゛と゛くのしょ
-<spell> Antidote
+<spell>Antidote
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 170, "prefix": null}
 # ちゆのしょ
-<spell> Cure
+<spell>Cure
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 171, "prefix": null}
 # ふふ゛きのしょ
-<spell> Blizzard
+<spell>Blizzard
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 172, "prefix": null}
 # て゛んかいのしょ
-<spell> Jolt
+<spell>Jolt
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 173, "prefix": null}
 # ちんもくのしょ
-<spell> Silence
+<spell>Silence
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 174, "prefix": null}
 # し゛ょうかのしょ
-<spell> Purify
+<spell>Purify
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 175, "prefix": null}
 # せきかのしょ
-<spell> Petrify
+<spell>Petrify
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 176, "prefix": null}
 # そせいのしょ
-<spell> Revive
+<spell>Revive
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 177, "prefix": null}
 # ふゆうのしょ
-<spell> Float
+<spell>Float
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 178, "prefix": null}
 # きせきのしょ
-<spell> Miracle
+<spell>Miracle
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 179, "prefix": null}
 # はめつのしょ
-<spell> Ruin
+<spell>Ruin
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 180, "prefix": null}
-# <spell> ひのたま
-<spell>  Light Ball
+# <spell>ひのたま
+<spell> Light Ball
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 181, "prefix": null}
-# <spell> こおりのたま
-<spell>  Weave Ball
+# <spell>こおりのたま
+<spell> Weave Ball
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 182, "prefix": null}
-# <spell> て゛んけ゛き
-<spell>  Lightning
+# <spell>て゛んけ゛き
+<spell> Lightning
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 183, "prefix": null}
-# <spell> せいしん
-<spell>  Earthquake
+# <spell>せいしん
+<spell> Earthquake
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 184, "prefix": null}
-# <spell> つらら
-<spell>  Icicle
+# <spell>つらら
+<spell> Icicle
 
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 185, "prefix": null}
-# <spell> たんけん
-<spell>  Explore
+# <spell>たんけん
+<spell> Explore
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 186, "prefix": null}
-# <spell> ひは゛しら
-<spell>  Fire Pillar
+# <spell>ひは゛しら
+<spell> Fire Pillar
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 187, "prefix": null}
-# <spell> いかす゛ち
-<spell>  Thunderbolt
+# <spell>いかす゛ち
+<spell> Thunderbolt
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 188, "prefix": null}
-# <spell> しんくう
-<spell>  Vacuum
+# <spell>しんくう
+<spell> Vacuum
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 189, "prefix": null}
-# <spell> きゅうすい
-<spell>  Absorb
+# <spell>きゅうすい
+<spell> Absorb
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 190, "prefix": null}
 # ていおうのけん
