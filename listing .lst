@@ -1842,7 +1842,7 @@
 00019B3A 4E71 4E71 4E71 4E71        	ENDW
 00019B42                            ; trying not to step on next LEA at $19b42
 00019B42                             org $f4480
-000F4480                            	incbin "./images/new_title.bin"
+000F4480                            	incbin "./images/new_title_samurai.bin"
 000F57C0                             org $f57c0
 000F57C0                            	incbin	"./images/press_start.bin"
 000F57C0                            	incbin	"./images/press_start.bin"

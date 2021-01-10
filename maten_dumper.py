@@ -92,6 +92,7 @@ fixed_len_blocks = [item_block, monster_block, npc_block, skill_block]
 # make sure we don't try inserting strings in this juicy whitespace
 exclusions = [(s.start, s.end) for s in fixed_len_blocks]
 exclusions.append((0xb3a0, 0xbb00))
+exclusions.append((0xf4480, 0xf5e00))
 exclusions = sorted(exclusions)
 
 
@@ -953,7 +954,8 @@ def dump_data_blocks(rom_path: Path, block_info: StringBlock) -> list:
 
 def dump_encounter_info(rom_path: Path) -> str:
 	# TODO this should return a string instead of just printing it
-	print('enc_ptr', 'enc_id', 'enc_lvl', 'enc_qty', 'enc_rate', 'enemy_id', sep='\t')
+	print('enc_ptr', 'enc_id', 'enc_lvl',
+							'enc_qty', 'enc_rate', 'enemy_id', sep='\t')
 	with open(rom_path, "rb") as rom:
 		encounter_pointer_base = 0x21c24
 		for i in range(16):

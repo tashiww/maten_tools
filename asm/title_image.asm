@@ -43,6 +43,6 @@ prologue_title:
 	ENDW
 ; trying not to step on next LEA at $19b42
  org $f4480
-	incbin "./images/new_title.bin"
+	incbin "./images/new_title_samurai.bin"
  org $f57c0
 	incbin	"./images/press_start.bin"
