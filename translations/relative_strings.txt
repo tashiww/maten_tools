@@ -393,7 +393,7 @@ Use<br>Give<br>Drop
 # WPN:<br>ARM:<br>HLM:<br>SHL:
 # with assembly hack to expand strings/menus:
 # equip menu
-Weapon<br> Armor<br>  Head<br>Shield<br>  Item
+Weapon:<br> Armor:<br>  Head:<br>Shield:<br>  Item:
 
 
 #{"ptr_pos": 34984, "pc_hex": "0x88a8", "str_pos": 34782, "abs_offset_hex": "0x87de", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
@@ -498,10 +498,10 @@ HP<br>MP
 {"ptr_pos": 428416, "pc_hex": "0x68980", "str_pos": 37478, "abs_offset_hex": "0x9266", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative", "prefix": "0x41fa"}
 # 体 力<br>知 力<br>生命力<br>素早さ
 # brand new string for new equip menu sub stats
-Stamina<br><br><br>
-Mind<br><br><br>
-Vitality<br><br><br>
-Speed
+STA<br>
+MND<br>
+VIT<br>
+SPD
 
 
 {"ptr_pos": 37216, "pc_hex": "0x9160", "str_pos": 37500, "abs_offset_hex": "0x927c", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}

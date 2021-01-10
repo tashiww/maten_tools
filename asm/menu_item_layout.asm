@@ -108,12 +108,11 @@ GivePartyLabels	macro
 
 ; party select listing two column printing
  org $a318
-	bsr.w	$b3bc
-	NOP
+	jsr	$68826
 	;addq	#1, d1	; changed this to 1 for single spacing
 	
 	; the party hp/mp menu is borked, maybe do another btst, for 1 or 2? to skip to evenoddprint
- org $b3bc
+ org $68826
  	addi.b	#$c, d0
 	btst	#$0, d5
 	beq	EvenOddPrint
@@ -151,17 +150,17 @@ EvenOddPrint:
 ; it gets a new d0 during draw subroutine and puts it into $ff32b8, maybe for cleanup later?
 
 ; equipment item menu
- org $886a
-	moveq #$a, ColOffset
-	moveq #$5, RowOffset
-	moveq #$1c, WindowWidth
-	moveq #$d, WindowHeight
-	move.w #$43, d4
+ ; org $886a
+	; moveq #$b, ColOffset
+	; moveq #$5, RowOffset
+	; moveq #$26, WindowWidth
+	; moveq #$d, WindowHeight
+	; move.w #$43, d4
 
- org $84da
- ; probably item menu in equip screen label offset
-	moveq #$b, ColOffset
-	moveq #$6, RowOffset
+ ;org $84da
+ ; ; probably item menu in equip screen label offset
+	; moveq #$c, ColOffset
+	; moveq #$6, RowOffset
 
 
 ; secondary party member window (for giving items)
@@ -650,9 +649,9 @@ draw_equipped_item:
 	ENDW
  org $00008856
 draw_equipment_backgrounds:
-	MOVEQ	#$2, D0	; x offset for current equipment
+	MOVEQ	#$a, D0	; x offset for current equipment
 	MOVEQ	#$14, D1        	; y offset
-	MOVEQ	#$1a, D2	; width 
+	MOVEQ	#$1c, D2	; width 
 	MOVEQ	#$7, D3	; height
 	MOVE.w	#$0043, D4	; palette info maybe?
 	BSR.w	draw_background_window	; the currently equipped item window
@@ -664,18 +663,18 @@ draw_equipment_backgrounds:
 	; small equipment menu stat page etc
 	; $887e ish
 	; this might be item window in equip page
-	MOVEQ	#$00000009, D0
-	MOVEQ	#$00000006, D1
-	MOVEQ	#$00000013, D2
-	MOVEQ	#$0000000E, D3
-	MOVE.w	#$0043, D4
+	MOVEQ	#$a, D0
+	MOVEQ	#$6, D1
+	MOVEQ	#$1c, D2
+	MOVEQ	#$E, D3
+	MOVE.w	#$43, D4
 	BSR.w	draw_background_window	; draw item window
 	MOVE.w	D0, $6(A6)	; this might have something to do with destroying the window later?
 
-	MOVEQ	#$1c, D0	; same as above, but for atk/def smaller window
+	MOVEQ	#$1d, D0	; same as above, but for atk/def smaller window
 	MOVEQ	#$6, D1	
-	MOVEQ	#$a, D2	
-	MOVEQ	#$15, D3	
+	MOVEQ	#$9, D2	
+	MOVEQ	#$e, D3	
 	MOVEQ	#$3, D4	
 	BSR.w	draw_small_window	; draw smaller atk/def window
 	; this window wasn't disappearing so i stacked it on top of the other one...
@@ -683,7 +682,7 @@ draw_equipment_backgrounds:
 	CLR.w	$6(A5)
  org $8894
 	MOVEA.w	$4(A5), A1
-	MOVEQ	#$3, D0	; x offset for text for gear labels
+	MOVEQ	#$b, D0	; x offset for text for gear labels
 	MOVEQ	#$15, D1	; y offset
 
  org $889c
@@ -695,7 +694,7 @@ draw_equipment_backgrounds:
 	LEA	$FFFF87DE.w, A0	; another automated python line... 
 	BSR.w	write_label_8x8	; i actually don't even write this anymore?
 	
-	MOVEQ	#$1d, D0	; offsets for atk/def text
+	MOVEQ	#$1e, D0	; offsets for atk/def text
 	MOVEQ	#$7, D1	
 	LEA	$FFFF87E4.w, A0	
 	BSR.w	write_label_8x8	; different string writing subroutine
@@ -704,7 +703,7 @@ draw_equipment_backgrounds:
 	BSR.w	get_player_ram_offset
 	MOVEA.l	A0, A2
 	MOVE.b	$14(A2), D2
-	MOVEQ	#$b, D0	; position for weapon
+	MOVEQ	#$14, D0	; position for weapon
 	MOVEQ	#$15, D1	
 	BSR.w	draw_equipped_item	; weap
 	MOVE.b	$15(A2), D2	; loading equipped gear into d2
@@ -714,17 +713,14 @@ draw_equipment_backgrounds:
 	BSR.w	draw_equipped_item	; armor
 	MOVE.b	$16(A2), D2	
 	;MOVEQ	#$00000013, D0	
-	NOP
 	addq	#1, D1
 	BSR.w	draw_equipped_item	; helmet
 	MOVE.b	$17(A2), D2
 	;MOVEQ	#$00000013, D0
-	NOP
 	addq	#1, D1
 	BSR.w	draw_equipped_item	; shield
 	MOVE.b	$18(A2), D2	
 	;MOVEQ	#$00000013, D0	; x offset for equipped item
-	NOP
 	addq	#1, D1
 	BSR.w	draw_equipped_item	; item
 	CLR.l	D2
@@ -735,10 +731,11 @@ draw_equipment_backgrounds:
 	;MOVE.w	#$270f, D2	; cap display at 9999 
 
 loc_00008916:
-	MOVEQ	#4, D3	; digit padding? in VRAM, space to reserve
+	MOVEQ	#4, D3	; digit padding? in VRAM, space to reserve.. i need to set d5 to $60 for proper padding
 	MOVEQ	#$21, D0	; x offset
 	MOVEQ	#$8, D1	; y offset
-	BSR.w	draw_value_8x8	; draw atk/def number
+	moveq	#$60, d4	; padding byte (empty space with english table)
+	BSR.w	draw_stat_value	; draw atk/def number
 	CLR.l	D2	
 	jsr draw_substats
 	
@@ -752,14 +749,14 @@ loc_00008916:
 	
 
 loc_00008930:
-	MOVEQ	#3, D3
-	MOVEQ	#$22, D0
+	MOVEQ	#4, D3
+	MOVEQ	#$21, D0
 	MOVEQ	#$b, D1
-	BSR.w	draw_value_8x8 ; probably defense writing
+	BSR.w	draw_stat_value ; probably defense writing
 	MOVE.w	$2(A5), D2
 	; item drawing in equipment page
 	BSR.w	start_item_writing	; item writing routine
-	MOVEQ	#$a, D0	; x / y offsets
+	MOVEQ	#$b, D0	; x / y offsets
 	MOVEQ	#$7, D1	
 	BSR.w	start_drawing_item_window	; draw items
 	ADDQ.w	#1, D0
@@ -1058,28 +1055,28 @@ get_xp_to_next_level:
  ; window is offset $1e, $c  x,y
 draw_substats:
 	LEA	$1234.w, A0	; strings for stat labels (str, vit, etc) ; my python script will redirect this...
-	MOVEQ	#$1d, x_tile_offset
-	MOVEQ	#$d, y_tile_offset
+	MOVEQ	#$1e, x_tile_offset
+	MOVEQ	#$e, y_tile_offset
 	JSR	write_label_8x8
 
 	CLR.l	D2
 	MOVE.b	$F(A2), D2	; str value
 	MOVEQ	#3, D3
 	MOVEQ	#$22, x_tile_offset	; set x offset for str / int stat values
-	addq	#$1, y_tile_offset
+	;addq	#$1, y_tile_offset
 	JSR	draw_value_8x8
 
 	CLR.l	D2
 	MOVE.b	$10(A2), D2	; intelligence value
-	addq	#3, y_tile_offset
+	addq	#1, y_tile_offset
 	JSR	draw_value_8x8
 	CLR.l	D2
 	MOVE.b	$11(A2), D2	; vitality
-	addq	#3, y_tile_offset
+	addq	#1, y_tile_offset
 	JSR	draw_value_8x8
 	CLR.l	D2
 	MOVE.b	$12(A2), D2	; speed
-	addq	#3, y_tile_offset
+	addq	#1, y_tile_offset
 	JSR	draw_value_8x8
 	RTS
 
@@ -1395,16 +1392,32 @@ finished_drawing_enemies
 ; #
 ; ########################################################################################
 
+; party select for skills menu window
+ org $939e
+	moveq #$a, ColOffset
+	moveq #$1, RowOffset
+	moveq #$1c, WindowWidth
+	moveq #$5, WindowHeight
+	moveq #$3, d4
+; and labels
+ org $93b4
+	moveq #$b, ColOffset
+	moveq #$2, RowOffset
+
+; actual skills window placement
  org $00009416
 	TST.w	D0
 	BEQ.w	$94a6	; omg i left this as *+$8C and snasm screwed me :(
-	MOVEQ	#$12, D0	; x offset
-	MOVEQ	#2, D1	; y offset
+	MOVEQ	#$a, D0	; x offset
+	MOVEQ	#6, D1	; y offset
 	MOVEQ	#$10, D2	; width
 	MOVEQ	#$a, D3; height
 	MOVEQ	#3, D4
 	;BSR.w	$32d6 or something
-
+; and labels
+ org $942e
+	moveq #$b, ColOffset
+	moveq #$7, RowOffset
 
  org $1dee
 write_to_vdp:
@@ -1417,3 +1430,6 @@ write_label_8x16:
 
  org $8a66
 mystery_label:
+
+ org $378a
+	moveq	#$60, d4	; set digit padding character to empty space

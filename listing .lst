@@ -296,25 +296,24 @@
 0000847C                            
 0000847C                            ; party select listing two column printing
 0000847C                             org $a318
-0000A318 6100 10A2                  	bsr.w	$b3bc
-0000A31C 4E71                       	NOP
+0000A318 4EB9 0006 8826             	jsr	$68826
 0000A31E                            	;addq	#1, d1	; changed this to 1 for single spacing
 0000A31E                            	
 0000A31E                            	; the party hp/mp menu is borked, maybe do another btst, for 1 or 2? to skip to evenoddprint
-0000A31E                             org $b3bc
-0000B3BC 0600 000C                   	addi.b	#$c, d0
-0000B3C0 0805 0000                  	btst	#$0, d5
-0000B3C4 6700 0000                  	beq	EvenOddPrint
-0000B3C8 0400 0018                  	subi.b	#$18, d0
-0000B3CC 5241                       	addq	#$1, d1
-0000B3CE                            EvenOddPrint:
-0000B3CE 5245                       	addq	#$1, d5
-0000B3D0 5246                       	addq	#$1, d6
-0000B3D2 4E75                       	rts
-0000B3D4                            	
-0000B3D4                            	
-0000B3D4                            	
-0000B3D4                             org $a326
+0000A31E                             org $68826
+00068826 0600 000C                   	addi.b	#$c, d0
+0006882A 0805 0000                  	btst	#$0, d5
+0006882E 6700 0000                  	beq	EvenOddPrint
+00068832 0400 0018                  	subi.b	#$18, d0
+00068836 5241                       	addq	#$1, d1
+00068838                            EvenOddPrint:
+00068838 5245                       	addq	#$1, d5
+0006883A 5246                       	addq	#$1, d6
+0006883C 4E75                       	rts
+0006883E                            	
+0006883E                            	
+0006883E                            	
+0006883E                             org $a326
 0000A326                             ; party select window for drop/give submenus item submenu layout control
 0000A326 740A 7600 7802             	PartySelectHighlights
 0000A32C 3C05                       	move.w	d5, d6	; maybe it's incrementing based on party count
@@ -339,21 +338,21 @@
 0000882C                            ; it gets a new d0 during draw subroutine and puts it into $ff32b8, maybe for cleanup later?
 0000882C                            
 0000882C                            ; equipment item menu
-0000882C                             org $886a
-0000886A 700A                       	moveq #$a, ColOffset
-0000886C 7205                       	moveq #$5, RowOffset
-0000886E 741C                       	moveq #$1c, WindowWidth
-00008870 760D                       	moveq #$d, WindowHeight
-00008872 383C 0043                  	move.w #$43, d4
-00008876                            
-00008876                             org $84da
-000084DA                             ; probably item menu in equip screen label offset
-000084DA 700B                       	moveq #$b, ColOffset
-000084DC 7206                       	moveq #$6, RowOffset
-000084DE                            
-000084DE                            
-000084DE                            ; secondary party member window (for giving items)
-000084DE                             org $86b6
+0000882C                             ; org $886a
+0000882C                            	; moveq #$b, ColOffset
+0000882C                            	; moveq #$5, RowOffset
+0000882C                            	; moveq #$26, WindowWidth
+0000882C                            	; moveq #$d, WindowHeight
+0000882C                            	; move.w #$43, d4
+0000882C                            
+0000882C                             ;org $84da
+0000882C                             ; ; probably item menu in equip screen label offset
+0000882C                            	; moveq #$c, ColOffset
+0000882C                            	; moveq #$6, RowOffset
+0000882C                            
+0000882C                            
+0000882C                            ; secondary party member window (for giving items)
+0000882C                             org $86b6
 000086B6                            ; draw window
 000086B6 700A 7214 741C 7605 383C+  	GivePartyMenu
 000086C2                            
@@ -838,9 +837,9 @@
 00008856 4E71 4E71 4E71 4E71 4E71+  	ENDW
 00008950                             org $00008856
 00008856                            draw_equipment_backgrounds:
-00008856 7002                       	MOVEQ	#$2, D0	; x offset for current equipment
+00008856 700A                       	MOVEQ	#$a, D0	; x offset for current equipment
 00008858 7214                       	MOVEQ	#$14, D1        	; y offset
-0000885A 741A                       	MOVEQ	#$1a, D2	; width 
+0000885A 741C                       	MOVEQ	#$1c, D2	; width 
 0000885C 7607                       	MOVEQ	#$7, D3	; height
 0000885E 383C 0043                  	MOVE.w	#$0043, D4	; palette info maybe?
 00008862 6100 AA72                  	BSR.w	draw_background_window	; the currently equipped item window
@@ -852,18 +851,18 @@
 0000886A                            	; small equipment menu stat page etc
 0000886A                            	; $887e ish
 0000886A                            	; this might be item window in equip page
-0000886A 7009                       	MOVEQ	#$00000009, D0
-0000886C 7206                       	MOVEQ	#$00000006, D1
-0000886E 7413                       	MOVEQ	#$00000013, D2
-00008870 760E                       	MOVEQ	#$0000000E, D3
-00008872 383C 0043                  	MOVE.w	#$0043, D4
+0000886A 700A                       	MOVEQ	#$a, D0
+0000886C 7206                       	MOVEQ	#$6, D1
+0000886E 741C                       	MOVEQ	#$1c, D2
+00008870 760E                       	MOVEQ	#$E, D3
+00008872 383C 0043                  	MOVE.w	#$43, D4
 00008876 6100 AA5E                  	BSR.w	draw_background_window	; draw item window
 0000887A 3D40 0006                  	MOVE.w	D0, $6(A6)	; this might have something to do with destroying the window later?
 0000887E                            
-0000887E 701C                       	MOVEQ	#$1c, D0	; same as above, but for atk/def smaller window
+0000887E 701D                       	MOVEQ	#$1d, D0	; same as above, but for atk/def smaller window
 00008880 7206                       	MOVEQ	#$6, D1	
-00008882 740A                       	MOVEQ	#$a, D2	
-00008884 7615                       	MOVEQ	#$15, D3	
+00008882 7409                       	MOVEQ	#$9, D2	
+00008884 760E                       	MOVEQ	#$e, D3	
 00008886 7803                       	MOVEQ	#$3, D4	
 00008888 6100 0000                  	BSR.w	draw_small_window	; draw smaller atk/def window
 0000888C                            	; this window wasn't disappearing so i stacked it on top of the other one...
@@ -871,7 +870,7 @@
 00008890 426D 0006                  	CLR.w	$6(A5)
 00008894                             org $8894
 00008894 326D 0004                  	MOVEA.w	$4(A5), A1
-00008898 7003                       	MOVEQ	#$3, D0	; x offset for text for gear labels
+00008898 700B                       	MOVEQ	#$b, D0	; x offset for text for gear labels
 0000889A 7215                       	MOVEQ	#$15, D1	; y offset
 0000889C                            
 0000889C                             org $889c
@@ -883,7 +882,7 @@
 000088A8 41F8 87DE                  	LEA	$FFFF87DE.w, A0	; another automated python line... 
 000088AC 6100 AD7A                  	BSR.w	write_label_8x8	; i actually don't even write this anymore?
 000088B0                            	
-000088B0 701D                       	MOVEQ	#$1d, D0	; offsets for atk/def text
+000088B0 701E                       	MOVEQ	#$1e, D0	; offsets for atk/def text
 000088B2 7207                       	MOVEQ	#$7, D1	
 000088B4 41F8 87E4                  	LEA	$FFFF87E4.w, A0	
 000088B8 6100 AD6E                  	BSR.w	write_label_8x8	; different string writing subroutine
@@ -892,7 +891,7 @@
 000088C4 6100 192C                  	BSR.w	get_player_ram_offset
 000088C8 2448                       	MOVEA.l	A0, A2
 000088CA 142A 0014                  	MOVE.b	$14(A2), D2
-000088CE 700B                       	MOVEQ	#$b, D0	; position for weapon
+000088CE 7014                       	MOVEQ	#$14, D0	; position for weapon
 000088D0 7215                       	MOVEQ	#$15, D1	
 000088D2 6100 FF22                  	BSR.w	draw_equipped_item	; weap
 000088D6 142A 0015                  	MOVE.b	$15(A2), D2	; loading equipped gear into d2
@@ -902,52 +901,50 @@
 000088DE 6100 FF16                  	BSR.w	draw_equipped_item	; armor
 000088E2 142A 0016                  	MOVE.b	$16(A2), D2	
 000088E6                            	;MOVEQ	#$00000013, D0	
-000088E6 4E71                       	NOP
-000088E8 5241                       	addq	#1, D1
-000088EA 6100 FF0A                  	BSR.w	draw_equipped_item	; helmet
-000088EE 142A 0017                  	MOVE.b	$17(A2), D2
-000088F2                            	;MOVEQ	#$00000013, D0
-000088F2 4E71                       	NOP
-000088F4 5241                       	addq	#1, D1
-000088F6 6100 FEFE                  	BSR.w	draw_equipped_item	; shield
-000088FA 142A 0018                  	MOVE.b	$18(A2), D2	
-000088FE                            	;MOVEQ	#$00000013, D0	; x offset for equipped item
-000088FE 4E71                       	NOP
-00008900 5241                       	addq	#1, D1
-00008902 6100 FEF2                  	BSR.w	draw_equipped_item	; item
-00008906 4282                       	CLR.l	D2
-00008908 342A 000A                  	MOVE.w	$A(A2), D2	; get atk stat into d2
-0000890C                            	;CMPI.w	#$03E8, D2	; compare to 1k
-0000890C                            	;CMPI.w	#$2710, D2	; compare to 10k :D
-0000890C                            	;BCS.b	loc_00008916
-0000890C                            	;MOVE.w	#$270f, D2	; cap display at 9999 
-0000890C                            
-0000890C                            loc_00008916:
-0000890C 7604                       	MOVEQ	#4, D3	; digit padding? in VRAM, space to reserve
-0000890E 7021                       	MOVEQ	#$21, D0	; x offset
-00008910 7208                       	MOVEQ	#$8, D1	; y offset
-00008912 6100 AE20                  	BSR.w	draw_value_8x8	; draw atk/def number
-00008916 4282                       	CLR.l	D2	
-00008918 4EB9 0000 0000             	jsr draw_substats
+000088E6 5241                       	addq	#1, D1
+000088E8 6100 FF0C                  	BSR.w	draw_equipped_item	; helmet
+000088EC 142A 0017                  	MOVE.b	$17(A2), D2
+000088F0                            	;MOVEQ	#$00000013, D0
+000088F0 5241                       	addq	#1, D1
+000088F2 6100 FF02                  	BSR.w	draw_equipped_item	; shield
+000088F6 142A 0018                  	MOVE.b	$18(A2), D2	
+000088FA                            	;MOVEQ	#$00000013, D0	; x offset for equipped item
+000088FA 5241                       	addq	#1, D1
+000088FC 6100 FEF8                  	BSR.w	draw_equipped_item	; item
+00008900 4282                       	CLR.l	D2
+00008902 342A 000A                  	MOVE.w	$A(A2), D2	; get atk stat into d2
+00008906                            	;CMPI.w	#$03E8, D2	; compare to 1k
+00008906                            	;CMPI.w	#$2710, D2	; compare to 10k :D
+00008906                            	;BCS.b	loc_00008916
+00008906                            	;MOVE.w	#$270f, D2	; cap display at 9999 
+00008906                            
+00008906                            loc_00008916:
+00008906 7604                       	MOVEQ	#4, D3	; digit padding? in VRAM, space to reserve.. i need to set d5 to $60 for proper padding
+00008908 7021                       	MOVEQ	#$21, D0	; x offset
+0000890A 7208                       	MOVEQ	#$8, D1	; y offset
+0000890C 7860                       	moveq	#$60, d4	; padding byte (empty space with english table)
+0000890E 6100 AE68                  	BSR.w	draw_stat_value	; draw atk/def number
+00008912 4282                       	CLR.l	D2	
+00008914 4EB9 0000 0000             	jsr draw_substats
+0000891A                            	
+0000891A 342A 000C                  	MOVE.w	$C(A2), D2	; same as above but for defense
+0000891E                            	;CMPI.w	#$03E8, D2
 0000891E                            	
-0000891E 342A 000C                  	MOVE.w	$C(A2), D2	; same as above but for defense
-00008922                            	;CMPI.w	#$03E8, D2
-00008922                            	
-00008922                             org $8926
+0000891E                             org $8926
 00008926 0C42 2710                  	CMPI.w	#$2710, D2	; compare to 10k :D
 0000892A 6500                       	BCS.b	loc_00008930
 0000892C 343C 270F                  	MOVE.w	#$270f, D2	; set at 9999
 00008930                            	
 00008930                            
 00008930                            loc_00008930:
-00008930 7603                       	MOVEQ	#3, D3
-00008932 7022                       	MOVEQ	#$22, D0
+00008930 7604                       	MOVEQ	#4, D3
+00008932 7021                       	MOVEQ	#$21, D0
 00008934 720B                       	MOVEQ	#$b, D1
-00008936 6100 ADFC                  	BSR.w	draw_value_8x8 ; probably defense writing
+00008936 6100 AE40                  	BSR.w	draw_stat_value ; probably defense writing
 0000893A 342D 0002                  	MOVE.w	$2(A5), D2
 0000893E                            	; item drawing in equipment page
 0000893E 6100 18DC                  	BSR.w	start_item_writing	; item writing routine
-00008942 700A                       	MOVEQ	#$a, D0	; x / y offsets
+00008942 700B                       	MOVEQ	#$b, D0	; x / y offsets
 00008944 7207                       	MOVEQ	#$7, D1	
 00008946 6100 1B6C                  	BSR.w	start_drawing_item_window	; draw items
 0000894A 5240                       	ADDQ.w	#1, D0
@@ -1246,43 +1243,43 @@
 00068980                             ; window is offset $1e, $c  x,y
 00068980                            draw_substats:
 00068980 41F8 1234                  	LEA	$1234.w, A0	; strings for stat labels (str, vit, etc) ; my python script will redirect this...
-00068984 701D                       	MOVEQ	#$1d, x_tile_offset
-00068986 720D                       	MOVEQ	#$d, y_tile_offset
+00068984 701E                       	MOVEQ	#$1e, x_tile_offset
+00068986 720E                       	MOVEQ	#$e, y_tile_offset
 00068988 4EB9 0000 3628             	JSR	write_label_8x8
 0006898E                            
 0006898E 4282                       	CLR.l	D2
 00068990 142A 000F                  	MOVE.b	$F(A2), D2	; str value
 00068994 7603                       	MOVEQ	#3, D3
 00068996 7022                       	MOVEQ	#$22, x_tile_offset	; set x offset for str / int stat values
-00068998 5241                       	addq	#$1, y_tile_offset
-0006899A 4EB9 0000 3734             	JSR	draw_value_8x8
-000689A0                            
-000689A0 4282                       	CLR.l	D2
-000689A2 142A 0010                  	MOVE.b	$10(A2), D2	; intelligence value
-000689A6 5641                       	addq	#3, y_tile_offset
-000689A8 4EB9 0000 3734             	JSR	draw_value_8x8
-000689AE 4282                       	CLR.l	D2
-000689B0 142A 0011                  	MOVE.b	$11(A2), D2	; vitality
-000689B4 5641                       	addq	#3, y_tile_offset
-000689B6 4EB9 0000 3734             	JSR	draw_value_8x8
-000689BC 4282                       	CLR.l	D2
-000689BE 142A 0012                  	MOVE.b	$12(A2), D2	; speed
-000689C2 5641                       	addq	#3, y_tile_offset
-000689C4 4EB9 0000 3734             	JSR	draw_value_8x8
-000689CA 4E75                       	RTS
-000689CC                            
-000689CC                            ; ########################################################################################
-000689CC                            ; #
-000689CC                            ; # Battle menu adjustments!
-000689CC                            ; #
-000689CC                            ; # Creation Date:   2021-1-3 14:24:36
-000689CC                            ; # Analysis Region: 0x0000D894 - 0x0000DAF8
-000689CC                            ; ########################################################################################
-000689CC                            
-000689CC                            window_tile_width	equr	d2	; for window drawing routines
-000689CC                            window_tile_height	equr	d3	; 
-000689CC                            
-000689CC                             org $0000D894
+00068998                            	;addq	#$1, y_tile_offset
+00068998 4EB9 0000 3734             	JSR	draw_value_8x8
+0006899E                            
+0006899E 4282                       	CLR.l	D2
+000689A0 142A 0010                  	MOVE.b	$10(A2), D2	; intelligence value
+000689A4 5241                       	addq	#1, y_tile_offset
+000689A6 4EB9 0000 3734             	JSR	draw_value_8x8
+000689AC 4282                       	CLR.l	D2
+000689AE 142A 0011                  	MOVE.b	$11(A2), D2	; vitality
+000689B2 5241                       	addq	#1, y_tile_offset
+000689B4 4EB9 0000 3734             	JSR	draw_value_8x8
+000689BA 4282                       	CLR.l	D2
+000689BC 142A 0012                  	MOVE.b	$12(A2), D2	; speed
+000689C0 5241                       	addq	#1, y_tile_offset
+000689C2 4EB9 0000 3734             	JSR	draw_value_8x8
+000689C8 4E75                       	RTS
+000689CA                            
+000689CA                            ; ########################################################################################
+000689CA                            ; #
+000689CA                            ; # Battle menu adjustments!
+000689CA                            ; #
+000689CA                            ; # Creation Date:   2021-1-3 14:24:36
+000689CA                            ; # Analysis Region: 0x0000D894 - 0x0000DAF8
+000689CA                            ; ########################################################################################
+000689CA                            
+000689CA                            window_tile_width	equr	d2	; for window drawing routines
+000689CA                            window_tile_height	equr	d3	; 
+000689CA                            
+000689CA                             org $0000D894
 0000D894                            	WHILE *<$DAFa
 0000D894                            		NOP
 0000D894 4E71 4E71 4E71 4E71 4E71+  	ENDW
@@ -1583,18 +1580,34 @@
 0000AB12                            ; #
 0000AB12                            ; ########################################################################################
 0000AB12                            
-0000AB12                             org $00009416
+0000AB12                            ; party select for skills menu window
+0000AB12                             org $939e
+0000939E 700A                       	moveq #$a, ColOffset
+000093A0 7201                       	moveq #$1, RowOffset
+000093A2 741C                       	moveq #$1c, WindowWidth
+000093A4 7605                       	moveq #$5, WindowHeight
+000093A6 7803                       	moveq #$3, d4
+000093A8                            ; and labels
+000093A8                             org $93b4
+000093B4 700B                       	moveq #$b, ColOffset
+000093B6 7202                       	moveq #$2, RowOffset
+000093B8                            
+000093B8                            ; actual skills window placement
+000093B8                             org $00009416
 00009416 4A40                       	TST.w	D0
 00009418 6700 008C                  	BEQ.w	$94a6	; omg i left this as *+$8C and snasm screwed me :(
-0000941C 7012                       	MOVEQ	#$12, D0	; x offset
-0000941E 7202                       	MOVEQ	#2, D1	; y offset
+0000941C 700A                       	MOVEQ	#$a, D0	; x offset
+0000941E 7207                       	MOVEQ	#7, D1	; y offset
 00009420 7410                       	MOVEQ	#$10, D2	; width
 00009422 760A                       	MOVEQ	#$a, D3; height
 00009424 7803                       	MOVEQ	#3, D4
 00009426                            	;BSR.w	$32d6 or something
-00009426                            
-00009426                            
-00009426                             org $1dee
+00009426                            ; and labels
+00009426                             org $942e
+0000942E 700B                       	moveq #$b, ColOffset
+00009430 7208                       	moveq #$8, RowOffset
+00009432                            
+00009432                             org $1dee
 00001DEE                            write_to_vdp:
 00001DEE                            
 00001DEE                             org $2fec
@@ -1605,18 +1618,21 @@
 000036F2                            
 000036F2                             org $8a66
 00008A66                            mystery_label:
-00008A66                            mystery_label:
 00008A66                            
-00008A66                            ; changes behavior of name selection screen to match smaller english alphabet
-00008A66                            	include "./asm/menu_name_selection.asm"
-00008A66                            ; ########################################################################################
-00008A66                            ; # Generated by the active disassembly feature of the Exodus emulation platform
-00008A66                            ; #
-00008A66                            ; # Creation Date:   2021-1-2 18:35:47
-00008A66                            ; # Analysis Region: 0x00004090 - 0x000042DC
-00008A66                            ; ########################################################################################
-00008A66                            
-00008A66                             org $00004016
+00008A66                             org $378a
+0000378A 7860                       	moveq	#$60, d4	; set digit padding character to empty space
+0000378A 7860                       	moveq	#$60, d4	; set digit padding character to empty space
+0000378C                            
+0000378C                            ; changes behavior of name selection screen to match smaller english alphabet
+0000378C                            	include "./asm/menu_name_selection.asm"
+0000378C                            ; ########################################################################################
+0000378C                            ; # Generated by the active disassembly feature of the Exodus emulation platform
+0000378C                            ; #
+0000378C                            ; # Creation Date:   2021-1-2 18:35:47
+0000378C                            ; # Analysis Region: 0x00004090 - 0x000042DC
+0000378C                            ; ########################################################################################
+0000378C                            
+0000378C                             org $00004016
 00004016                            ; moves current cursor position from ram into registers
 00004016                            cursor_blinker:
 00004016 3029 001A                  	MOVE.w	$1A(A1), x_tile_offset
