@@ -66,7 +66,8 @@ fixed_len_strings = [
 					'translations/enemy_list.txt',
 					'translations/skill_list.txt',
 					'translations/npc_list.txt',
-					'translations/battle_status_list.txt'
+					'translations/battle_status_list.txt',
+					'translations/town_list.txt'
 					]
 
 # asm hacks should be applied to this file before inserting strings
@@ -85,6 +86,7 @@ item_block = StringBlock('itm', 0x130c6, 0x14920, 0x20, 10)
 monster_block = StringBlock('mon', 0x151be, 0x16c10, 0x40, 10)
 npc_block = StringBlock('npc', 0xa05c, 0xa15a, 0xe, 7)
 skill_block = StringBlock('skl', 0x1c2fa, 0x1d45c, 0x40, 0x10)
+town_block = StringBlock('town', 0xb986, 0xbac6, 0x10, 0xa)
 
 fixed_len_blocks = [item_block, monster_block, npc_block, skill_block]
 # dump_fixed_str(original_rom.path, ja_menu_tbl, block)
@@ -821,7 +823,10 @@ def insert_fixed_str(rom_path: Path, script_name: str) -> int:
 	with open(rom_path, "rb+") as rom:
 		# new_pos = find_space(rom, 0x20000, None, len(lines) * step)
 		for line in lines:
+			if isinstance(line.id, str):
+				line.id = int(line.id, 16)
 			rom.seek(new_pos + (line.id * step))
+			# this should be truncated to block max_len
 			rom.write(line.en_bin[0:16] + b'\x00')
 
 
@@ -835,12 +840,12 @@ def dump_fixed_str(rom_path: Path, tbl: dict, block_info: StringBlock) -> list:
 	with rom_path.open("rb+") as rom:
 		while current_string_offset < end_offset:
 			rom.seek(current_string_offset, 0)
-			orig_str = rom.read(12)
+			orig_str = rom.read(block_info.max_len)
 			itm_name = bin_to_text(orig_str, tbl)[0].rstrip("<end>")
 			block_info.id = i
 			block_info.ptr_type = "fixed"
 			block_info.table = "menu"
-			block_info.ptr_pos = None
+			block_info.ptr_pos = 0
 			block_info.repoint = False
 			block_info.str_pos = block_info.start
 			json_block = json.dumps(block_info.__dict__)
@@ -1041,8 +1046,8 @@ real_monster_block = StringBlock('mon', 0x1519a, 0x16c30, 0x40, 10)
 # dump_data_blocks(original_rom.path, real_monster_block)
 # dump_data_blocks(original_rom.path, item_block)
 # dump_level_growth(original_rom.path, party)
+# print(dump_fixed_str(original_rom.path, ja_menu_tbl, town_block))
 # dump_encounter_info(original_rom.path)
-
 free_space = make_space_from_file(tling_rom.path, script_files)
 print(f"cleared {free_space} bytes")
 

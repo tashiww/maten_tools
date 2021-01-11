@@ -222,13 +222,13 @@ Death Doll
 
 {"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 55, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
 # あっさつけいたい
-#tlcheck
-Crush
+# slime's special one hit kill move
+Absorb
 
 {"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 56, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
 # ほ゛うこ゛けいたい
-#tlcheck
-Guard
+# slime's special defense move?
+Guard Form
 
 {"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 57, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
 # ゆめしは゛り

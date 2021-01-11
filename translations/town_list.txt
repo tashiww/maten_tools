@@ -1,0 +1,79 @@
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x0", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# リーム
+Leam
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x1", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# レミア
+Lamia
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x2", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# アルフ
+Alf
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x3", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# サイレス
+Syles
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x4", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# レムレス
+Remless
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x5", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# マステマ
+Mastem
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x6", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# エムスミ
+Emsome
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x7", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# サウスリーハ゛
+SouthRiver
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x8", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# オネス
+Neos
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x9", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# ラヒ゛
+Rabi
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0xa", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# ファイリンク゛
+Filing
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0xb", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# ト゛ラン
+Dran
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0xc", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# ホ゜ロン
+Pron
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0xd", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# フ゛ルーホ゜ート
+Blue Port
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0xe", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# シルハ゛ームーン
+Silvermoon
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0xf", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# イエローサント゛
+Yellowsand
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x10", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# ホーリーレイク
+Holy Lake
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x11", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# ハ゜ルファム
+Parfam
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x12", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# こころのひろは゛
+SpiritLand
+
+{"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x13", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
+# まかいのいす゛み
+DemonLand

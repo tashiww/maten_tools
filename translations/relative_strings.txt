@@ -131,7 +131,7 @@ Whose items will you store?
 
 {"ptr_pos": 24986, "pc_hex": "0x619a", "str_pos": 26030, "abs_offset_hex": "0x65ae", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # どれを預けますか？
-Which will you leave?
+What would you like to store?
 
 
 {"ptr_pos": 25194, "pc_hex": "0x626a", "str_pos": 26030, "abs_offset_hex": "0x65ae", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
@@ -144,7 +144,7 @@ Which will you leave?
 
 {"ptr_pos": 25122, "pc_hex": "0x6222", "str_pos": 26042, "abs_offset_hex": "0x65ba", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative", "prefix": "0x41fa"}
 # 引き出すときに<val>G<br>かかりますが，よろしいですか？
-It will cost <val> to retrieve this item. Is that okay?
+It will cost <val>G to retrieve this item. Is that okay?
 
 
 {"ptr_pos": 25248, "pc_hex": "0x62a0", "str_pos": 26070, "abs_offset_hex": "0x65d6", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
@@ -665,16 +665,16 @@ A hole opened up.
 
 {"ptr_pos": 70408, "pc_hex": "0x11308", "str_pos": 70492, "abs_offset_hex": "0x1135c", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # スライムは，<pc_itm>におおいかぶさった。
-Slym absorbed <pc_itm>!
+Slime absorbed <pc_itm>!
 
 {"ptr_pos": 70418, "pc_hex": "0x11312", "str_pos": 70510, "abs_offset_hex": "0x1136e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # スライムは，<pc_itm><val>におおいかぶさった。
-Slym absorbed <pc_itm><val>.
+Slime absorbed <pc_itm><val>.
 
 
 {"ptr_pos": 70560, "pc_hex": "0x113a0", "str_pos": 70590, "abs_offset_hex": "0x113be", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # スライムは，ひろがりなかまを防御した。
-Slym is defending his allies.
+Slime is defending his allies.
 
 {"ptr_pos": 70628, "pc_hex": "0x113e4", "str_pos": 70710, "abs_offset_hex": "0x11436", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # ナイトメアは，夢しばりの術をかけた。
@@ -698,11 +698,11 @@ Kirikaze used Shadow.
 
 {"ptr_pos": 71204, "pc_hex": "0x11624", "str_pos": 71310, "abs_offset_hex": "0x1168e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # ワ―タイガ―は，タイガ―形態に変身した。
-Wyte Tiger changed to Tiger form.
+White Tiger changed to Tiger form.
 
 {"ptr_pos": 71334, "pc_hex": "0x116a6", "str_pos": 71432, "abs_offset_hex": "0x11708", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # ワ―タイガ―は，しんどうはをはっせいした。
-Wyte Tiger sent out an energy blast.
+White Tiger sent out an energy blast.
 
 {"ptr_pos": 71454, "pc_hex": "0x1171e", "str_pos": 71498, "abs_offset_hex": "0x1174a", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # ネビュロスは，魔法のけっかいをはった。
@@ -710,11 +710,11 @@ Nebulous set up a magic barrier.
 
 {"ptr_pos": 71554, "pc_hex": "0x11782", "str_pos": 71678, "abs_offset_hex": "0x117fe", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # ソ―ドマンは，<pc_itm>に剣をつきさした。
-Swordman stabbed <pc_itm>.
+Sword Man stabbed <pc_itm>.
 
 {"ptr_pos": 71568, "pc_hex": "0x11790", "str_pos": 71698, "abs_offset_hex": "0x11812", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative", "prefix": "0x41fa"}
 # ソ―ドマンは，<pc_itm><val>に剣をつきさした。
-Swordman stabbed <pc_itm><val>.
+Sword Man stabbed <pc_itm><val>.
 
 {"ptr_pos": 71614, "pc_hex": "0x117be", "str_pos": 71720, "abs_offset_hex": "0x11828", "table": "normal", "repoint": false, "missing": 1, "ptr_type": "relative", "prefix": "0x41fa"}
 # <pc_itm>は，<val>ポイントのエネルギ―をすいとられた。
@@ -726,7 +726,7 @@ Swordman stabbed <pc_itm><val>.
 
 {"ptr_pos": 71770, "pc_hex": "0x1185a", "str_pos": 71918, "abs_offset_hex": "0x118ee", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # ソ―ドマンは，念呪縛をおこなった。
-Swordman used Spell Chain.
+Sword Man used Spell Chain.
 
 {"ptr_pos": 72146, "pc_hex": "0x119d2", "str_pos": 72176, "abs_offset_hex": "0x119f0", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # <pc_itm>は，<br>デスド―ルになった。
@@ -750,7 +750,7 @@ The spell was reflected back.
 
 {"ptr_pos": 74340, "pc_hex": "0x12264", "str_pos": 74366, "abs_offset_hex": "0x1227e", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 #  うっ！<br> こ，この楽は・・・・
-Ugh! This medicine...
+"Ugh! This potion... it's nullifying my powers..."
 
 {"ptr_pos": 74352, "pc_hex": "0x12270", "str_pos": 74384, "abs_offset_hex": "0x12290", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 #  うでわのこうかがきえた。

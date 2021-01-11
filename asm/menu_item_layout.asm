@@ -12,7 +12,7 @@ WindowHeight	equr	d3
 PartySelectMenu	macro
 	moveq #$a, ColOffset
 	moveq #$1, RowOffset
-	moveq #$1c, WindowWidth
+	moveq #$19, WindowWidth
 	moveq #$5, WindowHeight
 	move.w #$3, d4
 	endm
@@ -36,7 +36,7 @@ ItemListLabelOffset	macro
 GivePartyMenu	macro
 	moveq #$a, ColOffset
 	moveq #$14, RowOffset
-	moveq #$1c, WindowWidth
+	moveq #$19, WindowWidth
 	moveq #$5, WindowHeight
 	move.w #$3, d4
 	endm
@@ -92,6 +92,11 @@ GivePartyLabels	macro
 	moveq	#$3, d5	; rows?
 	moveq	#$3, d6 ; option count?
 	
+; use targetable item , party select menu
+ org $85ca
+	GivePartyMenu
+ org $85de
+	GivePartyLabels
 
 ; primary party select menu (left side originally) for give/drop selection but not use...?
  org $8460
@@ -106,7 +111,7 @@ GivePartyLabels	macro
 	jsr	$68826
 	;addq	#1, d1	; changed this to 1 for single spacing
 	
-	; the party hp/mp menu is borked, maybe do another btst, for 1 or 2? to skip to evenoddprint
+	; the party hp/mp menu is borked, maybe do another btst, for 1 or 2? to skip to evenoddprint <- implemented 
  org $68826
 	btst	#$1, d3
 	bne	NormalIncrement
@@ -462,6 +467,8 @@ loc_0000367C:
 	MOVEM.l	(A7)+, D0/D1/D2/D3/A0/A1
 	RTS
 
+
+
  org $32d6
 draw_background_window:
 
@@ -600,6 +607,10 @@ give_to_npc_window:
 	moveq #$c, ColOffset
 	moveq #$7, RowOffset
 
+; it prints item list twice after selling, i dunno why, make this match item label offset...
+ org $5fe2
+	moveq #$c, ColOffset
+	moveq #$7, RowOffset
 
  org $5e6a
 	bra.w item_shop_insertion_point
@@ -795,7 +806,7 @@ draw_equipment_backgrounds:
 	BSR.w	get_player_ram_offset
 	MOVEA.l	A0, A2
 	MOVE.b	$14(A2), D2
-	MOVEQ	#$14, D0	; position for weapon
+	MOVEQ	#$13, D0	; position for weapon
 	MOVEQ	#$15, D1	
 	BSR.w	draw_equipped_item	; weap
 	MOVE.b	$15(A2), D2	; loading equipped gear into d2
@@ -823,8 +834,8 @@ draw_equipment_backgrounds:
 	;MOVE.w	#$270f, D2	; cap display at 9999 
 
 loc_00008916:
-	MOVEQ	#4, D3	; digit padding? in VRAM, space to reserve.. i need to set d5 to $60 for proper padding
-	MOVEQ	#$21, D0	; x offset
+	MOVEQ	#5, D3	; digit padding? in VRAM, space to reserve.. i need to set d5 to $60 for proper padding
+	MOVEQ	#$20, D0	; x offset
 	MOVEQ	#$8, D1	; y offset
 	moveq	#$60, d4	; padding byte (empty space with english table)
 	BSR.w	draw_stat_value	; draw atk/def number
@@ -841,8 +852,8 @@ loc_00008916:
 	
 
 loc_00008930:
-	MOVEQ	#4, D3
-	MOVEQ	#$21, D0
+	MOVEQ	#5, D3
+	MOVEQ	#$20, D0
 	MOVEQ	#$b, D1
 	BSR.w	draw_stat_value ; probably defense writing
 	MOVE.w	$2(A5), D2
@@ -1281,18 +1292,18 @@ loc_0000D980:
 	MOVE.w	D6, x_tile_offset
 	MOVE.w	D7, y_tile_offset
 	MOVEQ	#8, window_tile_width
-	MOVEQ	#5, window_tile_height
+	MOVEQ	#5, window_tile_height	; player window dimensions
 	MOVEQ	#3, D4
 	JSR	draw_small_window
 	ADDQ.w	#1, D6
 	MOVEA.l	$20(A6), A0	; party member name string location
 	JSR	$0000352A	; nothing seemed to happen?
-	MOVEQ	#6, y_tile_offset
+	MOVEQ	#6, y_tile_offset	; for centering character name, max length of name
 	SUB.w	D0, y_tile_offset
 	LSR.w	#1, y_tile_offset
 	MOVE.w	D6, x_tile_offset
 	ADD.w	D1, x_tile_offset
-	MOVE.w	D7, y_tile_offset	; all of this fiddling is probably to set up having multiple party members
+	MOVE.w	D7, y_tile_offset	; 
 	JSR	write_label_8x8
 	
 	MOVE.w	D6, x_tile_offset
@@ -1508,13 +1519,12 @@ finished_drawing_enemies
  org $939e
 	moveq #$a, ColOffset
 	moveq #$1, RowOffset
-	moveq #$1c, WindowWidth
+	moveq #$19, WindowWidth
 	moveq #$5, WindowHeight
-	moveq #$3, d4
+	moveq	#$3, d4
 ; and labels
  org $93b4
-	moveq #$b, ColOffset
-	moveq #$2, RowOffset
+	PartySelectLabels
 
 ; actual skills window placement
  org $00009416
@@ -1523,14 +1533,206 @@ finished_drawing_enemies
 	MOVEQ	#$a, D0	; x offset
 	MOVEQ	#6, D1	; y offset
 	MOVEQ	#$10, D2	; width
-	MOVEQ	#$a, D3; height
+	MOVEQ	#$8, D3; height
 	MOVEQ	#3, D4
 	;BSR.w	$32d6 or something
 ; and labels
  org $942e
 	moveq #$b, ColOffset
 	moveq #$7, RowOffset
+; there are different offsets for scrolling left/right...
+ org $9482
+	moveq #$b, ColOffset
+	moveq #$7, RowOffset
+ org $949c
+	moveq #$b, ColOffset
+	moveq #$7, RowOffset
+	
+; i wish i had labeled this?? this might just reset position after using a skill??
+ org $94f2
+	moveq #$a, ColOffset
+	moveq #$e, RowOffset
+	moveq #$19, WindowWidth
+	moveq #$5, WindowHeight
+	move.w #$3, d4
+	bsr.w draw_background_window
+	move.w	d0, $6(a6)
+	moveq #$b, ColOffset
+	moveq #$f, RowOffset
 
+; fixing rewrite after closing window - set this to normal skill window parameters
+ org $957c
+	MOVEQ	#$b, D0	; x offset
+	MOVEQ	#7, D1	; y offset
+ org $955a
+	MOVEQ	#$b, D0	; x offset
+	MOVEQ	#7, D1	; y offset
+ 
+ 
+; magic gate party select window
+ org $b236
+	moveq #$a, ColOffset
+	moveq #$e, RowOffset
+	moveq #$19, WindowWidth
+	moveq #$5, WindowHeight
+; labels
+ org $b250 
+ 	moveq #$b, ColOffset
+	moveq #$f, RowOffset
+; highlights
+ org $b276
+	moveq #$b, ColOffset
+	moveq #$f, RowOffset
+	moveq #$a, d2
+	moveq #$0, d3
+	moveq	#$2, d4	; cols?
+	; sets rows from count of available comrades, maybe?
+	
+	; jsr to $330c, the highlighting routine?
+
+; return spell town list	 - this list is paginated :( - generally seems to work??
+; drawing window
+ org $954e
+	moveq #$1a, ColOffset
+	moveq #$6, RowOffset
+ org $ab72
+	moveq #$c, WindowWidth
+	moveq #$a, WindowHeight
+
+; prob double spacing for town list
+ org $ac00 
+	addq.w #$1, d1
+
+	
+; ########################################################################################
+; # bank menu redesign
+; #
+; ########################################################################################
+
+; store / take menu
+ org $604e
+ 	moveq #$2, ColOffset
+	moveq #$4, RowOffset
+	moveq #$7, WindowWidth
+	moveq #$6, WindowHeight
+ org $606a ; labels
+  	moveq #$3, ColOffset
+	moveq #$5, RowOffset
+; highlights
+ org $6076
+ 	moveq	#$3, ColOffset
+	moveq	#$5, RowOffset	
+	moveq	#$4, d2	; width
+	moveq	#$1, d3	; height
+
+ org $60f4
+; item / money menu
+ 	moveq #$2, ColOffset
+	moveq #$a, RowOffset
+	moveq #$7, WindowWidth
+	moveq #$6, WindowHeight
+; labels
+ org $6108
+  	moveq #$3, ColOffset
+	moveq #$b, RowOffset
+; highlights
+ org $6114
+ 	moveq	#$3, ColOffset
+	moveq	#$b, RowOffset	
+	moveq	#$4, d2	; width
+	moveq	#$1, d3	; height
+
+; party select for storing items 
+ org $615a
+	moveq #$b, ColOffset
+	moveq #$1, RowOffset
+	moveq #$19, WindowWidth
+	moveq #$5, WindowHeight
+ org $6172
+  	moveq #$c, ColOffset
+	moveq #$2, RowOffset
+
+; item storage window
+ org $61a4
+	moveq #$b, ColOffset
+	moveq #$6, RowOffset
+	moveq #$13, WindowWidth
+	moveq #$e, WindowHeight
+; labels
+ org $61c4
+  	moveq #$c, ColOffset
+	moveq #$7, RowOffset
+
+; reset label position
+ org $6294
+  	moveq #$c, ColOffset
+	moveq #$7, RowOffset
+	
+ 
+; returning item, item list
+ org $62f8 
+	moveq #$b, ColOffset
+	moveq #$1, RowOffset
+	moveq #$13, WindowWidth
+	moveq #$e, WindowHeight
+; labels
+ org $630e
+	moveq #$c, ColOffset
+	moveq #$2, RowOffset
+; highlights ? 
+
+; returning item, party list
+ org $6360
+	moveq #$b, ColOffset
+	moveq #$f, RowOffset
+	moveq #$19, WindowWidth
+	moveq #$5, WindowHeight
+; labels
+ org $6378
+	moveq #$c, ColOffset
+	moveq #$10, RowOffset
+ 
+; ########################################################################################
+; # temple menu redesign
+; #
+; ########################################################################################
+; heal menu
+ org $6962
+	moveq #$2, ColOffset
+	moveq #$4, RowOffset
+	moveq #$a, WindowWidth
+	moveq #$a, WindowHeight
+; labels
+ org $697e
+	moveq #$3, ColOffset
+	moveq #$5, RowOffset
+; highlights
+ org $698a
+	moveq #$3, ColOffset
+	moveq #$5, RowOffset
+	moveq	#$7, d2	; width
+	moveq	#$1, d3	; height
+
+ 
+ 
+; party member select for treatment
+ org $6a04
+	moveq #$c, ColOffset
+	moveq #$4, RowOffset
+	moveq #$19, WindowWidth
+	moveq #$5, WindowHeight
+; labels
+ org $6a1c
+	moveq #$d, ColOffset
+	moveq #$5, RowOffset
+ 
+ 
+; ########################################################################################
+; # miscelleaneous labels...
+; #
+; ########################################################################################
+ 
+ 
  org $1dee
 write_to_vdp:
 

@@ -200,7 +200,7 @@
 00003FE6                            PartySelectMenu	macro
 00003FE6                            	moveq #$a, ColOffset
 00003FE6                            	moveq #$1, RowOffset
-00003FE6                            	moveq #$1c, WindowWidth
+00003FE6                            	moveq #$19, WindowWidth
 00003FE6                            	moveq #$5, WindowHeight
 00003FE6                            	move.w #$3, d4
 00003FE6                            	endm
@@ -224,7 +224,7 @@
 00003FE6                            GivePartyMenu	macro
 00003FE6                            	moveq #$a, ColOffset
 00003FE6                            	moveq #$14, RowOffset
-00003FE6                            	moveq #$1c, WindowWidth
+00003FE6                            	moveq #$19, WindowWidth
 00003FE6                            	moveq #$5, WindowHeight
 00003FE6                            	move.w #$3, d4
 00003FE6                            	endm
@@ -280,10 +280,15 @@
 00008434 7A03                       	moveq	#$3, d5	; rows?
 00008436 7C03                       	moveq	#$3, d6 ; option count?
 00008438                            	
-00008438                            
-00008438                            ; primary party select menu (left side originally) for give/drop selection but not use...?
-00008438                             org $8460
-00008460 700A 7201 741C 7605 383C+  	PartySelectMenu
+00008438                            ; use targetable item , party select menu
+00008438                             org $85ca
+000085CA 700A 7214 7419 7605 383C+  	GivePartyMenu
+000085D6                             org $85de
+000085DE 700B 7215                  	GivePartyLabels
+000085E2                            
+000085E2                            ; primary party select menu (left side originally) for give/drop selection but not use...?
+000085E2                             org $8460
+00008460 700A 7201 7419 7605 383C+  	PartySelectMenu
 0000846C                            	
 0000846C                             org $8478
 00008478                             ; set label origin for primary party select menu
@@ -294,7 +299,7 @@
 0000A318 4EB9 0006 8826             	jsr	$68826
 0000A31E                            	;addq	#1, d1	; changed this to 1 for single spacing
 0000A31E                            	
-0000A31E                            	; the party hp/mp menu is borked, maybe do another btst, for 1 or 2? to skip to evenoddprint
+0000A31E                            	; the party hp/mp menu is borked, maybe do another btst, for 1 or 2? to skip to evenoddprint <- implemented 
 0000A31E                             org $68826
 00068826 0803 0001                  	btst	#$1, d3
 0006882A 6600 0000                  	bne	NormalIncrement
@@ -331,7 +336,7 @@
 000687DC                            
 000687DC                            ; equip party select menu
 000687DC                             org $8810
-00008810 700A 7201 741C 7605 383C+  	PartySelectMenu
+00008810 700A 7201 7419 7605 383C+  	PartySelectMenu
 0000881C                            
 0000881C                             org $8828
 00008828 700B 7202                  	PartySelectLabels
@@ -363,7 +368,7 @@
 0000882C                            ; secondary party member window (for giving items)
 0000882C                             org $86b6
 000086B6                            ; draw window
-000086B6 700A 7214 741C 7605 383C+  	GivePartyMenu
+000086B6 700A 7214 7419 7605 383C+  	GivePartyMenu
 000086C2                            
 000086C2                             org $86ca
 000086CA                            ; set label offset
@@ -650,6 +655,8 @@
 0000367C 4CDF 030F                  	MOVEM.l	(A7)+, D0/D1/D2/D3/A0/A1
 00003680 4E75                       	RTS
 00003682                            
+00003682                            
+00003682                            
 00003682                             org $32d6
 000032D6                            draw_background_window:
 000032D6                            
@@ -760,7 +767,7 @@
 00005D5E                            	
 00005D5E                            	; setting text list position
 00005D5E 7009                       	MOVEQ	#$9, D0	
-00005D60 7210                       	MOVEQ	#$10, D1	
+00005D60 720F                       	MOVEQ	#$f, D1	
 00005D62 7401                       	MOVEQ	#1, D2	; argument for party drawing function :>	
 00005D64 6100 44C8                  	BSR.w	$a22e	; no idea
 00005D68 3E2B 000E                  	MOVE.w	$E(A3), D7
@@ -788,8 +795,12 @@
 00005EDE 700C                       	moveq #$c, ColOffset
 00005EE0 7207                       	moveq #$7, RowOffset
 00005EE2                            
-00005EE2                            
-00005EE2                             org $5e6a
+00005EE2                            ; it prints item list twice after selling, i dunno why, make this match item label offset...
+00005EE2                             org $5fe2
+00005FE2 700C                       	moveq #$c, ColOffset
+00005FE4 7207                       	moveq #$7, RowOffset
+00005FE6                            
+00005FE6                             org $5e6a
 00005E6A 6000 FE2A                  	bra.w item_shop_insertion_point
 00005E6E                            	
 00005E6E                            ; ########################################################################################
@@ -983,7 +994,7 @@
 000088C4 6100 192C                  	BSR.w	get_player_ram_offset
 000088C8 2448                       	MOVEA.l	A0, A2
 000088CA 142A 0014                  	MOVE.b	$14(A2), D2
-000088CE 7014                       	MOVEQ	#$14, D0	; position for weapon
+000088CE 7013                       	MOVEQ	#$13, D0	; position for weapon
 000088D0 7215                       	MOVEQ	#$15, D1	
 000088D2 6100 FF22                  	BSR.w	draw_equipped_item	; weap
 000088D6 142A 0015                  	MOVE.b	$15(A2), D2	; loading equipped gear into d2
@@ -1011,8 +1022,8 @@
 00008906                            	;MOVE.w	#$270f, D2	; cap display at 9999 
 00008906                            
 00008906                            loc_00008916:
-00008906 7604                       	MOVEQ	#4, D3	; digit padding? in VRAM, space to reserve.. i need to set d5 to $60 for proper padding
-00008908 7021                       	MOVEQ	#$21, D0	; x offset
+00008906 7605                       	MOVEQ	#5, D3	; digit padding? in VRAM, space to reserve.. i need to set d5 to $60 for proper padding
+00008908 7020                       	MOVEQ	#$20, D0	; x offset
 0000890A 7208                       	MOVEQ	#$8, D1	; y offset
 0000890C 7860                       	moveq	#$60, d4	; padding byte (empty space with english table)
 0000890E 6100 AE68                  	BSR.w	draw_stat_value	; draw atk/def number
@@ -1029,8 +1040,8 @@
 00008930                            	
 00008930                            
 00008930                            loc_00008930:
-00008930 7604                       	MOVEQ	#4, D3
-00008932 7021                       	MOVEQ	#$21, D0
+00008930 7605                       	MOVEQ	#5, D3
+00008932 7020                       	MOVEQ	#$20, D0
 00008934 720B                       	MOVEQ	#$b, D1
 00008936 6100 AE40                  	BSR.w	draw_stat_value ; probably defense writing
 0000893A 342D 0002                  	MOVE.w	$2(A5), D2
@@ -1469,18 +1480,18 @@
 0000D98A 3006                       	MOVE.w	D6, x_tile_offset
 0000D98C 3207                       	MOVE.w	D7, y_tile_offset
 0000D98E 7408                       	MOVEQ	#8, window_tile_width
-0000D990 7605                       	MOVEQ	#5, window_tile_height
+0000D990 7605                       	MOVEQ	#5, window_tile_height	; player window dimensions
 0000D992 7803                       	MOVEQ	#3, D4
 0000D994 4EB9 0000 0000             	JSR	draw_small_window
 0000D99A 5246                       	ADDQ.w	#1, D6
 0000D99C 206E 0020                  	MOVEA.l	$20(A6), A0	; party member name string location
 0000D9A0 4EB9 0000 352A             	JSR	$0000352A	; nothing seemed to happen?
-0000D9A6 7206                       	MOVEQ	#6, y_tile_offset
+0000D9A6 7206                       	MOVEQ	#6, y_tile_offset	; for centering character name, max length of name
 0000D9A8 9240                       	SUB.w	D0, y_tile_offset
 0000D9AA E249                       	LSR.w	#1, y_tile_offset
 0000D9AC 3006                       	MOVE.w	D6, x_tile_offset
 0000D9AE D041                       	ADD.w	D1, x_tile_offset
-0000D9B0 3207                       	MOVE.w	D7, y_tile_offset	; all of this fiddling is probably to set up having multiple party members
+0000D9B0 3207                       	MOVE.w	D7, y_tile_offset	; 
 0000D9B2 4EB9 0000 3628             	JSR	write_label_8x8
 0000D9B8                            	
 0000D9B8 3006                       	MOVE.w	D6, x_tile_offset
@@ -1696,13 +1707,12 @@
 0000AB12                             org $939e
 0000939E 700A                       	moveq #$a, ColOffset
 000093A0 7201                       	moveq #$1, RowOffset
-000093A2 741C                       	moveq #$1c, WindowWidth
+000093A2 7419                       	moveq #$19, WindowWidth
 000093A4 7605                       	moveq #$5, WindowHeight
-000093A6 7803                       	moveq #$3, d4
+000093A6 7803                       	moveq	#$3, d4
 000093A8                            ; and labels
 000093A8                             org $93b4
-000093B4 700B                       	moveq #$b, ColOffset
-000093B6 7202                       	moveq #$2, RowOffset
+000093B4 700B 7202                  	PartySelectLabels
 000093B8                            
 000093B8                            ; actual skills window placement
 000093B8                             org $00009416
@@ -1711,15 +1721,207 @@
 0000941C 700A                       	MOVEQ	#$a, D0	; x offset
 0000941E 7206                       	MOVEQ	#6, D1	; y offset
 00009420 7410                       	MOVEQ	#$10, D2	; width
-00009422 760A                       	MOVEQ	#$a, D3; height
+00009422 7608                       	MOVEQ	#$8, D3; height
 00009424 7803                       	MOVEQ	#3, D4
 00009426                            	;BSR.w	$32d6 or something
 00009426                            ; and labels
 00009426                             org $942e
 0000942E 700B                       	moveq #$b, ColOffset
 00009430 7207                       	moveq #$7, RowOffset
-00009432                            
-00009432                             org $1dee
+00009432                            ; there are different offsets for scrolling left/right...
+00009432                             org $9482
+00009482 700B                       	moveq #$b, ColOffset
+00009484 7207                       	moveq #$7, RowOffset
+00009486                             org $949c
+0000949C 700B                       	moveq #$b, ColOffset
+0000949E 7207                       	moveq #$7, RowOffset
+000094A0                            	
+000094A0                            ; i wish i had labeled this?? this might just reset position after using a skill??
+000094A0                             org $94f2
+000094F2 700A                       	moveq #$a, ColOffset
+000094F4 720E                       	moveq #$e, RowOffset
+000094F6 7419                       	moveq #$19, WindowWidth
+000094F8 7605                       	moveq #$5, WindowHeight
+000094FA 383C 0003                  	move.w #$3, d4
+000094FE 6100 9DD6                  	bsr.w draw_background_window
+00009502 3D40 0006                  	move.w	d0, $6(a6)
+00009506 700B                       	moveq #$b, ColOffset
+00009508 720F                       	moveq #$f, RowOffset
+0000950A                            
+0000950A                            ; fixing rewrite after closing window - set this to normal skill window parameters
+0000950A                             org $957c
+0000957C 700B                       	MOVEQ	#$b, D0	; x offset
+0000957E 7207                       	MOVEQ	#7, D1	; y offset
+00009580                             org $955a
+0000955A 700B                       	MOVEQ	#$b, D0	; x offset
+0000955C 7207                       	MOVEQ	#7, D1	; y offset
+0000955E                             
+0000955E                             
+0000955E                            ; magic gate party select window
+0000955E                             org $b236
+0000B236 700A                       	moveq #$a, ColOffset
+0000B238 720E                       	moveq #$e, RowOffset
+0000B23A 7419                       	moveq #$19, WindowWidth
+0000B23C 7605                       	moveq #$5, WindowHeight
+0000B23E                            ; labels
+0000B23E                             org $b250 
+0000B250 700B                        	moveq #$b, ColOffset
+0000B252 720F                       	moveq #$f, RowOffset
+0000B254                            ; highlights
+0000B254                             org $b276
+0000B276 700B                       	moveq #$b, ColOffset
+0000B278 720F                       	moveq #$f, RowOffset
+0000B27A 740A                       	moveq #$a, d2
+0000B27C 7600                       	moveq #$0, d3
+0000B27E 7802                       	moveq	#$2, d4	; cols?
+0000B280                            	; sets rows from count of available comrades, maybe?
+0000B280                            	
+0000B280                            	; jsr to $330c, the highlighting routine?
+0000B280                            
+0000B280                            ; return spell town list	 - this list is paginated :( - generally seems to work??
+0000B280                            ; drawing window
+0000B280                             org $954e
+0000954E 701A                       	moveq #$1a, ColOffset
+00009550 7206                       	moveq #$6, RowOffset
+00009552                             org $ab72
+0000AB72 740C                       	moveq #$c, WindowWidth
+0000AB74 760A                       	moveq #$a, WindowHeight
+0000AB76                            
+0000AB76                            ; prob double spacing for town list
+0000AB76                             org $ac00 
+0000AC00 5241                       	addq.w #$1, d1
+0000AC02                            
+0000AC02                            	
+0000AC02                            ; ########################################################################################
+0000AC02                            ; # bank menu redesign
+0000AC02                            ; #
+0000AC02                            ; ########################################################################################
+0000AC02                            
+0000AC02                            ; store / take menu
+0000AC02                             org $604e
+0000604E 7002                        	moveq #$2, ColOffset
+00006050 7204                       	moveq #$4, RowOffset
+00006052 7407                       	moveq #$7, WindowWidth
+00006054 7606                       	moveq #$6, WindowHeight
+00006056                             org $606a ; labels
+0000606A 7003                         	moveq #$3, ColOffset
+0000606C 7205                       	moveq #$5, RowOffset
+0000606E                            ; highlights
+0000606E                             org $6076
+00006076 7003                        	moveq	#$3, ColOffset
+00006078 7205                       	moveq	#$5, RowOffset	
+0000607A 7404                       	moveq	#$4, d2	; width
+0000607C 7601                       	moveq	#$1, d3	; height
+0000607E                            
+0000607E                             org $60f4
+000060F4                            ; item / money menu
+000060F4 7002                        	moveq #$2, ColOffset
+000060F6 720A                       	moveq #$a, RowOffset
+000060F8 7407                       	moveq #$7, WindowWidth
+000060FA 7606                       	moveq #$6, WindowHeight
+000060FC                            ; labels
+000060FC                             org $6108
+00006108 7003                         	moveq #$3, ColOffset
+0000610A 720B                       	moveq #$b, RowOffset
+0000610C                            ; highlights
+0000610C                             org $6114
+00006114 7003                        	moveq	#$3, ColOffset
+00006116 720B                       	moveq	#$b, RowOffset	
+00006118 7404                       	moveq	#$4, d2	; width
+0000611A 7601                       	moveq	#$1, d3	; height
+0000611C                            
+0000611C                            ; party select for storing items 
+0000611C                             org $615a
+0000615A 700B                       	moveq #$b, ColOffset
+0000615C 7201                       	moveq #$1, RowOffset
+0000615E 7419                       	moveq #$19, WindowWidth
+00006160 7605                       	moveq #$5, WindowHeight
+00006162                             org $6172
+00006172 700C                         	moveq #$c, ColOffset
+00006174 7202                       	moveq #$2, RowOffset
+00006176                            
+00006176                            ; item storage window
+00006176                             org $61a4
+000061A4 700B                       	moveq #$b, ColOffset
+000061A6 7206                       	moveq #$6, RowOffset
+000061A8 7413                       	moveq #$13, WindowWidth
+000061AA 760E                       	moveq #$e, WindowHeight
+000061AC                            ; labels
+000061AC                             org $61c4
+000061C4 700C                         	moveq #$c, ColOffset
+000061C6 7207                       	moveq #$7, RowOffset
+000061C8                            
+000061C8                            ; reset label position
+000061C8                             org $6294
+00006294 700C                         	moveq #$c, ColOffset
+00006296 7207                       	moveq #$7, RowOffset
+00006298                            	
+00006298                             
+00006298                            ; returning item, item list
+00006298                             org $62f8 
+000062F8 700B                       	moveq #$b, ColOffset
+000062FA 7201                       	moveq #$1, RowOffset
+000062FC 7413                       	moveq #$13, WindowWidth
+000062FE 760E                       	moveq #$e, WindowHeight
+00006300                            ; labels
+00006300                             org $630e
+0000630E 700C                       	moveq #$c, ColOffset
+00006310 7202                       	moveq #$2, RowOffset
+00006312                            ; highlights ? 
+00006312                            
+00006312                            ; returning item, party list
+00006312                             org $6360
+00006360 700B                       	moveq #$b, ColOffset
+00006362 720F                       	moveq #$f, RowOffset
+00006364 7419                       	moveq #$19, WindowWidth
+00006366 7605                       	moveq #$5, WindowHeight
+00006368                            ; labels
+00006368                             org $6378
+00006378 700C                       	moveq #$c, ColOffset
+0000637A 7210                       	moveq #$10, RowOffset
+0000637C                             
+0000637C                            ; ########################################################################################
+0000637C                            ; # temple menu redesign
+0000637C                            ; #
+0000637C                            ; ########################################################################################
+0000637C                            ; heal menu
+0000637C                             org $6962
+00006962 7002                       	moveq #$2, ColOffset
+00006964 7204                       	moveq #$4, RowOffset
+00006966 740A                       	moveq #$a, WindowWidth
+00006968 760A                       	moveq #$a, WindowHeight
+0000696A                            ; labels
+0000696A                             org $697e
+0000697E 7003                       	moveq #$3, ColOffset
+00006980 7205                       	moveq #$5, RowOffset
+00006982                            ; highlights
+00006982                             org $698a
+0000698A 7003                       	moveq #$3, ColOffset
+0000698C 7205                       	moveq #$5, RowOffset
+0000698E 7407                       	moveq	#$7, d2	; width
+00006990 7601                       	moveq	#$1, d3	; height
+00006992                            
+00006992                             
+00006992                             
+00006992                            ; party member select for treatment
+00006992                             org $6a04
+00006A04 700C                       	moveq #$c, ColOffset
+00006A06 7204                       	moveq #$4, RowOffset
+00006A08 7419                       	moveq #$19, WindowWidth
+00006A0A 7605                       	moveq #$5, WindowHeight
+00006A0C                            ; labels
+00006A0C                             org $6a1c
+00006A1C 700D                       	moveq #$d, ColOffset
+00006A1E 7205                       	moveq #$5, RowOffset
+00006A20                             
+00006A20                             
+00006A20                            ; ########################################################################################
+00006A20                            ; # miscelleaneous labels...
+00006A20                            ; #
+00006A20                            ; ########################################################################################
+00006A20                             
+00006A20                             
+00006A20                             org $1dee
 00001DEE                            write_to_vdp:
 00001DEE                            
 00001DEE                             org $2fec

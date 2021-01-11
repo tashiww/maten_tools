@@ -686,7 +686,7 @@ Yo, bro, what's got you so down? Cheer up.
 # あなた神秘の楽草ってしってる？<br>
 # ここから南の山道のさきの森にある<br>
 # らしいわよ。
-Do you know about Holy Herbs? They supposedly grow in the forest at the end of the mountain path, south of here.
+Do you know about Mysterious Herbs? They supposedly grow in the forest at the end of the mountain path, south of here.
 
 
 {"prefix":"0x7","ptr_pos":148776,"str_pos":148970,"ptr_hex":"24528","str_hex":"245EA","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -809,7 +809,7 @@ Be gentle with people's emotions.
 # わたしは「チャイルドかめん」<br>
 # あなたに夢あるかぎり，戦いましょ<br>
 # う。 えっ，わたしって変？
-I'm "Child Man." I'll fight as long as you have dreams. What? You think I'm weird?
+I'm Sailor Child. I'll fight as long as you have dreams. What? You think I'm weird?
 
 
 {"prefix":"0x7","ptr_pos":150124,"str_pos":150374,"ptr_hex":"24A6C","str_hex":"24B66","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -835,7 +835,7 @@ Lichiel "Hark, who goes there? Oh, wait... is that you, <npc1>?"<scroll>
 <npc1> "Yes, I am your sister!! I thought you looked familiar, so I asked <player> to get your attention. I can't believe I finally found you."<scroll>
 Lichiel "I had a spiritual rebirth in this town. My only purpose in life now is to spread happiness."<scroll>
 <npc1> "Lichiel, let's live together."<scroll>
-Lichiel "No, I don't think that will happen. I have too much work to do here. Oh, look at the time, I must be going now, but be sure to visit the church and listen to their teachings before you leave town. Peace and Joy!"
+Lichiel "No, I don't think that will happen. I have too much work to do here. Oh, look at the time, I must be going now, but be sure to visit the church and listen to their teachings before you leave town. Peace and joy!"
 
 
 {"prefix":"0x7","ptr_pos":150144,"str_pos":150724,"ptr_hex":"24A80","str_hex":"24CC4","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -849,6 +849,7 @@ Lichiel "No, I don't think that will happen. I have too much work to do here. Oh
 {"prefix":"0x7","ptr_pos":150194,"str_pos":150974,"ptr_hex":"24AB2","str_hex":"24DBE","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 教団にかざってあるつぼってあやし<br>
 # いとおもわない？
+# this line breaks at churc//h ? breakcheck
 Don't you think it's suspicious to have pots in a church?
 
 
@@ -1393,7 +1394,7 @@ You can get various treatments here... for a price.
 
 {"prefix":"0x7","ptr_pos":158384,"str_pos":158512,"ptr_hex":"26AB0","str_hex":"26B30","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 神秘の楽草をみつけた。
-You found the Holy Herb.
+You found a Mysterious Herb.
 
 
 {"prefix":"0x7","ptr_pos":158412,"str_pos":158530,"ptr_hex":"26ACC","str_hex":"26B42","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -1430,6 +1431,7 @@ Thanks, you really helped me out... Out of the hole! Now I'm going to exact my m
 # は何でもきくからさ。」<scroll><player>「しょうがないな。その<br>
 # かわり，もう悪さをするなよ。」<scroll>スライム「ありがとう。オレが必要な<br>
 # 時はいつでもよんでくれ。」
+# the last line doesn't wrap correctly for some reason ?
 <player> "Learn your place!"<scroll>
 Slime "Please, wait! I admit I made a faux pas. Won't you spare my life? I'll do anything you ask."<scroll>
 <player> "Fine, just don't attack any more random adventurers."<scroll>
@@ -1613,15 +1615,15 @@ Elder "Bandits attacked our town and kidnapped all of our women! Please rescue <
 # なくてな。それをつくるには神秘の<br>
 # 楽草が必要なのじゃ。」
 Elder "Is <npc1> okay?"<scroll>
-<player>"Well, yes, but also no. I need to defeat the Bandit Boss, but she has a magical bracelet that makes her immune to my attacks. Do you know how to nullify her magical protection?"<scroll>
-Elder "Of course, you just need to melt the bracelet. I know how to make a potion that can do that."<scroll>
+<player> "Well, yes, but also no. I need to defeat the Bandit Boss, but he has a magical bracer that makes him immune to my attacks. Do you know how to nullify his magical protection?"<scroll>
+Elder "Of course, you just need to melt the bracer. I know how to make a potion that can do that."<scroll>
 <player> "Then hurry up and make it!"<scroll>
-Elder "I can't, I don't have the ingredients. You'll need to bring me some Holy Herbs."
+Elder "I can't, I don't have the ingredients. You'll need to bring me a Mysterious Herb."
 
 
 {"prefix":"0x7","ptr_pos":162220,"str_pos":162652,"ptr_hex":"279AC","str_hex":"27B5C","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 神秘の楽草があればなぁ。
-If only I had some Holy Herbs...
+If only I had some Mysterious Herbs...
 
 
 {"prefix":"0x7","ptr_pos":162228,"str_pos":162670,"ptr_hex":"279B4","str_hex":"27B6E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -1635,7 +1637,7 @@ If only I had some Holy Herbs...
 # の楽草！！これで楽をつくる事が<br>
 # 出来る。今からさっそくつくろう。<br>
 # 明日にでもとりに来てくれ。」
-Elder "Oh my stars! It's the Holy Herb! I can make the potion right now. Come back tomorrow and I'll give it to you."
+Elder "Oh my stars! It's the Mysterious Herb! I can make the potion right now. Come back tomorrow and I'll give it to you."
 
 
 {"prefix":"0x7","ptr_pos":162250,"str_pos":162778,"ptr_hex":"279CA","str_hex":"27BDA","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -1665,7 +1667,7 @@ I'm still working on it. Come back tomorrow.
 <player> "Are you okay?!"<scroll>
 Elder "I worked a little too hard last night... also, I was badly injured from the bandit attack..."<scroll>
 <player> "Hang in there!"
-Elder "No, I can sense that my time has come to an end. Don't worry, I finished the potion. It's on the shelf over there. I want you to have it."<scroll>
+Elder "No, I can sense that my time has come to an end. Don't worry, I finished the potion. It's on the bookshelf behind me. I want you to have it."<scroll>
 <player> "What am I supposed to do with it?"<scroll>
 Elder "Just throw the whole bottle at the bandit boss and save our girls... I'll tarry no longer on this mortal plane..."
 <player> "Noooo!!"
@@ -1804,14 +1806,14 @@ King "Well met, <player>. Zafan has told me much about you."<scroll>
 <player> "Your Majesty, actually, my father passed away last night from injuries he suffered while fulfilling his duties to you. Now that I've had some time to process, I've come to ask if I can work for you in order to avenge his death."
 King "Zafan is dead?! Good grief... He was supposed to be investigating the cause of the unrest in the world. I never thought it would end like this... Sorry, kid."<scroll>
 <player> "Your Majesty, please let me continue my father's work!"<scroll>
-King "Patience! I have another task for you to complete first. Queen Erin has taken ill recently and suddenly, and nothing seems to be helping. There is a forest south of here where you can find Holy Herbs that can cure any ailment. With a heavy heart do I ask you to bring me a Holy Herb."<scroll>
+King "Patience! I have another task for you to complete first. Queen Erin has taken ill recently and suddenly, and nothing seems to be helping. There is a forest south of here where you can find Mysterious Herbs that can cure any ailment. With a heavy heart do I ask you to bring me a Mysterious Herb."<scroll>
 <player> "I understand. I will not fail you."
 
 
 {"prefix":"0x7","ptr_pos":164546,"str_pos":165432,"ptr_hex":"282C2","str_hex":"28638","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 王「必ず楽草をとってきてくれ。たの<br>
 # んだぞ。」
-King "You must bring the Holy Herbs. I'm counting on you."
+King "You must bring the Mysterious Herbs. I'm counting on you."
 
 
 {"prefix":"0x7","ptr_pos":164554,"str_pos":165462,"ptr_hex":"282CA","str_hex":"28656","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -1833,7 +1835,7 @@ King "You must bring the Holy Herbs. I'm counting on you."
 King "Have you recovered from your wounds?"<scroll>
 <player> "Yes, Your Majesty."<scroll>
 King "Well, Erin kicked it. Thanks for your help."<scroll>
-<player> "Oh, God!! Why?! I beg your forgiveness. If only I had gotten the Holy Herb faster..."<scroll>
+<player> "Oh, God!! Why?! I beg your forgiveness. If only I had gotten the Mysterious Herb faster..."<scroll>
 King "Don't beat yourself up too much. The Queen always prayed for our country to become peaceful once more. In order to do that, we must investigate the cause of the unrest. Will you carry on where your father failed?"<scroll>
 <player> "Certainly, Your Majesty! I am yours to command!"<scroll>
 King "Great, you'd best get to it, then. Here's some pocket change and a weapon to get you started."<scroll>
@@ -2077,7 +2079,7 @@ Assassin "Heh, it's nothing personal. I'm just following orders, so you might as
 # もらう。」<scroll><player>「その様な事をさせる<br>
 # ものか！！」
 <player> "Halt! If you want to get to the Prince, you'll have to get through us!"<scroll>
-Assassin "Then I'll be going through you first"<scroll>
+Assassin "Then I'll be going through you first."<scroll>
 <player> "Over our dead bodies!"
 
 
@@ -2271,7 +2273,7 @@ I wonder how the townsfolk are doing. I'm worried about them.
 # うでわのふしぎな力をふうじる方法<br>
 # をおじいちゃんなら知っていると<br>
 # おもうわ。」
-<npc1> "The Boss has a mysterious, magical bracelet, but I think my grandfather knows how to dispell enchantments."
+<npc1> "The Boss has a mysterious, magical bracelet, but I think my grandfather knows how to dispel enchantments."
 
 
 {"prefix":"0x7","ptr_pos":170932,"str_pos":170946,"ptr_hex":"29BB4","str_hex":"29BC2","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -2371,6 +2373,7 @@ This is a bank. You can store items here.
 # 聞きました。<br>
 # 手つだってくれますね。」<scroll>リヒエル「もちろんだ。妹のためにも<br>
 # 必ず手に入れてみせる。」
+# breakcheck forgive th//e//church for this
 Lichiel "<npc1>! What happened?!"<scroll>
 <player> "Whose fault do you think this is?!"<scroll>
 Lichiel "I don't know, whose fault is it?!"<scroll>
@@ -2445,6 +2448,7 @@ Child "Dude, chill out, how thirsty are you?"
 # すぐに兄さんをさがしに行きましょ<br>
 # う。」<scroll><player>「どうか，ぶじでいて<br>
 # くれたらよいのだが。」
+# breakcheck .. antido//te//for you.
 <player> "Good morning. Feel better?"<scroll>
 <npc1> "Yes, I think I'm fine now."
 .......
@@ -2456,8 +2460,8 @@ I can't wait to see my brother again."<scroll>
 
 {"prefix":"0x7","ptr_pos":172358,"str_pos":172666,"ptr_hex":"2A146","str_hex":"2A27A","table":"normal","repoint":false,"ptr_type":"absolute"}
 # う―ん。う―ん。
-# tlcheck
-Hmm.. hmm...
+# lilith lying poisoned on bed
+Murmur.. mm...
 
 
 {"prefix":"0x7","ptr_pos":172366,"str_pos":172676,"ptr_hex":"2A14E","str_hex":"2A284","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -2472,7 +2476,7 @@ Hmm.. hmm...
 <player> "<npc1>, drink this. It will heal you."<scroll>
 <npc1> "......"<scroll>
 <player> "Hey, you're looking better already."<scroll>
-<npc1>"What happened to me?"<scroll>
+<npc1> "What happened to me?"<scroll>
 <player> "You drank some poison and passed out. I'll explain everything later. You should rest now."
 
 
@@ -2640,6 +2644,7 @@ Cardinal "You two will meet the same fate. There is no escape. Bishops, to me!"
 # かい。」<scroll><npc1>「ええ，あなたとなら<br>
 # それもたえられるわ。おねがいつれ<br>
 # てって。」
+# breakcheck, brother is g//one.//Finding
 <player> "It's unfortunate, but your brother is gone. Finding him was the reason you joined my party, so now what are you going to do?"<scroll>
 <npc1> "It's true that I started this journey to find my brother, but things have changed."<scroll>
 <player> "What's different now?"<scroll>
@@ -2689,6 +2694,7 @@ Lichiel "<player>. Take the medicine and don't look back! Take care of <npc1> fo
 # いっしょにここを出ましょう。」<scroll>老人「いいや。わしにはもうそんな<br>
 # 元気はない。お前さんたち２人で<br>
 # 行くがよい。」
+# breakcheck this line breaks weirdly too
 Old man "You want to get out of jail?"<scroll>
 <player> "Duh??"<scroll>
 Old man "This cell is connected to the next one over. If you inspect the walls over there, you should find a way out."<scroll>
@@ -2731,12 +2737,14 @@ I wonder what kind of life I could have on the outside...
 
 {"prefix":"0x7","ptr_pos":175914,"str_pos":176868,"ptr_hex":"2AF2A","str_hex":"2B2E4","table":"normal","repoint":false,"ptr_type":"absolute"}
 # う―ん。う―ん。
-Hum de dum.
+# lilith lying poisoned on prison floor
+Ugh.. urgh...
 
 
 {"prefix":"0x7","ptr_pos":175938,"str_pos":177190,"ptr_hex":"2AF42","str_hex":"2B426","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 何をしている早く行け。
-What are you doing? Be free!
+# lichiel staying behind to let arnath escape
+What are you doing? Just leave!
 
 
 {"prefix":"0x7","ptr_pos":175946,"str_pos":177890,"ptr_hex":"2AF4A","str_hex":"2B6E2","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -2785,7 +2793,7 @@ I have Excalibur, lookit! You think it's a fake? You're trying to trick me, aren
 # きている。だれにきまるのだろう。<br>
 # この様な事はなくさなければならな<br>
 # いとおもっているのだが・・・。」
-Cline "Soon another girl will be sacrified to the monster. I wonder who it will be this year. If only there were another way..."
+Cline "Soon another girl will be sacrificed to the monster. I wonder who it will be this year. If only there were another way..."
 
 
 {"prefix":"0x7","ptr_pos":178668,"str_pos":179032,"ptr_hex":"2B9EC","str_hex":"2BB58","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -3603,7 +3611,7 @@ I got a little too excited and just bought this thing... I can't even use it.
 # いわね。」
 Cline "Well, if it isn't <player> and <npc1>. Greetings to you both. How is your journey going? You seem as thick as thieves."<scroll>
 <player> "Um, we're not that thick, are we? Heh..."<scroll>
-<npc1> "You're so embarrassing sometimes, <player>"
+<npc1> "You're so embarrassing sometimes, <player>."
 
 
 {"prefix":"0x7","ptr_pos":190024,"str_pos":190230,"ptr_hex":"2E648","str_hex":"2E716","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4468,7 +4476,7 @@ Freya "I can't afford to let you leave now that you've uncovered my secret. Prep
 # ゆだんはできないな。」
 Freya "I am defeated. I wanted power so badly I made a deal with the devil, but I still failed. Maybe this is for the best."<scroll>
 <player> "Queen Freya..."<scroll>
-Abel "Freya was a bit tragic, wasn't she?<scroll>
+Abel "Freya was a bit tragic, wasn't she?"<scroll>
 <player> "I guess, but she said she made a deal with the devil. The Demon Lord could be responsible for all of this. Let's keep our guard up as we continue our journey."
 
 
@@ -4782,7 +4790,7 @@ Boss "You fool! I'm just a pawn. Others from the demon world will come to take m
 
 {"prefix":"0x7","ptr_pos":208966,"str_pos":209024,"ptr_hex":"33046","str_hex":"33080","table":"normal","repoint":false,"ptr_type":"absolute"}
 # ここはラビの村です。
-This is Labi.
+This is Rabi Village.
 
 
 {"prefix":"0x7","ptr_pos":208974,"str_pos":209038,"ptr_hex":"3304E","str_hex":"3308E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4836,7 +4844,7 @@ Only men are born in this town. We don't have any women here.
 # どうくつに，怪物がすみついてしま<br>
 # ったらしい。だれか怪物をたおして<br>
 # くれないものだろうか。
-There's only one way to get to Labi, but the cave is full of monsters now. If only someone would defeat the monsters for us...
+There's only one way to get to Rabi Village, but the cave is full of monsters now. If only someone would defeat the monsters for us...
 
 
 {"prefix":"0x7","ptr_pos":209512,"str_pos":209714,"ptr_hex":"33268","str_hex":"33332","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4849,7 +4857,7 @@ I like to look at the ocean. I've seen a strange ship going from south to north 
 {"prefix":"0x7","ptr_pos":209528,"str_pos":209688,"ptr_hex":"33278","str_hex":"33318","table":"normal","repoint":false,"ptr_type":"absolute"}
 # こわくて，ラビの村へあそびにいけ<br>
 # ないよ。
-It's too scary to go to Labi village anymore.
+It's too scary to go to Rabi Village village anymore.
 
 
 {"prefix":"0x7","ptr_pos":209536,"str_pos":209766,"ptr_hex":"33280","str_hex":"33366","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5452,7 +5460,7 @@ Call me Broseph from now on!
 {"prefix":"0x7","ptr_pos":217944,"str_pos":217950,"ptr_hex":"35358","str_hex":"3535E","table":"normal","repoint":false,"ptr_type":"absolute"}
 # オイラにエリクサ―をおごっておく<br>
 # れ。
-Please, hook me up with an elixer.
+Please, hook me up with an elixir.
 
 
 {"prefix":"0x7","ptr_pos":218058,"str_pos":218126,"ptr_hex":"353CA","str_hex":"3540E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7463,7 +7471,7 @@ The demon gate is sealed with 4 locks. There's one key in each castle.
 # ダメ―ジをあたえる事はかなわん。<br>
 # しかし，「ていおうのけん」もつ者<br>
 # あればそのたいしょうではない。
-There's a demon armor duke with nearly impenetrable armor. The only way to weaken it is with the Emperor's Sword.
+There's a demon armor duke with nearly impenetrable armor. The only way to weaken it is with the Tyrant's Sword.
 
 
 {"prefix":"0x7","ptr_pos":254502,"str_pos":254508,"ptr_hex":"3E226","str_hex":"3E22C","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7472,7 +7480,7 @@ There's a demon armor duke with nearly impenetrable armor. The only way to weake
 # 事はかなわん。しかし，「ていおう<br>
 # のかぶと」かぶりし者あればその<br>
 # たいしょうではない。
-There's a demon magic duke with nearly limitless magical powers. However, he becomes weaker when fighting someone wearing the Emperor's Helm.
+There's a demon magic duke with nearly limitless magical powers. However, he becomes weaker when fighting someone wearing the Tyrant's Helm.
 
 
 {"prefix":"0x7","ptr_pos":254814,"str_pos":254820,"ptr_hex":"3E35E","str_hex":"3E364","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7493,7 +7501,7 @@ There are hidden switches in some pillars in the demon world.
 # はかりしれん。しかし，「ていおう<br>
 # のよろい」きる者あれば，そのたい<br>
 # しょうではない。
-There's a demon power duke with nearly limitless strength. However, 
+There's a demon power duke with nearly limitless strength. However, if you have the Tyrant's Armor, you can withstand his attacks.
 
 
 {"prefix":"0x7","ptr_pos":256636,"str_pos":256642,"ptr_hex":"3EA7C","str_hex":"3EA82","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7508,7 +7516,7 @@ There are six pillars in the demon world.
 # る事はかなわん。しかし，「ていお<br>
 # うのたて」もつ者あればそのたいし<br>
 # ょうではない。
-There's a demon sage duke with nearly impenetrable magic defense. However, using the Emperor's Shield will make him more vulnerable.
+There's a demon sage duke with nearly impenetrable magic defense. However, using the Tyrant's Shield will make him more vulnerable.
 
 
 {"prefix":"0x7","ptr_pos":257330,"str_pos":257400,"ptr_hex":"3ED32","str_hex":"3ED78","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7542,7 +7550,7 @@ There's a magic sphere in the center of the demon world.
 # おまえたちの武器ではわたしに，<br>
 # かすりきずひとつつけることができ<br>
 # ないだろう。」
-Armor Duke "I'm Duke Agalialept. I heard about some idiots coming here from the human world, but I didn't expect you to look so stupid. You want to fight me with your dinky little weapons? You're about 10,000 light years away from hurting me."
+Armor Duke "I'm Duke Agaliarept. I heard about some idiots coming here from the human world, but I didn't expect you to look so stupid. You want to fight me with your dinky little weapons? You're about 10,000 light years away from hurting me."
 
 
 {"prefix":"0x7","ptr_pos":258416,"str_pos":258718,"ptr_hex":"3F170","str_hex":"3F29E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7566,7 +7574,7 @@ The demon gate will open when all six pillar switches have been pushed.
 # なすがたのまま，あの世へおくって<br>
 # やるわ。では，いくぞ！！くらえ，<br>
 # ハイパ―マインドバスタ―！！」
-Magic Duke "I am Duke Astaros. You are deeply misguided if you think you can defeat the demon emperor. You don't even look like you can handle my magic attacks. I'll send you to the afterlife with your spirits in shambles. Eat my Hyper Mind Buster!!"
+Magic Duke "I am Duke Astaroth. You are deeply misguided if you think you can defeat the demon emperor. You don't even look like you can handle my magic attacks. I'll send you to the afterlife with your spirits in shambles. Eat my Hyper Mind Buster!!"
 
 
 {"prefix":"0x7","ptr_pos":259650,"str_pos":260028,"ptr_hex":"3F642","str_hex":"3F7BC","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7609,7 +7617,7 @@ You got the magic key.
 # だったなんて，びっくりしたな。」<scroll><player>「よし，<npc1>。<br>
 # 帝王をたおしにいこう！！」
 <player> "<npc1>, you're an angel, too??"<scroll>
-<npc1> "Yes, my memories were suppressed, but they're coming back now. I was born in heaven, but it was my job to live on Earth among the humans.<scroll>
+<npc1> "Yes, my memories were suppressed, but they're coming back now. I was born in heaven, but it was my job to live on Earth among the humans."<scroll>
 <player> "Oh, okay, that makes sense."<scroll>
 <npc9> "What were the odds that <npc1> was an angel, too? I mean, really?"<scroll>
 <player> "Alright, <npc1>, let's go take out the demon emperor!"
@@ -8016,7 +8024,7 @@ Thus <player> lost his father, Zafan, and <player>'s own journey began.
 # おれがつれもどす。」<scroll>ナンナ「わかったわ，わたしはここで<br>
 # まってる。気をつけてね。」<scroll><npc1>「<player>とうぜん<br>
 # わたしはいっしょに行くわよ。」<scroll><player>「ああ，わかってる。」
-<player>, you wait here. I'll go and find Slay.<scroll>
+<player> "You wait here. I'll go and find Slay.<scroll>
 Nana "Okay, I'll stay here. Be careful."<scroll>
 <npc1> "I'm not just gonna sit around, you know, right, <player>?"
 <player> "Yeah yeah, I know."
@@ -8460,7 +8468,7 @@ What would you like to sell?
 {"prefix":"0x18a6","ptr_pos":136532,"str_pos":137396,"ptr_hex":"21554","str_hex":"218B4","table":"normal","repoint":false,"ptr_type":"absolute"}
 # <pc_itm>ですと<val>G<br>
 # ですが，よろしいですか？
-I best price I can give for <pc_itm> is <val>G. Would you like to sell it?
+The best price I can give for <pc_itm> is <val>G. Would you like to sell it?
 
 
 {"prefix":"0x18b4","ptr_pos":136536,"str_pos":137418,"ptr_hex":"21558","str_hex":"218CA","table":"normal","repoint":false,"ptr_type":"absolute"}

@@ -731,44 +731,44 @@ Hormone Shovel
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 180, "prefix": null}
 # <spell>ひのたま
-<spell> Light Ball
+<spell>Light Ball
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 181, "prefix": null}
 # <spell>こおりのたま
-<spell> Weave Ball
+<spell>Weave Ball
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 182, "prefix": null}
 # <spell>て゛んけ゛き
-<spell> Lightning
+<spell>Lightning
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 183, "prefix": null}
 # <spell>せいしん
-<spell> Earthquake
+<spell>Earthquake
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 184, "prefix": null}
 # <spell>つらら
-<spell> Icicle
+<spell>Icicle
 
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 185, "prefix": null}
 # <spell>たんけん
-<spell> Explore
+<spell>Dagger
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 186, "prefix": null}
 # <spell>ひは゛しら
-<spell> Fire Pillar
+<spell>Fire Pillar
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 187, "prefix": null}
 # <spell>いかす゛ち
-<spell> Thunderbolt
+<spell>Thunderbolt
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 188, "prefix": null}
 # <spell>しんくう
-<spell> Vacuum
+<spell>Vacuum
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 189, "prefix": null}
 # <spell>きゅうすい
-<spell> Absorb
+<spell>Absorb
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 190, "prefix": null}
 # ていおうのけん
