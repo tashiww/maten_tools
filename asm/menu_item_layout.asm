@@ -108,16 +108,28 @@ GivePartyLabels	macro
 
 ; party select listing two column printing
  org $a318
-	jsr	$68826
+	jsr	TwoColumnPartyList	
 
 ; $a27e checks for party ids < $e (guest party members) and skips drawing them in the "give" party selection menu
 ; it's branching somewhere broken atm.. it's trying to go to the addq #1, d6 
  org $a282
-	bcs.w	$a31e	; skip the addq and go straight to DBF? seems to work
+	bcs.w	$a318	; added guest party check to my routine
 	
 	
  org $68826
-	btst	#$1, d3
+TwoColumnPartyList:
+	btst.l	#0, d3	; i think this means "give or drop" menu
+	beq	CheckPartyStat	
+	CMPI.b	#$1, d2	; arnath check
+	beq	CheckPartyStat	
+	CMPI.b	#$2, d2	; lilith check
+	beq	CheckPartyStat	
+	CMPI.b	#$9, d2	; kamil check
+	beq	CheckPartyStat	
+	cmpi.b	#$e, d2	; guest member check
+	bcs.w	IncrementNoPrint
+CheckPartyStat:
+	btst	#$1, d3	
 	bne	NormalIncrement
  	addi.b	#$c, d0
 	btst	#$0, d5
@@ -127,7 +139,9 @@ NormalIncrement:
 	addq	#$1, d1
 EvenOddPrint:
 	addq	#$1, d5
-	addq	#$1, d6
+IncrementNoPrint:
+	addq	#$1, d6	; this was in my subroutine but guest members need to increment this without printing
+
 	rts
 	
 	

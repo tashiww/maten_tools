@@ -296,32 +296,45 @@
 0000847C                            
 0000847C                            ; party select listing two column printing
 0000847C                             org $a318
-0000A318 4EB9 0006 8826             	jsr	$68826
+0000A318 4EB9 0000 0000             	jsr	TwoColumnPartyList	
 0000A31E                            
-0000A31E                            ; $a27e checks for party ids < $e and skips drawing them in the "give" party selection menu
-0000A31E                            ; it's branching somewhere broken atm.. it's trying to go to the addq #1, d6 ...
+0000A31E                            ; $a27e checks for party ids < $e (guest party members) and skips drawing them in the "give" party selection menu
+0000A31E                            ; it's branching somewhere broken atm.. it's trying to go to the addq #1, d6 
 0000A31E                             org $a282
-0000A282 6500 009A                  	bcs.w	$a31e	; skip the addq ?
+0000A282 6500 0094                  	bcs.w	$a318	; skip the addq and go straight to DBF? seems to work
 0000A286                            	
 0000A286                            	
-0000A286                            	; the party hp/mp menu is borked, maybe do another btst, for 1 or 2? to skip to evenoddprint <- implemented 
 0000A286                             org $68826
-00068826 0803 0001                  	btst	#$1, d3
-0006882A 6600 0000                  	bne	NormalIncrement
-0006882E 0600 000C                   	addi.b	#$c, d0
-00068832 0805 0000                  	btst	#$0, d5
-00068836 6700 0000                  	beq	EvenOddPrint
-0006883A 0400 0018                  	subi.b	#$18, d0
-0006883E                            NormalIncrement:
-0006883E 5241                       	addq	#$1, d1
-00068840                            EvenOddPrint:
-00068840 5245                       	addq	#$1, d5
-00068842 5246                       	addq	#$1, d6
-00068844 4E75                       	rts
-00068846                            	
-00068846                            	
-00068846                            	
-00068846                             org $a326
+00068826                            TwoColumnPartyList:
+00068826 0803 0000                  	btst.l	#0, d3	; i think this means "give or drop" menu
+0006882A 6700 0000                  	beq	CheckPartyStat	
+0006882E 0C02 0001                  	CMPI.b	#$1, d2	; arnath check
+00068832 6700 0000                  	beq	CheckPartyStat	
+00068836 0C02 0002                  	CMPI.b	#$2, d2	; lilith check
+0006883A 6700 0000                  	beq	CheckPartyStat	
+0006883E 0C02 0009                  	CMPI.b	#$9, d2	; kamil check
+00068842 6700 0000                  	beq	CheckPartyStat	
+00068846 0C02 000E                  	cmpi.b	#$e, d2	; guest member check
+0006884A 6500 0000                  	bcs.w	IncrementNoPrint
+0006884E                            CheckPartyStat:
+0006884E 0803 0001                  	btst	#$1, d3	
+00068852 6600 0000                  	bne	NormalIncrement
+00068856 0600 000C                   	addi.b	#$c, d0
+0006885A 0805 0000                  	btst	#$0, d5
+0006885E 6700 0000                  	beq	EvenOddPrint
+00068862 0400 0018                  	subi.b	#$18, d0
+00068866                            NormalIncrement:
+00068866 5241                       	addq	#$1, d1
+00068868                            EvenOddPrint:
+00068868 5245                       	addq	#$1, d5
+0006886A                            IncrementNoPrint:
+0006886A 5246                       	addq	#$1, d6	; this was in my subroutine but guest members need to increment this without printing
+0006886C                            
+0006886C 4E75                       	rts
+0006886E                            	
+0006886E                            	
+0006886E                            	
+0006886E                             org $a326
 0000A326                             ; party select window for drop/give submenus item submenu layout control
 0000A326 4EB9 0006 87C6             	jsr $687c6
 0000A32C                            	WHILE *<$a330
