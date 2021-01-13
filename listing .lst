@@ -297,10 +297,15 @@
 0000847C                            ; party select listing two column printing
 0000847C                             org $a318
 0000A318 4EB9 0006 8826             	jsr	$68826
-0000A31E                            	;addq	#1, d1	; changed this to 1 for single spacing
-0000A31E                            	
-0000A31E                            	; the party hp/mp menu is borked, maybe do another btst, for 1 or 2? to skip to evenoddprint <- implemented 
-0000A31E                             org $68826
+0000A31E                            
+0000A31E                            ; $a27e checks for party ids < $e and skips drawing them in the "give" party selection menu
+0000A31E                            ; it's branching somewhere broken atm.. it's trying to go to the addq #1, d6 ...
+0000A31E                             org $a282
+0000A282 6500 009A                  	bcs.w	$a31e	; skip the addq ?
+0000A286                            	
+0000A286                            	
+0000A286                            	; the party hp/mp menu is borked, maybe do another btst, for 1 or 2? to skip to evenoddprint <- implemented 
+0000A286                             org $68826
 00068826 0803 0001                  	btst	#$1, d3
 0006882A 6600 0000                  	bne	NormalIncrement
 0006882E 0600 000C                   	addi.b	#$c, d0

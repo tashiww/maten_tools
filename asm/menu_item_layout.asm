@@ -109,9 +109,13 @@ GivePartyLabels	macro
 ; party select listing two column printing
  org $a318
 	jsr	$68826
-	;addq	#1, d1	; changed this to 1 for single spacing
+
+; $a27e checks for party ids < $e (guest party members) and skips drawing them in the "give" party selection menu
+; it's branching somewhere broken atm.. it's trying to go to the addq #1, d6 
+ org $a282
+	bcs.w	$a31e	; skip the addq and go straight to DBF? seems to work
 	
-	; the party hp/mp menu is borked, maybe do another btst, for 1 or 2? to skip to evenoddprint <- implemented 
+	
  org $68826
 	btst	#$1, d3
 	bne	NormalIncrement

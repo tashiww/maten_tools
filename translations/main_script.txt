@@ -876,7 +876,8 @@ Is it just my imagination or is Granny off her rocker?
 # ゅう」という教団がかつどうを行な<br>
 # っているらしいけど，ほんとうに<br>
 # ふこうな人がすくわれるのかしら。
-The Happyology church is active here in Alf. I wonder if they really help people, though.
+#breakcheck hmm no 's here still weird break though
+The Happyology church is active in Alf. I wonder if they really help people, though.
 
 
 {"prefix":"0x7","ptr_pos":151352,"str_pos":151714,"ptr_hex":"24F38","str_hex":"250A2","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -2784,7 +2785,7 @@ I just want a simple life.
 # えっ，これちがうのかい？<br>
 # そんな事いって，とっちゃうきだろ<br>
 # だまされないぞ。
-I have Excalibur, lookit! You think it's a fake? You're trying to trick me, aren't you?
+I have Excalibur, lookit! You think it's a fake? As if, you just want it for yourself!
 
 
 {"prefix":"0x7","ptr_pos":178660,"str_pos":178796,"ptr_hex":"2B9E4","str_hex":"2BA6C","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6741,7 +6742,7 @@ Selkie "What madness is this?! <player> has been trapped inside a demon's body?"
 <npc1> "Just so, Your Majesty. Is there any way to save him?"<scroll>
 Selkie "We are familiar with but one way to return someone to their original body after being trapped in a demon's body. <player> will have to engage in a battle of wills with the demon and win his freedom."<scroll>
 <npc9> "That's probably a piece of cake for <player>. Please, tell us what to do."<scroll>
-Selkie "Very well. You need to find Brigit and get a Spirit Ball. There is a place in Holy Lake where you can summon <player>'s spirit and store it in the Spirit Ball. Finally, you must throw the ball at the demon. After that, it's up to <player> to free himself."<scroll>
+Selkie "Very well. You need to find Bridget and get a Spirit Ball. There is a place in Holy Lake where you can summon <player>'s spirit and store it in the Spirit Ball. Finally, you must throw the ball at the demon. After that, it's up to <player> to free himself."<scroll>
 <npc1> "Thank you, Your Majesty."
 
 
