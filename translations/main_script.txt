@@ -4783,9 +4783,9 @@ Boss "You fool! I'm just a pawn. Others from the demon world will come to take m
 # <npc1>いっしょにいこう。」
 <npc1> "Good job, <player>. You got revenge for your father."<scroll>
 <player> "Yes, and revenge is sweet, but I fear another, greater evil is behind this. Peace cannot be restored to the land until we find the true leader. I think this portal will take us to another world."<scroll>
-<npc1> "Surely you can't be serious, <npc1>!"<scroll>
+<npc1> "Surely you can't be serious, <player>!"<scroll>
 <player> "Oh, but I am. I will travel worlds to find the root of all evil. You can stay here in our world."<scroll>
-<npc1> "Don't be ridiculous, <player>. I'll stay with you across any number of worlds."<scroll>
+<npc1> "Don't be ridiculous, <player>. I'll follow you across any number of worlds."<scroll>
 <player> "Alright then, let's go together."
 
 
@@ -4932,7 +4932,7 @@ Egg "Don't let him do me like that, baby."<scroll>
 
 {"prefix":"0x7","ptr_pos":210170,"str_pos":210756,"ptr_hex":"334FA","str_hex":"33744","table":"normal","repoint":false,"ptr_type":"absolute"}
 # これから魔法の書を返しに行くの。
-We need to return the magic scroll.
+I'm on my way to return a magic scroll.
 
 
 {"prefix":"0x7","ptr_pos":211040,"str_pos":211086,"ptr_hex":"33860","str_hex":"3388E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5280,7 +5280,7 @@ Nana "Really?! I knew it! Thank you. Let's blow this popsicle stand. I can help 
 
 {"prefix":"0x7","ptr_pos":214318,"str_pos":215218,"ptr_hex":"3452E","str_hex":"348B2","table":"normal","repoint":false,"ptr_type":"absolute"}
 # ナンナがなかまになった。
-Nana joined the paty.
+Nana joined the party.
 
 
 {"prefix":"0x7","ptr_pos":214344,"str_pos":215306,"ptr_hex":"34548","str_hex":"3490A","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5461,7 +5461,7 @@ Call me Broseph from now on!
 {"prefix":"0x7","ptr_pos":217944,"str_pos":217950,"ptr_hex":"35358","str_hex":"3535E","table":"normal","repoint":false,"ptr_type":"absolute"}
 # オイラにエリクサ―をおごっておく<br>
 # れ。
-Please, hook me up with an elixir.
+I'm jonesing for an elixir.
 
 
 {"prefix":"0x7","ptr_pos":218058,"str_pos":218126,"ptr_hex":"353CA","str_hex":"3540E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5527,7 +5527,8 @@ You're going to hatch into an awesome dragon, right?
 # 知ってる？それを海で使うとすごい<br>
 # 事がおこるらしいの。
 # tlcheck
-You "Do you know about the Raging Sea Pot? If you use it at sea, something crazy will happen."
+# a woman in Dran says this to you ..
+Do you know about the Raging Sea Pot? If you use it at sea, something crazy will happen.
 
 
 {"prefix":"0x7","ptr_pos":219116,"str_pos":219154,"ptr_hex":"357EC","str_hex":"35812","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6797,7 +6798,7 @@ What are you doing here? Seek an audience with the Queen if that's your wish.
 {"prefix":"0x7","ptr_pos":238262,"str_pos":238540,"ptr_hex":"3A2B6","str_hex":"3A3CC","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 怪物「ウガ―，ウガ―！！」<scroll>スレイ「こいつだな。<br>
 # <player>，行くぞ！！」<scroll><player>「まかせてください！」
-Monster "Grrr bark!"<scroll>
+Monster "Grrr bark bark!"<scroll>
 Slay "This must be him. Let's take him out, <player>!"<scroll>
 <player> "Got it!"
 

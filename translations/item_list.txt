@@ -100,7 +100,7 @@ Drill Horn
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 25, "prefix": null}
 # なまりのつふ゛て
-Lead Balls
+Lead Gloves
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 26, "prefix": null}
 # とくしゅえき
@@ -278,7 +278,7 @@ Dark Garments
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 68, "prefix": null}
 # しんひ゜のマント
-Mystery Cape
+Mysterious Cape
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 69, "prefix": null}
 # あやしいころも
@@ -598,7 +598,7 @@ Winged Boots
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 147, "prefix": null}
 # フリック゛のゆひ゛わ
-Frigg"s Ring
+Frigg's Ring
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 148, "prefix": null}
 # オーク゛のゆひ゛わ
@@ -715,7 +715,7 @@ Hormone Shovel
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 176, "prefix": null}
 # そせいのしょ
-<spell>Revive
+<spell>Raise
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 177, "prefix": null}
 # ふゆうのしょ

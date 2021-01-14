@@ -38,6 +38,7 @@ Caped Skeleton
 {"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 9, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
 # カ゛ルサ゛ラート゛
 # furry guy with staff?
+# boss of first tower, but there might be 2 of him?
 Galzalard
 
 {"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 10, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
@@ -48,11 +49,12 @@ Bigly Baloo
 
 {"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 11, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
 # フレイヤ
-Freyja
+Freya
 
 
 {"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 12, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
 # マルハ゛ス
+# syles maiden eating monster
 Malbas
 
 
@@ -249,7 +251,7 @@ Skull Crew
 
 {"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 60, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
 # レット゛ワーム
-Red Worm
+Red Snake
 
 {"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 61, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
 # テ゛ーウ
@@ -411,7 +413,7 @@ Bat
 
 {"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 99, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
 # シュロフ゛
-Syrup
+Shelob
 
 {"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 100, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
 # ころしや

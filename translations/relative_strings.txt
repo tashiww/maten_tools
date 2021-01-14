@@ -762,7 +762,11 @@ Dragon "Thank you both. I finally hatched. As my parents, why don't you give me 
 
 {"ptr_pos": 74562, "pc_hex": "0x12342", "str_pos": 74692, "abs_offset_hex": "0x123c4", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # ドラゴン「<npc9>か。<br> とっても，いい名前だね。どうも<br> ありがとう！！<br> さてと。２人とも，これからはぼく<br> がいるからもうあんしんだよ。」<scroll><npc1>「えっ，どういう事？」<scroll><npc9>「ぼくも，いっしょに旅<br> をするという事さ。」<scroll><player>「何を考えてるんだ。<br> どうなっても知らんぞ。」<scroll><npc9>「まあ，大船にのった<br> 気持ちでいてくれよ。」<scroll><npc1>「これからよろしくね，<br> <npc9>。」
-Dragon "<npc9>? What a beautiful name. Thank you soooo much. From now on, you can leave things to me.<scroll><npc1> "Err, what?"<scroll><npc9> "I'm going to travel with you from now on."<scroll><player> "What the heck? Okay, but don't come crying to me if you get killed."<scroll><npc> "Hey, have some faith here."<scroll><npc1>"I look forward to working with you, <npc9>."
+Dragon "<npc9>? What a beautiful name. Thank you soooo much. From now on, you can leave things to me.<scroll>
+<npc1> "Err, what?"<scroll><npc9> "I'm going to travel with you from now on."<scroll>
+<player> "What the heck? Okay, but don't come crying to me if you get killed."<scroll>
+<npc9> "Hey, have some faith here."<scroll>
+<npc1> "I look forward to working with you, <npc9>."
 
 {"ptr_pos": 76148, "pc_hex": "0x12974", "str_pos": 76162, "abs_offset_hex": "0x12982", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # アガリアレプトは本来の防御力を<br>はっき出来なくなった。
