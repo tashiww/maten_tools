@@ -566,7 +566,7 @@ Mouse Whistle
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 139, "prefix": null}
 # エリクサー
-Elixer
+Elixir
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 140, "prefix": null}
 # ようせいのきのみ
@@ -666,32 +666,32 @@ Hormone Shovel
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 164, "prefix": null}
 # はと゛うのしょ
-<spell>Pulse
+<spell>Energy Blast
 
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 165, "prefix": null}
 # きは゛らしのしょ
-<spell>Relax
+<spell>Refresh
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 166, "prefix": null}
 # かいふくのしょ
-<spell>Recovery
+<spell>Healerism
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 167, "prefix": null}
 # ひしょうのしょ
-<spell>Retreat
+<spell>Return
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 168, "prefix": null}
 # おんけいのしょ
-<spell>Blessing
+<spell>More Heal
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 169, "prefix": null}
 # け゛と゛くのしょ
-<spell>Antidote
+<spell>Cure
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 170, "prefix": null}
 # ちゆのしょ
-<spell>Cure
+<spell>Somehealing
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 171, "prefix": null}
 # ふふ゛きのしょ

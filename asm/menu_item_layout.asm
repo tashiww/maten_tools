@@ -531,7 +531,7 @@ draw_label_8x8:
  org $00005C80
 	MOVEQ	#$8, D0	; x offset
 	MOVEQ	#4, D1	; y offset
-	MOVEQ	#$16, D2	; window width, this breaks above $19 for some reason?
+	MOVEQ	#$18, D2	; window width, this breaks above $19 for some reason?
 	MOVEQ	#$a, D3 ; window height probably
 	moveq #$43, d4
 	bsr.w	draw_background_window
@@ -550,7 +550,7 @@ loc_00005C9E:
 	MOVEQ	#$9, D0
 	BSR.w	get_item_offset
 	BSR.w	write_label_8x8
-	MOVEQ	#$00000017, D0 ; probably x offset of price?
+	MOVEQ	#$00000019, D0 ; probably x offset of price?
 	CLR.l	D2
 	MOVE.w	$2(A4,D5.w), D2
 	BNE.b	loc_00005CBE
@@ -573,7 +573,7 @@ loc_00005CD6:
 	SUBQ.w	#1, D6
 	MOVEQ	#$9, D0	
 	MOVEQ	#5, D1	
-	MOVEQ	#$13, D2	; highlight width
+	MOVEQ	#$f, D2	; highlight width
 	MOVEQ	#0, D3	; highlight height
 	MOVEQ	#1, D4
 	MOVEQ	#6, D5
@@ -1228,6 +1228,9 @@ draw_substats:
 ; # Creation Date:   2021-1-3 14:24:36
 ; # Analysis Region: 0x0000D894 - 0x0000DAF8
 ; ########################################################################################
+
+; TODO: in-battle item text needs to be moved up one row
+; TODO: enemy status debuffs in enemy window
 
 window_tile_width	equr	d2	; for window drawing routines
 window_tile_height	equr	d3	; 

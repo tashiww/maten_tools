@@ -301,7 +301,7 @@
 0000A31E                            ; $a27e checks for party ids < $e (guest party members) and skips drawing them in the "give" party selection menu
 0000A31E                            ; it's branching somewhere broken atm.. it's trying to go to the addq #1, d6 
 0000A31E                             org $a282
-0000A282 6500 0094                  	bcs.w	$a318	; skip the addq and go straight to DBF? seems to work
+0000A282 6500 0094                  	bcs.w	$a318	; added guest party check to my routine
 0000A286                            	
 0000A286                            	
 0000A286                             org $68826
@@ -719,7 +719,7 @@
 00005C1A                             org $00005C80
 00005C80 7008                       	MOVEQ	#$8, D0	; x offset
 00005C82 7204                       	MOVEQ	#4, D1	; y offset
-00005C84 7416                       	MOVEQ	#$16, D2	; window width, this breaks above $19 for some reason?
+00005C84 7418                       	MOVEQ	#$18, D2	; window width, this breaks above $19 for some reason?
 00005C86 760A                       	MOVEQ	#$a, D3 ; window height probably
 00005C88 7843                       	moveq #$43, d4
 00005C8A 6100 D64A                  	bsr.w	draw_background_window
@@ -738,7 +738,7 @@
 00005CA4 7009                       	MOVEQ	#$9, D0
 00005CA6 6100 47B0                  	BSR.w	get_item_offset
 00005CAA 6100 D97C                  	BSR.w	write_label_8x8
-00005CAE 7017                       	MOVEQ	#$00000017, D0 ; probably x offset of price?
+00005CAE 7019                       	MOVEQ	#$00000019, D0 ; probably x offset of price?
 00005CB0 4282                       	CLR.l	D2
 00005CB2 3434 5002                  	MOVE.w	$2(A4,D5.w), D2
 00005CB6 6600                       	BNE.b	loc_00005CBE
@@ -761,7 +761,7 @@
 00005CD6 5346                       	SUBQ.w	#1, D6
 00005CD8 7009                       	MOVEQ	#$9, D0	
 00005CDA 7205                       	MOVEQ	#5, D1	
-00005CDC 7413                       	MOVEQ	#$13, D2	; highlight width
+00005CDC 7410                       	MOVEQ	#$10, D2	; highlight width
 00005CDE 7600                       	MOVEQ	#0, D3	; highlight height
 00005CE0 7801                       	MOVEQ	#1, D4
 00005CE2 7A06                       	MOVEQ	#6, D5

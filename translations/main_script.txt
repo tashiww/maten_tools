@@ -323,7 +323,7 @@ This spell has been blocked.
 {"prefix":"0x41f9","ptr_pos":68188,"str_pos":128018,"ptr_hex":"10A5C","str_hex":"1F412","table":"normal","repoint":false,"ptr_type":"absolute"}
 # <pc_itm>の<br>
 # 呪文をふうじた。
-<pc_itm>'s spells were blocked.2
+<pc_itm>'s spells were blocked.
 
 
 {"prefix":"0x41f9","ptr_pos":68196,"str_pos":128032,"ptr_hex":"10A64","str_hex":"1F420","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -931,7 +931,7 @@ Thanks to Reno's sacrifice, everyone in the village can have a peaceful life for
 # に気をつけてください。」<scroll><npc1>「クレイン，お元気で」<scroll>クレイン「またどこかであうことも<br>
 # あるだろう。旅のあんぜんを<br>
 # いのっている。元気でな！！」
-Cline "<player>, thank you for your help. Now the village won't need to sacrifice any more young girls. The memories of Reno have spoiled this place for me, so I cannot bear to remain here any longer. I'm going to travel alone for awhile."<scroll>
+Cline "<player>, thank you for your help. Now the village won't need to sacrifice any more young girls. My memories of Reno have spoiled this place, so I cannot bear to remain here any longer. I'm going to travel alone for awhile."<scroll>
 <player> "Sorry we didn't save her. Take care out there."
 <npc1> "Be safe, Cline."<scroll>
 Cline "I hope our paths may cross again someday. Until then, safe travels."
@@ -984,7 +984,7 @@ I'm worried about your health, Master Isaiah.
 {"prefix":"0x7","ptr_pos":152622,"str_pos":152762,"ptr_hex":"2542E","str_hex":"254BA","table":"normal","repoint":false,"ptr_type":"absolute"}
 # シャイアスのお兄ちゃん，まだ帰っ<br>
 # てこないのかなぁ。
-Isaiah's brother isn't back yet.
+Isaiah hasn't come back yet.
 
 
 {"prefix":"0x7","ptr_pos":152630,"str_pos":152948,"ptr_hex":"25436","str_hex":"25574","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -2987,7 +2987,7 @@ Granny "This was my bad, guys."
 # ならないのです。」
 Innkeeper "How did you sleep?"<scroll>
 <player> "It's weird, I don't feel rested at all. It's not just me, everyone still feels tired."<scroll>
-Innkeeper "I figured. There's sleep demon that comes in the night and feeds on people's dreams. No one who sleeps here ever feels rested in the morning."<scroll>
+Innkeeper "I figured. There's a sleep demon that comes in the night and feeds on people's dreams. No one who sleeps here ever feels rested in the morning."<scroll>
 <player> "Jeez, can't you do something about the sleep demon?"<scroll>
 Innkeeper "We can't do anything while he's in the dream world. You'll have to pull him out of there before you can get rid of him."
 
@@ -3046,7 +3046,7 @@ Isaiah "What have you done?!"
 # だろうがな。」
 <player> "Isaiah! What's wrong?"<scroll>
 Isaiah "When I pulled the demon from the dream world, I let my guard down. My mind and spirit have been shattered. *cough cough*."<scroll>
-<val> "Isaiah!! Don't die!!"<scroll>
+<player> "Isaiah!! Don't die!!"<scroll>
 Isaiah "It's okay, I'm fine, except I'm going to die soon."
 
 
@@ -3069,7 +3069,7 @@ Isaiah "It's okay, I'm fine, except I'm going to die soon."
 # よんでください。すぐにかけつけ<br>
 # ますから。」
 <player> "Nightmare! How could you?!"<scroll>
-Nightmare "That was my bad, sorry guys. I won't kill anyone else if you let me go, though, promise."<scroll>
+Nightmare "That was my bad, sorry guys. I won't kill anyone else if you let me go, though, I promise."<scroll>
 Isaiah "Forgive him, <player>. He might be a demon, but he's not a bad guy. I believe him."<scroll>
 <player> "But Isaiah.. you're dying..."<scroll>
 Isaiah "That doesn't matter right now, just forgive Nightmare. For me."<scroll>
@@ -3471,7 +3471,7 @@ Double "You're the best. I won't forget this."
 # かいふくのみは，ラッパのマ―クの<br>
 # かいふくのみにかぎるぜ。
 # tlcheck
-Healing only works for trumpet marks
+Don't expect any old berry to heal you, okay?
 
 
 {"prefix":"0x7","ptr_pos":187404,"str_pos":188094,"ptr_hex":"2DC0C","str_hex":"2DEBE","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -3852,7 +3852,7 @@ Clergy 2 "How on Earth should I know?"
 # 何ですか，それは。」
 Founder "You two don't look like you're from around here."<scroll>
 <player> "We are adventurers, on an adventure. Who are you?"<scroll>
-Founder "I'm the founder of Happyology. My name is Bigly Balou. If you're not part of my cult, what are you doing here?"<scroll>
+Founder "I'm the founder of Happyology. My name is Bigly Baloo. If you're not part of my cult, what are you doing here?"<scroll>
 <player> "We noticed everyone in South River looked sorta brainwashed so we were trying to figure out what happened to them. That led us here."<scroll>
 Bigly "So the brainwashing is already working? That's great, we're ahead of schedule."<scroll>
 <player> "Schedule? What do you mean?"
@@ -3912,7 +3912,7 @@ Bigly "I see, that's quite a heretical way of thinking. I can't afford to let yo
 {"prefix":"0x7","ptr_pos":194046,"str_pos":194254,"ptr_hex":"2F5FE","str_hex":"2F6CE","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 私は，このはなからとれるえき体を<br>
 # ここの水にながしています。
-I'm contaminating the water supply with a toxin that this flower produces.
+I'm contaminating the water supply with a toxin produced by this flower.
 
 
 {"prefix":"0x7","ptr_pos":195546,"str_pos":195612,"ptr_hex":"2FBDA","str_hex":"2FC1C","table":"normal","repoint":false,"ptr_type":"absolute"}
