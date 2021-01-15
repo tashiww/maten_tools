@@ -271,21 +271,18 @@ menu_draw_setup:
 	MOVEM.l	A0/D7/D5/D4/D3/D2/D1/D0, -(Stack)	
 	MOVE.w	D2, D5	
 	MOVE.w	D3, D7	; d2 and d3 were set to $1 previously...
-	MOVEQ	#5, D4	; number of loops / rows of items maybe? 
+	MOVEQ	#$b, D4	; number of loops / prints 2 items per loop so $5 is fine for 16 items
 	CLR.w	D6
 	CLR.w	D3
 	
 start_drawing_row:
 
-	;LEA	blank_spaces_x9(PC), A0	; contains a string of 9 $3F bytes, empty spaces, to blank areas before writing to it
-	;BSR.w	write_label_8x8	; $3628 , checks for linebreak / dakutens.. 
+	LEA	blank_spaces_x9(PC), A0	; contains a string of 9 $3F bytes, empty spaces, to blank areas before writing to it
+	BSR.w	write_label_8x8	; $3628 , checks for linebreak / dakutens.. 
 			; branch to $367c if null byte, $3652 for either dakuten, $3664 if not <br>, 
 			; then $1dee to print to vdp. going into $1dee, d1 is y offset, d0 is x offset probably
-	NOP
-	NOP
-	NOP
-	NOP
-	NOP
+			; removing this broke bank item display
+	
 	TST.w	D7	; d7 was 1
 	BNE.b	store_item_id_leftside
 	CLR.w	D2	;Predicted (Code-scan)
@@ -314,75 +311,74 @@ draw_e_or_not_leftside:
 	BSR.w	write_label_8x8	; $3628 again, this time with $c and $e as x and y (d0, d1)
 			; and writing item name instead of spaces!
 	;ADDQ.w	#8, D0	; move over for second column, maybe?
-	ADDQ.w	#1, d1	; go down instead of over
+	SUBQ.w	#1, d0	; scoot back after the "E" offset ??
 	ADDQ.w	#1, D6	; printed item counter maybe?
-	ADDQ.w	#1, D3	; ?? both these went from $0 to $1, adding d3 to a1 gets next item in RAM
-	ADD.w	D7, D3	; new d3 == $2 after first item printed, d3 is $6 after the third item printed ..
-	BRA.b	draw_rightside
+
 no_more_items_leftside:
 	; ADDI.w	#9, D0
-	ADDQ.w	#1, D3
-	ADD.w	D7, D3
-	
-draw_rightside:
-	TST.w	D5
-	BEQ.b	back_to_leftside
-	; LEA	blank_spaces_x9(PC), A0
-	; BSR.w	write_label_8x8	
-	
-	NOP
-	NOP
-	NOP
-	NOP
-	SUBQ.w	#1, d0	; scoot back after the "e" offset
-	
-	TST.w	D7	; seems to be $01 all the time?
-	BNE.b	loc_0000A3FE
-	CLR.w	D2	;Predicted (Code-scan)
-	MOVE.b	(A1,D3.w), D2	;Predicted (Code-scan)
-	BRA.b	loc_0000A402	;Predicted (Code-scan)
-	
-loc_0000A3FE:
-	MOVE.w	(A1,D3.w), D2	; puts new item id in d2
-	
-loc_0000A402:
-	BEQ.b	no_more_items	; maybe different for left/right columns??
-	MOVE.l	D2, -(Stack)
-	BTST.l	#$0F, D2	; check if item currently equipped ($80xx)
-	BEQ.b	not_equipped_rightside
-	MOVE.w	#$E56F, D2	; vram offset for 'E' equipped mark
-	BRA.b	loc_0000A416
-not_equipped_rightside:
-	MOVE.w	#$E52F, D2	;Predicted (Code-scan)
-loc_0000A416:
-	MOVEA.w	#$C000, A0
-	JSR	write_to_vdp
-	MOVE.l	(Stack)+, D2	; gets item id back into d2
-	ADDQ.w	#1, D0	; increment x offset
-	BSR.w	get_item_offset
-	BSR.w	write_label_8x8
-	;SUBI.w	#$000A, D0	; x offset had gone up to $15, drop back to $b
-	;NOP
-	ADDQ.w	#1, D1	; go down two rows (one for dakuten, one for next row of items)
-	ADDQ.w	#1, D6	; item counter or..?
-	ADDQ.w	#1, D3
-	ADD.w	D7, D3
-	SUBI.w	#1, D0
-	BRA.b	loop_print_rows
-no_more_items:
-	ADDQ.w	#1, D3
-	ADD.w	D7, D3
-back_to_leftside:
-	 SUBI.w	#1, D0
-	; ADDQ.w	#2, D1
+	;ADDQ.w	#1, D3
+	;ADD.w	D7, D3
+	ADDQ.w	#1, d1	; go down instead of over
+	ADDQ.w	#1, D3	; ?? both these went from $0 to $1, adding d3 to a1 gets next item in RAM
+	ADD.w	D7, D3	; new d3 == $2 after first item printed, d3 is $6 after the third item printed ..
 
-	;NOP
-	;ADDQ.w	#1,	d1
 loop_print_rows:
 	DBF	D4, start_drawing_row	; d4 was set to 5 a very long time ago ... 6 rows of items? probably
 	MOVEM.l	(Stack)+, D0/D1/D2/D3/D4/D5/D7/A0
 	RTS
+		
+ ; org $A3E6 ; python needs this LEA to be here, or update the relative_strings file too...
+; draw_rightside:
+	; TST.w	D5
+	; BEQ.b	back_to_leftside	
+	; LEA	blank_spaces_x9(PC), A0	; i had this commented out too.. but needed for blanking old item names!
+	; BSR.w	write_label_8x8	
 	
+
+	
+	; TST.w	D7	; seems to be $01 all the time?
+	; BNE.b	loc_0000A3FE
+	; CLR.w	D2	;Predicted (Code-scan)
+	; MOVE.b	(A1,D3.w), D2	;Predicted (Code-scan)
+	; BRA.b	loc_0000A402	;Predicted (Code-scan)
+	
+; loc_0000A3FE:
+	; MOVE.w	(A1,D3.w), D2	; puts new item id in d2
+	
+; loc_0000A402:
+	; BEQ.b	loop_print_rows	; maybe different for left/right columns??
+	; MOVE.l	D2, -(Stack)
+	; BTST.l	#$0F, D2	; check if item currently equipped ($80xx)
+	; BEQ.b	not_equipped_rightside
+	; MOVE.w	#$E56F, D2	; vram offset for 'E' equipped mark
+	; BRA.b	loc_0000A416
+; not_equipped_rightside:
+	; MOVE.w	#$E52F, D2	;Predicted (Code-scan)
+; loc_0000A416:
+	; MOVEA.w	#$C000, A0
+	; JSR	write_to_vdp
+	; MOVE.l	(Stack)+, D2	; gets item id back into d2
+	; ADDQ.w	#1, D0	; increment x offset
+	; BSR.w	get_item_offset
+	; BSR.w	write_label_8x8
+	; ;SUBI.w	#$000A, D0	; x offset had gone up to $15, drop back to $b
+	; ADDQ.w	#1, D1	; go down two rows (one for dakuten, one for next row of items)
+	; ADDQ.w	#1, D6	; item counter or..?
+	; ADDQ.w	#1, D3
+	; ADD.w	D7, D3
+	; SUBI.w	#1, D0
+	; BRA.b	loop_print_rows
+; no_more_items:
+	; ADDQ.w	#1, D3
+	; ADD.w	D7, D3
+; back_to_leftside:
+	; ; SUBI.w	#1, D0
+	; ; ADDQ.w	#2, D1
+
+	; ;NOP
+	; ;ADDQ.w	#1,	d1
+	
+
 	
 blank_spaces_x9:
 	WHILE *<$a458
@@ -1762,6 +1758,8 @@ finished_drawing_enemies
 	moveq #$7, RowOffset
 
 ; reset label position
+; it's not erasing the old items .. do i need to redraw background window to blank it?
+; original routine LEA's 9 $3Fs from $a44e to overwrite whatever item is there before writing the actual item name
  org $6294
   	moveq #$c, ColOffset
 	moveq #$7, RowOffset
@@ -1778,7 +1776,21 @@ finished_drawing_enemies
 	moveq #$c, ColOffset
 	moveq #$2, RowOffset
 ; highlights ? 
-
+ org $acf8
+  	addq	#$1, ColOffset
+	;moveq	#$2, RowOffset	; this is carried over from somewhere
+	moveq	#$f, d2	; width
+	moveq	#$0, d3	; height
+	moveq	#$1, d4	; cols?
+	moveq	#$c, d5
+; need to do something with pagination
+ org $acce
+	divu.w	#$c, d5
+ org $acde
+	mulu.w	#$c, d2
+ org $ad3a
+	mulu.w	#$c, d6	; 12 items per page?
+ 
 ; returning item, party list
  org $6360
 	moveq #$b, ColOffset

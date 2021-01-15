@@ -459,123 +459,119 @@
 0000A384 48E7 FD80                  	MOVEM.l	A0/D7/D5/D4/D3/D2/D1/D0, -(Stack)	
 0000A388 3A02                       	MOVE.w	D2, D5	
 0000A38A 3E03                       	MOVE.w	D3, D7	; d2 and d3 were set to $1 previously...
-0000A38C 7805                       	MOVEQ	#5, D4	; number of loops / rows of items maybe? 
+0000A38C 780B                       	MOVEQ	#$b, D4	; number of loops / prints 2 items per loop so $5 is fine for 16 items
 0000A38E 4246                       	CLR.w	D6
 0000A390 4243                       	CLR.w	D3
 0000A392                            	
 0000A392                            start_drawing_row:
 0000A392                            
-0000A392                            	;LEA	blank_spaces_x9(PC), A0	; contains a string of 9 $3F bytes, empty spaces, to blank areas before writing to it
-0000A392                            	;BSR.w	write_label_8x8	; $3628 , checks for linebreak / dakutens.. 
-0000A392                            			; branch to $367c if null byte, $3652 for either dakuten, $3664 if not <br>, 
-0000A392                            			; then $1dee to print to vdp. going into $1dee, d1 is y offset, d0 is x offset probably
-0000A392 4E71                       	NOP
-0000A394 4E71                       	NOP
-0000A396 4E71                       	NOP
-0000A398 4E71                       	NOP
-0000A39A 4E71                       	NOP
-0000A39C 4A47                       	TST.w	D7	; d7 was 1
-0000A39E 6600                       	BNE.b	store_item_id_leftside
-0000A3A0 4242                       	CLR.w	D2	;Predicted (Code-scan)
-0000A3A2 1431 3000                  	MOVE.b	(A1,D3.w), D2	;Predicted (Code-scan)
-0000A3A6 6000                       	BRA.b	check_equipped_leftside	;Predicted (Code-scan)
-0000A3A8                            	
-0000A3A8                            store_item_id_leftside:
-0000A3A8 3431 3000                  	MOVE.w	(A1,D3.w), D2	; d3 is item index, gets item id into d2
-0000A3AC                            	
-0000A3AC                            check_equipped_leftside:
-0000A3AC 6700                       	BEQ.b	no_more_items_leftside	; if no more items maybe?
-0000A3AE 2F02                       	MOVE.l	D2, -(Stack)	; item id to stack
-0000A3B0 0802 000F                  	BTST.l	#$0F, D2	; check if item currently equipped ($80xx)
-0000A3B4 6700                       	BEQ.b	item_not_equipped_leftside	
-0000A3B6 343C E56F                  	MOVE.w	#$E56F, D2	; $E56F is small E for "equipped" items
-0000A3BA 6000                       	BRA.b	draw_e_or_not_leftside
-0000A3BC                            item_not_equipped_leftside:
-0000A3BC 343C E52F                  	MOVE.w	#$E52F, D2	; $E52F is vram offset for empty space
-0000A3C0                            	
-0000A3C0                            draw_e_or_not_leftside:
-0000A3C0 307C C000                  	MOVEA.w	#$C000, A0
-0000A3C4 4EB9 0000 0000             	JSR	write_to_vdp	; $1dee draws to vdp
-0000A3CA 241F                       	MOVE.l	(Stack)+, D2	
-0000A3CC 5240                       	ADDQ.w	#1, D0	; increment x offset
-0000A3CE 6100 0000                  	BSR.w	get_item_offset	
-0000A3D2 6100 0000                  	BSR.w	write_label_8x8	; $3628 again, this time with $c and $e as x and y (d0, d1)
-0000A3D6                            			; and writing item name instead of spaces!
-0000A3D6                            	;ADDQ.w	#8, D0	; move over for second column, maybe?
-0000A3D6 5241                       	ADDQ.w	#1, d1	; go down instead of over
-0000A3D8 5246                       	ADDQ.w	#1, D6	; printed item counter maybe?
+0000A392 41FA 0000                  	LEA	blank_spaces_x9(PC), A0	; contains a string of 9 $3F bytes, empty spaces, to blank areas before writing to it
+0000A396 6100 0000                  	BSR.w	write_label_8x8	; $3628 , checks for linebreak / dakutens.. 
+0000A39A                            			; branch to $367c if null byte, $3652 for either dakuten, $3664 if not <br>, 
+0000A39A                            			; then $1dee to print to vdp. going into $1dee, d1 is y offset, d0 is x offset probably
+0000A39A                            			; removing this broke bank item display
+0000A39A                            	
+0000A39A 4A47                       	TST.w	D7	; d7 was 1
+0000A39C 6600                       	BNE.b	store_item_id_leftside
+0000A39E 4242                       	CLR.w	D2	;Predicted (Code-scan)
+0000A3A0 1431 3000                  	MOVE.b	(A1,D3.w), D2	;Predicted (Code-scan)
+0000A3A4 6000                       	BRA.b	check_equipped_leftside	;Predicted (Code-scan)
+0000A3A6                            	
+0000A3A6                            store_item_id_leftside:
+0000A3A6 3431 3000                  	MOVE.w	(A1,D3.w), D2	; d3 is item index, gets item id into d2
+0000A3AA                            	
+0000A3AA                            check_equipped_leftside:
+0000A3AA 6700                       	BEQ.b	no_more_items_leftside	; if no more items maybe?
+0000A3AC 2F02                       	MOVE.l	D2, -(Stack)	; item id to stack
+0000A3AE 0802 000F                  	BTST.l	#$0F, D2	; check if item currently equipped ($80xx)
+0000A3B2 6700                       	BEQ.b	item_not_equipped_leftside	
+0000A3B4 343C E56F                  	MOVE.w	#$E56F, D2	; $E56F is small E for "equipped" items
+0000A3B8 6000                       	BRA.b	draw_e_or_not_leftside
+0000A3BA                            item_not_equipped_leftside:
+0000A3BA 343C E52F                  	MOVE.w	#$E52F, D2	; $E52F is vram offset for empty space
+0000A3BE                            	
+0000A3BE                            draw_e_or_not_leftside:
+0000A3BE 307C C000                  	MOVEA.w	#$C000, A0
+0000A3C2 4EB9 0000 0000             	JSR	write_to_vdp	; $1dee draws to vdp
+0000A3C8 241F                       	MOVE.l	(Stack)+, D2	
+0000A3CA 5240                       	ADDQ.w	#1, D0	; increment x offset
+0000A3CC 6100 0000                  	BSR.w	get_item_offset	
+0000A3D0 6100 0000                  	BSR.w	write_label_8x8	; $3628 again, this time with $c and $e as x and y (d0, d1)
+0000A3D4                            			; and writing item name instead of spaces!
+0000A3D4                            	;ADDQ.w	#8, D0	; move over for second column, maybe?
+0000A3D4 5340                       	SUBQ.w	#1, d0	; scoot back after the "E" offset ??
+0000A3D6 5246                       	ADDQ.w	#1, D6	; printed item counter maybe?
+0000A3D8                            
+0000A3D8                            no_more_items_leftside:
+0000A3D8                            	; ADDI.w	#9, D0
+0000A3D8                            	;ADDQ.w	#1, D3
+0000A3D8                            	;ADD.w	D7, D3
+0000A3D8 5241                       	ADDQ.w	#1, d1	; go down instead of over
 0000A3DA 5243                       	ADDQ.w	#1, D3	; ?? both these went from $0 to $1, adding d3 to a1 gets next item in RAM
 0000A3DC D647                       	ADD.w	D7, D3	; new d3 == $2 after first item printed, d3 is $6 after the third item printed ..
-0000A3DE 6000                       	BRA.b	draw_rightside
-0000A3E0                            no_more_items_leftside:
-0000A3E0                            	; ADDI.w	#9, D0
-0000A3E0 5243                       	ADDQ.w	#1, D3
-0000A3E2 D647                       	ADD.w	D7, D3
-0000A3E4                            	
-0000A3E4                            draw_rightside:
-0000A3E4 4A45                       	TST.w	D5
-0000A3E6 6700                       	BEQ.b	back_to_leftside
-0000A3E8                            	; LEA	blank_spaces_x9(PC), A0
+0000A3DE                            
+0000A3DE                            loop_print_rows:
+0000A3DE 51CC FFB2                  	DBF	D4, start_drawing_row	; d4 was set to 5 a very long time ago ... 6 rows of items? probably
+0000A3E2 4CDF 01BF                  	MOVEM.l	(Stack)+, D0/D1/D2/D3/D4/D5/D7/A0
+0000A3E6 4E75                       	RTS
+0000A3E8                            		
+0000A3E8                             ; org $A3E6 ; python needs this LEA to be here, or update the relative_strings file too...
+0000A3E8                            ; draw_rightside:
+0000A3E8                            	; TST.w	D5
+0000A3E8                            	; BEQ.b	back_to_leftside	
+0000A3E8                            	; LEA	blank_spaces_x9(PC), A0	; i had this commented out too.. but needed for blanking old item names!
 0000A3E8                            	; BSR.w	write_label_8x8	
 0000A3E8                            	
-0000A3E8 4E71                       	NOP
-0000A3EA 4E71                       	NOP
-0000A3EC 4E71                       	NOP
-0000A3EE 4E71                       	NOP
-0000A3F0 5340                       	SUBQ.w	#1, d0	; scoot back after the "e" offset
-0000A3F2                            	
-0000A3F2 4A47                       	TST.w	D7	; seems to be $01 all the time?
-0000A3F4 6600                       	BNE.b	loc_0000A3FE
-0000A3F6 4242                       	CLR.w	D2	;Predicted (Code-scan)
-0000A3F8 1431 3000                  	MOVE.b	(A1,D3.w), D2	;Predicted (Code-scan)
-0000A3FC 6000                       	BRA.b	loc_0000A402	;Predicted (Code-scan)
-0000A3FE                            	
-0000A3FE                            loc_0000A3FE:
-0000A3FE 3431 3000                  	MOVE.w	(A1,D3.w), D2	; puts new item id in d2
-0000A402                            	
-0000A402                            loc_0000A402:
-0000A402 6700                       	BEQ.b	no_more_items	; maybe different for left/right columns??
-0000A404 2F02                       	MOVE.l	D2, -(Stack)
-0000A406 0802 000F                  	BTST.l	#$0F, D2	; check if item currently equipped ($80xx)
-0000A40A 6700                       	BEQ.b	not_equipped_rightside
-0000A40C 343C E56F                  	MOVE.w	#$E56F, D2	; vram offset for 'E' equipped mark
-0000A410 6000                       	BRA.b	loc_0000A416
-0000A412                            not_equipped_rightside:
-0000A412 343C E52F                  	MOVE.w	#$E52F, D2	;Predicted (Code-scan)
-0000A416                            loc_0000A416:
-0000A416 307C C000                  	MOVEA.w	#$C000, A0
-0000A41A 4EB9 0000 0000             	JSR	write_to_vdp
-0000A420 241F                       	MOVE.l	(Stack)+, D2	; gets item id back into d2
-0000A422 5240                       	ADDQ.w	#1, D0	; increment x offset
-0000A424 6100 0000                  	BSR.w	get_item_offset
-0000A428 6100 0000                  	BSR.w	write_label_8x8
-0000A42C                            	;SUBI.w	#$000A, D0	; x offset had gone up to $15, drop back to $b
-0000A42C                            	;NOP
-0000A42C 5241                       	ADDQ.w	#1, D1	; go down two rows (one for dakuten, one for next row of items)
-0000A42E 5246                       	ADDQ.w	#1, D6	; item counter or..?
-0000A430 5243                       	ADDQ.w	#1, D3
-0000A432 D647                       	ADD.w	D7, D3
-0000A434 0440 0001                  	SUBI.w	#1, D0
-0000A438 6000                       	BRA.b	loop_print_rows
-0000A43A                            no_more_items:
-0000A43A 5243                       	ADDQ.w	#1, D3
-0000A43C D647                       	ADD.w	D7, D3
-0000A43E                            back_to_leftside:
-0000A43E 0440 0001                  	 SUBI.w	#1, D0
-0000A442                            	; ADDQ.w	#2, D1
-0000A442                            
-0000A442                            	;NOP
-0000A442                            	;ADDQ.w	#1,	d1
-0000A442                            loop_print_rows:
-0000A442 51CC FF4E                  	DBF	D4, start_drawing_row	; d4 was set to 5 a very long time ago ... 6 rows of items? probably
-0000A446 4CDF 01BF                  	MOVEM.l	(Stack)+, D0/D1/D2/D3/D4/D5/D7/A0
-0000A44A 4E75                       	RTS
-0000A44C                            	
-0000A44C                            	
-0000A44C                            blank_spaces_x9:
-0000A44C                            	WHILE *<$a458
-0000A44C                            		dc.b $3f
-0000A44C 3F3F 3F3F 3F3F 3F3F 3F3F+  	ENDW
+0000A3E8                            
+0000A3E8                            	
+0000A3E8                            	; TST.w	D7	; seems to be $01 all the time?
+0000A3E8                            	; BNE.b	loc_0000A3FE
+0000A3E8                            	; CLR.w	D2	;Predicted (Code-scan)
+0000A3E8                            	; MOVE.b	(A1,D3.w), D2	;Predicted (Code-scan)
+0000A3E8                            	; BRA.b	loc_0000A402	;Predicted (Code-scan)
+0000A3E8                            	
+0000A3E8                            ; loc_0000A3FE:
+0000A3E8                            	; MOVE.w	(A1,D3.w), D2	; puts new item id in d2
+0000A3E8                            	
+0000A3E8                            ; loc_0000A402:
+0000A3E8                            	; BEQ.b	loop_print_rows	; maybe different for left/right columns??
+0000A3E8                            	; MOVE.l	D2, -(Stack)
+0000A3E8                            	; BTST.l	#$0F, D2	; check if item currently equipped ($80xx)
+0000A3E8                            	; BEQ.b	not_equipped_rightside
+0000A3E8                            	; MOVE.w	#$E56F, D2	; vram offset for 'E' equipped mark
+0000A3E8                            	; BRA.b	loc_0000A416
+0000A3E8                            ; not_equipped_rightside:
+0000A3E8                            	; MOVE.w	#$E52F, D2	;Predicted (Code-scan)
+0000A3E8                            ; loc_0000A416:
+0000A3E8                            	; MOVEA.w	#$C000, A0
+0000A3E8                            	; JSR	write_to_vdp
+0000A3E8                            	; MOVE.l	(Stack)+, D2	; gets item id back into d2
+0000A3E8                            	; ADDQ.w	#1, D0	; increment x offset
+0000A3E8                            	; BSR.w	get_item_offset
+0000A3E8                            	; BSR.w	write_label_8x8
+0000A3E8                            	; ;SUBI.w	#$000A, D0	; x offset had gone up to $15, drop back to $b
+0000A3E8                            	; ADDQ.w	#1, D1	; go down two rows (one for dakuten, one for next row of items)
+0000A3E8                            	; ADDQ.w	#1, D6	; item counter or..?
+0000A3E8                            	; ADDQ.w	#1, D3
+0000A3E8                            	; ADD.w	D7, D3
+0000A3E8                            	; SUBI.w	#1, D0
+0000A3E8                            	; BRA.b	loop_print_rows
+0000A3E8                            ; no_more_items:
+0000A3E8                            	; ADDQ.w	#1, D3
+0000A3E8                            	; ADD.w	D7, D3
+0000A3E8                            ; back_to_leftside:
+0000A3E8                            	; ; SUBI.w	#1, D0
+0000A3E8                            	; ; ADDQ.w	#2, D1
+0000A3E8                            
+0000A3E8                            	; ;NOP
+0000A3E8                            	; ;ADDQ.w	#1,	d1
+0000A3E8                            	
+0000A3E8                            
+0000A3E8                            	
+0000A3E8                            blank_spaces_x9:
+0000A3E8                            	WHILE *<$a458
+0000A3E8                            		dc.b $3f
+0000A3E8 3F3F 3F3F 3F3F 3F3F 3F3F+  	ENDW
 0000A458                            ;	dc.b	$3F ;0x0 (0x0000A44E-0x0000A44F, Entry count: 0x1)
 0000A458                            ;	dc.b	$3F, $3F, $3F, $3F, $3F, $3F, $3F, $3F, $00 ;0x0 (0x0000A44F-0x0000A458, Entry count: 0x9)
 0000A458                            
@@ -1950,6 +1946,8 @@
 000061C6 7207                       	moveq #$7, RowOffset
 000061C8                            
 000061C8                            ; reset label position
+000061C8                            ; it's not erasing the old items .. do i need to redraw background window to blank it?
+000061C8                            ; original routine LEA's 9 $3Fs from $a44e to overwrite whatever item is there before writing the actual item name
 000061C8                             org $6294
 00006294 700C                         	moveq #$c, ColOffset
 00006296 7207                       	moveq #$7, RowOffset
@@ -1966,9 +1964,23 @@
 0000630E 700C                       	moveq #$c, ColOffset
 00006310 7202                       	moveq #$2, RowOffset
 00006312                            ; highlights ? 
-00006312                            
-00006312                            ; returning item, party list
-00006312                             org $6360
+00006312                             org $acf8
+0000ACF8 5240                         	addq	#$1, ColOffset
+0000ACFA                            	;moveq	#$2, RowOffset	; this is carried over from somewhere
+0000ACFA 740F                       	moveq	#$f, d2	; width
+0000ACFC 7600                       	moveq	#$0, d3	; height
+0000ACFE 7801                       	moveq	#$1, d4	; cols?
+0000AD00 7A0C                       	moveq	#$c, d5
+0000AD02                            ; need to do something with pagination
+0000AD02                             org $acce
+0000ACCE 8AFC 000C                  	divu.w	#$c, d5
+0000ACD2                             org $acde
+0000ACDE C4FC 000C                  	mulu.w	#$c, d2
+0000ACE2                             org $ad3a
+0000AD3A CCFC 000C                  	mulu.w	#$c, d6	; 12 items per page?
+0000AD3E                             
+0000AD3E                            ; returning item, party list
+0000AD3E                             org $6360
 00006360 700B                       	moveq #$b, ColOffset
 00006362 720F                       	moveq #$f, RowOffset
 00006364 7419                       	moveq #$19, WindowWidth
