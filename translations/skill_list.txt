@@ -214,7 +214,7 @@ Mind Buster
 
 {"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 53, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
 # サイコアッフ゜
-Psychic Up
+Rage
 
 {"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 54, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
 # テ゛スト゛ール
@@ -233,7 +233,8 @@ Guard Form
 {"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 57, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
 # ゆめしは゛り
 #tlcheck
-Dream Chains
+# it has a chance to ohko sleeping enemies
+Dream Eater
 
 {"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 58, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
 # むかいし゛ん

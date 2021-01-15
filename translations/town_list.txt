@@ -68,7 +68,7 @@ Holy Lake
 
 {"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x11", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
 # ハ゜ルファム
-Parfam
+Palfam
 
 {"desc": "town", "start": 47494, "start_hex": "0xb986", "end": 47814, "end_hex": "0xbac6", "step": 16, "max_len": 10, "id": "0x12", "ptr_type": "fixed", "table": "menu", "ptr_pos": 0, "repoint": false, "str_pos": 47494}
 # こころのひろは゛

@@ -296,7 +296,7 @@
 0000847C                            
 0000847C                            ; party select listing two column printing
 0000847C                             org $a318
-0000A318 4EB9 0000 0000             	jsr	TwoColumnPartyList	
+0000A318 4EB9 0000 0000             	jsr	TwoColumnPartyList	; pretty sure this will overwrite important stuff
 0000A31E                            
 0000A31E                            ; $a27e checks for party ids < $e (guest party members) and skips drawing them in the "give" party selection menu
 0000A31E                            ; it's branching somewhere broken atm.. it's trying to go to the addq #1, d6 
@@ -319,6 +319,7 @@
 0006884E                            CheckPartyStat:
 0006884E 0803 0001                  	btst	#$1, d3	
 00068852 6600 0000                  	bne	NormalIncrement
+00068856                            SimpleTwoCol:
 00068856 0600 000C                   	addi.b	#$c, d0
 0006885A 0805 0000                  	btst	#$0, d5
 0006885E 6700 0000                  	beq	EvenOddPrint
@@ -1777,9 +1778,13 @@
 0000955A 700B                       	MOVEQ	#$b, D0	; x offset
 0000955C 7207                       	MOVEQ	#7, D1	; y offset
 0000955E                             
-0000955E                             
-0000955E                            ; magic gate party select window
-0000955E                             org $b236
+0000955E                            ; after targeting and cancelling, draw labels in original offset
+0000955E                             org $952e
+0000952E 700B                       	moveq #$b, ColOffset
+00009530 7207                       	moveq #$7, RowOffset
+00009532                             
+00009532                            ; magic gate party select window
+00009532                             org $b236
 0000B236 700A                       	moveq #$a, ColOffset
 0000B238 720E                       	moveq #$e, RowOffset
 0000B23A 7419                       	moveq #$19, WindowWidth
@@ -1799,27 +1804,99 @@
 0000B280                            	
 0000B280                            	; jsr to $330c, the highlighting routine?
 0000B280                            
-0000B280                            ; return spell town list	 - this list is paginated :( - generally seems to work??
-0000B280                            ; drawing window
-0000B280                             org $954e
+0000B280                            ; need to write party members in 2 col format..
+0000B280                             org $b26c
+0000B26C 4EB9 0006 8856              jsr SimpleTwoCol
+0000B272                            
+0000B272                            
+0000B272                            ; return spell town list	 - this list is paginated :( - generally seems to work??
+0000B272                            ; drawing window
+0000B272                             org $954e
 0000954E 701A                       	moveq #$1a, ColOffset
 00009550 7206                       	moveq #$6, RowOffset
 00009552                             org $ab72
 0000AB72 740C                       	moveq #$c, WindowWidth
 0000AB74 760A                       	moveq #$a, WindowHeight
 0000AB76                            
-0000AB76                            ; prob double spacing for town list
-0000AB76                             org $ac00 
+0000AB76                             org $ac12
+0000AC12                             	; gets x and y offsets from ram, $20 + $3338
+0000AC12 7409                       	moveq #$9, d2	; width of highlight
+0000AC14                            	
+0000AC14                            
+0000AC14                            ; highlighting subroutine is sometimes $330c
+0000AC14                            
+0000AC14                            ; prob double spacing for town list
+0000AC14                             org $ac00 
 0000AC00 5241                       	addq.w #$1, d1
 0000AC02                            
-0000AC02                            	
 0000AC02                            ; ########################################################################################
-0000AC02                            ; # bank menu redesign
+0000AC02                            ; # auction house menu redesign
 0000AC02                            ; #
 0000AC02                            ; ########################################################################################
 0000AC02                            
-0000AC02                            ; store / take menu
-0000AC02                             org $604e
+0000AC02                            ; current cash in auction house? seems different than item shop, might be stuck at 6 digits still
+0000AC02                             org $193a4
+000193A4 7001                        	moveq #$1, ColOffset
+000193A6 7202                       	moveq #$2, RowOffset
+000193A8 7409                       	moveq #$9, WindowWidth
+000193AA 7603                       	moveq #$3, WindowHeight
+000193AC                            
+000193AC                            ; current gold G label offsets
+000193AC                             org $193ba
+000193BA 7002                         	moveq #$2, ColOffset
+000193BC 7203                       	moveq #$3, RowOffset
+000193BE 2439 00FF D5D6             	move.l	$00ffd5d6, d2	
+000193C4 7606                       	moveq	#$6, d3	; digit padding, maybe i should change the hard cap in the padding routine to > 6
+000193C6 4EB9 0000 3734             	jsr	draw_value_8x8
+000193CC 7008                       	moveq	#$8, ColOffset	; for "G" label
+000193CE 7203                       	moveq	#$3, RowOffset	; for "G" label
+000193D0                            
+000193D0                            
+000193D0                            ; item for sale window
+000193D0                             org $193f0
+000193F0 700A                       	moveq #$a, ColOffset
+000193F2 7202                       	moveq #$2, RowOffset
+000193F4 7412                       	moveq #$12, WindowWidth
+000193F6 7603                       	moveq #$3, WindowHeight
+000193F8                            
+000193F8                            ; item label
+000193F8                             org $1940a
+0001940A 700B                       	moveq #$b, ColOffset
+0001940C 7203                       	moveq #$3, RowOffset
+0001940E                            
+0001940E                            ; current bid price window
+0001940E                             org $19414
+00019414 701C                       	moveq #$1c, ColOffset
+00019416 7202                       	moveq #$2, RowOffset
+00019418 7409                       	moveq #$9, WindowWidth
+0001941A 7603                       	moveq #$3, WindowHeight
+0001941C                            ; "G" offset
+0001941C                             org $1942a
+0001942A 7023                       	moveq #$23, ColOffset
+0001942C 7203                       	moveq #$3, RowOffset
+0001942E                            ; price offset
+0001942E                             org $19442
+00019442 701D                       	moveq #$1d, ColOffset
+00019444 7203                       	moveq #$3, RowOffset
+00019446                             org $195d0
+000195D0                            ; update bid offset when new bid placed
+000195D0 701D                       	moveq #$1d, ColOffset
+000195D2 7203                       	moveq #$3, RowOffset
+000195D4                            
+000195D4                            ; your own bid .. i dunno if i want to move this...
+000195D4                             org $1953c
+0001953C 701C                       	moveq #$1c, ColOffset
+0001953E 7205                       	moveq #$5, RowOffset
+00019540                            
+00019540                            
+00019540                            	
+00019540                            ; ########################################################################################
+00019540                            ; # bank menu redesign
+00019540                            ; #
+00019540                            ; ########################################################################################
+00019540                            
+00019540                            ; store / take menu
+00019540                             org $604e
 0000604E 7002                        	moveq #$2, ColOffset
 00006050 7204                       	moveq #$4, RowOffset
 00006052 7407                       	moveq #$7, WindowWidth

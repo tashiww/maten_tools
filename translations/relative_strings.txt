@@ -197,7 +197,7 @@ Their inventory is full. Who should take it?
 
 {"ptr_pos": 25608, "pc_hex": "0x6408", "str_pos": 26176, "abs_offset_hex": "0x6640", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # お返しします。
-I'll return your items.
+Here you go.
 
 {"ptr_pos": 25898, "pc_hex": "0x652a", "str_pos": 26176, "abs_offset_hex": "0x6640", "table": "normal", "repoint": true, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # # REDIRECT ONLYお返しします。
@@ -626,7 +626,7 @@ OH BABY A CRIT!!
 
 {"ptr_pos": 63646, "pc_hex": "0xf89e", "str_pos": 63666, "abs_offset_hex": "0xf8b2", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # <player>「さあ，行こう。この中<br> に「女神像」があるはずだ。」<scroll><npc1>「そうね。<br> 行きましょう。」<scroll><npc9>「ぼくが必ず見つけだし<br> てみせるよ。」
-<player> "Let's go, the Goddess Statue should be inside."<scroll><npc1> "Yes, let's go inside."<scroll><npc9> "I'll find it for sure!"
+<player> "Let's go, the Goddess Statue should be inside."<scroll><npc1> "Yes, let's go inside."<scroll><npc9> "We'll find it for sure!"
 
 {"ptr_pos": 65502, "pc_hex": "0xffde", "str_pos": 65786, "abs_offset_hex": "0x100fa", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # <pc_itm>は<br><pc_itm>をとなえた。

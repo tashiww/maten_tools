@@ -1496,7 +1496,7 @@ I was chilling in Leam for the day, and when I got back, I saw bandits abscondin
 # ちどエルフの女王のところへ行って<br>
 # みましょう。」<scroll><npc9>「え～っ！！なんか<br>
 # ぼくこわいな。」
-<player> "We finally made it back to Fantasy Island"<scroll>
+<player> "We finally made it back to Fantasia"<scroll>
 <npc1> "<player>, let's talk to the Elf Queen again."<scroll>
 <npc9> "Oh, God! She terrifies me."
 
@@ -1531,7 +1531,7 @@ I was chilling in Leam for the day, and when I got back, I saw bandits abscondin
 # いくぜ，みんな元気でな！！」
 Cynak "<player>. This has been enough for me. I'm out. What will you do?"<scroll>
 <player> "I'm going to find the Goddess Statue and bring it back to Miona in Pron."<scroll>
-Cynak "Then this is where we part ways. Oh, you'll be stranded here without a ship, won't you? As thanks, I'll give you my old ship. I'll take that nice, new pirate ship. It needs some repairs, but it's way better than my old ship. Smell ya later!"
+Cynak "Then this is where we part ways. Oh, you'll be stranded here without a ship, won't you? As thanks, I'll give you my old ship. I'll take that nice, new pirate ship. It needs some repairs, but it's way better than my old ship. Come by the bar sometime if you want to chat."
 
 
 {"prefix":"0x7","ptr_pos":161272,"str_pos":161416,"ptr_hex":"275F8","str_hex":"27688","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -1579,7 +1579,7 @@ Zafan "16 years ago, I was taking a stroll near my home, and I saw a flying mons
 # かくされているにちがいない。<br>
 # わたしも力になろう。」
 <npc1> "<player>!!"<scroll>
-<npc9> "<player>, so you're an angel."<scroll>
+<npc9> "<player>, you're an angel?"<scroll>
 Zafan "First we need to get a Fairy Ship so we can fly out of this place. There must be something hidden in the towers here. I'll help you."
 
 
@@ -4972,7 +4972,7 @@ We can stay up all night if we want because there aren't any adults to tell us w
 # にアッツイアッツイ，ヒュ―ヒュ―<br>
 # だよ。
 # tlcheck
-The only thing hot enough for Magdola is the volcano fairy.
+Magladora is so hot for his wife, but then again he is a volcano spirit.
 
 
 {"prefix":"0x7","ptr_pos":211622,"str_pos":211684,"ptr_hex":"33AA6","str_hex":"33AE4","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4996,7 +4996,7 @@ There have been more and more pirate sightings recently.
 {"prefix":"0x7","ptr_pos":211646,"str_pos":211778,"ptr_hex":"33ABE","str_hex":"33B42","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 海賊の名前はたしか，サイナックと<br>
 # いってたな。
-The pirate's name was Cynack, I think.
+The pirate's name was Cynakk, I think.
 
 
 {"prefix":"0x7","ptr_pos":211654,"str_pos":211808,"ptr_hex":"33AC6","str_hex":"33B60","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5020,7 +5020,7 @@ The sea is beautiful tonight *flirty flirt*
 # 毎晩，さか場にあらわれるあの方に<br>
 # こいをしてしまいました。<br>
 # ああ，なにもかもバラいろ。
-I am a maiden in love. I fell in love with the drunk who goes to the bar every night. Be still, my beating heart.
+I am a maiden in love. I fell in love with a drunk who goes to the bar every night. Be still, my beating heart.
 
 
 {"prefix":"0x7","ptr_pos":212240,"str_pos":212294,"ptr_hex":"33D10","str_hex":"33D46","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5528,7 +5528,7 @@ You're going to hatch into an awesome dragon, right?
 # 事がおこるらしいの。
 # tlcheck
 # a woman in Dran says this to you ..
-Do you know about the Raging Sea Pot? If you use it at sea, something crazy will happen.
+Do you know about the Tsunami Pot? If you use it at sea, something crazy will happen.
 
 
 {"prefix":"0x7","ptr_pos":219116,"str_pos":219154,"ptr_hex":"357EC","str_hex":"35812","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5814,20 +5814,20 @@ There are rumors of an illusionist living in a little house on a peninsula.
 # させてもらうぜ。海にいるやつらを<br>
 # 見つけるには船が必要だな。<br>
 # 船はおれの船をつかってくれ。」
-Cynac "Who dares disturb me?"<scroll>
+Cynak "Who dares disturb me?"<scroll>
 <player> "What's your problem?"<scroll>
-Cynac "You talkin' to me?! I'm the pirate, Cynac. I'm not THAT Cynac, though."<scroll>
+Cynak "You talkin' to me?! I'm the pirate, Cynak. I'm not THAT Cynak, though."<scroll>
 <player> "Do you know who that other guy is?"<scroll>
-Cynac "I wish I did, kid. Do you know how hard it is to get confused for him all the time?"<scroll>
+Cynak "I wish I did, kid. Do you know how hard it is to get confused for him all the time?"<scroll>
 <player> "That sounds pretty inconvenient. You know he's using your name, right?"<scroll>
-Cynac "That's a load of codswallop! I'll find him and put a stop to this."<scroll>
+Cynak "That's a load of codswallop! I'll find him and put a stop to this."<scroll>
 <player> "How about we come with you?"<scroll>
-Cynac "Great, I'll be needing a crew. It will take a ship to find someone on a ship, so we can use mine."
+Cynak "Great, I'll be needing a crew. It will take a ship to find someone on a ship, so we can use mine."
 
 
 {"prefix":"0x7","ptr_pos":223146,"str_pos":223744,"ptr_hex":"367AA","str_hex":"36A00","table":"normal","repoint":false,"ptr_type":"absolute"}
 # サイナックがなかまになった。
-Cynac joined the party.
+Cynak joined the party.
 
 
 {"prefix":"0x7","ptr_pos":223180,"str_pos":223760,"ptr_hex":"367CC","str_hex":"36A10","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5835,7 +5835,7 @@ Cynac joined the party.
 # <player>じゃねえか。<br>
 # 元気にしてるか，この前は世話に<br>
 # なったな。」
-Cynac "Heya, <player>! How's it going, landlubber?"
+Cynak "Heya, <player>! How's it going, landlubber?"
 
 
 {"prefix":"0x7","ptr_pos":223202,"str_pos":223812,"ptr_hex":"367E2","str_hex":"36A44","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5848,9 +5848,9 @@ Cynac "Heya, <player>! How's it going, landlubber?"
 # おまえにやるよ。」<scroll><player>「それじゃあ，もらって<br>
 # おきます。」
 <player> "How is life on the high seas treating you?"<scroll>
-Cynac "I'm like a fish in water. I have a new ship, and you know what? I found something inside it."<scroll>
+Cynak "I'm like a fish in water. I have a new ship, and you know what? I found something inside it."<scroll>
 <player> "You're showing me a pot?"<scroll>
-Cynac "Yeah, I've never cared for pots, so you can have it."<scroll>
+Cynak "Yeah, I've never cared for pots, so you can have it."<scroll>
 <player> "O-okay, thanks?"
 
 
@@ -5858,7 +5858,7 @@ Cynac "Yeah, I've never cared for pots, so you can have it."<scroll>
 # サイナック「また，こんどいっしょに<br>
 # 海であばれようぜ！！<br>
 # たのしみにしているからな。」
-Cynac "Let's go sailing again someday! I'm looking forward to it."
+Cynak "Let's go sailing again someday! I'm looking forward to it."
 
 
 {"prefix":"0x7","ptr_pos":224142,"str_pos":224218,"ptr_hex":"36B8E","str_hex":"36BDA","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5870,7 +5870,7 @@ Good morning. Stop by anytime.
 {"prefix":"0x7","ptr_pos":224212,"str_pos":224244,"ptr_hex":"36BD4","str_hex":"36BF4","table":"normal","repoint":false,"ptr_type":"absolute"}
 # サイナックという海賊はよわい者<br>
 # は，おそわないと聞いたのだが。
-I heard Cynac is a noble pirate that doesn't attack innocents.
+I heard Cynak is a noble pirate that doesn't attack innocents.
 
 
 {"prefix":"0x7","ptr_pos":224510,"str_pos":224524,"ptr_hex":"36CFE","str_hex":"36D0C","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6716,7 +6716,7 @@ Selkie "As far as We are aware, no one in Fantasia is perpetrating such actions.
 # では，島におりる事ができる様に<br>
 # してあげましょう。」
 <player> "Your Majesty, I tried to get to the bottom of the lake, but it kept moving away from me."<scroll>
-Selkie "Well, naturally. You need to use the Wind Harp to stop a lake from moving. The harp is, of course, hidden in the Wind Tower. We shall make a clearing on the island so you can fly there."
+Selkie "Well, naturally. You need to use the Gale Harp to stop a lake from moving. The harp is, of course, hidden in the Gale Tower. We shall make a clearing on the island so you can fly there."
 
 
 {"prefix":"0x7","ptr_pos":234848,"str_pos":236388,"ptr_hex":"39560","str_hex":"39B64","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6846,9 +6846,9 @@ I was chasing a pirate ship and ended up here. This must be their secret hideout
 # いやつらの船しかおそわないぜ。」<scroll>船長「お前らのあいてをしているひま<br>
 # はない。ましてや，おれがお前らに<br>
 # つかまるわけがないだろう。」
-Captain "Who are you?! How did you find us? What are you accusing me, Cynac, of doing? I haven't done anything wrong! I've just been raiding and pillaging all of the towns near the coast."<scroll>
+Captain "Who are you?! How did you find us? What are you accusing me, Cynak, of doing? I haven't done anything wrong! I've just been raiding and pillaging all of the towns near the coast."<scroll>
 <player> "Yeah, no, that's exactly what you've been doing wrong."<scroll>
-Cynac "You've ruined my good name! Although, I am also a pirate, so I'm not in a place to criticize you too much. At least I have a policy of only attacking other pirates."<scroll>
+Cynak "You've ruined my good name! Although, I am also a pirate, so I'm not in a place to criticize you too much. At least I have a policy of only attacking other pirates."<scroll>
 Captain "You guys just keep talking, I'm going to sneak out of here before you notice me running away."
 
 
@@ -6872,9 +6872,9 @@ Captain "You guys just keep talking, I'm going to sneak out of here before you n
 # 毒のぬまになっちゃって，だれも<br>
 # あそびに来てくれないんだ。」<scroll><player>「たしかに，外はひどい<br>
 # 状態だったな。」
-Homonculus "Hey, it's been a while since we had customers."<scroll>
+Homonculus "Hey, it's been a while since we had guests."<scroll>
 <player> "Do you live alone here in the middle of a swamp?"<scroll>
-Homunculus "Do you see anyone else here? A while back I noticed the swamp had turned into poison and I stopped getting visitors shortly after that."<scroll>
+Homunculus "Do you see anyone else here? A while back I noticed the swamp had turned into poison spikes and I stopped getting visitors shortly after that."<scroll>
 <player> "Yeah, not gonna lie, it's a mess out there, man."
 
 
@@ -7057,7 +7057,7 @@ You know it's bad manners to break into someone's house, right?
 # とってきてちょうだい。」
 Blizanora "Alright, what has my husband put you up to?"<scroll>
 <player> "He wants you to go back to him."<scroll>
-Blizanora "And he couldn't even come to ask me himself? Whatever, I'll go back, under one condition. There's an Ice Ring in the cave behind this house. Give me the ring and I go back to my husband."
+Blizanora "And he couldn't even come to ask me himself? Whatever, I'll go back, under one condition. There's an Ice Ring in the cave behind this house. Give me the ring and I'll go back to my husband."
 
 
 {"prefix":"0x7","ptr_pos":243208,"str_pos":243468,"ptr_hex":"3B608","str_hex":"3B70C","table":"normal","repoint":false,"ptr_type":"absolute"}

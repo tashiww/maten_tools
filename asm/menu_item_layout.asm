@@ -108,7 +108,7 @@ GivePartyLabels	macro
 
 ; party select listing two column printing
  org $a318
-	jsr	TwoColumnPartyList	
+	jsr	TwoColumnPartyList	; pretty sure this will overwrite important stuff
 
 ; $a27e checks for party ids < $e (guest party members) and skips drawing them in the "give" party selection menu
 ; it's branching somewhere broken atm.. it's trying to go to the addq #1, d6 
@@ -131,6 +131,7 @@ TwoColumnPartyList:
 CheckPartyStat:
 	btst	#$1, d3	
 	bne	NormalIncrement
+SimpleTwoCol:
  	addi.b	#$c, d0
 	btst	#$0, d5
 	beq	EvenOddPrint
@@ -1589,6 +1590,10 @@ finished_drawing_enemies
 	MOVEQ	#$b, D0	; x offset
 	MOVEQ	#7, D1	; y offset
  
+; after targeting and cancelling, draw labels in original offset
+ org $952e
+	moveq #$b, ColOffset
+	moveq #$7, RowOffset
  
 ; magic gate party select window
  org $b236
@@ -1611,6 +1616,11 @@ finished_drawing_enemies
 	
 	; jsr to $330c, the highlighting routine?
 
+; need to write party members in 2 col format..
+ org $b26c
+ jsr SimpleTwoCol
+
+
 ; return spell town list	 - this list is paginated :( - generally seems to work??
 ; drawing window
  org $954e
@@ -1620,9 +1630,76 @@ finished_drawing_enemies
 	moveq #$c, WindowWidth
 	moveq #$a, WindowHeight
 
+ org $ac12
+ 	; gets x and y offsets from ram, $20 + $3338
+	moveq #$9, d2	; width of highlight
+	
+
+; highlighting subroutine is sometimes $330c
+
 ; prob double spacing for town list
  org $ac00 
 	addq.w #$1, d1
+
+; ########################################################################################
+; # auction house menu redesign
+; #
+; ########################################################################################
+
+; current cash in auction house? seems different than item shop, might be stuck at 6 digits still
+ org $193a4
+ 	moveq #$1, ColOffset
+	moveq #$2, RowOffset
+	moveq #$9, WindowWidth
+	moveq #$3, WindowHeight
+
+; current gold G label offsets
+ org $193ba
+  	moveq #$2, ColOffset
+	moveq #$3, RowOffset
+	move.l	$00ffd5d6, d2	
+	moveq	#$6, d3	; digit padding, maybe i should change the hard cap in the padding routine to > 6
+	jsr	draw_value_8x8
+	moveq	#$8, ColOffset	; for "G" label
+	moveq	#$3, RowOffset	; for "G" label
+
+
+; item for sale window
+ org $193f0
+	moveq #$a, ColOffset
+	moveq #$2, RowOffset
+	moveq #$12, WindowWidth
+	moveq #$3, WindowHeight
+
+; item label
+ org $1940a
+	moveq #$b, ColOffset
+	moveq #$3, RowOffset
+
+; current bid price window
+ org $19414
+	moveq #$1c, ColOffset
+	moveq #$2, RowOffset
+	moveq #$9, WindowWidth
+	moveq #$3, WindowHeight
+; "G" offset
+ org $1942a
+	moveq #$23, ColOffset
+	moveq #$3, RowOffset
+; price offset
+ org $19442
+	moveq #$1d, ColOffset
+	moveq #$3, RowOffset
+ org $195d0
+; update bid offset when new bid placed
+	moveq #$1d, ColOffset
+	moveq #$3, RowOffset
+
+; your own bid .. i dunno if i want to move this...
+ org $1953c
+	moveq #$1c, ColOffset
+	moveq #$5, RowOffset
+
 
 	
 ; ########################################################################################
