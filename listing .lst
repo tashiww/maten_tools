@@ -1420,7 +1420,16 @@
 000689CA                            window_tile_width	equr	d2	; for window drawing routines
 000689CA                            window_tile_height	equr	d3	; 
 000689CA                            
-000689CA                             org $0000D894
+000689CA                            ; party member selection for heal / buff spells window
+000689CA                             org $cfc6
+0000CFC6                             ; d1 set by party member offset somehow..
+0000CFC6 7419                       	moveq #$19, WindowWidth
+0000CFC8 7605                       	moveq #$5, WindowHeight
+0000CFCA                            
+0000CFCA                             org $cfe2
+0000CFE2 5241                       	addq #$1, d1	; y offset
+0000CFE4                            
+0000CFE4                             org $0000D894
 0000D894                            	WHILE *<$DAFa
 0000D894                            		NOP
 0000D894 4E71 4E71 4E71 4E71 4E71+  	ENDW
@@ -1503,13 +1512,56 @@
 0000D994 4EB9 0000 0000             	JSR	draw_small_window
 0000D99A 5246                       	ADDQ.w	#1, D6
 0000D99C 206E 0020                  	MOVEA.l	$20(A6), A0	; party member name string location
-0000D9A0 4EB9 0000 352A             	JSR	$0000352A	; nothing seemed to happen?
-0000D9A6 7206                       	MOVEQ	#6, y_tile_offset	; for centering character name, max length of name
-0000D9A8 9240                       	SUB.w	D0, y_tile_offset
-0000D9AA E249                       	LSR.w	#1, y_tile_offset
+0000D9A0 4EB9 0000 352A             	JSR	$0000352A	; this gets party name length
+0000D9A6                            	;MOVEQ	#$6, d1	; for centering character name, max length of name
+0000D9A6                            	;SUB.w	D0, d1
+0000D9A6                            	;LSR.w	#1, d1
+0000D9A6 4EB9 0000 0000             	JSR new_name_offset
 0000D9AC 3006                       	MOVE.w	D6, x_tile_offset
 0000D9AE D041                       	ADD.w	D1, x_tile_offset
 0000D9B0 3207                       	MOVE.w	D7, y_tile_offset	; 
+0000D9B2                             
+0000D9B2                             org $68780
+00068780                            new_name_offset:
+00068780 7208                       	MOVEQ	#$8, d1	; for centering character name, max length of name
+00068782 9240                       	SUB.w	D0, d1
+00068784 6600 0000                  	bne new_name_done
+00068788 2F09                       	MOVE.l	a1, -(a7)
+0006878A 7207                       	moveq	#$7, d1
+0006878C 43F9 00FF D5FC             	lea	$ffd5fc, a1	; hopefully this is empty lol
+00068792                            truncate_name:
+00068792 12D8                       	move.b	(a0)+, (a1)+
+00068794 51C9 FFFC                  	DBF	d1, truncate_name
+00068798 41F9 00FF D5FC             	lea	$ffd5fc, a0
+0006879E 225F                       	move.l	(a7)+, a1
+000687A0                            
+000687A0                            new_name_done:
+000687A0 5341                       	subq	#$1, d1
+000687A2 E249                       	LSR.w	#1, d1
+000687A4 4E75                       	rts
+000687A6                            ; name length counter
+000687A6                             org $0000352A
+0000352A                            
+0000352A 48E7 4080                  	MOVEM.l	A0/D1, -(A7)
+0000352E 4240                       	CLR.w	D0
+00003530                            loc_00003530:
+00003530 1218                       	MOVE.b	(A0)+, D1
+00003532 6700                       	BEQ.b	leave_SR
+00003534 0C00 0008                  	CMPI.b	#$8, d0
+00003538 6400 0000                  	bcc	leave_SR
+0000353C 5240                       	ADDQ.w	#1, D0
+0000353E 60F0                       	BRA.b	loc_00003530
+00003540                            loc_0000354A:
+00003540                            	;cmpi.b	#$8, d0
+00003540                            	;bne leave_SR
+00003540                            	;subq	#1, d6
+00003540                            leave_SR:
+00003540                            	;subq	#2, d6
+00003540 4CDF 0102                  	MOVEM.l	(A7)+, D1/A0
+00003544 4E75                       	RTS
+00003546                            	
+00003546                             
+00003546                             org $d9b2
 0000D9B2 4EB9 0000 3628             	JSR	write_label_8x8
 0000D9B8                            	
 0000D9B8 3006                       	MOVE.w	D6, x_tile_offset

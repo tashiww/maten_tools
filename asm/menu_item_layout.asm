@@ -1232,6 +1232,15 @@ draw_substats:
 window_tile_width	equr	d2	; for window drawing routines
 window_tile_height	equr	d3	; 
 
+; party member selection for heal / buff spells window
+ org $cfc6
+ ; d1 set by party member offset somehow..
+	moveq #$19, WindowWidth
+	moveq #$5, WindowHeight
+
+ org $cfe2
+	addq #$1, d1	; y offset
+
  org $0000D894
 	WHILE *<$DAFa
 		NOP
@@ -1315,13 +1324,56 @@ loc_0000D980:
 	JSR	draw_small_window
 	ADDQ.w	#1, D6
 	MOVEA.l	$20(A6), A0	; party member name string location
-	JSR	$0000352A	; nothing seemed to happen?
-	MOVEQ	#6, y_tile_offset	; for centering character name, max length of name
-	SUB.w	D0, y_tile_offset
-	LSR.w	#1, y_tile_offset
+	JSR	$0000352A	; this gets party name length
+	;MOVEQ	#$6, d1	; for centering character name, max length of name
+	;SUB.w	D0, d1
+	;LSR.w	#1, d1
+	JSR new_name_offset
 	MOVE.w	D6, x_tile_offset
 	ADD.w	D1, x_tile_offset
 	MOVE.w	D7, y_tile_offset	; 
+ 
+ org $68780
+new_name_offset:
+	MOVEQ	#$8, d1	; for centering character name, max length of name
+	SUB.w	D0, d1
+	bne new_name_done
+	MOVE.l	a1, -(a7)
+	moveq	#$7, d1
+	lea	$ffd5fc, a1	; hopefully this is empty lol
+truncate_name:
+	move.b	(a0)+, (a1)+
+	DBF	d1, truncate_name
+	lea	$ffd5fc, a0
+	move.l	(a7)+, a1
+
+new_name_done:
+	subq	#$1, d1
+	LSR.w	#1, d1
+	rts
+; name length counter
+ org $0000352A
+
+	MOVEM.l	A0/D1, -(A7)
+	CLR.w	D0
+loc_00003530:
+	MOVE.b	(A0)+, D1
+	BEQ.b	leave_SR
+	CMPI.b	#$8, d0
+	bcc	leave_SR
+	ADDQ.w	#1, D0
+	BRA.b	loc_00003530
+loc_0000354A:
+	;cmpi.b	#$8, d0
+	;bne leave_SR
+	;subq	#1, d6
+leave_SR:
+	;subq	#2, d6
+	MOVEM.l	(A7)+, D1/A0
+	RTS
+	
+ 
+ org $d9b2
 	JSR	write_label_8x8
 	
 	MOVE.w	D6, x_tile_offset

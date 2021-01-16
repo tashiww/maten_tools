@@ -607,9 +607,9 @@ Attack<br>Skills<br>Defend<br>Items
 Attack<br>Defend<br>Items
 
 {"ptr_pos": 55680, "pc_hex": "0xd980", "str_pos": 55616, "abs_offset_hex": "0xd940", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
-#        
-        
-
+#      
+# i think this is battle name blanking spaces  
+       
 
 {"ptr_pos": 58670, "pc_hex": "0xe52e", "str_pos": 58688, "abs_offset_hex": "0xe540", "table": "normal", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # クリティカルヒット！！

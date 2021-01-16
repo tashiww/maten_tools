@@ -6392,12 +6392,13 @@ If you lose an important item, it will eventually end up in the auction house.
 # いらっしゃいませ<br>
 # レンタルのアクムです。
 # tlcheck
-Welcome. I'm a rental nightmare.
+# two people standing by the door of rental shop in holy lake
+Welcome to a world of rental paradise.
 
 
 {"prefix":"0x7","ptr_pos":231834,"str_pos":231864,"ptr_hex":"3899A","str_hex":"389B8","table":"normal","repoint":false,"ptr_type":"absolute"}
 # ごりようは，けいかくてきにねっ！
-Use it sparingly!
+Be careful not to overindulge with our fine rental merchandise.
 
 
 {"prefix":"0x7","ptr_pos":231940,"str_pos":231946,"ptr_hex":"38A04","str_hex":"38A0A","table":"normal","repoint":false,"ptr_type":"absolute"}
