@@ -286,7 +286,7 @@ Burple
 
 {"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 68, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
 # ホルモン
-Hormone
+Homunculus
 
 {"desc": "mon", "str_pos": 86462, "start_hex": "0x151be", "end": 93200, "end_hex": "0x16c10", "step": 64, "max_len": 10, "id": 69, "ptr_type": "fixed", "table": "menu", "ptr_pos": 0}
 # ストーンエルーシ゛

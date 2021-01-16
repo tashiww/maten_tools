@@ -1,3 +1,8 @@
+{"prefix":"0","ptr_pos":428674,"str_pos":127954,"ptr_hex":"0x68a82","str_hex":"xxx","table":"menu","repoint":false,"ptr_type":"absolute"}
+#spoofed string info, "level" in party list
+LVL
+
+
 {"prefix":"0x41f9","ptr_pos":44552,"str_pos":127954,"ptr_hex":"AE08","str_hex":"1F3D2","table":"normal","repoint":false,"ptr_type":"absolute"}
 # <pc_itm>のHPが<br>
 # <val>かいふくした。
@@ -1585,7 +1590,7 @@ Zafan "First we need to get a Fairy Ship so we can fly out of this place. There 
 
 {"prefix":"0x7","ptr_pos":162098,"str_pos":163108,"ptr_hex":"27932","str_hex":"27D24","table":"normal","repoint":false,"ptr_type":"absolute"}
 # やくひんのビンをみつけた。
-You found a medicine bottle.
+You found a potion bottle.
 
 
 {"prefix":"0x7","ptr_pos":162164,"str_pos":162302,"ptr_hex":"27974","str_hex":"279FE","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -3228,7 +3233,7 @@ Will there really be a war?
 
 {"prefix":"0x7","ptr_pos":184668,"str_pos":184776,"ptr_hex":"2D15C","str_hex":"2D1C8","table":"normal","repoint":false,"ptr_type":"absolute"}
 # あたらしい王妃様見た？
-Did you see the new queen?
+Did you see the new Queen?
 
 
 {"prefix":"0x7","ptr_pos":184676,"str_pos":184794,"ptr_hex":"2D164","str_hex":"2D1DA","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -3264,13 +3269,13 @@ Oh man, put a fork in me because I am DONE. *munch munch*
 {"prefix":"0x7","ptr_pos":185038,"str_pos":185044,"ptr_hex":"2D2CE","str_hex":"2D2D4","table":"normal","repoint":false,"ptr_type":"absolute"}
 # あたらしい王妃様って，前はリ―ム<br>
 # の国にすんでいたらしいわよ。
-I heard the new queen used to live in Leam.
+I heard the new Queen used to live in Leam.
 
 
 {"prefix":"0x7","ptr_pos":185178,"str_pos":185216,"ptr_hex":"2D35A","str_hex":"2D380","table":"normal","repoint":false,"ptr_type":"absolute"}
 # あたらしい王妃もさいこんらしい。<br>
 # 男の子をひとりつれてきたからな。
-The new queen was apparently married before. I heard she brought her son with her.
+The new Queen was apparently married before. I heard she brought her son with her.
 
 
 {"prefix":"0x7","ptr_pos":185194,"str_pos":185256,"ptr_hex":"2D36A","str_hex":"2D3A8","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -3278,20 +3283,20 @@ The new queen was apparently married before. I heard she brought her son with he
 # とてもなかよくされてましたよ。<br>
 # あたらしい王妃様もたいせつに<br>
 # するでしょうね。
-King Utork was quite friendly with his previous wife. I imagine he'll treat the new queen the same way.
+King Utork was quite friendly with his previous wife. I imagine he'll treat the new Queen the same way.
 
 
 {"prefix":"0x7","ptr_pos":185202,"str_pos":185324,"ptr_hex":"2D372","str_hex":"2D3EC","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 王妃はリ―ムのだい２王妃だった<br>
 # そうですね。
-People are saying the new queen was the Queen Consort of Leam.
+People are saying the new Queen was the former Queen Consort of Leam.
 
 
 {"prefix":"0x7","ptr_pos":185210,"str_pos":185354,"ptr_hex":"2D37A","str_hex":"2D40A","table":"normal","repoint":false,"ptr_type":"absolute"}
 # ぼくあんまりあたらしい王妃様って<br>
 # すきじゃない！！だって，目が<br>
 # こわいんだもん。
-I don't like the new queen! She's scary!
+I don't like the new Queen! She's scary!
 
 
 {"prefix":"0x7","ptr_pos":185546,"str_pos":185592,"ptr_hex":"2D4CA","str_hex":"2D4F8","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -3311,7 +3316,7 @@ Looking at you, I'm reminded of the time I saw a strange flying monster with a b
 {"prefix":"0x7","ptr_pos":185562,"str_pos":185692,"ptr_hex":"2D4DA","str_hex":"2D55C","table":"normal","repoint":false,"ptr_type":"absolute"}
 # お～，こわいこわい。<br>
 # あたらしい王妃様は何かこわいよ。
-I've got chills, that new queen makes me shiver.
+I've got chills, that new Queen makes me shiver.
 
 
 {"prefix":"0x7","ptr_pos":185570,"str_pos":185726,"ptr_hex":"2D4E2","str_hex":"2D57E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4457,7 +4462,7 @@ Why are there monsters in the basement? It's totally illogical.
 # わたしがえたこの魔の力，とくと<br>
 # あじわうがいいわ！！」
 Freya "Who are you?! Abel?!"<scroll>
-Abel "Just as I suspected... After hearing everyone describe what a snake the new queen is, I knew it had to be you."<scroll>
+Abel "Just as I suspected... After hearing everyone describe what a snake the new Queen is, I knew it had to be you."<scroll>
 <player> "Queen Freya, you tried to have Prince Abel assassinated, didn't you?"<scroll>
 Freya "Yes, he was stopping me from taking Leam for myself. I poisoned Erin, drugged the king to keep him stupid, and all I had to do was get rid of Abel. I would've gotten away with it, too, if it weren't for you meddling kids."<scroll>
 Abel "Egads! You killed my mother?! I'll make you pay for that!"<scroll>
@@ -5940,7 +5945,7 @@ Do you know about the Gale Harp?
 {"prefix":"0x7","ptr_pos":225450,"str_pos":225456,"ptr_hex":"370AA","str_hex":"370B0","table":"normal","repoint":false,"ptr_type":"absolute"}
 # かぜの塔って，しってるかい？<br>
 # ここから南にある島にたってるよ。
-Do you know about the Gale tower? It's on the island south of here.
+Do you know about the Gale Tower? It's on the island south of here.
 
 
 {"prefix":"0x7","ptr_pos":225702,"str_pos":225750,"ptr_hex":"371A6","str_hex":"371D6","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6213,7 +6218,7 @@ Welcome. Our drinks are all made with special, tasty water.
 # こまったときには，エルフの女王に<br>
 # そうだんするといいわ。何か，いい<br>
 # ちえをわけてくれるわよ，きっと。
-If you don't know what to do next, try asking the elf queen. She can point you in the right direction.
+If you don't know what to do next, try asking the Elf Queen. She can point you in the right direction.
 
 
 {"prefix":"0x7","ptr_pos":229150,"str_pos":229268,"ptr_hex":"37F1E","str_hex":"37F94","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6425,7 +6430,7 @@ If you want to bring <player> back, just have his soul resurrected into this bal
 {"prefix":"0x7","ptr_pos":232120,"str_pos":232264,"ptr_hex":"38AB8","str_hex":"38B48","table":"normal","repoint":false,"ptr_type":"absolute"}
 # これが<player>の心が入った<br>
 # 「れいきゅう」じゃ。
-Now <player>'s soul is in this spirit ball.
+Now <player>'s soul is in the Spirit Ball.
 
 
 {"prefix":"0x7","ptr_pos":232164,"str_pos":232292,"ptr_hex":"38AE4","str_hex":"38B64","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6478,13 +6483,13 @@ You want to hurry up and become a human? You look like you're already a human.
 {"prefix":"0x7","ptr_pos":233566,"str_pos":233724,"ptr_hex":"3905E","str_hex":"390FC","table":"normal","repoint":false,"ptr_type":"absolute"}
 # このさきから２Fへいけば，わたし<br>
 # たちの女王にあえますよ。
-If you go to the second floor, you can see the elf queen herself.
+If you go to the second floor, you can see the Elf Queen herself.
 
 
 {"prefix":"0x7","ptr_pos":233574,"str_pos":233758,"ptr_hex":"39066","str_hex":"3911E","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 女王にあうときには，れいぎ正しく<br>
 # してくださいね。
-Be sure to mind your manners in the presence of the queen.
+Be sure to mind your manners in the presence of the Queen.
 
 
 {"prefix":"0x7","ptr_pos":233582,"str_pos":233790,"ptr_hex":"3906E","str_hex":"3913E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6553,7 +6558,7 @@ You have a bracer..? Very good, you may pass.
 {"prefix":"0x7","ptr_pos":233686,"str_pos":234124,"ptr_hex":"390D6","str_hex":"3928C","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 女王様が，お会いして下さるかどう<br>
 # か・・・。
-I'm not sure if I can get an audience with the queen...
+I'm not sure if I can get an audience with the Queen...
 
 
 {"prefix":"0x7","ptr_pos":233694,"str_pos":234154,"ptr_hex":"390DE","str_hex":"392AA","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6650,7 +6655,7 @@ Selkie "Farewell, you pathetic animals."<scroll>
 # セルキ―「わたしはエルフの女王，<br>
 # セルキ―・マナ・ミルラ―ドです。<br>
 # 人間がわたしに何のようですか。」
-Selkie "We are the Elf queen, Selkie Mana Milliard. What is your business here, humans?"
+Selkie "We are the Elf Queen, Selkie Mana Milliard. What is your business here, humans?"
 
 
 {"prefix":"0x7","ptr_pos":234784,"str_pos":235560,"ptr_hex":"39520","str_hex":"39828","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6873,7 +6878,7 @@ Captain "You guys just keep talking, I'm going to sneak out of here before you n
 # 毒のぬまになっちゃって，だれも<br>
 # あそびに来てくれないんだ。」<scroll><player>「たしかに，外はひどい<br>
 # 状態だったな。」
-Homonculus "Hey, it's been a while since we had guests."<scroll>
+Homunculus "Hey, it's been a while since we had guests."<scroll>
 <player> "Do you live alone here in the middle of a swamp?"<scroll>
 Homunculus "Do you see anyone else here? A while back I noticed the swamp had turned into poison spikes and I stopped getting visitors shortly after that."<scroll>
 <player> "Yeah, not gonna lie, it's a mess out there, man."
@@ -7208,7 +7213,7 @@ Satan "There is no escape. You will become a part of me."
 {"prefix":"0x7","ptr_pos":245742,"str_pos":246386,"ptr_hex":"3BFEE","str_hex":"3C272","table":"normal","repoint":false,"ptr_type":"absolute"}
 # <npc1>は，れいきゅうを<br>
 # なげつけた。
-<npc1> threw the spirit ball.
+<npc1> threw the Spirit Ball.
 
 
 {"prefix":"0x7","ptr_pos":245762,"str_pos":246406,"ptr_hex":"3C002","str_hex":"3C286","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7360,8 +7365,8 @@ Bridget "Oh, I eat geysers for breakfast. Lead the way!"
 # 「れいきゅう」をあげるわ。必ず<br>
 # <player>をたすけてあげて。」
 Bridget "Uh oh, what happened to <player>?"<scroll>
-<npc1> "He got absorbed into the demon lord's body. We need a spirit ball to get his spirit back. Would you mind giving us your spirit ball?"<scroll>
-Bridget "One spirit ball coming right up. Use it to save <player>."
+<npc1> "He got absorbed into the demon lord's body. We need the Spirit Ball to get his spirit back. Would you mind giving it to us?"<scroll>
+Bridget "One Spirit Ball coming right up. Use it to save <player>."
 
 
 {"prefix":"0x7","ptr_pos":248222,"str_pos":248416,"ptr_hex":"3C99E","str_hex":"3CA60","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7425,7 +7430,7 @@ He who holds the five sacred instruments, play them in the correct sequence. The
 # 必ずへいわな世界をつくってみせま<br>
 # す。」
 Zafan "If you use the fairy ship, you can leave the spirit world. You don't need me anymore. Stay strong, <player>."<scroll>
-<player> "Thank you, Father. I will bring peace back the worlds."
+<player> "Thank you, Father. I will bring peace back to the worlds."
 
 
 {"prefix":"0x7","ptr_pos":253082,"str_pos":253184,"ptr_hex":"3DC9A","str_hex":"3DD00","table":"normal","repoint":false,"ptr_type":"absolute"}

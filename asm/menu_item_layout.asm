@@ -130,7 +130,9 @@ TwoColumnPartyList:
 	bcs.w	IncrementNoPrint
 CheckPartyStat:
 	btst	#$1, d3	
-	bne	NormalIncrement
+	beq	SimpleTwoCol
+	addq	#1, d1
+	bra.b	NormalIncrement
 SimpleTwoCol:
  	addi.b	#$c, d0
 	btst	#$0, d5
@@ -158,9 +160,12 @@ IncrementNoPrint:
 	btst	#1, d3	; check if party status list
 	beq	NotPartyStatusList
 	subq	#$1, d4
+	move	#$1, d3
+	bra.b	PartyWindowHighlights
 NotPartyStatusList:
-	moveq	#$a, d2	; highlight width
 	moveq	#$0, d3	; height (0 is 1 tile)
+PartyWindowHighlights:
+	moveq	#$a, d2	; highlight width
 	move.w	d5, d6	; maybe it's incrementing based on party count
 	subq.w	#1, d6	; i think it limits selectable options
 	RTS
@@ -885,20 +890,20 @@ loc_00008930:
 
 ; ########################################################################################
 ; # stats -> party submenu !! renamed to status but it's the menu that lists all party members and their hp / status
-; # slight widening 
+; # slight widening party menu, party list
 ; ########################################################################################
 
 
  org $68580
 redraw_party_menu:
 	moveq #$2, ColOffset
-	moveq #$d, RowOffset
-	moveq #$24, WindowWidth
-	moveq #$a, WindowHeight
+	moveq #$c, RowOffset
+	moveq #$21, WindowWidth
+	moveq #$f, WindowHeight
 	moveq #$43, d4
 	jsr	draw_background_window
 	moveq #$3, ColOffset
-	moveq #$f, RowOffset
+	moveq #$e, RowOffset
 	moveq #$2, d2
 	rts
 ; $8f18 drawing party-> stats window
@@ -907,9 +912,9 @@ redraw_party_menu:
  org $8f18
 draw_party_menu:
 	moveq #$2, ColOffset
-	moveq #$d, RowOffset
-	moveq #$24, WindowWidth
-	moveq #$a, WindowHeight
+	moveq #$c, RowOffset
+	moveq #$21, WindowWidth
+	moveq #$f, WindowHeight
 	moveq #$43, d4
  
  org $8f2e
@@ -938,8 +943,27 @@ draw_party_menu:
  org $a2da
 	addq #$1, ColOffset	; max mp
  org $a2e0
-	addq #$5, ColOffset	; status debuffs
+	jsr DrawLevelOnPartyList
+ ; highlighting is in one of my custom routines, like $68880 or something
+ 
+ org $68a80
+DrawLevelOnPartyList:
+; this subroutine will draw member level on party status menu, and set up the status debuff to resume after RTS
+	LEA	$1234, a0
+	moveq	#$6, ColOffset
+	addq	#$1, RowOffset
+	jsr	write_label_8x8	; printing "level" label?
+	
+	clr	d2
+	addq	#$4, ColOffset
+	move.b	$e(a1), d2
+	moveq	#$2, d3
+	jsr	draw_value_8x8
 
+	moveq	#$f, ColOffset
+	move.b	$19(a1), d2
+	rts
+ 
 ; ########################################################################################
 ; #
 ; #	party order menu

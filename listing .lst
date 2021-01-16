@@ -318,24 +318,26 @@
 0006884A 6500 0000                  	bcs.w	IncrementNoPrint
 0006884E                            CheckPartyStat:
 0006884E 0803 0001                  	btst	#$1, d3	
-00068852 6600 0000                  	bne	NormalIncrement
-00068856                            SimpleTwoCol:
-00068856 0600 000C                   	addi.b	#$c, d0
-0006885A 0805 0000                  	btst	#$0, d5
-0006885E 6700 0000                  	beq	EvenOddPrint
-00068862 0400 0018                  	subi.b	#$18, d0
-00068866                            NormalIncrement:
-00068866 5241                       	addq	#$1, d1
-00068868                            EvenOddPrint:
-00068868 5245                       	addq	#$1, d5
-0006886A                            IncrementNoPrint:
-0006886A 5246                       	addq	#$1, d6	; this was in my subroutine but guest members need to increment this without printing
-0006886C                            
-0006886C 4E75                       	rts
-0006886E                            	
-0006886E                            	
-0006886E                            	
-0006886E                             org $a326
+00068852 6700 0000                  	beq	SimpleTwoCol
+00068856 5241                       	addq	#1, d1
+00068858 6000                       	bra.b	NormalIncrement
+0006885A                            SimpleTwoCol:
+0006885A 0600 000C                   	addi.b	#$c, d0
+0006885E 0805 0000                  	btst	#$0, d5
+00068862 6700 0000                  	beq	EvenOddPrint
+00068866 0400 0018                  	subi.b	#$18, d0
+0006886A                            NormalIncrement:
+0006886A 5241                       	addq	#$1, d1
+0006886C                            EvenOddPrint:
+0006886C 5245                       	addq	#$1, d5
+0006886E                            IncrementNoPrint:
+0006886E 5246                       	addq	#$1, d6	; this was in my subroutine but guest members need to increment this without printing
+00068870                            
+00068870 4E75                       	rts
+00068872                            	
+00068872                            	
+00068872                            	
+00068872                             org $a326
 0000A326                             ; party select window for drop/give submenus item submenu layout control
 0000A326 4EB9 0006 8700             	jsr $68700
 0000A32C                            	WHILE *<$a330
@@ -346,15 +348,18 @@
 00068702 0803 0001                  	btst	#1, d3	; check if party status list
 00068706 6700 0000                  	beq	NotPartyStatusList
 0006870A 5344                       	subq	#$1, d4
-0006870C                            NotPartyStatusList:
-0006870C 740A                       	moveq	#$a, d2	; highlight width
-0006870E 7600                       	moveq	#$0, d3	; height (0 is 1 tile)
-00068710 3C05                       	move.w	d5, d6	; maybe it's incrementing based on party count
-00068712 5346                       	subq.w	#1, d6	; i think it limits selectable options
-00068714 4E75                       	RTS
-00068716                            
-00068716                            ; equip party select menu
-00068716                             org $8810
+0006870C 363C 0001                  	move	#$1, d3
+00068710 6000                       	bra.b	PartyWindowHighlights
+00068712                            NotPartyStatusList:
+00068712 7600                       	moveq	#$0, d3	; height (0 is 1 tile)
+00068714                            PartyWindowHighlights:
+00068714 740A                       	moveq	#$a, d2	; highlight width
+00068716 3C05                       	move.w	d5, d6	; maybe it's incrementing based on party count
+00068718 5346                       	subq.w	#1, d6	; i think it limits selectable options
+0006871A 4E75                       	RTS
+0006871C                            
+0006871C                            ; equip party select menu
+0006871C                             org $8810
 00008810 700A 7201 7419 7605 383C+  	PartySelectMenu
 0000881C                            
 0000881C                             org $8828
@@ -1073,20 +1078,20 @@
 00008954                            
 00008954                            ; ########################################################################################
 00008954                            ; # stats -> party submenu !! renamed to status but it's the menu that lists all party members and their hp / status
-00008954                            ; # slight widening 
+00008954                            ; # slight widening party menu, party list
 00008954                            ; ########################################################################################
 00008954                            
 00008954                            
 00008954                             org $68580
 00068580                            redraw_party_menu:
 00068580 7002                       	moveq #$2, ColOffset
-00068582 720D                       	moveq #$d, RowOffset
-00068584 7424                       	moveq #$24, WindowWidth
-00068586 760A                       	moveq #$a, WindowHeight
+00068582 720C                       	moveq #$c, RowOffset
+00068584 7421                       	moveq #$21, WindowWidth
+00068586 760F                       	moveq #$f, WindowHeight
 00068588 7843                       	moveq #$43, d4
 0006858A 4EB9 0000 32D6             	jsr	draw_background_window
 00068590 7003                       	moveq #$3, ColOffset
-00068592 720F                       	moveq #$f, RowOffset
+00068592 720E                       	moveq #$e, RowOffset
 00068594 7402                       	moveq #$2, d2
 00068596 4E75                       	rts
 00068598                            ; $8f18 drawing party-> stats window
@@ -1095,9 +1100,9 @@
 00068598                             org $8f18
 00008F18                            draw_party_menu:
 00008F18 7002                       	moveq #$2, ColOffset
-00008F1A 720D                       	moveq #$d, RowOffset
-00008F1C 7424                       	moveq #$24, WindowWidth
-00008F1E 760A                       	moveq #$a, WindowHeight
+00008F1A 720C                       	moveq #$c, RowOffset
+00008F1C 7421                       	moveq #$21, WindowWidth
+00008F1E 760F                       	moveq #$f, WindowHeight
 00008F20 7843                       	moveq #$43, d4
 00008F22                             
 00008F22                             org $8f2e
@@ -1126,16 +1131,35 @@
 0000A2D2                             org $a2da
 0000A2DA 5240                       	addq #$1, ColOffset	; max mp
 0000A2DC                             org $a2e0
-0000A2E0 5A40                       	addq #$5, ColOffset	; status debuffs
-0000A2E2                            
-0000A2E2                            ; ########################################################################################
-0000A2E2                            ; #
-0000A2E2                            ; #	party order menu
-0000A2E2                            ; #
-0000A2E2                            ; ########################################################################################
-0000A2E2                            
-0000A2E2                            ; member selection list
-0000A2E2                             org $8bb6
+0000A2E0 4EB9 0000 0000             	jsr DrawLevelOnPartyList
+0000A2E6                             ; highlighting is in one of my custom routines, like $68880 or something
+0000A2E6                             
+0000A2E6                             org $68a80
+00068A80                            DrawLevelOnPartyList:
+00068A80                            ; this subroutine will draw member level on party status menu, and set up the status debuff to resume after RTS
+00068A80 41F9 0000 1234             	LEA	$1234, a0
+00068A86 7006                       	moveq	#$6, ColOffset
+00068A88 5241                       	addq	#$1, RowOffset
+00068A8A 4EB9 0000 3628             	jsr	write_label_8x8	; printing "level" label?
+00068A90                            	
+00068A90 4242                       	clr	d2
+00068A92 5840                       	addq	#$4, ColOffset
+00068A94 1429 000E                  	move.b	$e(a1), d2
+00068A98 7602                       	moveq	#$2, d3
+00068A9A 4EB9 0000 3734             	jsr	draw_value_8x8
+00068AA0                            
+00068AA0 700F                       	moveq	#$f, ColOffset
+00068AA2 1429 0019                  	move.b	$19(a1), d2
+00068AA6 4E75                       	rts
+00068AA8                             
+00068AA8                            ; ########################################################################################
+00068AA8                            ; #
+00068AA8                            ; #	party order menu
+00068AA8                            ; #
+00068AA8                            ; ########################################################################################
+00068AA8                            
+00068AA8                            ; member selection list
+00068AA8                             org $8bb6
 00008BB6 7006                        	moveq #$6, ColOffset
 00008BB8 720B                       	moveq #$b, RowOffset
 00008BBA 7419                       	moveq #$19, WindowWidth
@@ -1986,7 +2010,7 @@
 0000B280                            
 0000B280                            ; need to write party members in 2 col format..
 0000B280                             org $b26c
-0000B26C 4EB9 0006 8856              jsr SimpleTwoCol
+0000B26C 4EB9 0006 885A              jsr SimpleTwoCol
 0000B272                            
 0000B272                            
 0000B272                            ; return spell town list	 - this list is paginated :( - generally seems to work??

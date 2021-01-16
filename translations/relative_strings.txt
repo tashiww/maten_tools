@@ -519,17 +519,19 @@ Item
 # added 2 spaces so i could fit 9999 hp ? lol
 HP        MP
 
+
 {"ptr_pos": 41708, "pc_hex": "0xa2ec", "str_pos": 41796, "abs_offset_hex": "0xa344", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # ト゛ク
-STN
+# these are for party menu status menu list
+Stoned
 
 {"ptr_pos": 41724, "pc_hex": "0xa2fc", "str_pos": 41800, "abs_offset_hex": "0xa348", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # ト゛ク
-PAR
+Paralyzed
 
 {"ptr_pos": 41740, "pc_hex": "0xa30c", "str_pos": 41804, "abs_offset_hex": "0xa34c", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # ト゛ク
-PSN
+Poisoned
 
 
 {"ptr_pos": 41874, "pc_hex": "0xa392", "str_pos": 42216, "abs_offset_hex": "0xa44e", "table": "menu", "repoint": false, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
