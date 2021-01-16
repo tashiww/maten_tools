@@ -16,30 +16,30 @@
 0006054F                            ; insert 8x16 english font to replace original 16x16 Japanese font
 0006054F                            	org $648e6
 000648E6                            	incbin "./fonts/8x16 font.bin"
-00064EF6                            	
-00064EF6                            ; blank out the rest of the original Japanese font
-00064EF6                            	DO
-00064EF6                            	dcb.l 150,$FFFFFFFF	
-00064EF6                            	UNTIL *>$68A00
-00068BE6                            
-00068BE6                            ; adjust font routine for 8x16 font instead of 16x16
-00068BE6                            	include "./asm/text_engine.asm"
-00068BE6                            ; ############################################################################
-00068BE6                            ; # English Patch for maten no soumetsu
-00068BE6                            ; ############################################################################
-00068BE6                            ; # Created by:	tashi
-00068BE6                            ; # Creation Date:	20XX
-00068BE6                            ; # Re-assembled with asm68k (port of SNASM68k)
-00068BE6                            ; # Summary:
-00068BE6                            ; # 	Modify text engine for 8x16 font
-00068BE6                            ; #			- Change VRAM increments
-00068BE6                            ; #			- Change font tile lookup
-00068BE6                            ; ############################################################################
-00068BE6                            
-00068BE6                            FontTileOffset	equr	d0
-00068BE6                            BaseFontOffset	equr	a0
-00068BE6                            
-00068BE6                             org $00001FE8
+00064F06                            	
+00064F06                            ; blank out the rest of the original Japanese font
+00064F06                            	DO
+00064F06                            	dcb.l 150,$FFFFFFFF	
+00064F06                            	UNTIL *>$68A00
+00068BF6                            
+00068BF6                            ; adjust font routine for 8x16 font instead of 16x16
+00068BF6                            	include "./asm/text_engine.asm"
+00068BF6                            ; ############################################################################
+00068BF6                            ; # English Patch for maten no soumetsu
+00068BF6                            ; ############################################################################
+00068BF6                            ; # Created by:	tashi
+00068BF6                            ; # Creation Date:	20XX
+00068BF6                            ; # Re-assembled with asm68k (port of SNASM68k)
+00068BF6                            ; # Summary:
+00068BF6                            ; # 	Modify text engine for 8x16 font
+00068BF6                            ; #			- Change VRAM increments
+00068BF6                            ; #			- Change font tile lookup
+00068BF6                            ; ############################################################################
+00068BF6                            
+00068BF6                            FontTileOffset	equr	d0
+00068BF6                            BaseFontOffset	equr	a0
+00068BF6                            
+00068BF6                             org $00001FE8
 00001FE8                            
 00001FE8 48E7 E0C0                  	MOVEM.l	A1/A0/D2/D1/D0, -(A7)
 00001FEC 3409                       	MOVE.w	A1, D2
@@ -239,7 +239,7 @@
 00003FE6                            ; main menu
 00003FE6                             org $8372
 00008372 7002                       	moveq #$2, ColOffset
-00008374 7201                       	moveq #$1, RowOffset
+00008374 7202                       	moveq #$2, RowOffset
 00008376 7408                       	moveq #$8, WindowWidth
 00008378 760A                       	moveq #$a, WindowHeight
 0000837A 7803                       	moveq #$3, d4
@@ -247,12 +247,12 @@
 0000837C                             org $8386
 00008386                            ; label offset
 00008386 7003                       	moveq #$3, ColOffset
-00008388 7202                       	moveq #$2, RowOffset
+00008388 7203                       	moveq #$3, RowOffset
 0000838A                            
 0000838A                            ; highlight main menu maybe? bsr to $3328
 0000838A                             org $8392
 00008392 7003                       	moveq #$3, ColOffset
-00008394 7202                       	moveq #$2, RowOffset
+00008394 7203                       	moveq #$3, RowOffset
 00008396 7405                       	moveq #$5, d2
 00008398 7601                       	moveq #$1, d3
 0000839A 7801                       	moveq	#$1, d4
@@ -262,18 +262,18 @@
 000083A0                            ; sub menu	use/give/drop layout, label, and highlighting
 000083A0                            
 000083A0                             org $8402
-00008402 7003                       	moveq #$3, ColOffset
-00008404 7202                       	moveq #$2, RowOffset
+00008402 7004                       	moveq #$4, ColOffset
+00008404 7203                       	moveq #$3, RowOffset
 00008406 7406                       	moveq #$6, WindowWidth
 00008408 7608                       	moveq #$8, WindowHeight
 0000840A 383C 0083                  	move.w #$83, d4
 0000840E                             org $841a
-0000841A 7004                       	moveq #$4, ColOffset
-0000841C 7203                       	moveq #$3, RowOffset
+0000841A 7005                       	moveq #$5, ColOffset
+0000841C 7204                       	moveq #$4, RowOffset
 0000841E                            ; highlights
 0000841E                             org $842a
-0000842A 7004                       	moveq #$4, ColOffset
-0000842C 7203                       	moveq #$3, RowOffset
+0000842A 7005                       	moveq #$5, ColOffset
+0000842C 7204                       	moveq #$4, RowOffset
 0000842E 7403                       	moveq #$3, d2
 00008430 7601                       	moveq #$1, d3
 00008432 7801                       	moveq	#$1, d4	; cols
@@ -337,24 +337,24 @@
 0006886E                            	
 0006886E                             org $a326
 0000A326                             ; party select window for drop/give submenus item submenu layout control
-0000A326 4EB9 0006 87C6             	jsr $687c6
+0000A326 4EB9 0006 8700             	jsr $68700
 0000A32C                            	WHILE *<$a330
 0000A32C                            		NOP
 0000A32C 4E71 4E71                  	ENDW
-0000A330                             org $687c6
-000687C6 7802                       	moveq	#$2, d4	; selectable columns, need to conditionally set to 1 for party status list
-000687C8 0803 0001                  	btst	#1, d3	; check if party status list
-000687CC 6700 0000                  	beq	NotPartyStatusList
-000687D0 5344                       	subq	#$1, d4
-000687D2                            NotPartyStatusList:
-000687D2 740A                       	moveq	#$a, d2	; highlight width
-000687D4 7600                       	moveq	#$0, d3	; height (0 is 1 tile)
-000687D6 3C05                       	move.w	d5, d6	; maybe it's incrementing based on party count
-000687D8 5346                       	subq.w	#1, d6	; i think it limits selectable options
-000687DA 4E75                       	RTS
-000687DC                            
-000687DC                            ; equip party select menu
-000687DC                             org $8810
+0000A330                             org $68700
+00068700 7802                       	moveq	#$2, d4	; selectable columns, need to conditionally set to 1 for party status list
+00068702 0803 0001                  	btst	#1, d3	; check if party status list
+00068706 6700 0000                  	beq	NotPartyStatusList
+0006870A 5344                       	subq	#$1, d4
+0006870C                            NotPartyStatusList:
+0006870C 740A                       	moveq	#$a, d2	; highlight width
+0006870E 7600                       	moveq	#$0, d3	; height (0 is 1 tile)
+00068710 3C05                       	move.w	d5, d6	; maybe it's incrementing based on party count
+00068712 5346                       	subq.w	#1, d6	; i think it limits selectable options
+00068714 4E75                       	RTS
+00068716                            
+00068716                            ; equip party select menu
+00068716                             org $8810
 00008810 700A 7201 7419 7605 383C+  	PartySelectMenu
 0000881C                            
 0000881C                             org $8828
@@ -1077,11 +1077,23 @@
 00008954                            ; ########################################################################################
 00008954                            
 00008954                            
-00008954                            
-00008954                            
-00008954                            ; $8f18 drawing party-> stats window
-00008954                            
-00008954                             org $8f18
+00008954                             org $68580
+00068580                            redraw_party_menu:
+00068580 7002                       	moveq #$2, ColOffset
+00068582 720D                       	moveq #$d, RowOffset
+00068584 7424                       	moveq #$24, WindowWidth
+00068586 760A                       	moveq #$a, WindowHeight
+00068588 7843                       	moveq #$43, d4
+0006858A 4EB9 0000 32D6             	jsr	draw_background_window
+00068590 7003                       	moveq #$3, ColOffset
+00068592 720F                       	moveq #$f, RowOffset
+00068594 7402                       	moveq #$2, d2
+00068596 4E75                       	rts
+00068598                            ; $8f18 drawing party-> stats window
+00068598                            
+00068598                            
+00068598                             org $8f18
+00008F18                            draw_party_menu:
 00008F18 7002                       	moveq #$2, ColOffset
 00008F1A 720D                       	moveq #$d, RowOffset
 00008F1C 7424                       	moveq #$24, WindowWidth
@@ -1089,9 +1101,10 @@
 00008F20 7843                       	moveq #$43, d4
 00008F22                             
 00008F22                             org $8f2e
-00008F2E 7003                       	moveq #$3, ColOffset
-00008F30 720F                       	moveq #$f, RowOffset
-00008F32 7402                       	moveq #$2, d2
+00008F2E 4EB9 0006 8580             	jsr redraw_party_menu
+00008F34                            	; moveq #$3, ColOffset
+00008F34                            	; moveq #$f, RowOffset
+00008F34                            	; moveq #$2, d2
 00008F34                            
 00008F34                            ; offset for HP  MP headers
 00008F34                             org $a246
@@ -1115,17 +1128,47 @@
 0000A2DC                             org $a2e0
 0000A2E0 5A40                       	addq #$5, ColOffset	; status debuffs
 0000A2E2                            
-0000A2E2                            
 0000A2E2                            ; ########################################################################################
-0000A2E2                            ; # Full page stat screen!!
-0000A2E2                            ; # layout adjustments to avoid abbreviations
 0000A2E2                            ; #
-0000A2E2                            ; # Generated by the active disassembly feature of the Exodus emulation platform
-0000A2E2                            ; # Creation Date:   2021-1-2 10:22:43
-0000A2E2                            ; # Analysis Region: 0x00009002 - 0x000091C4
+0000A2E2                            ; #	party order menu
+0000A2E2                            ; #
 0000A2E2                            ; ########################################################################################
 0000A2E2                            
-0000A2E2                             org $00008F86
+0000A2E2                            ; member selection list
+0000A2E2                             org $8bb6
+00008BB6 7006                        	moveq #$6, ColOffset
+00008BB8 720B                       	moveq #$b, RowOffset
+00008BBA 7419                       	moveq #$19, WindowWidth
+00008BBC 7605                       	moveq #$5, WindowHeight
+00008BBE                            ; member label offsets
+00008BBE                             org $8c24
+00008C24 7007                         	moveq #$7, ColOffset
+00008C26 720C                       	moveq #$c, RowOffset
+00008C28                            
+00008C28                             
+00008C28                            ; new order output
+00008C28                             org $8bc8
+00008BC8 700B                        	moveq #$b, ColOffset
+00008BCA 7211                       	moveq #$11, RowOffset
+00008BCC 740D                       	moveq #$d, WindowWidth
+00008BCE 7608                       	moveq #$8, WindowHeight
+00008BD0                            ; new order label offsets
+00008BD0                             org $8bea
+00008BEA 700C                        	moveq #$c, ColOffset
+00008BEC 7212                       	moveq #$12, RowOffset
+00008BEE                             org $8c00
+00008C00 5241                       	addq	#1, d1	; single spacing
+00008C02                            
+00008C02                            ; ########################################################################################
+00008C02                            ; # Full page stat screen!!
+00008C02                            ; # layout adjustments to avoid abbreviations
+00008C02                            ; #
+00008C02                            ; # Generated by the active disassembly feature of the Exodus emulation platform
+00008C02                            ; # Creation Date:   2021-1-2 10:22:43
+00008C02                            ; # Analysis Region: 0x00009002 - 0x000091C4
+00008C02                            ; ########################################################################################
+00008C02                            
+00008C02                             org $00008F86
 00008F86                            	; dimensions for xxx G small window in top right
 00008F86 701D                       	MOVEQ	#$0000001d, D0
 00008F88 7200                       	MOVEQ	#0, D1
@@ -1521,47 +1564,136 @@
 0000D9AE D041                       	ADD.w	D1, x_tile_offset
 0000D9B0 3207                       	MOVE.w	D7, y_tile_offset	; 
 0000D9B2                             
-0000D9B2                             org $68780
-00068780                            new_name_offset:
-00068780 7208                       	MOVEQ	#$8, d1	; for centering character name, max length of name
-00068782 9240                       	SUB.w	D0, d1
-00068784 6600 0000                  	bne new_name_done
-00068788 2F09                       	MOVE.l	a1, -(a7)
-0006878A 7207                       	moveq	#$7, d1
-0006878C 43F9 00FF D5FC             	lea	$ffd5fc, a1	; hopefully this is empty lol
-00068792                            truncate_name:
-00068792 12D8                       	move.b	(a0)+, (a1)+
-00068794 51C9 FFFC                  	DBF	d1, truncate_name
-00068798 41F9 00FF D5FC             	lea	$ffd5fc, a0
-0006879E 225F                       	move.l	(a7)+, a1
-000687A0                            
-000687A0                            new_name_done:
-000687A0 5341                       	subq	#$1, d1
-000687A2 E249                       	LSR.w	#1, d1
-000687A4 4E75                       	rts
-000687A6                            ; name length counter
-000687A6                             org $0000352A
-0000352A                            
+0000D9B2                             org $68740
+00068740                            new_name_offset:
+00068740 2F09                       	move.l	a1, -(a7)
+00068742 7208                       	MOVEQ	#$8, d1	; for centering character name, max length of name
+00068744 9240                       	SUB.w	D0, d1
+00068746 6400 0000                  	bcc new_name_done
+0006874A 7207                       	moveq	#$7, d1	; loop counter for copying bytes
+0006874C                            truncate_name:
+0006874C B1FC 00FF D590             	CMPI.l	#$00FFD590, a0	; nightmare ram string offset
+00068752 6600 0000                  	BNE	check_whitetiger
+00068756 41F9 00FF D5FC             	lea	$ffd5fc, a0	; hopefully this is empty lol
+0006875C 43F9 0000 0000             	lea	squishy_nightmare, a1
+00068762                            copy_nightmare:
+00068762 10D9                       	move.b	(a1)+, (a0)+
+00068764 51C9 FFFC                  	dbf	d1, copy_nightmare
+00068768 41F9 00FF D5FC             	lea	$ffd5fc, a0
+0006876E                            check_whitetiger:
+0006876E B1FC 00FF D5AC             	CMPI.l #$00FFD5AC, a0
+00068774 6600 0000                  	BNE	check_satan	; if the name was > 8 chars it should be nightmare, white tiger, or satan 
+00068778 41F9 00FF D5FC             	lea	$ffd5fc, a0
+0006877E 43F9 0000 0000             	lea	squishy_whitetiger, a1
+00068784                            copy_whitetiger:
+00068784 10D9                       	move.b	(a1)+, (a0)+
+00068786 51C9 FFFC                  	dbf	d1, copy_whitetiger
+0006878A 41F9 00FF D5FC             	lea	$ffd5fc, a0
+00068790                            check_satan:
+00068790 B1FC 00FF D574             	CMPI.l	#$00FFd574, a0
+00068796 6600 0000                  	BNE	new_name_done
+0006879A 43F9 00FF D5FC             	lea	$ffd5fc, a1
+000687A0 7204                       	moveq	#$4, d1
+000687A2                            copy_satan:
+000687A2 12D8                       	move.b	(a0)+, (a1)+	; just copy first 5 letters of satanachia
+000687A4 51C9 FFFC                  	dbf	d1, copy_satan
+000687A8 7200                       	moveq	#$0, d1
+000687AA 12C1                       	move.b	d1, (a1)+
+000687AC 41F9 00FF D5FC             	lea	$ffd5fc, a0
+000687B2 7202                       	moveq	#$2, d1
+000687B4                            new_name_done:
+000687B4 225F                       	move.l	(a7)+,	a1
+000687B6 5341                       	subq	#$1, d1
+000687B8 E249                       	LSR.w	#1, d1
+000687BA 4E75                       	rts
+000687BC                            	
+000687BC                            squishy_nightmare:
+000687BC 2E71 7273 4D41 5245        	dc.l	$2e717273, $4d415245
+000687C4 00                         	dc.b	$00
+000687C5                            squishy_whitetiger:
+000687C5 3748 7475 7677 7879        	dc.l	$37487475, $76777879
+000687CD 00                         	dc.b	$00
+000687CE                            
+000687CE                            	
+000687CE                            ; name length counter
+000687CE                             org $0000352A
 0000352A 48E7 4080                  	MOVEM.l	A0/D1, -(A7)
 0000352E 4240                       	CLR.w	D0
 00003530                            loc_00003530:
 00003530 1218                       	MOVE.b	(A0)+, D1
-00003532 6700                       	BEQ.b	leave_SR
-00003534 0C00 0008                  	CMPI.b	#$8, d0
-00003538 6400 0000                  	bcc	leave_SR
-0000353C 5240                       	ADDQ.w	#1, D0
-0000353E 60F0                       	BRA.b	loc_00003530
-00003540                            loc_0000354A:
-00003540                            	;cmpi.b	#$8, d0
-00003540                            	;bne leave_SR
-00003540                            	;subq	#1, d6
-00003540                            leave_SR:
-00003540                            	;subq	#2, d6
-00003540 4CDF 0102                  	MOVEM.l	(A7)+, D1/A0
-00003544 4E75                       	RTS
-00003546                            	
-00003546                             
-00003546                             org $d9b2
+00003532 6700                       	BEQ.b	name_count_finished
+00003534 5240                       	ADDQ.w	#1, D0
+00003536 60F8                       	BRA.b	loc_00003530
+00003538                            loc_0000354A:
+00003538                            	;cmpi.b	#$8, d0
+00003538                            	;bne name_count_finished
+00003538                            	;subq	#1, d6
+00003538                            name_count_finished:
+00003538                            	;subq	#2, d6
+00003538 4CDF 0102                  	MOVEM.l	(A7)+, D1/A0
+0000353C 4E75                       	RTS
+0000353E                            
+0000353E                            
+0000353E                            ; right side skill target party select window
+0000353E                            
+0000353E                             org $cfce
+0000CFCE                            	;jsr draw_background_window
+0000CFCE 4EB9 0000 0000             	jsr adjust_battle_windows
+0000CFD4                            	
+0000CFD4                            ; offset windows on right side
+0000CFD4                             org $68680
+00068680                            
+00068680                            adjust_battle_windows:
+00068680 0C40 0017                  	cmpi	#$17, d0
+00068684 6600 0000                  	bne leave_adjust_sr
+00068688 700A                       	moveq	#$a, d0
+0006868A                            leave_adjust_sr:
+0006868A 4EB9 0000 32D6             	jsr draw_background_window
+00068690 4E75                       	rts
+00068692                            	
+00068692                            ; labels for party select rightside skill use in battle
+00068692                             org $cfe0
+0000CFE0 4EB9 0000 0000             	jsr adjust_battle_labels
+0000CFE6                            	
+0000CFE6                             org $686b0
+000686B0                            adjust_battle_labels:
+000686B0 0C40 0017                  	cmpi	#$17, d0
+000686B4 6600 0000                  	bne leave_label_sr
+000686B8 700A                       	moveq	#$a, d0
+000686BA                            leave_label_sr:
+000686BA 5240                       	addq	#1, d0
+000686BC 5241                       	addq	#1, d1
+000686BE 4242                       	clr	d2
+000686C0 4E75                       	rts
+000686C2                            
+000686C2                            ; item party select in battle right side 
+000686C2                             org $d0e6
+0000D0E6 4EB9 0006 8680             	jsr	adjust_battle_windows
+0000D0EC                            
+0000D0EC                             org $d0f8
+0000D0F8 4EB9 0006 86B0             	jsr adjust_battle_labels
+0000D0FE                             
+0000D0FE                            ; battle item window	
+0000D0FE                             org $d05a
+0000D05A                            	; x tile offset is set conditionally somewhere above... 9 for left-side people
+0000D05A 5541                       	subq	#$2, y_tile_offset
+0000D05C 7414                       	moveq	#$14, d2	; width
+0000D05E 760E                       	moveq	#$e, d3	; height
+0000D060                            	
+0000D060                             ; battle item labels
+0000D060                             org	$d088
+0000D088 5241                       	addq	#1, y_tile_offset	; i think this was moving item list down two
+0000D08A                            
+0000D08A                            ; item target party window dimensions
+0000D08A                             org $d0de
+0000D0DE 7419                       	moveq #$19, WindowWidth
+0000D0E0 7605                       	moveq #$5, WindowHeight
+0000D0E2                            
+0000D0E2                             ;org $d0fa
+0000D0E2                             ;	addq	#1, y_tile_offset	; i think this was moving text down two
+0000D0E2                             ; i rolled this into adjust_battle_labels
+0000D0E2                            
+0000D0E2                             org $d9b2
 0000D9B2 4EB9 0000 3628             	JSR	write_label_8x8
 0000D9B8                            	
 0000D9B8 3006                       	MOVE.w	D6, x_tile_offset

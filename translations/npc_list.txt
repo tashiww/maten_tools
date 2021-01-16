@@ -36,7 +36,7 @@ Kamil
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 9, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # サイナック
-Cynak
+Cynac
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 10, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # サ゛ファン
@@ -72,4 +72,4 @@ Nebulous
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 18, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # ソート゛マン
-Sword Man
+Swordman

@@ -536,7 +536,7 @@ PSN
 #          
 #faking str pos to avoid blanking asm...
 # this is for item list, need 16
-                
+                 
 
 #{"ptr_pos": 41962, "pc_hex": "0xa3ea", "str_pos": 42216, "abs_offset_hex": "0xa44e", "table": "menu", "repoint": true, "missing": 0, "ptr_type": "relative", "prefix": "0x41fa"}
 # # REDIRECT ONLY         

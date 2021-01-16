@@ -51,7 +51,7 @@ GivePartyLabels	macro
 ; main menu
  org $8372
 	moveq #$2, ColOffset
-	moveq #$1, RowOffset
+	moveq #$2, RowOffset
 	moveq #$8, WindowWidth
 	moveq #$a, WindowHeight
 	moveq #$3, d4
@@ -59,12 +59,12 @@ GivePartyLabels	macro
  org $8386
 ; label offset
 	moveq #$3, ColOffset
-	moveq #$2, RowOffset
+	moveq #$3, RowOffset
 
 ; highlight main menu maybe? bsr to $3328
  org $8392
 	moveq #$3, ColOffset
-	moveq #$2, RowOffset
+	moveq #$3, RowOffset
 	moveq #$5, d2
 	moveq #$1, d3
 	moveq	#$1, d4
@@ -74,18 +74,18 @@ GivePartyLabels	macro
 ; sub menu	use/give/drop layout, label, and highlighting
 
  org $8402
-	moveq #$3, ColOffset
-	moveq #$2, RowOffset
+	moveq #$4, ColOffset
+	moveq #$3, RowOffset
 	moveq #$6, WindowWidth
 	moveq #$8, WindowHeight
 	move.w #$83, d4
  org $841a
-	moveq #$4, ColOffset
-	moveq #$3, RowOffset
+	moveq #$5, ColOffset
+	moveq #$4, RowOffset
 ; highlights
  org $842a
-	moveq #$4, ColOffset
-	moveq #$3, RowOffset
+	moveq #$5, ColOffset
+	moveq #$4, RowOffset
 	moveq #$3, d2
 	moveq #$1, d3
 	moveq	#$1, d4	; cols
@@ -149,11 +149,11 @@ IncrementNoPrint:
 	
  org $a326
  ; party select window for drop/give submenus item submenu layout control
-	jsr $687c6
+	jsr $68700
 	WHILE *<$a330
 		NOP
 	ENDW
- org $687c6
+ org $68700
 	moveq	#$2, d4	; selectable columns, need to conditionally set to 1 for party status list
 	btst	#1, d3	; check if party status list
 	beq	NotPartyStatusList
@@ -889,11 +889,23 @@ loc_00008930:
 ; ########################################################################################
 
 
-
-
+ org $68580
+redraw_party_menu:
+	moveq #$2, ColOffset
+	moveq #$d, RowOffset
+	moveq #$24, WindowWidth
+	moveq #$a, WindowHeight
+	moveq #$43, d4
+	jsr	draw_background_window
+	moveq #$3, ColOffset
+	moveq #$f, RowOffset
+	moveq #$2, d2
+	rts
 ; $8f18 drawing party-> stats window
 
+
  org $8f18
+draw_party_menu:
 	moveq #$2, ColOffset
 	moveq #$d, RowOffset
 	moveq #$24, WindowWidth
@@ -901,9 +913,10 @@ loc_00008930:
 	moveq #$43, d4
  
  org $8f2e
-	moveq #$3, ColOffset
-	moveq #$f, RowOffset
-	moveq #$2, d2
+	jsr redraw_party_menu
+	; moveq #$3, ColOffset
+	; moveq #$f, RowOffset
+	; moveq #$2, d2
 
 ; offset for HP  MP headers
  org $a246
@@ -927,6 +940,36 @@ loc_00008930:
  org $a2e0
 	addq #$5, ColOffset	; status debuffs
 
+; ########################################################################################
+; #
+; #	party order menu
+; #
+; ########################################################################################
+
+; member selection list
+ org $8bb6
+ 	moveq #$6, ColOffset
+	moveq #$b, RowOffset
+	moveq #$19, WindowWidth
+	moveq #$5, WindowHeight
+; member label offsets
+ org $8c24
+  	moveq #$7, ColOffset
+	moveq #$c, RowOffset
+
+ 
+; new order output
+ org $8bc8
+ 	moveq #$b, ColOffset
+	moveq #$11, RowOffset
+	moveq #$d, WindowWidth
+	moveq #$8, WindowHeight
+; new order label offsets
+ org $8bea
+ 	moveq #$c, ColOffset
+	moveq #$12, RowOffset
+ org $8c00
+	addq	#1, d1	; single spacing
 
 ; ########################################################################################
 ; # Full page stat screen!!
@@ -1333,46 +1376,135 @@ loc_0000D980:
 	ADD.w	D1, x_tile_offset
 	MOVE.w	D7, y_tile_offset	; 
  
- org $68780
+ org $68740
 new_name_offset:
+	move.l	a1, -(a7)
 	MOVEQ	#$8, d1	; for centering character name, max length of name
 	SUB.w	D0, d1
-	bne new_name_done
-	MOVE.l	a1, -(a7)
-	moveq	#$7, d1
-	lea	$ffd5fc, a1	; hopefully this is empty lol
+	bcc new_name_done
+	moveq	#$7, d1	; loop counter for copying bytes
 truncate_name:
-	move.b	(a0)+, (a1)+
-	DBF	d1, truncate_name
+	CMPI.l	#$00FFD590, a0	; nightmare ram string offset
+	BNE	check_whitetiger
+	lea	$ffd5fc, a0	; hopefully this is empty lol
+	lea	squishy_nightmare, a1
+copy_nightmare:
+	move.b	(a1)+, (a0)+
+	dbf	d1, copy_nightmare
 	lea	$ffd5fc, a0
-	move.l	(a7)+, a1
-
+check_whitetiger:
+	CMPI.l #$00FFD5AC, a0
+	BNE	check_satan	; if the name was > 8 chars it should be nightmare, white tiger, or satan 
+	lea	$ffd5fc, a0
+	lea	squishy_whitetiger, a1
+copy_whitetiger:
+	move.b	(a1)+, (a0)+
+	dbf	d1, copy_whitetiger
+	lea	$ffd5fc, a0
+check_satan:
+	CMPI.l	#$00FFd574, a0
+	BNE	new_name_done
+	lea	$ffd5fc, a1
+	moveq	#$4, d1
+copy_satan:
+	move.b	(a0)+, (a1)+	; just copy first 5 letters of satanachia
+	dbf	d1, copy_satan
+	moveq	#$0, d1
+	move.b	d1, (a1)+
+	lea	$ffd5fc, a0
+	moveq	#$2, d1
 new_name_done:
+	move.l	(a7)+,	a1
 	subq	#$1, d1
 	LSR.w	#1, d1
 	rts
+	
+squishy_nightmare:
+	dc.l	$2e717273, $4d415245
+	dc.b	$00
+squishy_whitetiger:
+	dc.l	$37487475, $76777879
+	dc.b	$00
+
+	
 ; name length counter
  org $0000352A
-
 	MOVEM.l	A0/D1, -(A7)
 	CLR.w	D0
 loc_00003530:
 	MOVE.b	(A0)+, D1
-	BEQ.b	leave_SR
-	CMPI.b	#$8, d0
-	bcc	leave_SR
+	BEQ.b	name_count_finished
 	ADDQ.w	#1, D0
 	BRA.b	loc_00003530
 loc_0000354A:
 	;cmpi.b	#$8, d0
-	;bne leave_SR
+	;bne name_count_finished
 	;subq	#1, d6
-leave_SR:
+name_count_finished:
 	;subq	#2, d6
 	MOVEM.l	(A7)+, D1/A0
 	RTS
+
+
+; right side skill target party select window
+
+ org $cfce
+	;jsr draw_background_window
+	jsr adjust_battle_windows
 	
+; offset windows on right side
+ org $68680
+
+adjust_battle_windows:
+	cmpi	#$17, d0
+	bne leave_adjust_sr
+	moveq	#$a, d0
+leave_adjust_sr:
+	jsr draw_background_window
+	rts
+	
+; labels for party select rightside skill use in battle
+ org $cfe0
+	jsr adjust_battle_labels
+	
+ org $686b0
+adjust_battle_labels:
+	cmpi	#$17, d0
+	bne leave_label_sr
+	moveq	#$a, d0
+leave_label_sr:
+	addq	#1, d0
+	addq	#1, d1
+	clr	d2
+	rts
+
+; item party select in battle right side 
+ org $d0e6
+	jsr	adjust_battle_windows
+
+ org $d0f8
+	jsr adjust_battle_labels
  
+; battle item window	
+ org $d05a
+	; x tile offset is set conditionally somewhere above... 9 for left-side people
+	subq	#$2, y_tile_offset
+	moveq	#$14, d2	; width
+	moveq	#$e, d3	; height
+	
+ ; battle item labels
+ org	$d088
+	addq	#1, y_tile_offset	; i think this was moving item list down two
+
+; item target party window dimensions
+ org $d0de
+	moveq #$19, WindowWidth
+	moveq #$5, WindowHeight
+
+ ;org $d0fa
+ ;	addq	#1, y_tile_offset	; i think this was moving text down two
+ ; i rolled this into adjust_battle_labels
+
  org $d9b2
 	JSR	write_label_8x8
 	

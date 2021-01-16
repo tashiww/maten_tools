@@ -590,7 +590,7 @@ Angry Soul
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 145, "prefix": null}
 # アスラのうて゛わ
-Ashura Bracer
+Asura Bracer
 
 {"desc": "itm", "repoint": "false","table": "menu","ptr_type": "fixed", "ptr_pos": 42076, "str_pos": 78022, "str_hex": "0x130c6", "end": 84256, "end_hex": "0x14920", "step": 32, "max_len": 10, "id": 146, "prefix": null}
 # ウィンク゛フ゛ーツ

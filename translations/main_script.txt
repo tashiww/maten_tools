@@ -1496,7 +1496,7 @@ I was chilling in Leam for the day, and when I got back, I saw bandits abscondin
 # ちどエルフの女王のところへ行って<br>
 # みましょう。」<scroll><npc9>「え～っ！！なんか<br>
 # ぼくこわいな。」
-<player> "We finally made it back to Fantasia"<scroll>
+<player> "We finally made it back to Fantasia."<scroll>
 <npc1> "<player>, let's talk to the Elf Queen again."<scroll>
 <npc9> "Oh, God! She terrifies me."
 
@@ -1529,9 +1529,9 @@ I was chilling in Leam for the day, and when I got back, I saw bandits abscondin
 # なくちゃならないが，パワ―はおれ<br>
 # の船より上だからな。じゃあおれは<br>
 # いくぜ，みんな元気でな！！」
-Cynak "<player>. This has been enough for me. I'm out. What will you do?"<scroll>
+Cynac "<player>. This has been enough for me. I'm out. What will you do?"<scroll>
 <player> "I'm going to find the Goddess Statue and bring it back to Miona in Pron."<scroll>
-Cynak "Then this is where we part ways. Oh, you'll be stranded here without a ship, won't you? As thanks, I'll give you my old ship. I'll take that nice, new pirate ship. It needs some repairs, but it's way better than my old ship. Come by the bar sometime if you want to chat."
+Cynac "Then this is where we part ways. Oh, you'll be stranded here without a ship, won't you? As thanks, I'll give you my old ship. I'll take that nice, new pirate ship. It needs some repairs, but it's way better than my old ship. Come by the bar sometime if you want to chat."
 
 
 {"prefix":"0x7","ptr_pos":161272,"str_pos":161416,"ptr_hex":"275F8","str_hex":"27688","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -4996,7 +4996,7 @@ There have been more and more pirate sightings recently.
 {"prefix":"0x7","ptr_pos":211646,"str_pos":211778,"ptr_hex":"33ABE","str_hex":"33B42","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 海賊の名前はたしか，サイナックと<br>
 # いってたな。
-The pirate's name was Cynakk, I think.
+The pirate's name was Cynac, I think.
 
 
 {"prefix":"0x7","ptr_pos":211654,"str_pos":211808,"ptr_hex":"33AC6","str_hex":"33B60","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5814,20 +5814,20 @@ There are rumors of an illusionist living in a little house on a peninsula.
 # させてもらうぜ。海にいるやつらを<br>
 # 見つけるには船が必要だな。<br>
 # 船はおれの船をつかってくれ。」
-Cynak "Who dares disturb me?"<scroll>
+Cynac "Who dares disturb me?"<scroll>
 <player> "What's your problem?"<scroll>
-Cynak "You talkin' to me?! I'm the pirate, Cynak. I'm not THAT Cynak, though."<scroll>
+Cynac "You talkin' to me?! I'm the pirate, Cynac. I'm not THAT Cynac, though."<scroll>
 <player> "Do you know who that other guy is?"<scroll>
-Cynak "I wish I did, kid. Do you know how hard it is to get confused for him all the time?"<scroll>
+Cynac "I wish I did, kid. Do you know how hard it is to get confused for him all the time?"<scroll>
 <player> "That sounds pretty inconvenient. You know he's using your name, right?"<scroll>
-Cynak "That's a load of codswallop! I'll find him and put a stop to this."<scroll>
+Cynac "That's a load of codswallop! I'll find him and put a stop to this."<scroll>
 <player> "How about we come with you?"<scroll>
-Cynak "Great, I'll be needing a crew. It will take a ship to find someone on a ship, so we can use mine."
+Cynac "Great, I'll be needing a crew. It will take a ship to find someone on a ship, so we can use mine."
 
 
 {"prefix":"0x7","ptr_pos":223146,"str_pos":223744,"ptr_hex":"367AA","str_hex":"36A00","table":"normal","repoint":false,"ptr_type":"absolute"}
 # サイナックがなかまになった。
-Cynak joined the party.
+Cynac joined the party.
 
 
 {"prefix":"0x7","ptr_pos":223180,"str_pos":223760,"ptr_hex":"367CC","str_hex":"36A10","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5835,7 +5835,7 @@ Cynak joined the party.
 # <player>じゃねえか。<br>
 # 元気にしてるか，この前は世話に<br>
 # なったな。」
-Cynak "Heya, <player>! How's it going, landlubber?"
+Cynac "Heya, <player>! How's it going, landlubber?"
 
 
 {"prefix":"0x7","ptr_pos":223202,"str_pos":223812,"ptr_hex":"367E2","str_hex":"36A44","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5848,9 +5848,9 @@ Cynak "Heya, <player>! How's it going, landlubber?"
 # おまえにやるよ。」<scroll><player>「それじゃあ，もらって<br>
 # おきます。」
 <player> "How is life on the high seas treating you?"<scroll>
-Cynak "I'm like a fish in water. I have a new ship, and you know what? I found something inside it."<scroll>
+Cynac "I'm like a fish in water. I have a new ship, and you know what? I found something inside it."<scroll>
 <player> "You're showing me a pot?"<scroll>
-Cynak "Yeah, I've never cared for pots, so you can have it."<scroll>
+Cynac "Yeah, I've never cared for pots, so you can have it."<scroll>
 <player> "O-okay, thanks?"
 
 
@@ -5858,7 +5858,7 @@ Cynak "Yeah, I've never cared for pots, so you can have it."<scroll>
 # サイナック「また，こんどいっしょに<br>
 # 海であばれようぜ！！<br>
 # たのしみにしているからな。」
-Cynak "Let's go sailing again someday! I'm looking forward to it."
+Cynac "Let's go sailing again someday! I'm looking forward to it."
 
 
 {"prefix":"0x7","ptr_pos":224142,"str_pos":224218,"ptr_hex":"36B8E","str_hex":"36BDA","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -5870,7 +5870,7 @@ Good morning. Stop by anytime.
 {"prefix":"0x7","ptr_pos":224212,"str_pos":224244,"ptr_hex":"36BD4","str_hex":"36BF4","table":"normal","repoint":false,"ptr_type":"absolute"}
 # サイナックという海賊はよわい者<br>
 # は，おそわないと聞いたのだが。
-I heard Cynak is a noble pirate that doesn't attack innocents.
+I heard Cynac is a noble pirate that doesn't attack innocents.
 
 
 {"prefix":"0x7","ptr_pos":224510,"str_pos":224524,"ptr_hex":"36CFE","str_hex":"36D0C","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6238,7 +6238,7 @@ Did you know elementalists can use spirit magic?
 
 {"prefix":"0x7","ptr_pos":229174,"str_pos":229388,"ptr_hex":"37F36","str_hex":"3800C","table":"normal","repoint":false,"ptr_type":"absolute"}
 # いいあんばいじゃの―。
-That's a good deal.
+That's some fine whisky.
 
 
 {"prefix":"0x7","ptr_pos":229550,"str_pos":229596,"ptr_hex":"380AE","str_hex":"380DC","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -6744,7 +6744,7 @@ Selkie "What madness is this?! <player> has been trapped inside a demon's body?"
 <npc1> "Just so, Your Majesty. Is there any way to save him?"<scroll>
 Selkie "We are familiar with but one way to return someone to their original body after being trapped in a demon's body. <player> will have to engage in a battle of wills with the demon and win his freedom."<scroll>
 <npc9> "That's probably a piece of cake for <player>. Please, tell us what to do."<scroll>
-Selkie "Very well. You need to find Bridget and get a Spirit Ball. There is a place in Holy Lake where you can summon <player>'s spirit and store it in the Spirit Ball. Finally, you must throw the ball at the demon. After that, it's up to <player> to free himself."<scroll>
+Selkie "Very well. You need to find Bridget and get a Spirit Ball. There is a temple in Holy Lake where you can summon <player>'s spirit and store it in the Spirit Ball. Finally, you must throw the ball at the demon. After that, it's up to <player> to free himself."<scroll>
 <npc1> "Thank you, Your Majesty."
 
 
@@ -6847,9 +6847,9 @@ I was chasing a pirate ship and ended up here. This must be their secret hideout
 # いやつらの船しかおそわないぜ。」<scroll>船長「お前らのあいてをしているひま<br>
 # はない。ましてや，おれがお前らに<br>
 # つかまるわけがないだろう。」
-Captain "Who are you?! How did you find us? What are you accusing me, Cynak, of doing? I haven't done anything wrong! I've just been raiding and pillaging all of the towns near the coast."<scroll>
+Captain "Who are you?! How did you find us? What are you accusing me, Cynac, of doing? I haven't done anything wrong! I've just been raiding and pillaging all of the towns near the coast."<scroll>
 <player> "Yeah, no, that's exactly what you've been doing wrong."<scroll>
-Cynak "You've ruined my good name! Although, I am also a pirate, so I'm not in a place to criticize you too much. At least I have a policy of only attacking other pirates."<scroll>
+Cynac "You've ruined my good name! Although, I am also a pirate, so I'm not in a place to criticize you too much. At least I have a policy of only attacking other pirates."<scroll>
 Captain "You guys just keep talking, I'm going to sneak out of here before you notice me running away."
 
 
@@ -7175,8 +7175,9 @@ The door shut even tighter.
 # わたしをたおす事はとうていむりだ<br>
 # とおもうがな。やれるだけやってみ<br>
 # るがいい。」
-Satan "You've come quite far. I've been watching you since you defeated my lieutenant in the human world, Galazar. I must say, you've done pretty well."<scroll>
-<player> "Galazar worked for you?! Just who are you?!"<scroll>
+# maybe change one of the galzalard's so there aren't two of them
+Satan "You've come quite far. I've been watching you since you defeated my lieutenant in the human world, Galzalard. I must say, you've done pretty well."<scroll>
+<player> "Galzalard worked for you?! Just who are you?!"<scroll>
 Satan "I am the demon lord Satan. You can't stop me from taking over the world."<scroll>
 <player> "Looks like I finally found the cause of all of the suffering in the human world."<scroll>
 Satan "And what are you going to do about it?"<scroll>
@@ -7259,7 +7260,7 @@ Satan "Hmm, I guess I'm fine with this."<scroll>
 <player> "Fine with what?"<scroll>
 Satan "If you're this strong, you might be able to survive in the demon world."<scroll>
 <player> "There's a demon world?"<scroll>
-Satan "Duh. That's where I live. The demon emperor from the demon world is causing mayhem in Fantasia and the human world."<scroll>
+Satan "Duh. That's where I'm from. The demon emperor from the demon world is causing mayhem in Fantasia and the human world."<scroll>
 <npc1> "Now there's a demon emperor? Really?"<scroll>
 Satan "Yes, and I don't agree with his methods. I've been waiting for a chance to defeat the demon emperor and stop our involvement with inter-dimensional politics. I hadn't found anyone strong enough to fight with me in the demon world until you guys. This was all a test for you."<scroll>
 <player> "Listen, Satan, I wasn't born yesterday, you know?"<scroll>
@@ -8027,7 +8028,7 @@ Thus <player> lost his father, Zafan, and <player>'s own journey began.
 # おれがつれもどす。」<scroll>ナンナ「わかったわ，わたしはここで<br>
 # まってる。気をつけてね。」<scroll><npc1>「<player>とうぜん<br>
 # わたしはいっしょに行くわよ。」<scroll><player>「ああ，わかってる。」
-<player> "You wait here. I'll go and find Slay.<scroll>
+<player> "You wait here. I'll go and find Slay."<scroll>
 Nana "Okay, I'll stay here. Be careful."<scroll>
 <npc1> "I'm not just gonna sit around, you know, right, <player>?"
 <player> "Yeah yeah, I know."
