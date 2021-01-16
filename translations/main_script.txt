@@ -5232,13 +5232,13 @@ Elder "Thanks for your help, <player>."
 # おじいちゃん。」<scroll>長老「しょうのない子じゃのう。」
 Nana "Hiya, I'm Nana. I'm getting married soon. Or, I should be, but I don't know if the wedding ring was delivered or not."<scroll>
 <player> "Oh no, that's terrible."<scroll>
-Nana "Grandfather, I'm going to see my fiance and make sure he has the ring."<scroll>
+Nana "Grandfather, I'm going to see my fiancé and make sure he has the ring."<scroll>
 Elder "Nana, you can't! The cave connecting our villages is full of monsters. I won't let you engage in such risky behavior."<scroll>
 Nana "Aww, c'mon. Oh, <player>, you guys were going to that village anyway, weren't you?"<scroll>
 <player> "Well, maybe? There's no other way out of here, is there?"<scroll>
 Nana "I knew it! Can I ask you for a huuuge favor?"<scroll>
 <player> "What is it?"<scroll>
-Nana "Please take me to my fiance's village. Grandfather, you trust them to chaperone me, don't you?"<scroll>
+Nana "Please take me to my fiancé's village. Grandfather, you trust them to chaperone me, don't you?"<scroll>
 Elder "Fine, you win."
 
 
@@ -5364,7 +5364,7 @@ I heard someone found a shrine in the middle of the ocean.
 # な物だ！！おれがこの手で取りかえ<br>
 # してやる！！」
 Slay "Hey, Nana! I wasn't expecting you here. How did you get through the cave?"<scroll>
-Nana "I'm fine, there weren't even any monsters. Oh, let me introduce everyone. This is my fiance, Slay."<scroll>
+Nana "I'm fine, there weren't even any monsters. Oh, let me introduce everyone. This is my fiancé, Slay."<scroll>
 <player> "Nice to meet you. I'm <player>."<scroll>
 <npc1> "I'm <npc1>."<scroll>
 Slay "Howdy, I'm Slay."<scroll>
