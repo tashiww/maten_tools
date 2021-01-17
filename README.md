@@ -3,6 +3,7 @@
 
 |released date|version|notes|
 |---|---|---|
+|2021-01-16|	ver 02a|	all menus redesigned, played through to endgame, fixed all bugs encountered
 |2021-01-05|	ver 01a|	fixed vram overflow (text being overwritten) and made line breaks more aggressive to prevent words being split. added max level patch|
 |2021-01-04|	ver 00a|	initial feature complete?|
 ## features
@@ -20,6 +21,7 @@ fully playable in English: all strings translated from Japanese to English
 * Added "xp to next level" to stat page
 * Added stat window to equipment menu
 * Increased displayable cap on some attributes (from 999 to 9999)
+* Added "level" to party list
 
 ## building
 ### Requirements:
