@@ -7541,13 +7541,13 @@ Power Duke "I am Duke Asmodeus. I know you've come far from the human world, but
 
 {"prefix":"0x7","ptr_pos":257362,"str_pos":257556,"ptr_hex":"3ED52","str_hex":"3EE14","table":"normal","repoint":false,"ptr_type":"absolute"}
 # ちからのカギを，てにいれた。
-You got the power key.
+You got the Power Key.
 
 
 {"prefix":"0x7","ptr_pos":257394,"str_pos":257528,"ptr_hex":"3ED72","str_hex":"3EDF8","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 「まほうきゅう」は，魔界もんの<br>
 # 中にあり。
-There's a magic sphere in the center of the demon world.
+There's a Magic Ball in the center of the demon world.
 
 
 {"prefix":"0x7","ptr_pos":258384,"str_pos":258534,"ptr_hex":"3F150","str_hex":"3F1E6","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7564,7 +7564,7 @@ Armor Duke "I'm Duke Agaliarept. I heard about some idiots coming here from the 
 
 {"prefix":"0x7","ptr_pos":258416,"str_pos":258718,"ptr_hex":"3F170","str_hex":"3F29E","table":"normal","repoint":false,"ptr_type":"absolute"}
 # まもりのカギを，てにいれた。
-You got the armor key.
+You got the Armor Key.
 
 
 {"prefix":"0x7","ptr_pos":258528,"str_pos":258686,"ptr_hex":"3F1E0","str_hex":"3F27E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7611,7 +7611,7 @@ Magic Duke "I'll kill you all!"
 
 {"prefix":"0x7","ptr_pos":259726,"str_pos":260436,"ptr_hex":"3F68E","str_hex":"3F954","table":"normal","repoint":false,"ptr_type":"absolute"}
 # こころのカギを，てにいれた。
-You got the magic key.
+You got the Magic Key.
 
 
 {"prefix":"0x7","ptr_pos":259746,"str_pos":260172,"ptr_hex":"3F6A2","str_hex":"3F84C","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7626,7 +7626,7 @@ You got the magic key.
 # だったなんて，びっくりしたな。」<scroll><player>「よし，<npc1>。<br>
 # 帝王をたおしにいこう！！」
 <player> "<npc1>, you're an angel, too??"<scroll>
-<npc1> "Yes, my memories were suppressed, but they're coming back now. I was born in heaven, but it was my job to live on Earth among the humans."<scroll>
+<npc1> "Yes, my memories were suppressed, but they're coming back now. I was born in heaven, but I was tasked to live among the humans."<scroll>
 <player> "Oh, okay, that makes sense."<scroll>
 <npc9> "What were the odds that <npc1> was an angel, too? I mean, really?"<scroll>
 <player> "Alright, <npc1>, let's go take out the demon emperor!"
@@ -7659,7 +7659,7 @@ Sage Duke "I'm sure my reputation precedes me. My name strikes fear into the hea
 
 {"prefix":"0x7","ptr_pos":261160,"str_pos":261416,"ptr_hex":"3FC28","str_hex":"3FD28","table":"normal","repoint":false,"ptr_type":"absolute"}
 # まのカギを，てにいれた。
-You got the sage key.
+You got the Sage Key.
 
 
 {"prefix":"0x7","ptr_pos":261226,"str_pos":261368,"ptr_hex":"3FC6A","str_hex":"3FCF8","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7728,7 +7728,7 @@ Satan "<player>, this is as far as we go together. I'll see you when this is all
 # らう事にしよう。おまえのなかま<br>
 # たちを使ってな。」
 Lucifer "Welcome to the lowest circle of the demon world. You've finally reached me, the demon emperor. Defeating my 5 dukes has earned you the right to challenge me. Don't disappoint me."<scroll>
-<player> "Lucifer!! I won't let you bring calamity to Earth or Fantasia. Do you know how much suffering you've caused with your hordes of monsters?!"<scroll>
+<player> "Lucifer!! I won't let you bring calamity to my world or Fantasia. Do you know how much suffering you've caused with your hordes of monsters?!"<scroll>
 Lucifer "Talk is cheap. Let's fight. Your friends can help you, too."
 
 

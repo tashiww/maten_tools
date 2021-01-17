@@ -1084,20 +1084,32 @@
 00008954                            
 00008954                             org $68580
 00068580                            redraw_party_menu:
-00068580 7002                       	moveq #$2, ColOffset
-00068582 720C                       	moveq #$c, RowOffset
-00068584 7421                       	moveq #$21, WindowWidth
-00068586 760F                       	moveq #$f, WindowHeight
-00068588 7843                       	moveq #$43, d4
-0006858A 4EB9 0000 32D6             	jsr	draw_background_window
-00068590 7003                       	moveq #$3, ColOffset
-00068592 720E                       	moveq #$e, RowOffset
-00068594 7402                       	moveq #$2, d2
-00068596 4E75                       	rts
-00068598                            ; $8f18 drawing party-> stats window
-00068598                            
-00068598                            
-00068598                             org $8f18
+00068580 2F08                       	move.l	a0, -(a7)
+00068582 302E 0004                  	move	$4(a6), d0	; this is the 3rd nesting level of window indices (main -> party -> status) for party list
+00068586 41F9 00FF 3036             	LEA	$ff3036, a0	; base offset of window property RAM
+0006858C C0FC 000C                  	mulu.w	#$c, d0	; each window has $c bytes of data stored
+00068590 D0C0                       	adda.w	d0, a0
+00068592 4250                       	clr	(a0)	; first clear out RAM for party list window before we draw another (prevent nesting / recursion)
+00068594 205F                       	move.l	(a7)+, a0	
+00068596                            	
+00068596 7002                       	moveq #$2, ColOffset
+00068598 720C                       	moveq #$c, RowOffset
+0006859A 7421                       	moveq #$21, WindowWidth
+0006859C 760F                       	moveq #$f, WindowHeight
+0006859E 7843                       	moveq #$43, d4
+000685A0 4EB9 0000 32D6             	jsr	draw_background_window
+000685A6                            party_labels_only:
+000685A6 7003                       	moveq #$3, ColOffset
+000685A8 720E                       	moveq #$e, RowOffset
+000685AA 7402                       	moveq #$2, d2
+000685AC 4E75                       	rts
+000685AE                            ; $8f18 drawing party-> stats window
+000685AE                            
+000685AE                             org $9250
+00009250 6000 0000                  	bra.w	draw_party_labels
+00009254                            
+00009254                            	
+00009254                             org $8f18
 00008F18                            draw_party_menu:
 00008F18 7002                       	moveq #$2, ColOffset
 00008F1A 720C                       	moveq #$c, RowOffset
@@ -1106,10 +1118,11 @@
 00008F20 7843                       	moveq #$43, d4
 00008F22                             
 00008F22                             org $8f2e
+00008F2E                            draw_party_labels:
 00008F2E 4EB9 0006 8580             	jsr redraw_party_menu
-00008F34                            	; moveq #$3, ColOffset
-00008F34                            	; moveq #$f, RowOffset
-00008F34                            	; moveq #$2, d2
+00008F34                            	;moveq #$3, ColOffset
+00008F34                            	;moveq #$e, RowOffset
+00008F34                            	;moveq #$2, d2	
 00008F34                            
 00008F34                            ; offset for HP  MP headers
 00008F34                             org $a246
@@ -1224,13 +1237,13 @@
 00009018 142C 000E                  	MOVE.b	$E(A4), D2	; lvl value
 0000901C 7011                       	MOVEQ	#$00000011, x_tile_offset	
 0000901E 7205                       	MOVEQ	#5, y_tile_offset
-00009020 7602                       	MOVEQ	#2, D3	; was 0?
+00009020 7600                       	MOVEQ	#0, D3	; was 0? digit padding
 00009022 6100 A754                  	BSR.w	draw_stat_value	
 00009026 242C 0032                  	MOVE.l	$32(A4), D2	; exp value
 0000902A 7019                       	MOVEQ	#$00000019, x_tile_offset
 0000902C 7205                       	MOVEQ	#5, y_tile_offset
-0000902E 7600                       	MOVEQ	#0, D3
-00009030 6100 A746                  	BSR.w	draw_stat_value
+0000902E 7600                       	MOVEQ	#0, D3	; was 0
+00009030 6100 A746                  	BSR.w	draw_stat_value	
 00009034                            	
 00009034 7003                       	MOVEQ	#$0000003, x_tile_offset
 00009036 7202                       	MOVEQ	#2, y_tile_offset
@@ -1269,34 +1282,35 @@
 00009082 720A                       	MOVEQ	#$0000000a, y_tile_offset
 00009084 6100 0000                  	BSR.w	write_label_8x16	
 00009088 41F8 9262                  	LEA	$FFFF9262.w, A0	; slashes between current and max hp (23 / 50)
-0000908C 700B                       	MOVEQ	#$0000000b, x_tile_offset
+0000908C 700C                       	MOVEQ	#$0000000c, x_tile_offset
 0000908E 720A                       	MOVEQ	#$0000000a, y_tile_offset
 00009090 6100 0000                  	BSR.w	write_label_8x16
 00009094 4282                       	CLR.l	D2
 00009096                            	
 00009096 342C 0002                  	MOVE.w	$2(A4), D2	; current hp
-0000909A 7600                       	MOVEQ	#0, D3	; i think this is digit padding? bumped to 4... doesn't seem to do anything tbh
-0000909C 4EB9 0000 0000             	jsr	small_number_indenter
-000090A2                            	;moveq	#$7, x_tile_offset
-000090A2 720A                       	MOVEQ	#$a, y_tile_offset
-000090A4 6100 A6D2                  	BSR.w	draw_stat_value
-000090A8 4282                       	CLR.l	D2	; this probably isn't necessary? current hp can't exceed max hp
-000090AA 342C 0004                  	MOVE.w	$4(A4), D2	; max hp
-000090AE 700C                       	MOVEQ	#$c, x_tile_offset
-000090B0 6100 A6C6                  	BSR.w	draw_stat_value	; draw max hp
-000090B4                            	
-000090B4 4282                       	CLR.l	D2
-000090B6 342C 0006                  	MOVE.w	$6(A4), D2	; current mp
-000090BA                            	;MOVEQ	#4, D3
-000090BA 4EB9 0000 0000             	jsr small_number_indenter
-000090C0 720C                       	MOVEQ	#$c, y_tile_offset
-000090C2 6100 A6B4                  	BSR.w	draw_stat_value	
-000090C6 4282                       	CLR.l	D2	
-000090C8 342C 0008                  	MOVE.w	$8(A4), D2	; max mp
-000090CC 700C                       	MOVEQ	#$c, x_tile_offset
-000090CE 6100 A6A8                  	BSR.w	draw_stat_value
-000090D2                            	
-000090D2                             org $90d4
+0000909A 7604                       	MOVEQ	#4, D3	; i think this is digit padding? bumped to 4... doesn't seem to do anything tbh
+0000909C                            	;jsr	small_number_indenter
+0000909C 7008                       	moveq	#$8, x_tile_offset
+0000909E 720A                       	MOVEQ	#$a, y_tile_offset
+000090A0 6100 A6D6                  	BSR.w	draw_stat_value
+000090A4 4282                       	CLR.l	D2	; this probably isn't necessary? current hp can't exceed max hp
+000090A6 342C 0004                  	MOVE.w	$4(A4), D2	; max hp
+000090AA 700D                       	MOVEQ	#$d, x_tile_offset
+000090AC 6100 A6CA                  	BSR.w	draw_stat_value	; draw max hp
+000090B0                            	
+000090B0 4282                       	CLR.l	D2
+000090B2 342C 0006                  	MOVE.w	$6(A4), D2	; current mp
+000090B6                            	;MOVEQ	#4, D3
+000090B6                            	;jsr small_number_indenter
+000090B6 7008                       	moveq	#$8, x_tile_offset
+000090B8 720C                       	MOVEQ	#$c, y_tile_offset
+000090BA 6100 A6BC                  	BSR.w	draw_stat_value	
+000090BE 4282                       	CLR.l	D2	
+000090C0 342C 0008                  	MOVE.w	$8(A4), D2	; max mp
+000090C4 700D                       	MOVEQ	#$d, x_tile_offset
+000090C6 6100 A6B0                  	BSR.w	draw_stat_value
+000090CA                            	
+000090CA                             org $90d4
 000090D4                            	; this might need an org or something
 000090D4 41F8 9266                  	LEA	$FFFF9266.w, A0	; strings for stat labels (str, vit, etc)
 000090D8 7003                       	MOVEQ	#3, x_tile_offset
@@ -1305,7 +1319,7 @@
 000090E0                            	
 000090E0 4282                       	CLR.l	D2
 000090E2 142C 000F                  	MOVE.b	$F(A4), D2	; str value
-000090E6 7603                       	MOVEQ	#3, D3
+000090E6 7604                       	MOVEQ	#4, D3
 000090E8 700D                       	MOVEQ	#$0000000d, x_tile_offset	; set x offset for str / int stat values
 000090EA                            	;MOVEQ	#$0000000f, y_tile_offset
 000090EA 6100 A68C                  	BSR.w	draw_stat_value
@@ -1337,7 +1351,7 @@
 00009132                            	;BCS.b	draw_atk_value
 00009132                            	;MOVE.w	#$03E7, D2	; cap atk display at 999
 00009132                            draw_atk_value:
-00009132 7603                       	MOVEQ	#3, D3
+00009132 7604                       	MOVEQ	#4, D3
 00009134 700D                       	MOVEQ	#$0000000d, x_tile_offset
 00009136                            	;MOVEQ	#$0000000f, y_tile_offset
 00009136 6100 A640                  	BSR.w	draw_stat_value
@@ -1434,17 +1448,18 @@
 0006891E 94AC 0032                  	sub.l	$32(A4), d2	; subtract current xp
 00068922 701E                       	moveq	#$1e, x_tile_offset
 00068924 7207                       	moveq	#$7, y_tile_offset
-00068926 4EB9 0000 3778             	jsr draw_stat_value
-0006892C                            
-0006892C 4E75                       	rts
-0006892E                            	
-0006892E                            ; ########################################################################################
-0006892E                            ; # fully original asm!! display str/int/spd etc stats on equip menu
-0006892E                            ; # 
-0006892E                            ; #
-0006892E                            ; ########################################################################################
-0006892E                            	
-0006892E                             org $68980
+00068926 7600                       	moveq	#$0, d3
+00068928 4EB9 0000 3778             	jsr draw_stat_value
+0006892E                            
+0006892E 4E75                       	rts
+00068930                            	
+00068930                            ; ########################################################################################
+00068930                            ; # fully original asm!! display str/int/spd etc stats on equip menu
+00068930                            ; # 
+00068930                            ; #
+00068930                            ; ########################################################################################
+00068930                            	
+00068930                             org $68980
 00068980                             ; window is offset $1e, $c  x,y
 00068980                            draw_substats:
 00068980 41F8 1234                  	LEA	$1234.w, A0	; strings for stat labels (str, vit, etc) ; my python script will redirect this...

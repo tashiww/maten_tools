@@ -896,19 +896,31 @@ loc_00008930:
 
  org $68580
 redraw_party_menu:
+	move.l	a0, -(a7)
+	move	$4(a6), d0	; this is the 3rd nesting level of window indices (main -> party -> status) for party list
+	LEA	$ff3036, a0	; base offset of window property RAM
+	mulu.w	#$c, d0	; each window has $c bytes of data stored
+	adda.w	d0, a0
+	clr	(a0)	; first clear out RAM for party list window before we draw another (prevent nesting / recursion)
+	move.l	(a7)+, a0	
+	
 	moveq #$2, ColOffset
 	moveq #$c, RowOffset
 	moveq #$21, WindowWidth
 	moveq #$f, WindowHeight
 	moveq #$43, d4
 	jsr	draw_background_window
+party_labels_only:
 	moveq #$3, ColOffset
 	moveq #$e, RowOffset
 	moveq #$2, d2
 	rts
 ; $8f18 drawing party-> stats window
 
+ org $9250
+	bra.w	draw_party_labels
 
+	
  org $8f18
 draw_party_menu:
 	moveq #$2, ColOffset
@@ -918,10 +930,11 @@ draw_party_menu:
 	moveq #$43, d4
  
  org $8f2e
+draw_party_labels:
 	jsr redraw_party_menu
-	; moveq #$3, ColOffset
-	; moveq #$f, RowOffset
-	; moveq #$2, d2
+	;moveq #$3, ColOffset
+	;moveq #$e, RowOffset
+	;moveq #$2, d2	
 
 ; offset for HP  MP headers
  org $a246
@@ -1036,13 +1049,13 @@ player_ram_offset	equr	a4	; starting with $ffcedc, incrementing $50ish? for each
 	MOVE.b	$E(A4), D2	; lvl value
 	MOVEQ	#$00000011, x_tile_offset	
 	MOVEQ	#5, y_tile_offset
-	MOVEQ	#2, D3	; was 0?
+	MOVEQ	#0, D3	; was 0? digit padding
 	BSR.w	draw_stat_value	
 	MOVE.l	$32(A4), D2	; exp value
 	MOVEQ	#$00000019, x_tile_offset
 	MOVEQ	#5, y_tile_offset
-	MOVEQ	#0, D3
-	BSR.w	draw_stat_value
+	MOVEQ	#0, D3	; was 0
+	BSR.w	draw_stat_value	
 	
 	MOVEQ	#$0000003, x_tile_offset
 	MOVEQ	#2, y_tile_offset
@@ -1081,31 +1094,32 @@ not_poisoned:
 	MOVEQ	#$0000000a, y_tile_offset
 	BSR.w	write_label_8x16	
 	LEA	$FFFF9262.w, A0	; slashes between current and max hp (23 / 50)
-	MOVEQ	#$0000000b, x_tile_offset
+	MOVEQ	#$0000000c, x_tile_offset
 	MOVEQ	#$0000000a, y_tile_offset
 	BSR.w	write_label_8x16
 	CLR.l	D2
 	
 	MOVE.w	$2(A4), D2	; current hp
-	MOVEQ	#0, D3	; i think this is digit padding? bumped to 4... doesn't seem to do anything tbh
-	jsr	small_number_indenter
-	;moveq	#$7, x_tile_offset
+	MOVEQ	#4, D3	; i think this is digit padding? bumped to 4... doesn't seem to do anything tbh
+	;jsr	small_number_indenter
+	moveq	#$8, x_tile_offset
 	MOVEQ	#$a, y_tile_offset
 	BSR.w	draw_stat_value
 	CLR.l	D2	; this probably isn't necessary? current hp can't exceed max hp
 	MOVE.w	$4(A4), D2	; max hp
-	MOVEQ	#$c, x_tile_offset
+	MOVEQ	#$d, x_tile_offset
 	BSR.w	draw_stat_value	; draw max hp
 	
 	CLR.l	D2
 	MOVE.w	$6(A4), D2	; current mp
 	;MOVEQ	#4, D3
-	jsr small_number_indenter
+	;jsr small_number_indenter
+	moveq	#$8, x_tile_offset
 	MOVEQ	#$c, y_tile_offset
 	BSR.w	draw_stat_value	
 	CLR.l	D2	
 	MOVE.w	$8(A4), D2	; max mp
-	MOVEQ	#$c, x_tile_offset
+	MOVEQ	#$d, x_tile_offset
 	BSR.w	draw_stat_value
 	
  org $90d4
@@ -1117,7 +1131,7 @@ not_poisoned:
 	
 	CLR.l	D2
 	MOVE.b	$F(A4), D2	; str value
-	MOVEQ	#3, D3
+	MOVEQ	#4, D3
 	MOVEQ	#$0000000d, x_tile_offset	; set x offset for str / int stat values
 	;MOVEQ	#$0000000f, y_tile_offset
 	BSR.w	draw_stat_value
@@ -1149,7 +1163,7 @@ not_poisoned:
 	;BCS.b	draw_atk_value
 	;MOVE.w	#$03E7, D2	; cap atk display at 999
 draw_atk_value:
-	MOVEQ	#3, D3
+	MOVEQ	#4, D3
 	MOVEQ	#$0000000d, x_tile_offset
 	;MOVEQ	#$0000000f, y_tile_offset
 	BSR.w	draw_stat_value
@@ -1246,6 +1260,7 @@ get_xp_to_next_level:
 	sub.l	$32(A4), d2	; subtract current xp
 	moveq	#$1e, x_tile_offset
 	moveq	#$7, y_tile_offset
+	moveq	#$0, d3
 	jsr draw_stat_value
 
 	rts
