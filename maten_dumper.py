@@ -95,6 +95,7 @@ fixed_len_blocks = [item_block, monster_block, npc_block, skill_block]
 exclusions = [(s.start, s.end) for s in fixed_len_blocks]
 exclusions.append((0xb3a0, 0xbb00))
 exclusions.append((0xf4480, 0xf5e00))
+exclusions.append((0x648e6, 0x64f06))
 exclusions = sorted(exclusions)
 
 

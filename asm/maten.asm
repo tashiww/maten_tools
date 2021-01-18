@@ -15,7 +15,7 @@
 	
 ; insert 8x16 english font to replace original 16x16 Japanese font
 	org $648e6
-	incbin "./fonts/8x16 font.bin"
+	incbin "./fonts/8x16 font vwf.bin"
 	
 ; blank out the rest of the original Japanese font
 	DO
