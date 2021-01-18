@@ -184,57 +184,22 @@ NotZero:
 	jmp vwf_routine_lol
 
  org $68300
+; when i enter .. 
+; a0 is current char image data
+; a1 is prob where final image will get copied
+; a2 is where current image data gets copied
+; a3 is ram offset of the next letter offset! (like 32=c)
+; d0 and d1 are $F and $E, need to stay that for palette reasons.
 
 vwf_routine_lol: 
+	LEA	$00FFFA02, a4
+	TST	(a4)
+	BNE	copy_overflow	; before writing new character, check if we have overflow from previous character
+
+
+	movem.l	a2/d0, -(a7)
 	move.l	#$7, d2	; will store # of empty columns on right side of tile here
-	moveq	#3, d4	; number of 4x8 chunks to read
-
-	jmp get_image_data
-	; pretend first character is 6px wide so we're mushing in 2px of next letter
-	; get left 2 px of next tile
-	; get current letter, OR'ing in our slice...
-	; somehow conveniently $FF32b9 has the next letter already muwahaha
-	movem.l	a2/a0/d0, -(a7)
-	clr	d0
-	move.b	(a3), FontTileOffset
-	SUBI.w	#$0010, FontTileOffset	; $00-$0F are control codes (non-printable)
-	BMI.b	vwf_cleanup	; no idea what to do with ccs... bypass entirely?
-	EXT.l	FontTileOffset	
-	LSL.w	#4, FontTileOffset	; multiply by $20 for 8x16 font
-	LEA	$000648E6, BaseFontOffset	; base font address in ROM
-	ADDA.l	FontTileOffset, BaseFontOffset	; font tile offset for current character
-
-	moveq	#7, d4	; number of 4x8 chunks to read
-	move.l	(a7)+, d0	
-get_vwf_image:
-	MOVE.l	(A0)+, D3	; gets 4 rows of font tile image data at a time
-	MOVEQ	#3, D5	; loop through each byte (4 bytes in a long) (4 rows of image 8x8 tile)
-
-vwf_loop:
-	MOVEQ	#7, D6	; loop 8 times (8 bits per byte)
-	CLR.l	D7	; d7 is where bits are converted to Es and Fs
-vwf_convert:
-	LSL.l	#4, D7	; scoots one "digit" over
-	LSL.l	#1, D3	; pop bit from image data ($c0 means first two bits set, rest blank, so $FFeeeeee)
-	BCS.b	fill_vwf_bit
-	ADD.b	D1, D7	; if bit wasn't set, blank ($E)
-	BRA.b	bit_vwf_loop	
-fill_vwf_bit:
-	ADD.b	D0, D7
-bit_vwf_loop:
-	DBF	D6, vwf_convert
-	;LSR.l	#8, d7
-	;LSR.l	#8, d7
-	swap	d7
-	ANDI.l	#$0000FFFF, d7
-
-	;MOVE.l	D7, (A2)+	; store "decompressed" image data in RAM
-	dbf	d5, vwf_loop
-	dbf	d4, get_vwf_image
-	
-vwf_cleanup:
-	movem.l	(a7)+, a0/a2
-	
+get_image_firstpass:
 	moveq	#3, d4	; number of 4x8 chunks to read
 
 get_image_data:
@@ -264,27 +229,87 @@ bit_loop:
 	DBF	D4, get_image_data	
 	
 	TST	d2	; check if we have extra room in tile
-	BEQ	copy_back_setup	
+	BEQ	vwf_cleanup	
 	CMPI.b	#$7, d2	; ignore space tiles for now
-	BEQ	copy_back_setup	
+	BEQ	vwf_cleanup	
 	subq	#$1, d2	; don't squeeze if only 1px available
-	BEQ	copy_back_setup
+	BEQ	vwf_cleanup
 	
 	
 	moveq	#-1, d4
-	lsl.l	#$2, d2
-	lsl.l	d2, d4
+	lsl.l	#$2, d2	
+	move	d2, $FFfa00
+
+	lsr.l	d2, d4	; getting $F mask.. 
 	not.l	d4
+	move.l	d4, d2	; if d2 was 1, convert to $F000 0000 to save just the left-most column
 	
-	; clr	d4
-; get_mask_loop:
-	; lsl.l	#$4, d4
-	; addi.b	#$f, d4
-	; dbf	d2, get_mask_loop
-	moveq	#$f, d2
-blank_test:
-	or.l	d4, -(a2)
-	dbf	d2, blank_test
+	; moveq	#$f, d2	
+; blank_test:
+	; or.l	d4, -(a2)
+	; dbf	d2, blank_test
+
+; if we're here, we have spaces to fill in.
+
+	; get current letter, OR'ing in our slice...
+	; somehow conveniently $FF32b9 has the next letter already muwahaha
+	;movem.l	a2/a0/d0, -(a7)
+
+; FontTileOffset	equr	d0
+; BaseFontOffset	equr	a0
+
+start_vwf_nonsense:
+	clr	d0
+	move.b	(a3), FontTileOffset
+	SUBI.w	#$0010, FontTileOffset	; $00-$0F are control codes (non-printable)
+	BMI.b	vwf_cleanup	; no idea what to do with ccs... bypass entirely?
+	EXT.l	FontTileOffset	
+	LSL.w	#4, FontTileOffset	; multiply by $20 for 8x16 font
+	LEA	$000648E6, BaseFontOffset	; base font address in ROM
+	ADDA.l	FontTileOffset, BaseFontOffset	; font tile offset for current character
+
+	moveq	#3, d4	; number of 4x8 chunks to read
+	movem.l	(a7)+, d0/a2
+
+get_vwf_image:
+	MOVE.l	(A0)+, D3	; gets 4 rows of font tile image data at a time
+	MOVEQ	#3, D5	; loop through each byte (4 bytes in a long) (4 rows of image 8x8 tile)
+
+vwf_loop:
+	MOVEQ	#7, D6	; loop 8 times (8 bits per byte)
+	CLR.l	D7	; d7 is where bits are converted to Es and Fs
+vwf_convert:
+	LSL.l	#4, D7	; scoots one "digit" over
+	LSL.l	#1, D3	; pop bit from image data ($c0 means first two bits set, rest blank, so $FFeeeeee)
+	BCS.b	fill_vwf_bit
+	ADD.b	D1, D7	; if bit wasn't set, blank ($E)
+	BRA.b	bit_vwf_loop	
+fill_vwf_bit:
+	ADD.b	D0, D7
+bit_vwf_loop:
+	DBF	D6, vwf_convert
+	; if i have $EEFFEEEE and I have space for 1 column.. i want to store $EFFE $EEE0 , then OR in $E at some point. at $FFFA00 , and OR in first $E to a2
+	
+	movem.l	d4/d5, -(a7)
+	move.l	d7, d6
+	move.w	$fffa00, d5
+	LSL.l	d5, d6
+	ORI.l	#$eeeeeeee, d6
+	move.l	d6, (a4)+
+	
+	and.l	d2, d7
+	ROL.l	d5, d7	; if i have $FEFFEEEE and want to save first 3 columns.. mask to get $FEF .. 
+	OR.l	D7, (A2)+	; store "decompressed" image data in RAM
+	
+	movem.l	(a7)+, d5/d4
+	dbf	d5, vwf_loop
+	dbf	d4, get_vwf_image
+	
+	bra.b	copy_back_setup
+	
+vwf_cleanup:
+	movem.l	(a7)+, d0/a2
+	
 	
 copy_back_setup:
 	MOVEA.l	(A7)+, A2	; offset where we just saved image data in RAM
@@ -294,6 +319,20 @@ copy_image_back:
 	DBF	D4, copy_image_back
 	
 	jmp	finish_image_copy_sr
+
+
+copy_overflow:
+	moveq	#$f, d4
+	MOVEA.l	(A7)+, A2	; offset where we just saved image data in RAM
+
+copy_overflow_loop:
+	move.l	(a4)+, (a1)+
+	dbf	d4, copy_overflow_loop
+	move.l	#$0, a4
+	clr.l	$fffa00
+	jmp finish_image_copy_sr
+
+
 	
  org $1EE0
 finish_image_copy_sr:
