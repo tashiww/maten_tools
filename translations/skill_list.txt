@@ -238,8 +238,8 @@ Dream Eater
 
 {"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 58, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
 # むかいし゛ん
-#tlcheck
-Other World
+#tlcheck - matched with script name
+Dreamcatcher
 
 {"desc": "skl", "start": 115450, "start_hex": "0x1c2fa", "end": 119900, "end_hex": "0x1d45c", "step": 64, "max_len": 16, "id": 59, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 115450, "table": "menu"}
 # ふ゛んしんのし゛ゅつ

@@ -2,6 +2,10 @@
 # this seems fine as-is because my menu G is in the same place as the original font
 # G
 
+{"ptr_pos": 130724, "ptr_pos_hex": "0x1fea4", "str_pos": 0, "str_pos_hex": "0x0", "table": "normal", "repoint": false, "ptr_type": "relative", "ja_bin": null, "en_text": null, "en_bin": null, "en_bin_len": null, "prefix": "0x41fa", "missing": 0}
+#LV
+LVL
+
 {"ptr_pos": 36926, "ptr_pos_hex": "0x903e", "str_pos": 37524, "str_pos_hex": "0x9294", "table": "normal", "repoint": false, "ptr_type": "relative", "ja_bin": null, "en_text": null, "en_bin": null, "en_bin_len": null, "prefix": "0x41fa", "missing": 0}
 # 死亡
 Dead

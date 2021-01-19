@@ -7265,12 +7265,12 @@ Satan "Hmm, I guess I'm fine with this."<scroll>
 <player> "Fine with what?"<scroll>
 Satan "If you're this strong, you might be able to survive in the demon world."<scroll>
 <player> "There's a demon world?"<scroll>
-Satan "Duh. That's where I'm from. The demon emperor from the demon world is causing mayhem in Fantasia and the human world."<scroll>
-<npc1> "Now there's a demon emperor? Really?"<scroll>
-Satan "Yes, and I don't agree with his methods. I've been waiting for a chance to defeat the demon emperor and stop our involvement with inter-dimensional politics. I hadn't found anyone strong enough to fight with me in the demon world until you guys. This was all a test for you."<scroll>
+Satan "Duh. That's where I'm from. The Demon Emperor from the demon world is causing mayhem in Fantasia and the human world."<scroll>
+<npc1> "Now there's a Demon Emperor? Really?"<scroll>
+Satan "Yes, and I don't agree with his methods. I've been waiting for a chance to defeat the Demon Emperor and stop our involvement with inter-dimensional politics. I hadn't found anyone strong enough to fight with me in the demon world until you guys. This was all a test for you."<scroll>
 <player> "Listen, Satan, I wasn't born yesterday, you know?"<scroll>
 Satan "I know how it sounds, but I'm on the level here. Why don't you come with me to the demon world and I'll prove it?"<scroll>
-<player> "If the demon emperor is really the cause of the current situation in my world, then I guess I don't have a choice. That doesn't mean I trust you, though."<scroll>
+<player> "If the Demon Emperor is really the cause of the current situation in my world, then I guess I don't have a choice. That doesn't mean I trust you, though."<scroll>
 <npc1> "Is this really what you want, <player>?"<scroll>
 <player> "I don't see any other way."<scroll>
 Satan "So we're all good here? Follow me to the demon world, then."
@@ -7510,7 +7510,7 @@ There are hidden switches in some pillars in the demon world.
 # はかりしれん。しかし，「ていおう<br>
 # のよろい」きる者あれば，そのたい<br>
 # しょうではない。
-There's a demon power duke with nearly limitless strength. However, if you have the Tyrant's Armor, you can withstand his attacks.
+There's a demon power duke with nearly limitless strength. However, if you use the Tyrant's Armor, you can withstand his attacks.
 
 
 {"prefix":"0x7","ptr_pos":256636,"str_pos":256642,"ptr_hex":"3EA7C","str_hex":"3EA82","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7583,7 +7583,7 @@ The demon gate will open when all six pillar switches have been pushed.
 # なすがたのまま，あの世へおくって<br>
 # やるわ。では，いくぞ！！くらえ，<br>
 # ハイパ―マインドバスタ―！！」
-Magic Duke "I am Duke Astaroth. You are deeply misguided if you think you can defeat the demon emperor. You don't even look like you can handle my magic attacks. I'll send you to the afterlife with your spirits in shambles. Eat my Hyper Mind Buster!!"
+Magic Duke "I am Duke Astaroth. You are deeply misguided if you think you can defeat the Demon Emperor. You don't even look like you can handle my magic attacks. I'll send you to the afterlife with your spirits in shambles. Eat my Hyper Mind Buster!!"
 
 
 {"prefix":"0x7","ptr_pos":259650,"str_pos":260028,"ptr_hex":"3F642","str_hex":"3F7BC","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7629,7 +7629,7 @@ You got the Magic Key.
 <npc1> "Yes, my memories were suppressed, but they're coming back now. I was born in heaven, but I was tasked to live among the humans."<scroll>
 <player> "Oh, okay, that makes sense."<scroll>
 <npc9> "What were the odds that <npc1> was an angel, too? I mean, really?"<scroll>
-<player> "Alright, <npc1>, let's go take out the demon emperor!"
+<player> "Alright, <npc1>, let's go take out the Demon Emperor!"
 
 
 {"prefix":"0x7","ptr_pos":259864,"str_pos":260358,"ptr_hex":"3F718","str_hex":"3F906","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7637,7 +7637,7 @@ You got the Magic Key.
 # どうとうの力をもつ。しかし，<br>
 # 「まほうきゅう」持つものあれば<br>
 # その力まぬがれる事もかのうなり。
-There is an archduke of the demon world. His power rivals the demon emperor himself. However, using a magic orb against him will weaken him considerably.
+There is an archduke of the demon world. His power rivals the Demon Emperor himself. However, using a magic orb against him will weaken him considerably.
 
 
 {"prefix":"0x7","ptr_pos":260900,"str_pos":260914,"ptr_hex":"3FB24","str_hex":"3FB32","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7676,7 +7676,7 @@ When the four keys of armor, power, magic, and sage are combined, the demon gate
 # 勝てるとでもおもっているのか？<br>
 # まあよい，死にたいのならかかって<br>
 # くるがいい。」
-Archduke "I am called Beelzebub. I'm the last thing standing between you and the demon emperor, but you won't be getting through me easily. I'm more than happy to send you to your graves."
+Archduke "I am called Beelzebub. I'm the last thing standing between you and the Demon Emperor, but you won't be getting through me easily. I'm more than happy to send you to your graves."
 
 
 {"prefix":"0x7","ptr_pos":262582,"str_pos":262734,"ptr_hex":"401B6","str_hex":"4024E","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7687,7 +7687,7 @@ Archduke "I am called Beelzebub. I'm the last thing standing between you and the
 # これからがほんとうの，戦い<br>
 # なんだから。」<scroll><player>「ああ・・・<br>
 # わかってるさ。」
-<player> "Now no one is between us and the demon emperor."<scroll>
+<player> "Now no one is between us and the Demon Emperor."<scroll>
 <npc1> "It's been a long and hard journey."<scroll>
 <npc9> "Don't count your dragons before they hatch, guys. This next battle will be our hardest yet."<scroll>
 <player> "Yeah, you can say that again."
@@ -7696,7 +7696,7 @@ Archduke "I am called Beelzebub. I'm the last thing standing between you and the
 {"prefix":"0x7","ptr_pos":262614,"str_pos":262852,"ptr_hex":"401D6","str_hex":"402C4","table":"normal","repoint":false,"ptr_type":"absolute"}
 # 「たいこうのマント」もつ者だけが<br>
 # 帝王の城の出入りがゆるされる。
-You need the archduke cape to enter the emperor's castle.
+You need the Archduke Cape to enter the Emperor's castle.
 
 
 {"prefix":"0x7","ptr_pos":263220,"str_pos":263400,"ptr_hex":"40434","str_hex":"404E8","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -7727,7 +7727,7 @@ Satan "<player>, this is as far as we go together. I'll see you when this is all
 # お前をたおしてみせる！！」<scroll>ルキフェル「ではその実力，見せても<br>
 # らう事にしよう。おまえのなかま<br>
 # たちを使ってな。」
-Lucifer "Welcome to the lowest circle of the demon world. You've finally reached me, the demon emperor. Defeating my 5 dukes has earned you the right to challenge me. Don't disappoint me."<scroll>
+Lucifer "Welcome to the lowest circle of the demon world. You've finally reached me, the Demon Emperor. Defeating my 5 dukes has earned you the right to challenge me. Don't disappoint me."<scroll>
 <player> "Lucifer!! I won't let you bring calamity to my world or Fantasia. Do you know how much suffering you've caused with your hordes of monsters?!"<scroll>
 Lucifer "Talk is cheap. Let's fight. Your friends can help you, too."
 
@@ -7811,7 +7811,7 @@ Large teardrops fell from <npc1>'s eyes, sparkling with refracted light.
 <player> "Lucifer, look what you made me do!"<scroll>
 Lucifer "I just released your inner demon. You're the one that killed your friends."<scroll>
 <player> "I did what? That's impossible..."<scroll>
-<npc1> "I'm not going to make it. Here, take the rest of my power. You must defeat the demon emperor."
+<npc1> "I'm not going to make it. Here, take the rest of my power. You must defeat the Demon Emperor."
 
 
 {"prefix":"0x7","ptr_pos":264622,"str_pos":265846,"ptr_hex":"409AE","str_hex":"40E76","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -8054,7 +8054,7 @@ The party's MP was restored.
 # <player>は全身が<npc1>の<br>
 # あいじょうで，いっぱいになっていく<br>
 # のを感じた。
-<player>'s felt his body fill with <npc1>'s love for him.
+<player> felt his body fill with <npc1>'s love for him.
 
 
 {"prefix":"07","ptr_pos":150032,"str_pos":150862,"ptr_hex":"24A10","str_hex":"24D4E","table":"normal","repoint":false,"ptr_type":"absolute"}
