@@ -193,11 +193,13 @@ NotZero:
 
 vwf_routine_lol: 
 	LEA	$00FFFA02, a4
+
 	TST	(a4)
 	BNE	copy_overflow	; before writing new character, check if we have overflow from previous character
-
-
+	
 	movem.l	a2/d0, -(a7)
+
+
 	move.l	#$7, d2	; will store # of empty columns on right side of tile here
 get_image_firstpass:
 	moveq	#3, d4	; number of 4x8 chunks to read
@@ -235,7 +237,7 @@ bit_loop:
 	subq	#$1, d2	; don't squeeze if only 1px available
 	BEQ	vwf_cleanup
 	
-	
+get_mask:
 	moveq	#-1, d4
 	lsl.l	#$2, d2	
 	move	d2, $FFfa00
@@ -329,8 +331,19 @@ copy_overflow_loop:
 	move.l	(a4)+, (a1)+
 	dbf	d4, copy_overflow_loop
 	move.l	#$0, a4
-	clr.l	$fffa00
-	jmp finish_image_copy_sr
+	clr.w	$fffa00
+	; i need to test get extra space pixels into d2
+	moveq	#$6, d2
+	moveq	#-1, d4
+	lsl.l	#$2, d2	
+	move	d2, $FFfa00
+
+	lsr.l	d2, d4	; getting $F mask.. 
+	not.l	d4
+	move.l	d4, d2	; if d2 was 1, convert to $F000 0000 to save just the left-most column
+	move.l	#$3, d4
+	jmp get_vwf_image
+	; jmp finish_image_copy_sr
 
 
 	

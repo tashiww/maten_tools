@@ -219,11 +219,13 @@
 00068300                            
 00068300                            vwf_routine_lol: 
 00068300 49F9 00FF FA02             	LEA	$00FFFA02, a4
+00068306                            
 00068306 4A54                       	TST	(a4)
 00068308 6600 0000                  	BNE	copy_overflow	; before writing new character, check if we have overflow from previous character
-0006830C                            
-0006830C                            
+0006830C                            	
 0006830C 48E7 8020                  	movem.l	a2/d0, -(a7)
+00068310                            
+00068310                            
 00068310 243C 0000 0007             	move.l	#$7, d2	; will store # of empty columns on right side of tile here
 00068316                            get_image_firstpass:
 00068316 7803                       	moveq	#3, d4	; number of 4x8 chunks to read
@@ -261,7 +263,7 @@
 00068350 5342                       	subq	#$1, d2	; don't squeeze if only 1px available
 00068352 6700 0000                  	BEQ	vwf_cleanup
 00068356                            	
-00068356                            	
+00068356                            get_mask:
 00068356 78FF                       	moveq	#-1, d4
 00068358 E58A                       	lsl.l	#$2, d2	
 0006835A 33C2 00FF FA00             	move	d2, $FFfa00
@@ -355,12 +357,23 @@
 000683DC 22DC                       	move.l	(a4)+, (a1)+
 000683DE 51CC FFFC                  	dbf	d4, copy_overflow_loop
 000683E2 287C 0000 0000             	move.l	#$0, a4
-000683E8 42B9 00FF FA00             	clr.l	$fffa00
-000683EE 4EF9 0000 0000             	jmp finish_image_copy_sr
-000683F4                            
-000683F4                            
-000683F4                            	
-000683F4                             org $1EE0
+000683E8 4279 00FF FA00             	clr.w	$fffa00
+000683EE                            	; i need to test get extra space pixels into d2
+000683EE 7406                       	moveq	#$6, d2
+000683F0 78FF                       	moveq	#-1, d4
+000683F2 E58A                       	lsl.l	#$2, d2	
+000683F4 33C2 00FF FA00             	move	d2, $FFfa00
+000683FA                            
+000683FA E4AC                       	lsr.l	d2, d4	; getting $F mask.. 
+000683FC 4684                       	not.l	d4
+000683FE 2404                       	move.l	d4, d2	; if d2 was 1, convert to $F000 0000 to save just the left-most column
+00068400 283C 0000 0003             	move.l	#$3, d4
+00068406 4EF9 0006 8382             	jmp get_vwf_image
+0006840C                            	; jmp finish_image_copy_sr
+0006840C                            
+0006840C                            
+0006840C                            	
+0006840C                             org $1EE0
 00001EE0                            finish_image_copy_sr:
 00001EE0 245F                       	MOVEA.l	(A7)+, A2	; offset where we originally saved the image data, not the copy..
 00001EE2 2F08                       	MOVE.l	A0, -(A7)
