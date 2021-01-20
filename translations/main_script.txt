@@ -1,5 +1,5 @@
 {"prefix":"0","ptr_pos":428674,"str_pos":127954,"ptr_hex":"0x68a82","str_hex":"xxx","table":"menu","repoint":false,"ptr_type":"absolute"}
-#spoofed string info, "level" in party list
+#spoofed string info, "LVL" in party list
 LVL
 
 
@@ -8727,6 +8727,140 @@ I've treated the petrification.
 # いきかえった。
 The resurrection is complete.
 
+{"prefix":"0","ptr_pos":130780,"str_pos":0,"ptr_hex":"0x1fedc","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
+#    PROGRAMMER<br>
+# <br>
+#       ABY<end>
+    Programmer<br><br>
+       ABY<end>
+       
+{"prefix":"0","ptr_pos":130794,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
+#   GAME DESIGNER<br>
+# <br>
+#       あっきり<end>
+   Game Designer<br><br>
+       Akkiri<end>
+
+{"prefix":"0","ptr_pos":130808,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
+# GRAPHICS DESIGNERS<br>
+# <br>
+#      井森 浩<br>
+#      二宮 宗<br>
+#      小嶌 一誠<br>
+#      神代 邦彦<br>
+#      天森 牧子<end>
+ Graphic Designers<br><br>
+      Hiroshi  Imori
+      Takashi  Ninomiya
+      Kazumasa Kojima
+      Kunihiko Kamiyo
+      Makiko   Amamori
+      
+{"prefix":"0","ptr_pos":130822,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
+#   MAP DESIGNERS<br>
+# <br>
+#       戸簾 隆浩<br>
+#      TAKUちゃん<end>
+   Map Designers<br><br>
+      Takahiro Tomisu
+      Taku-chan
+
+{"prefix":"0","ptr_pos":130836,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
+#    MAP EDITORS<br>
+# <br>
+#       藤岡 博<br>
+#       ももちゃん<end>
+    Map Editors<br><br>
+       Hiroshi Fujioka
+       Momo-chan
+       
+{"prefix":"0","ptr_pos":130850,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
+#    ILLUSTRATOR<br>
+# <br>
+#       足立 健<end>
+    Illustrator<br><br>
+       Takeshi Adachi
+
+{"prefix":"0","ptr_pos":130864,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
+#  SOUND COMPOSERS<br>
+# <br>
+#      溝口 功<br>
+#      岩垂 徳行<end>
+  Sound Composers<br><br>
+    Isao     Mizoguchi
+    Noriyuki Iwadare
+      
+{"prefix":"0","ptr_pos":130878,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
+# SCENARIO WRITERS<br>
+# <br>
+#   マインドバスタ― あたる<br>
+#       まこりん<end>
+ Scenario Writers<br><br>
+    Mindbuster Ataru
+    Makorin
+    
+{"prefix":"0","ptr_pos":130892,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
+#  MANUAL EDITOER<br>
+# <br>
+#      前原 慎一<end>
+  Manual Editor<br><br>
+    Shinichi Maebara
+
+
+{"prefix":"0","ptr_pos":130906,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
+#  BALANCE TESTERS<br>
+# <br>
+#       深水 元貴<br>
+#       にゃんのすけ<br>
+# SS－OGRUF REFINED<end>
+  Balance Testers<br><br>
+    Motoki   Fukami
+    Nyansuke
+    SS-Ogruf Refined
+
+{"prefix":"0","ptr_pos":130920,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
+#     DIRECTORS<br>
+# <br>
+#        みやび<br>
+#       阿部 角馬<end>
+  Directors<br><br>
+    Miyabi
+    Kakuma Abe   
+    
+{"prefix":"0","ptr_pos":130934,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}  
+#     PRODUCER<br>
+# <br>
+#      鈴木 暁彦<end>
+     Producer<br><br>
+      Akihiko Suzuki
+      
+{"prefix":"0","ptr_pos":130948,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}  
+#EXECUTIVE PRODUCER<br>
+# <br>
+#       田中 雅弘<end>
+Executive Producer<br><br>
+    Masahiro Tanaka
+    
+{"prefix":"0","ptr_pos":130962,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}  
+#  企画 WARLOCK<br>
+# <br>
+#  協力 GEO FACTORY<br>
+#     オカリナシステム<br>
+#     TWOFIVE<end>
+ Planning
+   Warlock<br><br>
+ Additional Support
+   Geo Factory
+   Ocarina System
+   TWOFIVE
+
+{"prefix":"0","ptr_pos":130976,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}  
+# <br>
+# <br>
+#     制作 講談社絵研<end>
+Publisher
+   Kodansha Research Institute<br><br><br>
+This is an unofficial fan translation for non-commercial purposes only.
 
 {"prefix":"07","ptr_pos":160278,"str_pos":160396,"ptr_hex":"27216","str_hex":"2728C","table":"normal","repoint":true,"ptr_type":"absolute"}
 # <player>「おや？<br>
