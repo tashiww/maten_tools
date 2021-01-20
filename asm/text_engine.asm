@@ -192,12 +192,12 @@ NotZero:
 ; d0 and d1 are $F and $E, need to stay that for palette reasons.
 
 vwf_routine_lol: 
-	LEA	$00FFFA02, a4
+	LEA	$00FFFA04, a4
+	movem.l	a2/d0, -(a7)
 
 	TST	(a4)
 	BNE	copy_overflow	; before writing new character, check if we have overflow from previous character
 	
-	movem.l	a2/d0, -(a7)
 
 
 	move.l	#$7, d2	; will store # of empty columns on right side of tile here
@@ -221,7 +221,7 @@ fill_bit:
 	ADD.b	D0, D7
 	CMP.b	d6, d2
 	bcs	bit_loop
-	move.b	d6, d2	; this isn't returning right value because d4 is #7, i'm reading two tiles still :/
+	move.b	d6, d2	; this doesn't work if d4 is #7, cuz it reads two tiles still
 bit_loop:
 	DBF	D6, convert_to_EFs
 	;ANDI.l	#$FFFF0000, d7
@@ -237,6 +237,7 @@ bit_loop:
 	subq	#$1, d2	; don't squeeze if only 1px available
 	BEQ	vwf_cleanup
 	
+	; i'm ruining this function, moving the mask elsewhere...
 get_mask:
 	moveq	#-1, d4
 	lsl.l	#$2, d2	
@@ -272,6 +273,8 @@ start_vwf_nonsense:
 
 	moveq	#3, d4	; number of 4x8 chunks to read
 	movem.l	(a7)+, d0/a2
+	LEA	$00FFFA04, a4	; location for "overflow" might need to be cleared later?
+	move.b	#$7, $FFfa02	; will store # of empty columns on right side of tile here
 
 get_vwf_image:
 	MOVE.l	(A0)+, D3	; gets 4 rows of font tile image data at a time
@@ -288,6 +291,10 @@ vwf_convert:
 	BRA.b	bit_vwf_loop	
 fill_vwf_bit:
 	ADD.b	D0, D7
+	CMP.b		$FFfa02, d6
+	bcc	bit_vwf_loop
+	move.b	d6, $FFfa02	; this doesn't work if d4 is #7, cuz it reads two tiles still
+
 bit_vwf_loop:
 	DBF	D6, vwf_convert
 	; if i have $EEFFEEEE and I have space for 1 column.. i want to store $EFFE $EEE0 , then OR in $E at some point. at $FFFA00 , and OR in first $E to a2
@@ -325,25 +332,31 @@ copy_image_back:
 
 copy_overflow:
 	moveq	#$f, d4
-	MOVEA.l	(A7)+, A2	; offset where we just saved image data in RAM
+	;	movem.l	(a7)+, d0/a2
+	; offset where we just saved image data in RAM
 
 copy_overflow_loop:
-	move.l	(a4)+, (a1)+
+	move.l	(a4)+, (a2)+
 	dbf	d4, copy_overflow_loop
 	move.l	#$0, a4
-	clr.w	$fffa00
 	; i need to test get extra space pixels into d2
-	moveq	#$6, d2
+	clr		d2
+	move.b	#$2, d2	; i want size in $ff02 but so far no dice
+	clr.l	$fffa00
+	clr.l	$fffa04
+
 	moveq	#-1, d4
 	lsl.l	#$2, d2	
-	move	d2, $FFfa00
+	move.w	d2, $FFfa00
 
-	lsr.l	d2, d4	; getting $F mask.. 
-	not.l	d4
-	move.l	d4, d2	; if d2 was 1, convert to $F000 0000 to save just the left-most column
-	move.l	#$3, d4
-	jmp get_vwf_image
-	; jmp finish_image_copy_sr
+	lsr.l d2, d4	; getting $F mask.. 
+	not.l d4
+	move.l d4, d2	; if d2 was 1, convert to $F000 0000 to save just the left-most column
+	move.l #$3, d4
+	jmp start_vwf_nonsense	; this needs to be conditional based on extra space in tile
+	;movem.l (a7)+, d0/a2 ; fix stack if not branching?
+
+	;jmp finish_image_copy_sr
 
 
 	
