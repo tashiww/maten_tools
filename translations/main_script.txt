@@ -8752,8 +8752,8 @@ The resurrection is complete.
  Graphic Designers<br><br>
       Hiroshi  Imori
       Takashi  Ninomiya
-      Kazumasa Kojima
-      Kunihiko Kamiyo
+      Issei    Kojima
+      Kunihiko Kumashiro
       Makiko   Amamori
       
 {"prefix":"0","ptr_pos":130822,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
@@ -8779,7 +8779,7 @@ The resurrection is complete.
 # <br>
 #       足立 健<end>
     Illustrator<br><br>
-       Takeshi Adachi
+       Ken Adachi
 
 {"prefix":"0","ptr_pos":130864,"str_pos":0,"ptr_hex":"0x1feea","str_hex":"0x20030","table":"normal","repoint":false,"ptr_type":"absolute"}
 #  SOUND COMPOSERS<br>
