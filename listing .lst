@@ -204,12 +204,12 @@
 00001EA6 0200 000F                  	ANDI.b	#$0F, D0
 00001EAA 0201 000F                  	ANDI.b	#$0F, D1
 00001EAE 2F0A                       	MOVE.l	A2, -(A7)
-00001EB0 2F0A                       	MOVE.l	A2, -(A7)
-00001EB2 7807                       	MOVEQ	#7, D4	; loop 8x for full font tile? a long is 8x4 pixels, font tile is 16x16px, need 8 iterations
-00001EB4                            			; setting this to 3 breaks the name selection menu for some reason ... everything else seems fine..
-00001EB4 4EF9 0000 0000             	jmp vwf_routine_lol
-00001EBA                            
-00001EBA                             org $68300
+00001EB0                            	;MOVE.l	A2, -(A7)
+00001EB0 7807                       	MOVEQ	#7, D4	; loop 8x for full font tile? a long is 8x4 pixels, font tile is 16x16px, need 8 iterations
+00001EB2                            			; setting this to 3 breaks the name selection menu for some reason ... everything else seems fine..
+00001EB2 4EF9 0000 0000             	jmp vwf_routine_lol
+00001EB8                            
+00001EB8                             org $68300
 00068300                            ; when i enter .. 
 00068300                            ; a0 is current char image data
 00068300                            ; a1 is prob where final image will get copied
@@ -218,176 +218,164 @@
 00068300                            ; d0 and d1 are $F and $E, need to stay that for palette reasons.
 00068300                            
 00068300                            vwf_routine_lol: 
-00068300 49F9 00FF FA04             	LEA	$00FFFA04, a4
-00068306 48E7 8020                  	movem.l	a2/d0, -(a7)
-0006830A                            
-0006830A 4A54                       	TST	(a4)
-0006830C 6600 0000                  	BNE	copy_overflow	; before writing new character, check if we have overflow from previous character
-00068310                            	
-00068310                            
-00068310                            
-00068310 243C 0000 0007             	move.l	#$7, d2	; will store # of empty columns on right side of tile here
-00068316                            get_image_firstpass:
-00068316 7803                       	moveq	#3, d4	; number of 4x8 chunks to read
-00068318                            
-00068318                            get_image_data:
-00068318 2618                       	MOVE.l	(A0)+, D3	; gets 4 rows of font tile image data at a time
-0006831A 7A03                       	MOVEQ	#3, D5	; loop through each byte (4 bytes in a long)
-0006831C                            
-0006831C                            image_byte_loop:
-0006831C 7C07                       	MOVEQ	#7, D6	; loop 8 times (8 bits per byte)
-0006831E 4287                       	CLR.l	D7	; d7 is where bits are converted to Es and Fs
-00068320                            convert_to_EFs:
-00068320 E98F                       	LSL.l	#4, D7	; scoots one "digit" over
-00068322 E38B                       	LSL.l	#1, D3	; pop bit from image data ($c0 means first two bits set, rest blank, so $FFeeeeee)
-00068324 6500                       	BCS.b	fill_bit
-00068326 DE01                       	ADD.b	D1, D7	; if bit wasn't set, blank ($E)
-00068328 6000                       	BRA.b	bit_loop	
-0006832A                            fill_bit:
-0006832A DE00                       	ADD.b	D0, D7
-0006832C B406                       	CMP.b	d6, d2
-0006832E 6500 0000                  	bcs	bit_loop
-00068332 1406                       	move.b	d6, d2	; this doesn't work if d4 is #7, cuz it reads two tiles still
-00068334                            bit_loop:
-00068334 51CE FFEA                  	DBF	D6, convert_to_EFs
-00068338                            	;ANDI.l	#$FFFF0000, d7
-00068338                            	;lsl.l	#8, d7
-00068338 24C7                       	move.l	D7, (A2)+	; store "decompressed" image data in RAM
-0006833A 51CD FFE0                  	DBF	D5, image_byte_loop	
-0006833E 51CC FFD8                  	DBF	D4, get_image_data	
-00068342                            	
-00068342 4A42                       	TST	d2	; check if we have extra room in tile
-00068344 6700 0000                  	BEQ	vwf_cleanup	
-00068348 0C02 0007                  	CMPI.b	#$7, d2	; ignore space tiles for now
-0006834C 6700 0000                  	BEQ	vwf_cleanup	
-00068350 5342                       	subq	#$1, d2	; don't squeeze if only 1px available
-00068352 6700 0000                  	BEQ	vwf_cleanup
-00068356                            	
-00068356                            	; i'm ruining this function, moving the mask elsewhere...
-00068356                            get_mask:
-00068356 78FF                       	moveq	#-1, d4
-00068358 E58A                       	lsl.l	#$2, d2	
-0006835A 33C2 00FF FA00             	move	d2, $FFfa00
-00068360                            
-00068360 E4AC                       	lsr.l	d2, d4	; getting $F mask.. 
-00068362 4684                       	not.l	d4
-00068364 2404                       	move.l	d4, d2	; if d2 was 1, convert to $F000 0000 to save just the left-most column
-00068366                            	
-00068366                            	; moveq	#$f, d2	
-00068366                            ; blank_test:
-00068366                            	; or.l	d4, -(a2)
-00068366                            	; dbf	d2, blank_test
-00068366                            
-00068366                            ; if we're here, we have spaces to fill in.
-00068366                            
-00068366                            	; get current letter, OR'ing in our slice...
-00068366                            	; somehow conveniently $FF32b9 has the next letter already muwahaha
-00068366                            	;movem.l	a2/a0/d0, -(a7)
-00068366                            
-00068366                            ; FontTileOffset	equr	d0
-00068366                            ; BaseFontOffset	equr	a0
-00068366                            
-00068366                            start_vwf_nonsense:
-00068366 4240                       	clr	d0
-00068368 1013                       	move.b	(a3), FontTileOffset
-0006836A 0440 0010                  	SUBI.w	#$0010, FontTileOffset	; $00-$0F are control codes (non-printable)
-0006836E 6B00                       	BMI.b	vwf_cleanup	; no idea what to do with ccs... bypass entirely?
-00068370 48C0                       	EXT.l	FontTileOffset	
-00068372 E948                       	LSL.w	#4, FontTileOffset	; multiply by $20 for 8x16 font
-00068374 41F9 0006 48E6             	LEA	$000648E6, BaseFontOffset	; base font address in ROM
-0006837A D1C0                       	ADDA.l	FontTileOffset, BaseFontOffset	; font tile offset for current character
-0006837C                            
-0006837C 7803                       	moveq	#3, d4	; number of 4x8 chunks to read
-0006837E 4CDF 0401                  	movem.l	(a7)+, d0/a2
-00068382 49F9 00FF FA04             	LEA	$00FFFA04, a4	; location for "overflow" might need to be cleared later?
-00068388 13FC 0007 00FF FA02        	move.b	#$7, $FFfa02	; will store # of empty columns on right side of tile here
-00068390                            
-00068390                            get_vwf_image:
-00068390 2618                       	MOVE.l	(A0)+, D3	; gets 4 rows of font tile image data at a time
-00068392 7A03                       	MOVEQ	#3, D5	; loop through each byte (4 bytes in a long) (4 rows of image 8x8 tile)
-00068394                            
-00068394                            vwf_loop:
-00068394 7C07                       	MOVEQ	#7, D6	; loop 8 times (8 bits per byte)
-00068396 4287                       	CLR.l	D7	; d7 is where bits are converted to Es and Fs
-00068398                            vwf_convert:
-00068398 E98F                       	LSL.l	#4, D7	; scoots one "digit" over
-0006839A E38B                       	LSL.l	#1, D3	; pop bit from image data ($c0 means first two bits set, rest blank, so $FFeeeeee)
-0006839C 6500                       	BCS.b	fill_vwf_bit
-0006839E DE01                       	ADD.b	D1, D7	; if bit wasn't set, blank ($E)
-000683A0 6000                       	BRA.b	bit_vwf_loop	
-000683A2                            fill_vwf_bit:
-000683A2 DE00                       	ADD.b	D0, D7
-000683A4 BC39 00FF FA02             	CMP.b		$FFfa02, d6
-000683AA 6400 0000                  	bcc	bit_vwf_loop
-000683AE 13C6 00FF FA02             	move.b	d6, $FFfa02	; this doesn't work if d4 is #7, cuz it reads two tiles still
-000683B4                            
-000683B4                            bit_vwf_loop:
-000683B4 51CE FFE2                  	DBF	D6, vwf_convert
-000683B8                            	; if i have $EEFFEEEE and I have space for 1 column.. i want to store $EFFE $EEE0 , then OR in $E at some point. at $FFFA00 , and OR in first $E to a2
-000683B8                            	
-000683B8 48E7 0C00                  	movem.l	d4/d5, -(a7)
-000683BC 2C07                       	move.l	d7, d6
-000683BE 3A39 00FF FA00             	move.w	$fffa00, d5
-000683C4 EBAE                       	LSL.l	d5, d6
-000683C6 0086 EEEE EEEE             	ORI.l	#$eeeeeeee, d6
-000683CC 28C6                       	move.l	d6, (a4)+
-000683CE                            	
-000683CE CE82                       	and.l	d2, d7
-000683D0 EBBF                       	ROL.l	d5, d7	; if i have $FEFFEEEE and want to save first 3 columns.. mask to get $FEF .. 
-000683D2 8F9A                       	OR.l	D7, (A2)+	; store "decompressed" image data in RAM
-000683D4                            	
-000683D4 4CDF 0030                  	movem.l	(a7)+, d5/d4
-000683D8 51CD FFBA                  	dbf	d5, vwf_loop
-000683DC 51CC FFB2                  	dbf	d4, get_vwf_image
-000683E0                            	
-000683E0 6000                       	bra.b	copy_back_setup
-000683E2                            	
-000683E2                            vwf_cleanup:
-000683E2 4CDF 0401                  	movem.l	(a7)+, d0/a2
-000683E6                            	
-000683E6                            	
-000683E6                            copy_back_setup:
-000683E6 245F                       	MOVEA.l	(A7)+, A2	; offset where we just saved image data in RAM
-000683E8 780F                       	MOVEQ	#$0000000F, D4	; 32 8px segments (of $EEFF etc)
-000683EA                            copy_image_back:
-000683EA 22DA                       	MOVE.l	(A2)+, (A1)+	; a1 was $3378, not sure when or why? it's $80 before where we just saved the image data to RAM
-000683EC 51CC FFFC                  	DBF	D4, copy_image_back
-000683F0                            	
-000683F0 4EF9 0000 0000             	jmp	finish_image_copy_sr
-000683F6                            
-000683F6                            
-000683F6                            copy_overflow:
-000683F6 780F                       	moveq	#$f, d4
-000683F8                            	;	movem.l	(a7)+, d0/a2
-000683F8                            	; offset where we just saved image data in RAM
-000683F8                            
-000683F8                            copy_overflow_loop:
-000683F8 24DC                       	move.l	(a4)+, (a2)+
-000683FA 51CC FFFC                  	dbf	d4, copy_overflow_loop
-000683FE 287C 0000 0000             	move.l	#$0, a4
-00068404                            	; i need to test get extra space pixels into d2
-00068404 4242                       	clr		d2
-00068406 143C 0002                  	move.b	#$2, d2	; i want size in $ff02 but so far no dice
-0006840A 42B9 00FF FA00             	clr.l	$fffa00
-00068410 42B9 00FF FA04             	clr.l	$fffa04
-00068416                            
-00068416 78FF                       	moveq	#-1, d4
-00068418 E58A                       	lsl.l	#$2, d2	
-0006841A 33C2 00FF FA00             	move.w	d2, $FFfa00
-00068420                            
-00068420 E4AC                       	lsr.l d2, d4	; getting $F mask.. 
-00068422 4684                       	not.l d4
-00068424 2404                       	move.l d4, d2	; if d2 was 1, convert to $F000 0000 to save just the left-most column
-00068426 283C 0000 0003             	move.l #$3, d4
-0006842C 4EF9 0006 8366             	jmp start_vwf_nonsense	; this needs to be conditional based on extra space in tile
-00068432                            	;movem.l (a7)+, d0/a2 ; fix stack if not branching?
-00068432                            
-00068432                            	;jmp finish_image_copy_sr
-00068432                            
-00068432                            
-00068432                            	
-00068432                             org $1EE0
+00068300 49F9 00FF FA04             	LEA	$00FFFA04, a4	; check overflow
+00068306 4A54                       	TST	(a4)
+00068308 6600 0000                  	BNE	copy_overflow	; before writing new character, copy overflow into tile
+0006830C 6000                       	bra.b	pre_vwf_image	; registers were already set up for new character
+0006830E                            
+0006830E                            ; somehow conveniently $FF32b9 has the next letter already muwahaha and that's in a3
+0006830E                            ; FontTileOffset	equr	d0
+0006830E                            ; BaseFontOffset	equr	a0
+0006830E                            
+0006830E                            get_next_letter:
+0006830E 2F00                       	move.l	d0, -(a7)
+00068310 4240                       	clr	d0
+00068312 1013                       	move.b	(a3), FontTileOffset
+00068314 0440 0010                  	SUBI.w	#$0010, FontTileOffset	; $00-$0F are control codes (non-printable)
+00068318 6B00 0000                  	BMI.w	cc_cleanup	; no idea what to do with control codes... bypass entirely?
+0006831C 48C0                       	EXT.l	FontTileOffset	
+0006831E E948                       	LSL.w	#4, FontTileOffset	; multiply by $20 for 8x16 font
+00068320 41F9 0006 48E6             	LEA	$000648E6, BaseFontOffset	; base font address in ROM
+00068326 D1C0                       	ADDA.l	FontTileOffset, BaseFontOffset	; font tile offset for current character
+00068328 201F                       	move.l	(a7)+, d0
+0006832A 2457                       	move.l	(a7), a2
+0006832C 6000                       	bra.b	pre_vwf_image
+0006832E                            cc_cleanup:
+0006832E 201F                       	move.l	(a7)+, d0
+00068330 2457                       	move.l	(a7), a2
+00068332 7400                       	moveq	#$0, d2
+00068334 42B9 00FF FA00             	clr.l	$FFfa00
+0006833A 42B9 00FF FA04             	clr.l	$FFfa04
+00068340 6000 0000                  	bra.w	copy_back_setup
+00068344                            
+00068344                            pre_vwf_image:
+00068344 33FC 0007 00FF FA02        	move.w	#$7, $FFfa02	; will store # of filled px here, start with empty px though
+0006834C 7803                       	moveq	#3, d4	; number of 8x4 chunks to read
+0006834E                            get_vwf_image:
+0006834E 2618                       	MOVE.l	(A0)+, D3	; gets 4 rows of font tile image data at a time
+00068350 7A03                       	MOVEQ	#3, D5	; loop through each byte (4 bytes in a long) (4 rows of image 8x8 tile)
+00068352                            vwf_loop:
+00068352 7C07                       	MOVEQ	#7, D6	; loop 8 times (8 bits per byte)
+00068354 4287                       	CLR.l	D7	; d7 is where bits are converted to Es and Fs
+00068356                            vwf_convert:
+00068356 E98F                       	LSL.l	#4, D7	; scoots one "digit" over
+00068358 E38B                       	LSL.l	#1, D3	; pop bit from image data ($c0 means first two bits set, rest blank, so $FFeeeeee)
+0006835A 6500                       	BCS.b	fill_vwf_bit
+0006835C DE01                       	ADD.b	D1, D7	; if bit wasn't set, blank ($E)
+0006835E 6000                       	BRA.b	bit_vwf_loop	
+00068360                            fill_vwf_bit:
+00068360 DE00                       	ADD.b	D0, D7
+00068362 BC79 00FF FA02             	CMP.w	$FFfa02, d6	; check if farther right pixel than previously stored
+00068368 6400 0000                  	bcc	bit_vwf_loop
+0006836C 33C6 00FF FA02             	move.w	d6, $FFfa02	; this doesn't work if d4 is #7, cuz it reads two tiles still
+00068372                            bit_vwf_loop:
+00068372 51CE FFE2                  	DBF	D6, vwf_convert
+00068376                            	; if i have $EEFFEEEE and I have space for 1 column.. i want to store $EFFE $EEE0 , then OR in $E at some point. at $FFFA00 , and OR in first $E to a2
+00068376 48E7 2C00                  	movem.l	d2/d4/d5, -(a7)
+0006837A                            
+0006837A 4A79 00FF FA00             	TST	($FFfa00)
+00068380 6700 0000                  	beq	store_letter
+00068384 7A07                       	moveq	#$7, d5
+00068386 9A79 00FF FA00             	sub.w	$fffa00, d5	; how many px we've drawn in current tile so far minus 7 gives how many extra px in tile?
+0006838C 6600 0000                  	BNE	process_overflow
+00068390                            	
+00068390                            store_letter:
+00068390 24C7                       	move.l	d7, (a2)+	; if no shifting, just move it in?
+00068392 6000                       	bra.b	done_handling_overflow
+00068394                            	
+00068394                            process_overflow:
+00068394 E54D                       	lsl	#2, d5
+00068396 3405                       	move.w	d5, d2
+00068398 2C07                       	move.l	d7, d6
+0006839A EBAE                       	LSL.l	d5, d6
+0006839C 0086 EEEE EEEE             	ORI.l	#$eeeeeeee, d6	
+000683A2 28C6                       	move.l	d6, (a4)+	; overflow storage
+000683A4 6100 0000                  	bsr.w	get_mask	; converts d2 to $FF00 mask based on how many bits to shift in d2
+000683A8 CE82                       	and.l	d2, d7
+000683AA EBBF                       	ROL.l	d5, d7	; if i have $FEFFEEEE and want to save first 3 columns.. mask to get $FEF .. 
+000683AC 8F9A                       	OR.l	D7, (A2)+	; overlay slice of extra letter on top of existing tile
+000683AE                            	
+000683AE                            done_handling_overflow:
+000683AE 4CDF 0034                  	movem.l	(a7)+, d5/d4/d2
+000683B2 51CD FF9E                  	dbf	d5, vwf_loop
+000683B6 51CC FF96                  	dbf	d4, get_vwf_image
+000683BA                            	
+000683BA 3439 00FF FA02             	move.w	$FFfa02, d2
+000683C0                            	;beq	reset_tile
+000683C0 0C42 0007                  	cmpi.w	#$7, d2
+000683C4 6700 0000                  	beq	reset_tile
+000683C8 7407                       	moveq	#$7, d2	; full 8 pixels
+000683CA 9479 00FF FA02             	sub.w	$FFfa02, d2	; current "filled px size" (subtract empty pixels from 7)
+000683D0 D479 00FF FA00             	add.w	$FFfa00, d2	; "old filled pixel width"?
+000683D6 5242                       	addq	#$1, d2
+000683D8 0C42 0007                  	CMPI.w	#$7, d2	; not sure if this is the right number... prob
+000683DC 6400 0000                  	bcc.w	vwf_cleanup	; we've filled > 8 px?
+000683E0 33C2 00FF FA00             	move.w	d2, $FFfa00
+000683E6 49F9 00FF FA04             	LEA	$00FFFA04, a4	; check overflow
+000683EC 6000 FF20                  	bra.w	get_next_letter	; get next letter and draw it if there's still room
+000683F0                            
+000683F0                            reset_tile:
+000683F0 42B9 00FF FA00             	clr.l	$FFfa00
+000683F6 42B9 00FF FA04             	clr.l	$FFfa04
+000683FC 4242                       	clr	d2
+000683FE                            	
+000683FE                            vwf_cleanup:
+000683FE 0C42 0007                  	CMPI.w	#$7, d2	
+00068402 6500 0000                  	bcs	copy_back_setup
+00068406 0442 0007                  	subi.w	#$7, d2	; we should only get here if tile overflowed
+0006840A 33C2 00FF FA00             	move.w	d2, $FFfa00
+00068410                            
+00068410                            copy_back_setup:
+00068410 33C2 00FF FA00             	move.w	d2, $FFfa00
+00068416 2457                       	MOVEA.l	(A7), A2	; offset where we just saved image data in RAM
+00068418 780F                       	MOVEQ	#$0000000F, D4	; 32 8px segments (of $EEFF etc)
+0006841A                            copy_image_back:
+0006841A 22DA                       	MOVE.l	(A2)+, (A1)+	; a1 was $3378, not sure when or why? it's $80 before where we just saved the image data to RAM
+0006841C 51CC FFFC                  	DBF	D4, copy_image_back
+00068420 4EF9 0000 0000             	jmp	finish_image_copy_sr
+00068426                            
+00068426                            
+00068426                            copy_overflow:
+00068426 780F                       	moveq	#$f, d4
+00068428                            copy_overflow_loop:
+00068428 24D4                       	move.l	(a4), (a2)+
+0006842A 429C                       	clr.l	(a4)+
+0006842C 51CC FFFA                  	dbf	d4, copy_overflow_loop
+00068430 49F9 00FF FA04             	LEA	$00FFFA04, a4	; check overflow
+00068436                            
+00068436                            	;moveq	#$8, d2
+00068436                            	;move.w	$FFfa00, d2
+00068436                            	
+00068436                            	;bsr	get_mask
+00068436                            	; clr.w	$FFfa00
+00068436                            	;move.l #$3, d4
+00068436                            	;jmp get_next_letter	; this needs to be conditional based on extra space in tile
+00068436                            	;movem.l (a7)+, d0/a2 ; fix stack if not branching?
+00068436 4242                       	clr	d2
+00068438 4A79 00FF FA00             	tst	($FFfa00)
+0006843E 6700 FFD0                  	beq copy_back_setup
+00068442 4EF9 0006 830E             	jmp get_next_letter
+00068448                            
+00068448                            	
+00068448                            	; ; i'm ruining this function, moving the mask elsewhere...
+00068448                            get_mask:
+00068448                            ; takes # of bits to shift (pixels * 4) and puts $FF00 mask in d2
+00068448                            ; assumes you'll only give valid values ... like 1-7 ish...
+00068448 4A42                       	TST	d2
+0006844A 6700 0000                  	beq	done_mask
+0006844E                            	
+0006844E 78FF                       	moveq	#-1, d4
+00068450 E4AC                       	lsr.l	d2, d4	; getting $F mask.. 
+00068452 4684                       	not.l	d4
+00068454 2404                       	move.l	d4, d2	; if d2 was 1, convert to $F000 0000 to save just the left-most column
+00068456                            done_mask:
+00068456 4E75                       	rts
+00068458                            
+00068458                            
+00068458                            	
+00068458                             org $1EE0
 00001EE0                            finish_image_copy_sr:
+00001EE0                            
 00001EE0 245F                       	MOVEA.l	(A7)+, A2	; offset where we originally saved the image data, not the copy..
 00001EE2 2F08                       	MOVE.l	A0, -(A7)
 00001EE4 204A                       	MOVEA.l	A2, A0

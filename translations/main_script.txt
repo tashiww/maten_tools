@@ -1279,7 +1279,7 @@ Zafan was so dreamy.
 {"prefix":"0x7","ptr_pos":156400,"str_pos":156488,"ptr_hex":"262F0","str_hex":"26348","table":"normal","repoint":false,"ptr_type":"absolute"}
 # どうせ，あたしなんていいのよ！！<br>
 # のんでやる！！
-I don't matter to him at all! I'm gonna get wasted!
+lolol I don't matter to him at all! I'm gonna get wasted!
 
 
 {"prefix":"0x7","ptr_pos":156592,"str_pos":156606,"ptr_hex":"263B0","str_hex":"263BE","table":"normal","repoint":false,"ptr_type":"absolute"}
