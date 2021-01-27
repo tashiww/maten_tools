@@ -1,10 +1,11 @@
 # maten_tools
  Tools for hacking maten no soumetsu SMD. Patches are available in the ./patches/ folder in xdelta, ips, and bps formats. Build instructions are below the feature list.
 
-|released date|version|notes|
-|---|---|---|
-|2021-01-16|	ver 02a|	all menus redesigned, played through to endgame, fixed all bugs encountered
-|2021-01-05|	ver 01a|	fixed vram overflow (text being overwritten) and made line breaks more aggressive to prevent words being split. added max level patch|
+|`    released date    `|version|notes|
+|--------|---|---|
+|2021-01-26|	ver 03a|	translated ending credits|
+|2021-01-16|	ver 02a|	all menus redesigned, played through to endgame, fixed all bugs encountered|
+|2021-01-05|	ver 01a|	fixed vram overflow (text being overwritten) and made line breaks more aggressive to prevent words being split (only sorta worked). added max level patch|
 |2021-01-04|	ver 00a|	initial feature complete?|
 ## features
 fully playable in English: all strings translated from Japanese to English
