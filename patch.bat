@@ -10,4 +10,6 @@ py maten_dumper.py
 IF [%1]==[] (GOTO :end) ELSE (GOTO :patch)
 :patch
 .\flips.exe -c --ips "Maten no Soumetsu (Japan).md" "foobar.bin" "./patches/bleeding_edge/maten_%datetime%.ips"
+.\flips.exe -c --bps "Maten no Soumetsu (Japan).md" "foobar.bin" "./patches/bleeding_edge/maten_%datetime%.bps"
+
 :end
