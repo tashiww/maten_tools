@@ -2509,3 +2509,187 @@
 000F57C0                             org $f57c0
 000F57C0                            	incbin	"./images/press_start.bin"
 000F57C0                            	incbin	"./images/press_start.bin"
+000F5DB0                            
+000F5DB0                            ; game balancing (xp / gold rewards, level requirements, battle frequency, hp/mp caps)
+000F5DB0                            	include "./asm/rebalance.asm"
+000F5DB0                            ; ############################################################################
+000F5DB0                            ; # Created by:	tashi
+000F5DB0                            ; # Creation Date:	20XX
+000F5DB0                            ; # Re-assembled with asm68k (port of SNASM68k)
+000F5DB0                            ; # don't move any ops within original routine!
+000F5DB0                            ; # Summary:
+000F5DB0                            ; # 	Make game easier / less punishing
+000F5DB0                            ; #			- lower encounter rate
+000F5DB0                            ; #			- increase gold / xp rewards
+000F5DB0                            ; #			- increase HP cap and give more HP on level-up
+000F5DB0                            ; ############################################################################
+000F5DB0                            
+000F5DB0 =00FFCAB0                  StepCount equ	$00FFCAB0
+000F5DB0                            
+000F5DB0                            ; random encounter chance routine	
+000F5DB0                             org $00007DDA
+00007DDA 2068 0002                  	MOVEA.l	$2(A0), A0	; puts encounter pointer in a0 (encounter info is: level, # enemies, enc rate, then list of enemy IDs)
+00007DDE 1228 0002                  	MOVE.b	$2(A0), D1	; puts encounter rate in d1
+00007DE2 E149                       	LSL.w	#8, D1	; $19 -> $1900
+00007DE4 4EF9 0000 0000             	JMP reduce_encounters
+00007DEA                            	; MULU.w	StepCount, D1	; steps since leaving town / last encounter, caps at 8
+00007DEA E889                       	LSR.l	#4, D1	; increased from 3 to 4 to reduce encounter rate 50% ?
+00007DEC 0C79 0008 00FF CAB0        	CMPI.w	#8, StepCount
+00007DF4 6400                       	BCC.b	level_modifier
+00007DF6 5279 00FF CAB0             	ADDQ.w	#1, StepCount
+00007DFC                             org $7dfc
+00007DFC                            level_modifier:
+00007DFC                            ; reduces encounter chance if max player level exceeds encounter base level, > 4 skips encounters entirely
+00007DFC 6100 2F98                  	BSR.w	$ad96	; gets party max level into d4 maybe
+00007E00 B810                       	CMP.b	(A0), D4	; checks encounter base level against max party level
+00007E02 6300                       	BLS.b	check_encounter_chance	
+00007E04 E249                       	LSR.w	#1, D1	;
+00007E06 5704                       	SUBQ.b	#3, D4	; increased to 3 and 3 so you can level up a bit more before going to harder areas?
+00007E08 B810                       	CMP.b	(A0), D4	;
+00007E0A 6300                       	BLS.b	check_encounter_chance	;
+00007E0C E249                       	LSR.w	#1, D1	; need to modify the encounter table so the last area isn't such a slough
+00007E0E 5704                       	SUBQ.b	#3, D4	;
+00007E10 B810                       	CMP.b	(A0), D4	;
+00007E12 6300                       	BLS.b	check_encounter_chance	;
+00007E14 6000 0000                  	BRA.w	skip_combat	; avoid combat
+00007E18                            check_encounter_chance:
+00007E18 6100 0000                  	BSR.w	get_rng
+00007E1C B041                       	cmp.w	d1, d0
+00007E1E 6400 0000                  	bcc.w	skip_combat
+00007E22                            
+00007E22                            	
+00007E22                             org $1f9c
+00001F9C                            get_rng:
+00001F9C                            
+00001F9C                             org $761e
+0000761E                            skip_combat:	
+0000761E                            
+0000761E                             org $68480	; prevent encounters for 6 steps, then increase encounter rate gradually for 8 steps...
+00068480                            reduce_encounters:
+00068480 C2F9 00FF CAB0             	MULU.w	StepCount, D1	; steps since leaving town / last encounter, caps at 8
+00068486 E889                       	LSR.l	#4, D1	; increased from 3 to 4 to reduce encounter rate
+00068488 0C79 0006 00FF CAB0        	CMPI.w	#6, StepCount	
+00068490 6400                       	bcc.b	increment_stepcount	
+00068492 7200                       	moveq	#$0, d1	; should set encounter chance to 0% i think
+00068494                            increment_stepcount:
+00068494 0C79 000C 00FF CAB0        	CMPI.w	#$c, StepCount	; increased from $8 to increase encounter rate from 50% original to 75% original
+0006849C 6400                       	BCC.b	exit_reduce_encounters
+0006849E 5279 00FF CAB0             	ADDQ.w	#1, StepCount
+000684A4                            exit_reduce_encounters:
+000684A4 4EF9 0000 7DFC             	JMP	level_modifier
+000684AA                            	
+000684AA                            	
+000684AA                            ; ############################################################################
+000684AA                            ; # increase xp / gold rewards from battle
+000684AA                            ; #	
+000684AA                            ; ############################################################################
+000684AA                            
+000684AA                             org $dafa
+0000DAFA                            tally_rewards:
+0000DAFA 48E7 8080                  	MOVEM.l	A0/D0, -(A7)
+0000DAFE 6100 0000                  	BSR.w	get_enemy_rom_offset
+0000DB02 4280                       	CLR.l	D0
+0000DB04 3028 0036                  	MOVE.w	$36(A0), D0	; enemy xp reward
+0000DB08 4EB9 0000 0000             	JSR	double_rewards
+0000DB0E 4CDF 0101                  	MOVEM.l	(A7)+, D0/A0
+0000DB12 4E75                       	RTS
+0000DB14                            
+0000DB14                             org $db48
+0000DB48                            get_enemy_rom_offset:
+0000DB48 2F02                       	MOVE.l	D2, -(A7)
+0000DB4A 5342                       	SUBQ.w	#1, D2
+0000DB4C C4FC 0040                  	MULU.w	#$0040, D2
+0000DB50 41F9 0001 519A             	LEA	$0001519A, A0
+0000DB56 D1C2                       	ADDA.l	D2, A0
+0000DB58 241F                       	MOVE.l	(A7)+, D2
+0000DB5A 4E75                       	RTS
+0000DB5C                            	
+0000DB5C                             org $684d0
+000684D0                            double_rewards:
+000684D0 E388                       	lsl.l	#$1, d0
+000684D2 D1B9 00FF DACA             	ADD.l	D0, $00FFDACA	; ram xp sum
+000684D8 3028 0038                  	MOVE.w	$38(A0), D0	; enemy gold reward
+000684DC E388                       	lsl.l	#$1, d0
+000684DE D1B9 00FF DACE             	ADD.l	D0, $00FFDACE	; ram gold sum
+000684E4 4E75                       	RTS
+000684E6                            
+000684E6                            ; ############################################################################
+000684E6                            ; # increase gold cap (for battle rewards and selling at shops)
+000684E6                            ; #	
+000684E6                            ; ############################################################################
+000684E6                            
+000684E6                             org $CA90
+0000CA90                            check_gold_cap_battle:
+0000CA90 2039 00FF DACE             	MOVE.l	$00FFDACE, D0	; battle reward gold location
+0000CA96 D0B9 00FF D5D6             	ADD.l	$00FFD5D6, D0	; normal gold ram location
+0000CA9C 0C80 000F 4240             	CMPI.l	#$000f4240, D0	; cmp to 1,000,000
+0000CAA2 6500                       	BCS.b	no_cap_battle	; skip next op
+0000CAA4 203C 000F 423F             	MOVE.l	#$000f423f, D0
+0000CAAA                            no_cap_battle:
+0000CAAA                            
+0000CAAA                             org $5fbc
+00005FBC                            selling_gold_cap:
+00005FBC 0C80 000F 4240             	CMPI.l	#$000f4240, D0	; cmp to 1,000,000
+00005FC2 6300                       	BLS.b	no_cap_shop	; skip next op
+00005FC4 203C 000F 423F             	MOVE.l	#$000f423f, D0
+00005FCA                            no_cap_shop:
+00005FCA                            
+00005FCA                            ; ############################################################################
+00005FCA                            ; # increase hp/mp cap, and hp/mp/atk/def growth per level
+00005FCA                            ; #	
+00005FCA                            ; ############################################################################
+00005FCA                            
+00005FCA                             org $cc56
+0000CC56                            add_vit_bonus_to_hp:
+0000CC56 4280                       	CLR.l	D0	;
+0000CC58 1029 0011                  	MOVE.b	$11(A1), D0	; get vit
+0000CC5C E388                       	LSL.l	#1, D0	; double it
+0000CC5E 4281                       	CLR.l	D1	;
+0000CC60 1229 000F                  	MOVE.b	$F(A1), D1	; str ??
+0000CC64 D081                       	ADD.l	D1, D0	;
+0000CC66 80FC 0005                  	DIVU.w	#$0005, D0	; divide by $14 -> $a , double hp growth? -> $5 , 4x? arnath had 750hp at lvl 46 originally -> 1400 at 2x, 2870 at 4x
+0000CC6A 3400                       	MOVE.w	D0, D2	;
+0000CC6C D469 0004                  	ADD.w	$4(A1), D2	; max hp
+0000CC70 0C42 2710                  	CMPI.w	#$2710, D2	; cap at 999 -> 9,999
+0000CC74 6500                       	BCS.b	loc_0000CC80	;
+0000CC76 343C 270F                  	MOVE.w	#$270f, D2	;
+0000CC7A 3002                       	MOVE.w	D2, D0	;
+0000CC7C 9069 0004                  	SUB.w	$4(A1), D0	;
+0000CC80                            loc_0000CC80:
+0000CC80 3342 0004                  	MOVE.w	D2, $4(A1)	;
+0000CC84 D169 0002                  	ADD.w	D0, $2(A1)	;
+0000CC88 4280                       	CLR.l	D0	;
+0000CC8A 1029 0010                  	MOVE.b	$10(A1), D0	; get mind
+0000CC8E E388                       	LSL.l	#1, D0	; double
+0000CC90 4281                       	CLR.l	D1	;
+0000CC92 1229 0011                  	MOVE.b	$11(A1), D1	; get vit
+0000CC96 D081                       	ADD.l	D1, D0	;
+0000CC98 80FC 000A                  	DIVU.w	#$000a, D0	; double mnd growth
+0000CC9C 3400                       	MOVE.w	D0, D2	;
+0000CC9E D469 0008                  	ADD.w	$8(A1), D2	;
+0000CCA2 0C42 2710                  	CMPI.w	#$2710, D2	;
+0000CCA6 6500                       	BCS.b	loc_0000CCB2	;
+0000CCA8 343C 270F                  	MOVE.w	#$270f, D2	;
+0000CCAC 3002                       	MOVE.w	D2, D0	;
+0000CCAE 9069 0008                  	SUB.w	$8(A1), D0	;
+0000CCB2                            loc_0000CCB2:
+0000CCB2                            
+0000CCB2                             org $cc2e
+0000CC2E E349                       	lsl.w	#1, d1	; double atk growth .. arnath gets 1500 at max level
+0000CC30                             org $cc48
+0000CC48 E349                       	lsl.w	#1, d1	; double def growth?
+0000CC4A                            	
+0000CC4A                            	
+0000CC4A                            ; ############################################################################
+0000CC4A                            ; # change shop items / prices
+0000CC4A                            ; #	
+0000CC4A                            ; ############################################################################
+0000CC4A                            	
+0000CC4A                             org $265fa
+000265FA 0000 0086                  	dc.l	$86	; add "miracle of love" revive item to leam item shop
+000265FE 0000 0000                  	dc.l	$00
+00026602 006E 000C                  	dc.l	$006e000c	; needed at end of shop inventory? i guess?
+00026606                             org $14184
+00014184 0096                       	dc.w	$0096	; change miracle of love price from 350g to 150g
+00014186                            	
+00014186                            	

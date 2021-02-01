@@ -33,3 +33,6 @@
 	
 ; new title graphic
 	include "./asm/title_image.asm"
+
+; game balancing (xp / gold rewards, level requirements, battle frequency, hp/mp caps)
+	include "./asm/rebalance.asm"

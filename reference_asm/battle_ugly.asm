@@ -1481,9 +1481,10 @@ get_new_spd:
 set_new_spd:
 	MOVE.b	D1, D2	;Predicted (Code-scan)
 	SUB.b	$12(A1), D2	;Predicted (Code-scan)
-	BMI.b	set_new_hp	;Predicted (Code-scan)
+	BMI.b	set_new_atk	;Predicted (Code-scan)
 	MOVE.b	D1, $12(A1)	;Predicted (Code-scan)
-set_new_hp:
+set_new_atk:
+; this might be atk and def lol 100% lol i'm so dumb
 	LSR.w	#1, D4	;Predicted (Code-scan)
 	MOVE.w	$4(A3,D3.w), D1	;Predicted (Code-scan)
 	MOVE.w	D4, D0	;Predicted (Code-scan)
@@ -1491,9 +1492,9 @@ set_new_hp:
 	ADD.w	D0, D1	;Predicted (Code-scan)
 	MOVE.w	D1, D2	;Predicted (Code-scan)
 	SUB.w	$A(A1), D2	;Predicted (Code-scan)
-	BMI.b	set_new_mp	;Predicted (Code-scan)
+	BMI.b	set_new_def	;Predicted (Code-scan)
 	MOVE.w	D1, $A(A1)	;Predicted (Code-scan)
-set_new_mp:
+set_new_def:
 	LSR.w	#2, D4	;Predicted (Code-scan)
 	MOVE.w	$6(A3,D3.w), D1	;Predicted (Code-scan)
 	MOVE.w	D4, D0	;Predicted (Code-scan)
@@ -1846,7 +1847,7 @@ get_enemy_ram_offset:
 	ADDA.l	D2, A0	;Predicted (Code-scan)
 	BRA.b	loc_0000DB44	;Predicted (Code-scan)
 enemy_counter_GT10:
-	ANDI.w	#$000F, D2	; effectively subtract 10.. ?
+	ANDI.w	#$000F, D2	; effectively subtract $10.. ?
 	MOVEA.l	$00FFDAB4, A0	; $FFDAB4 contains ram offsets of enemies / npcs perhaps?
 	MULU.w	#$0030, D2	; enemy stat block is $30
 	ADDA.l	D2, A0	; get RAM offset of current enemy
