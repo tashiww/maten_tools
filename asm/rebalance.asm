@@ -174,7 +174,8 @@ loc_0000CCB2:
  org $265fa
 	dc.l	$86	; add "miracle of love" revive item to leam item shop
 	dc.l	$00
-	dc.l	$006e000c	; needed at end of shop inventory? i guess?
+	dc.l	$6e
+	dc.w	$000c	; needed at end of shop inventory? i guess?
  org $14184
 	dc.w	$0096	; change miracle of love price from 350g to 150g
 	

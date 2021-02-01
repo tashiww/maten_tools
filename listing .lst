@@ -2688,8 +2688,9 @@
 0000CC4A                             org $265fa
 000265FA 0000 0086                  	dc.l	$86	; add "miracle of love" revive item to leam item shop
 000265FE 0000 0000                  	dc.l	$00
-00026602 006E 000C                  	dc.l	$006e000c	; needed at end of shop inventory? i guess?
-00026606                             org $14184
+00026602 0000 006E                  	dc.l	$6e
+00026606 000C                       	dc.w	$000c	; needed at end of shop inventory? i guess?
+00026608                             org $14184
 00014184 0096                       	dc.w	$0096	; change miracle of love price from 350g to 150g
 00014186                            	
 00014186                            	
