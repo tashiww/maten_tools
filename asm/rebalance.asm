@@ -171,11 +171,24 @@ loc_0000CCB2:
 ; #	
 ; ############################################################################
 	
- org $265fa
+ org $265c4
+	dc.l	$68440	; change pointer for leam item shop
+
+ org $14184
+	dc.w	$0096	; change miracle of love price from 350g to 150g
+
+ org $68440
+ ; leam shop inventory
+	dc.w	$09
+	dc.l	$31313	; header stuff?
+	dc.l	$0f
+	dc.l	$215b8	; mystery pointer?
+	dc.w	$c0
+	dc.w	$82	; item start, heal berry
+	dc.l	$83
 	dc.l	$86	; add "miracle of love" revive item to leam item shop
 	dc.l	$00
 	dc.l	$6e
-	dc.w	$000c	; needed at end of shop inventory? i guess?
- org $14184
-	dc.w	$0096	; change miracle of love price from 350g to 150g
+	dc.w	$0c
+	dc.l	$00
 	

@@ -2685,12 +2685,25 @@
 0000CC4A                            ; #	
 0000CC4A                            ; ############################################################################
 0000CC4A                            	
-0000CC4A                             org $265fa
-000265FA 0000 0086                  	dc.l	$86	; add "miracle of love" revive item to leam item shop
-000265FE 0000 0000                  	dc.l	$00
-00026602 0000 006E                  	dc.l	$6e
-00026606 000C                       	dc.w	$000c	; needed at end of shop inventory? i guess?
-00026608                             org $14184
+0000CC4A                             org $265c4
+000265C4 0006 8440                  	dc.l	$68440	; change pointer for leam item shop
+000265C8                            
+000265C8                             org $14184
 00014184 0096                       	dc.w	$0096	; change miracle of love price from 350g to 150g
-00014186                            	
-00014186                            	
+00014186                            
+00014186                             org $68440
+00068440                             ; leam shop inventory
+00068440 0009                       	dc.w	$09
+00068442 0003 1313                  	dc.l	$31313	; header stuff?
+00068446 0000 000F                  	dc.l	$0f
+0006844A 0002 15B8                  	dc.l	$215b8	; mystery pointer?
+0006844E 00C0                       	dc.w	$c0
+00068450 0082                       	dc.w	$82	; item start, heal berry
+00068452 0000 0083                  	dc.l	$83
+00068456 0000 0086                  	dc.l	$86	; add "miracle of love" revive item to leam item shop
+0006845A 0000 0000                  	dc.l	$00
+0006845E 0000 006E                  	dc.l	$6e
+00068462 000C                       	dc.w	$0c
+00068464 0000 0000                  	dc.l	$00
+00068468                            	
+00068468                            	
