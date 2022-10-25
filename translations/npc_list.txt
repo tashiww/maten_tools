@@ -1,6 +1,6 @@
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 0, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # アルナス
-Arnath
+Alnas
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 1, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # リリス
@@ -12,7 +12,7 @@ Lichiel
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 3, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # クレイン
-Cline
+Clein
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 4, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # シャイアス
@@ -40,7 +40,7 @@ Cynac
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 10, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # サ゛ファン
-Zafan
+Xafan
 
 {"desc": "npc", "start": 41052, "start_hex": "0xa05c", "end": 41306, "end_hex": "0xa15a", "step": 14, "max_len": 7, "id": 11, "ptr_type": "fixed", "ptr_pos": 0, "repoint": false, "str_pos": 41052, "table": "menu"}
 # フ゛リーイット゛
