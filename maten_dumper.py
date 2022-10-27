@@ -73,7 +73,7 @@ fixed_len_strings = [
 # asm hacks should be applied to this file before inserting strings
 tling_rom = FilePath("foobar.bin")
 
-# place output file in current directory (only for if dumping functions
+# place output file in current directory (only if dumping functions
 # are uncommented)
 output_file = FilePath("test_dump.txt")
 # empty the file before we start writing to it
@@ -89,9 +89,8 @@ skill_block = StringBlock('skl', 0x1c2fa, 0x1d45c, 0x40, 0x10)
 town_block = StringBlock('town', 0xb986, 0xbac6, 0x10, 0xa)
 
 fixed_len_blocks = [item_block, monster_block, npc_block, skill_block]
-# dump_fixed_str(original_rom.path, ja_menu_tbl, block)
 
-# make sure we don't try inserting strings in this juicy whitespace
+# make sure we don't try inserting strings in this juicy blank space
 exclusions = [(s.start, s.end) for s in fixed_len_blocks]
 exclusions.append((0xb3a0, 0xbb00))
 exclusions.append((0xf4480, 0xf5e00))
@@ -666,6 +665,7 @@ def repoint_relative(rom: BinaryIO, str_info: String, new_ptr: int) -> int:
 	lea = int(str_info.prefix, 16).to_bytes(2, 'big')[0:1] + b'\xf9'
 
 	pc = str_info.ptr_pos
+	# only have 2 bytes for the relative jump so +- half of 0xFFFF
 	start = max(pc - 0x7fff, 0)
 	stop = pc + 0x7fff
 	lea_space = find_space(rom, start, stop, 0x14, True)
@@ -1042,12 +1042,14 @@ def dump_level_growth(rom_path: Path, party: list) -> str:
 	# tbl_ptrs = struct.unpack(">"+"I"*len(party), ptr_data)
 
 
-real_monster_block = StringBlock('mon', 0x1519a, 0x16c30, 0x40, 10)
+# real_monster_block = StringBlock('mon', 0x1519a, 0x16c30, 0x40, 10)
 # dump_data_blocks(original_rom.path, real_monster_block)
 # dump_data_blocks(original_rom.path, item_block)
 # dump_level_growth(original_rom.path, party)
 # print(dump_fixed_str(original_rom.path, ja_menu_tbl, town_block))
 # dump_encounter_info(original_rom.path)
+
+
 free_space = make_space_from_file(tling_rom.path, script_files)
 print(f"cleared {free_space} bytes")
 

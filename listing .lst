@@ -67,7 +67,7 @@
 0000206C 3006                       	MOVE.w	D6, Xoffset 
 0000206E 3207                       	MOVE.w	D7, Yoffset	
 00002070 6100 FD7C                  	BSR.w	DrawFontTile	; draw font tile to VRAM routine
-00002074 5241                       	addq.w #1, Yoffset
+00002074 5241                       	addq.w	#1, Yoffset
 00002076 5242                       	ADDQ.w	#1, VramTile ;increment tile offset
 00002078 6100 FD74                  	BSR.w	DrawFontTile
 0000207C 5246                       	addq.w	#1,	d6	; this is x tile incrementer
@@ -87,7 +87,6 @@
 00002094 =0000F000                  VRAMBaseOffset	equ	$F000	
 00002094 =0000FFC0                  VRAMUpperBound	equ	$FFC0	; don't write to VRAM if we hit this offset
 00002094 =00000040                  VRAMOffsetStep	equ	$0040	; step value for incrementing VRAM offset, $40 is suitable for 8x16 font
-00002094                            
 00002094 =0000AE00                  VRAMOverflowBase	equ	$AE00
 00002094 =0000B4C0                  VRAMOverflowBound	equ	$B4C0
 00002094                            
